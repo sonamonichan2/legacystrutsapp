@@ -1,0 +1,69 @@
+codeRepositoryPath: .
+transformationName: AWS/comprehensive-codebase-analysis
+
+buildCommand: |
+  export JAVA_HOME=/usr/lib/jvm/java-1.8.0-amazon-corretto.x86_64
+  export PATH=$JAVA_HOME/bin:$PATH
+  mvn -DskipTests clean install
+
+validationCommands: |
+  export JAVA_HOME=/usr/lib/jvm/java-1.8.0-amazon-corretto.x86_64
+  export PATH=$JAVA_HOME/bin:$PATH
+  mvn -DskipTests clean install
+
+additionalPlanContext: |
+  Repository: openmrs-core version 2.0.3
+
+  Current state:
+  - Legacy Java 8 Maven multi-module monolith
+  - WAR-packaged web application
+  - Modules include tools, test, api, web, webapp
+  - Uses Spring 4.x, Hibernate 4.x, Liquibase, Servlet/JSP-era web stack
+  - Healthcare EMR backend platform for patient-based medical record management
+
+  Target outcome:
+  - Modernize into a modular monolith
+  - Keep a single deployable application in the first modernization wave
+  - Preserve existing business behavior and database semantics
+  - Keep one database in this phase
+  - Prefer Spring Boot as the runtime framework target
+  - Upgrade Java from 8 to 21
+  - Replace outdated JDK-dependent build tooling and deprecated plugins
+  - Retain Liquibase-based schema migration
+  - Reduce cross-module coupling and eliminate cyclic dependencies
+  - Separate domain logic from web and infrastructure adapters
+
+  Target module boundaries:
+  - patient
+  - person
+  - encounter
+  - observation
+  - orders
+  - concepts
+  - users-admin
+  - location
+  - integration
+  - search-reporting
+  - web-adapter
+  - shared-kernel (minimal)
+
+  Architecture rules:
+  - Each business module should separate domain, application, and infrastructure
+  - Web/controllers/REST endpoints must not contain business logic
+  - Integration concerns such as HL7 and external adapters must be isolated
+  - Shared-kernel should contain only truly common primitives and contracts
+  - Do not decompose to microservices yet
+  - Prefer incremental refactoring over full rewrite
+  - Preserve deployability on AWS EC2 Linux during intermediate stages
+
+  Required outputs:
+  1. Current-state architecture summary
+  2. Dependency map and cyclic dependency findings
+  3. Proposed modular-monolith target architecture
+  4. Module-by-module migration plan
+  5. Buildable code changes in waves
+  6. Testing and validation strategy
+  7. Backward compatibility risks
+  8. Rollback notes
+  9. Suggested package moves and interface extraction plan
+  10. Recommendation on WAR-first vs Spring Boot transition timing
