@@ -25,7 +25,7 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 
 import org.aopalliance.aop.Advice;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Allergen;

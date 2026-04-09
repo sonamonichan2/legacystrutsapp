@@ -32,21 +32,19 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.runtime.log.CommonsLogLogChute;
-import org.apache.velocity.tools.Scope;
+// Scope moved in velocity-tools 3.x
 import org.apache.velocity.tools.ToolContext;
 import org.apache.velocity.tools.ToolManager;
 import org.apache.velocity.tools.config.DefaultKey;
 import org.apache.velocity.tools.config.FactoryConfiguration;
 import org.apache.velocity.tools.config.ToolConfiguration;
 import org.apache.velocity.tools.config.ToolboxConfiguration;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openmrs.OpenmrsCharacterEscapes;
 import org.openmrs.api.APIException;
 import org.openmrs.api.context.Context;
@@ -184,17 +182,14 @@ public abstract class StartupFilter implements Filter {
 			velocityEngine = new VelocityEngine();
 
 			Properties props = new Properties();
-			props.setProperty(RuntimeConstants.RUNTIME_LOG,
-					"startup_wizard_vel.log");
+			// RUNTIME_LOG removed in Velocity 2.x - logging is handled by SLF4J
 			// Linux requires setting logging properties to initialize Velocity
 			// Context.
-			props.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,
-					"org.apache.velocity.runtime.log.CommonsLogLogChute");
-			props.setProperty(CommonsLogLogChute.LOGCHUTE_COMMONS_LOG_NAME,
-					"initial_wizard_velocity");
+			// Velocity 2.x uses SLF4J logging by default
+			props.setProperty("runtime.log.name", "initial_wizard_velocity");
 
 			// so the vm pages can import the header/footer
-			props.setProperty(RuntimeConstants.RESOURCE_LOADER, "class");
+			props.setProperty("resource.loaders", "class");
 			props.setProperty("class.resource.loader.description",
 					"Velocity Classpath Resource Loader");
 			props.setProperty("class.resource.loader.class",
@@ -352,8 +347,7 @@ public abstract class StartupFilter implements Filter {
 	 */
 	protected String toJSONString(Object object) {
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.getJsonFactory().setCharacterEscapes(
-				new OpenmrsCharacterEscapes());
+		mapper.getFactory().setCharacterEscapes(new OpenmrsCharacterEscapes());
 		try {
 			return mapper.writeValueAsString(object);
 		} catch (IOException e) {
@@ -390,7 +384,7 @@ public abstract class StartupFilter implements Filter {
 			// since we are using one tool box for all request within wizard
 			// we should propagate toolbox's scope on all application
 			ToolboxConfiguration toolbox = new ToolboxConfiguration();
-			toolbox.setScope(Scope.APPLICATION);
+			toolbox.setScope("application");
 			// next we are directly configuring custom localization tool by
 			// setting its class name, locale property etc.
 			ToolConfiguration localizationTool = new ToolConfiguration();

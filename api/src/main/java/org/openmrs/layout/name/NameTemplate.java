@@ -10,7 +10,7 @@
 package org.openmrs.layout.name;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.openmrs.PersonName;
 import org.openmrs.api.APIException;
 import org.openmrs.layout.LayoutSupport;

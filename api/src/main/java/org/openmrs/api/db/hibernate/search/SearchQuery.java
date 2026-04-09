@@ -11,7 +11,7 @@ package org.openmrs.api.db.hibernate.search;
 
 import java.util.List;
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.openmrs.collection.ListPart;

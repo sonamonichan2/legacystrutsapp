@@ -12,6 +12,8 @@ package org.openmrs.util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.event.MethodExceptionEventHandler;
+import org.apache.velocity.context.Context;
+import org.apache.velocity.util.introspection.Info;
 
 /**
  * Class to safely catch velocity exceptions
@@ -32,8 +34,8 @@ public class VelocityExceptionHandler implements MethodExceptionEventHandler {
 	 *      java.lang.String, java.lang.Exception)
 	 */
 	@SuppressWarnings("unchecked")
-	public Object methodException(Class claz, String method, Exception e)
-			throws Exception {
+	@Override
+	public Object methodException(Context context, Class<?> claz, String method, Exception e, Info info) {
 
 		log.debug("Claz: " + claz.getName() + " method: " + method, e);
 
@@ -44,7 +46,7 @@ public class VelocityExceptionHandler implements MethodExceptionEventHandler {
 		}
 
 		// keep the default behavior
-		throw e;
+		throw new RuntimeException(e);
 	}
 
 }

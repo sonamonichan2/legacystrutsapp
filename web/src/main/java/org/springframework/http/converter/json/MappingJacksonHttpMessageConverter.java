@@ -25,13 +25,13 @@ import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 import java.util.List;
 
-import org.codehaus.jackson.JsonEncoding;
-import org.codehaus.jackson.JsonGenerator;
-import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.type.TypeFactory;
-import org.codehaus.jackson.type.JavaType;
+import com.fasterxml.jackson.core.JsonEncoding;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fasterxml.jackson.databind.JavaType;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
@@ -88,9 +88,9 @@ public class MappingJacksonHttpMessageConverter
 	 * <p>
 	 * Setting a custom-configured {@code ObjectMapper} is one way to take
 	 * further control of the JSON serialization process. For example, an
-	 * extended {@link org.codehaus.jackson.map.SerializerFactory} can be
-	 * configured that provides custom serializers for specific types. The other
-	 * option for refining the serialization process is to use Jackson's
+	 * extended {@link com.fasterxml.jackson.databind.ser.SerializerFactory} can
+	 * be configured that provides custom serializers for specific types. The
+	 * other option for refining the serialization process is to use Jackson's
 	 * provided annotations on the types to be serialized, in which case a
 	 * custom-configured ObjectMapper is unnecessary.
 	 */
@@ -102,9 +102,8 @@ public class MappingJacksonHttpMessageConverter
 
 	private void configurePrettyPrint() {
 		if (this.prettyPrint != null) {
-			this.objectMapper
-					.configure(SerializationConfig.Feature.INDENT_OUTPUT,
-							this.prettyPrint);
+			this.objectMapper.configure(SerializationFeature.INDENT_OUTPUT,
+					this.prettyPrint);
 		}
 	}
 
@@ -142,13 +141,14 @@ public class MappingJacksonHttpMessageConverter
 	}
 
 	/**
-	 * Whether to use the {@link org.codehaus.jackson.impl.DefaultPrettyPrinter}
-	 * when writing JSON. This is a shortcut for setting up an
-	 * {@code ObjectMapper} as follows:
+	 * Whether to use the
+	 * {@link com.fasterxml.jackson.core.util.DefaultPrettyPrinter} when writing
+	 * JSON. This is a shortcut for setting up an {@code ObjectMapper} as
+	 * follows:
 	 * 
 	 * <pre>
 	 * ObjectMapper mapper = new ObjectMapper();
-	 * mapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true);
+	 * mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
 	 * converter.setObjectMapper(mapper);
 	 * </pre>
 	 * <p>
@@ -219,13 +219,12 @@ public class MappingJacksonHttpMessageConverter
 
 		JsonEncoding encoding = getJsonEncoding(outputMessage.getHeaders()
 				.getContentType());
-		JsonGenerator jsonGenerator = this.objectMapper.getJsonFactory()
+		JsonGenerator jsonGenerator = this.objectMapper.getFactory()
 				.createJsonGenerator(outputMessage.getBody(), encoding);
 
 		// A workaround for JsonGenerators not applying serialization features
 		// https://github.com/FasterXML/jackson-databind/issues/12
-		if (this.objectMapper.getSerializationConfig().isEnabled(
-				SerializationConfig.Feature.INDENT_OUTPUT)) {
+		if (this.objectMapper.isEnabled(SerializationFeature.INDENT_OUTPUT)) {
 			jsonGenerator.useDefaultPrettyPrinter();
 		}
 
@@ -276,8 +275,9 @@ public class MappingJacksonHttpMessageConverter
 	 * @return the java type
 	 */
 	protected JavaType getJavaType(Type type, Class<?> contextClass) {
-		return (contextClass != null) ? TypeFactory.type(type,
-				TypeFactory.type(contextClass)) : TypeFactory.type(type);
+		return (contextClass != null) ? TypeFactory.defaultInstance()
+				.constructType(type) : TypeFactory.defaultInstance()
+				.constructType(type);
 	}
 
 	/**

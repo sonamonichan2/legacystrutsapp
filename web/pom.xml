@@ -110,8 +110,8 @@
          <artifactId>jcl-over-slf4j</artifactId>
       </dependency>
       <dependency>
-		 <groupId>org.apache.velocity</groupId>
-		 <artifactId>velocity-tools</artifactId>
+		 <groupId>org.apache.velocity.tools</groupId>
+		 <artifactId>velocity-tools-generic</artifactId>
 	  </dependency>
       <dependency>
          <groupId>org.owasp.encoder</groupId>

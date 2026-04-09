@@ -11,7 +11,7 @@ package org.openmrs;
 
 import java.util.Comparator;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * The FormField object relates/orders the <code>fields</code> on a

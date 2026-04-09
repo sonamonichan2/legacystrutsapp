@@ -13,7 +13,7 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.Properties;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.db.SerializedObjectDAOTest;

@@ -18,7 +18,7 @@ import liquibase.exception.CustomPreconditionErrorException;
 import liquibase.exception.CustomPreconditionFailedException;
 import liquibase.precondition.CustomPrecondition;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.openmrs.util.DatabaseUtil;
 import org.openmrs.util.UpgradeUtil;
 

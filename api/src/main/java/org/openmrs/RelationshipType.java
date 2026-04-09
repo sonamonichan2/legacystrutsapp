@@ -9,7 +9,7 @@
  */
 package org.openmrs;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Defines a type of relationship between two people in the database. <br>

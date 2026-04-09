@@ -11,7 +11,7 @@ package org.openmrs;
 
 import java.util.Date;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * ConceptNameTag is a textual tag which can be applied to a ConceptName.

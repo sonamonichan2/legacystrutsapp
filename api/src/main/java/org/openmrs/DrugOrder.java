@@ -9,7 +9,7 @@
  */
 package org.openmrs;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import static org.openmrs.Order.Action.DISCONTINUE;
 import org.openmrs.util.OpenmrsUtil;
 

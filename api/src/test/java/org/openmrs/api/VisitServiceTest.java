@@ -10,7 +10,7 @@
 package org.openmrs.api;
 
 import junit.framework.Assert;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.TransientObjectException;
 import org.junit.After;
 import org.junit.Before;

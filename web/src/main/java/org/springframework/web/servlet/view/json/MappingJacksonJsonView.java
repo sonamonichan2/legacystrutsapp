@@ -31,10 +31,10 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.codehaus.jackson.JsonEncoding;
-import org.codehaus.jackson.JsonGenerator;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
+import com.fasterxml.jackson.core.JsonEncoding;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
@@ -162,7 +162,7 @@ public class MappingJacksonJsonView extends AbstractView {
 	 * 
 	 * <pre class="code">
 	 * ObjectMapper mapper = new ObjectMapper();
-	 * mapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true);
+	 * mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
 	 * </pre>
 	 * <p>
 	 * The default value is {@code false}.
@@ -174,9 +174,8 @@ public class MappingJacksonJsonView extends AbstractView {
 
 	private void configurePrettyPrint() {
 		if (this.prettyPrint != null) {
-			this.objectMapper
-					.configure(SerializationConfig.Feature.INDENT_OUTPUT,
-							this.prettyPrint);
+			this.objectMapper.configure(SerializationFeature.INDENT_OUTPUT,
+					this.prettyPrint);
 		}
 	}
 
@@ -310,13 +309,12 @@ public class MappingJacksonJsonView extends AbstractView {
 	 */
 	protected void writeContent(OutputStream stream, Object value,
 			String jsonPrefix) throws IOException {
-		JsonGenerator generator = this.objectMapper.getJsonFactory()
+		JsonGenerator generator = this.objectMapper.getFactory()
 				.createJsonGenerator(stream, this.encoding);
 
 		// A workaround for JsonGenerators not applying serialization features
 		// https://github.com/FasterXML/jackson-databind/issues/12
-		if (this.objectMapper.getSerializationConfig().isEnabled(
-				SerializationConfig.Feature.INDENT_OUTPUT)) {
+		if (this.objectMapper.isEnabled(SerializationFeature.INDENT_OUTPUT)) {
 			generator.useDefaultPrettyPrinter();
 		}
 

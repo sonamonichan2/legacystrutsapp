@@ -22,7 +22,7 @@ import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.openmrs.util.OpenmrsUtil;
 import org.springframework.util.StringUtils;
 
