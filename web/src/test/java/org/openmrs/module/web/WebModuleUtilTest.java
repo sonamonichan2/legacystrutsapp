@@ -32,8 +32,6 @@ import org.openmrs.module.Module;
 import org.openmrs.module.ModuleException;
 import org.openmrs.module.ModuleFactory;
 import org.openmrs.web.DispatcherServlet;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -41,8 +39,7 @@ import org.w3c.dom.Element;
 /**
  *
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(WebModuleUtil.class)
+
 public class WebModuleUtilTest {
 
 	private Properties propertiesWritten;

@@ -43,22 +43,15 @@
          <artifactId>dbunit</artifactId>
       </dependency>
       <dependency>
-         <groupId>xmlunit</groupId>
-         <artifactId>xmlunit</artifactId>
+         <groupId>org.xmlunit</groupId>
+         <artifactId>xmlunit-core</artifactId>
       </dependency>
       
 		<dependency>	
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.powermock</groupId>
-			<artifactId>powermock-module-junit4</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.powermock</groupId>
-			<artifactId>powermock-api-mockito</artifactId>
-		</dependency>
+		<!-- PowerMock removed - incompatible with Java 21 -->
 		<dependency>
 		    <groupId>org.hamcrest</groupId>
 		    <artifactId>hamcrest-core</artifactId>

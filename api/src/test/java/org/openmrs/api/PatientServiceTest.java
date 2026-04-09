@@ -756,8 +756,8 @@ public class PatientServiceTest extends BaseContextSensitiveTest {
 		return new ArgumentMatcher<Visit>() {
 
 			@Override
-			public boolean matches(Object argument) {
-				Visit visit = (Visit) argument;
+			public boolean matches(Visit argument) {
+				Visit visit = argument;
 				return OpenmrsUtil.nullSafeEquals(visit.getLocation(),
 						expected.getLocation())
 						&& OpenmrsUtil.nullSafeEquals(visit.getVisitType(),

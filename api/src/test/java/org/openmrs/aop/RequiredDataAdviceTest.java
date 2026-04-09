@@ -9,8 +9,8 @@
  */
 package org.openmrs.aop;
 
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -34,7 +34,7 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.openmrs.BaseOpenmrsData;
@@ -596,7 +596,7 @@ public class RequiredDataAdviceTest extends BaseContextMockTest {
 		requiredDataAdvice.before(m, new Object[]{},
 				new WithAppropriatelyNamedMethod());
 		verify(saveHandler, never()).handle(eq(openmrsObject),
-				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				ArgumentMatchers.<User> any(), ArgumentMatchers.<Date> any(),
 				anyString());
 	}
 
@@ -610,7 +610,7 @@ public class RequiredDataAdviceTest extends BaseContextMockTest {
 		requiredDataAdvice.before(m, new Object[]{openmrsObject},
 				new WithAppropriatelyNamedMethod());
 		verify(saveHandler, times(1)).handle(eq(openmrsObject),
-				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				ArgumentMatchers.<User> any(), ArgumentMatchers.<Date> any(),
 				anyString());
 	}
 
@@ -624,7 +624,7 @@ public class RequiredDataAdviceTest extends BaseContextMockTest {
 		requiredDataAdvice.before(m, new Object[]{openmrsObject},
 				new WithAppropriatelyNamedMethod());
 		verify(saveHandler, never()).handle(eq(openmrsObject),
-				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				ArgumentMatchers.<User> any(), ArgumentMatchers.<Date> any(),
 				anyString());
 	}
 
@@ -639,8 +639,8 @@ public class RequiredDataAdviceTest extends BaseContextMockTest {
 		requiredDataAdvice.before(m, new Object[]{openmrsObjects},
 				new WithAppropriatelyNamedMethod());
 		verify(saveHandler, times(2)).handle(
-				Matchers.<SomeOpenmrsData> anyObject(),
-				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				ArgumentMatchers.<SomeOpenmrsData> any(),
+				ArgumentMatchers.<User> any(), ArgumentMatchers.<Date> any(),
 				anyString());
 	}
 
@@ -655,7 +655,7 @@ public class RequiredDataAdviceTest extends BaseContextMockTest {
 		requiredDataAdvice.before(m, new Object[]{},
 				new WithAppropriatelyNamedMethod());
 		verify(voidHandler, never()).handle(eq(openmrsObject),
-				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				ArgumentMatchers.<User> any(), ArgumentMatchers.<Date> any(),
 				anyString());
 	}
 
@@ -670,7 +670,7 @@ public class RequiredDataAdviceTest extends BaseContextMockTest {
 				new Object[]{openmrsObject, "void reason"},
 				new WithAppropriatelyNamedMethod());
 		verify(voidHandler, times(1)).handle(eq(openmrsObject),
-				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				ArgumentMatchers.<User> any(), ArgumentMatchers.<Date> any(),
 				anyString());
 	}
 
@@ -684,7 +684,7 @@ public class RequiredDataAdviceTest extends BaseContextMockTest {
 		requiredDataAdvice.before(m, new Object[]{openmrsObjectSubClass,
 				"void reason"}, new WithAppropriatelyNamedMethod());
 		verify(voidHandler, times(1)).handle(eq(openmrsObjectSubClass),
-				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				ArgumentMatchers.<User> any(), ArgumentMatchers.<Date> any(),
 				anyString());
 	}
 
@@ -698,7 +698,7 @@ public class RequiredDataAdviceTest extends BaseContextMockTest {
 		requiredDataAdvice.before(m, new Object[]{openmrsObject},
 				new WithAppropriatelyNamedMethod());
 		verify(voidHandler, never()).handle(eq(openmrsObject),
-				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				ArgumentMatchers.<User> any(), ArgumentMatchers.<Date> any(),
 				anyString());
 	}
 
@@ -724,7 +724,7 @@ public class RequiredDataAdviceTest extends BaseContextMockTest {
 
 		// verify that the handle method was never called on this object
 		verify(voidHandler, never()).handle(eq(person),
-				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				ArgumentMatchers.<User> any(), ArgumentMatchers.<Date> any(),
 				anyString());
 
 	}
@@ -751,7 +751,7 @@ public class RequiredDataAdviceTest extends BaseContextMockTest {
 
 		// verify that the handle method was called on this object
 		verify(voidHandler, times(1)).handle(eq(person),
-				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				ArgumentMatchers.<User> any(), ArgumentMatchers.<Date> any(),
 				anyString());
 
 	}

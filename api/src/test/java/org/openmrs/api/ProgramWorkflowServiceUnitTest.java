@@ -53,9 +53,9 @@ public class ProgramWorkflowServiceUnitTest {
 	public void getProgramByName_shouldReturnNullWhenThereIsNoProgramForGivenName() {
 		ProgramWorkflowDAO mockDao = Mockito.mock(ProgramWorkflowDAO.class);
 		List<Program> noProgramWithGivenName = new ArrayList<Program>();
-		Mockito.stub(mockDao.getProgramsByName("A name", false)).toReturn(
+		Mockito.when(mockDao.getProgramsByName("A name", false)).thenReturn(
 				noProgramWithGivenName);
-		Mockito.stub(mockDao.getProgramsByName("A name", true)).toReturn(
+		Mockito.when(mockDao.getProgramsByName("A name", true)).thenReturn(
 				noProgramWithGivenName);
 		pws.setProgramWorkflowDAO(mockDao);
 		Assert.assertNull(pws.getProgramByName("A name"));
@@ -70,9 +70,9 @@ public class ProgramWorkflowServiceUnitTest {
 		Program program2 = new Program("A name");
 		programsWithGivenName.add(program1);
 		programsWithGivenName.add(program2);
-		Mockito.stub(mockDao.getProgramsByName("A name", false)).toReturn(
+		Mockito.when(mockDao.getProgramsByName("A name", false)).thenReturn(
 				programsWithGivenName);
-		Mockito.stub(mockDao.getProgramsByName("A name", true)).toReturn(
+		Mockito.when(mockDao.getProgramsByName("A name", true)).thenReturn(
 				programsWithGivenName);
 		pws.setProgramWorkflowDAO(mockDao);
 		pws.getProgramByName("A name");
