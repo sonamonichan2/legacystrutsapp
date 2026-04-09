@@ -15,8 +15,6 @@ import java.util.Timer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import sun.net.www.http.KeepAliveCache;
-
 /**
  * Utility functions to clean up causes of memory leakages.
  */
@@ -60,19 +58,27 @@ public class MemoryLeakUtil {
 		}
 	}
 
+	/**
+	 * Attempts to shut down the HTTP keep-alive timer to prevent memory leaks.
+	 * Note: The previous implementation used sun.net.www.http.HttpClient and
+	 * sun.net.www.http.KeepAliveCache which are internal JDK APIs not accessible
+	 * in Java 9+ due to module system restrictions.
+	 */
 	public static void shutdownKeepAliveTimer() {
 		try {
-			final Field kac = HttpClient.class.getDeclaredField("kac");
+			// Use reflection to access internal classes without compile-time dependency
+			Class<?> httpClientClass = Class.forName("sun.net.www.http.HttpClient");
+			Class<?> keepAliveCacheClass = Class.forName("sun.net.www.http.KeepAliveCache");
 
+			final Field kac = httpClientClass.getDeclaredField("kac");
 			kac.setAccessible(true);
-			final Field keepAliveTimer = KeepAliveCache.class
+			final Field keepAliveTimer = keepAliveCacheClass
 					.getDeclaredField("keepAliveTimer");
-
 			keepAliveTimer.setAccessible(true);
 
 			final Thread thread = (Thread) keepAliveTimer.get(kac.get(null));
 
-			if (thread.getContextClassLoader() == OpenmrsClassLoader
+			if (thread != null && thread.getContextClassLoader() == OpenmrsClassLoader
 					.getInstance()) {
 				// Set to system class loader such that we can be garbage
 				// collected.

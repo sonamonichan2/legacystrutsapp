@@ -223,6 +223,10 @@
 		   <groupId>net.sf.ehcache</groupId>
 		   <artifactId>ehcache</artifactId>
        </dependency>
+       <dependency>
+           <groupId>javax.annotation</groupId>
+           <artifactId>javax.annotation-api</artifactId>
+       </dependency>
    </dependencies>
    <build>
      <resources>
@@ -284,17 +288,7 @@
                <grammars>ArdenRecognizer.g</grammars>
             </configuration>
          </plugin>
-         <plugin>
-            <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
-            <artifactId>maven-java-formatter-plugin</artifactId>
-            <executions>
-               <execution>
-                  <goals>
-                     <goal>format</goal>
-                  </goals>
-               </execution>
-            </executions>
-         </plugin>
+         <!-- maven-java-formatter-plugin disabled - incompatible with Java 21 -->
       </plugins>
    </build>
    
