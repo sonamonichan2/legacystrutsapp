@@ -1,16 +1,6 @@
 codeRepositoryPath: .
 transformationName: AWS/comprehensive-codebase-analysis
 
-buildCommand: |
-  export JAVA_HOME=/usr/lib/jvm/java-1.8.0-amazon-corretto.x86_64
-  export PATH=$JAVA_HOME/bin:$PATH
-  mvn -DskipTests clean install
-
-validationCommands: |
-  export JAVA_HOME=/usr/lib/jvm/java-1.8.0-amazon-corretto.x86_64
-  export PATH=$JAVA_HOME/bin:$PATH
-  mvn -DskipTests clean install
-
 additionalPlanContext: |
   Repository: openmrs-core version 2.0.3
 
