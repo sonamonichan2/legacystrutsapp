@@ -174,6 +174,13 @@ public class MappingJacksonHttpMessageConverter
 		return (this.objectMapper.canSerialize(clazz) && canWrite(mediaType));
 	}
 
+	public boolean canWrite(Type type, Class<?> clazz, MediaType mediaType) {
+		if (type instanceof Class) {
+			return canWrite((Class<?>) type, mediaType);
+		}
+		return canWrite(mediaType);
+	}
+
 	@Override
 	protected boolean supports(Class<?> clazz) {
 		// should not be called, since we override canRead/Write instead
@@ -202,7 +209,7 @@ public class MappingJacksonHttpMessageConverter
 					.readValue(inputMessage.getBody(), javaType);
 		} catch (IOException ex) {
 			throw new HttpMessageNotReadableException("Could not read JSON: "
-					+ ex.getMessage(), ex);
+					+ ex.getMessage(), ex, inputMessage);
 		}
 	}
 
@@ -231,6 +238,13 @@ public class MappingJacksonHttpMessageConverter
 			throw new HttpMessageNotWritableException("Could not write JSON: "
 					+ ex.getMessage(), ex);
 		}
+	}
+
+	@Override
+	public void write(Object object, Type type, MediaType contentType,
+			HttpOutputMessage outputMessage) throws IOException,
+			HttpMessageNotWritableException {
+		writeInternal(object, outputMessage);
 	}
 
 	/**
@@ -274,8 +288,8 @@ public class MappingJacksonHttpMessageConverter
 	 * @return the JSON encoding to use (never {@code null})
 	 */
 	protected JsonEncoding getJsonEncoding(MediaType contentType) {
-		if (contentType != null && contentType.getCharSet() != null) {
-			Charset charset = contentType.getCharSet();
+		if (contentType != null && contentType.getCharset() != null) {
+			Charset charset = contentType.getCharset();
 			for (JsonEncoding encoding : JsonEncoding.values()) {
 				if (charset.name().equals(encoding.getJavaName())) {
 					return encoding;

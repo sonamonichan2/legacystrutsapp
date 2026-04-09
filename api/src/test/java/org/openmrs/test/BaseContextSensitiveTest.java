@@ -86,7 +86,6 @@ import org.openmrs.util.OpenmrsUtil;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 import org.xml.sax.InputSource;
@@ -106,7 +105,6 @@ import org.xml.sax.InputSource;
 		SkipBaseSetupAnnotationExecutionListener.class,
 		StartModuleExecutionListener.class})
 @Transactional
-@TransactionConfiguration(defaultRollback = true)
 public abstract class BaseContextSensitiveTest
 		extends
 			AbstractJUnit4SpringContextTests {
