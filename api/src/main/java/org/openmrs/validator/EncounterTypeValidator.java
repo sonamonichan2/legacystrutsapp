@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -24,12 +24,12 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { EncounterType.class }, order = 50)
+@Handler(supports = {EncounterType.class}, order = 50)
 public class EncounterTypeValidator implements Validator {
-	
+
 	/** Log for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -39,7 +39,7 @@ public class EncounterTypeValidator implements Validator {
 	public boolean supports(Class c) {
 		return c.equals(EncounterType.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -58,17 +58,23 @@ public class EncounterTypeValidator implements Validator {
 		if (encounterType == null) {
 			errors.rejectValue("encounterType", "error.general");
 		} else {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.name");
-			
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name",
+					"error.name");
+
 			if (!errors.hasErrors()) {
-				EncounterType duplicate = Context.getEncounterService().getEncounterType(encounterType.getName().trim());
-				if (duplicate != null && !OpenmrsUtil.nullSafeEquals(encounterType.getUuid(), duplicate.getUuid())
-				        && !duplicate.isRetired()) {
-					errors.rejectValue("name", "EncounterType.error.duplicateEncounterTypeNameSpecified",
-					    "Specified Encounter Type name already exists, please specify another ");
+				EncounterType duplicate = Context.getEncounterService()
+						.getEncounterType(encounterType.getName().trim());
+				if (duplicate != null
+						&& !OpenmrsUtil.nullSafeEquals(encounterType.getUuid(),
+								duplicate.getUuid()) && !duplicate.isRetired()) {
+					errors.rejectValue(
+							"name",
+							"EncounterType.error.duplicateEncounterTypeNameSpecified",
+							"Specified Encounter Type name already exists, please specify another ");
 				}
 			}
-			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "description", "retireReason");
+			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name",
+					"description", "retireReason");
 		}
 	}
 }

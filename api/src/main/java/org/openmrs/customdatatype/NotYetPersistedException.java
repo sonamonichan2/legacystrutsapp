@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -12,7 +12,8 @@ package org.openmrs.customdatatype;
 import org.openmrs.api.APIException;
 
 /**
- * Indicates that you tried to access the valueReference of a {@link SingleCustomValue} that has not yet been persisted
+ * Indicates that you tried to access the valueReference of a
+ * {@link SingleCustomValue} that has not yet been persisted
  */
 public class NotYetPersistedException extends APIException {
 

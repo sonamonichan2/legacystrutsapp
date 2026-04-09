@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -18,10 +18,10 @@ import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.core.type.filter.TypeFilter;
 
 /**
- * This class exists so that Spring component-scans can exclude any unit test classes that were
- * accidentally included on the classpath (like in an omod). <br>
- * This filter returns true for any class that has a super class that is a Test like
- * BaseContextSensitiveTest or TestCase. <br>
+ * This class exists so that Spring component-scans can exclude any unit test
+ * classes that were accidentally included on the classpath (like in an omod). <br>
+ * This filter returns true for any class that has a super class that is a Test
+ * like BaseContextSensitiveTest or TestCase. <br>
  * Example usage:
  * 
  * <pre>
@@ -33,33 +33,41 @@ import org.springframework.core.type.filter.TypeFilter;
  * (Look at the applicationContext-service.xml file to see this in action)
  */
 public class TestTypeFilter implements TypeFilter {
-	
+
 	/**
-	 * Any class with a super class in this list will not be loaded (scanned) by Spring
+	 * Any class with a super class in this list will not be loaded (scanned) by
+	 * Spring
 	 */
 	private static List<String> superClassNamesToExclude = new Vector<String>();
-	
+
 	static {
-		superClassNamesToExclude.add("org.openmrs.test.BaseContextSensitiveTest");
-		superClassNamesToExclude.add("org.openmrs.test.BaseModuleContextSensitiveTest");
-		superClassNamesToExclude.add("org.openmrs.web.test.BaseWebContextSensitiveTest");
-		superClassNamesToExclude.add("org.openmrs.web.test.BaseModuleWebContextSensitiveTest");
-		superClassNamesToExclude.add("org.springframework.test.AbstractTransactionalSpringContextTests");
+		superClassNamesToExclude
+				.add("org.openmrs.test.BaseContextSensitiveTest");
+		superClassNamesToExclude
+				.add("org.openmrs.test.BaseModuleContextSensitiveTest");
+		superClassNamesToExclude
+				.add("org.openmrs.web.test.BaseWebContextSensitiveTest");
+		superClassNamesToExclude
+				.add("org.openmrs.web.test.BaseModuleWebContextSensitiveTest");
+		superClassNamesToExclude
+				.add("org.springframework.test.AbstractTransactionalSpringContextTests");
 		superClassNamesToExclude.add("org.openmrs.BaseTest");
 		superClassNamesToExclude.add("junit.framework.TestCase");
 	}
-	
+
 	/**
 	 * @see org.springframework.core.type.filter.TypeFilter#match(org.springframework.core.type.classreading.MetadataReader,
 	 *      org.springframework.core.type.classreading.MetadataReaderFactory)
 	 */
-	public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) throws IOException {
-		String superClassName = metadataReader.getClassMetadata().getSuperClassName();
+	public boolean match(MetadataReader metadataReader,
+			MetadataReaderFactory metadataReaderFactory) throws IOException {
+		String superClassName = metadataReader.getClassMetadata()
+				.getSuperClassName();
 		if (superClassName != null) {
 			return superClassNamesToExclude.contains(superClassName);
 		}
-		
+
 		return false;
 	}
-	
+
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -21,7 +21,7 @@ import org.openmrs.Cohort;
  * @see org.openmrs.api.context.Context
  */
 public interface CohortDAO {
-	
+
 	/**
 	 * Finds the cohort with the given primary key
 	 * 
@@ -30,7 +30,7 @@ public interface CohortDAO {
 	 * @throws DAOException
 	 */
 	public Cohort getCohort(Integer id) throws DAOException;
-	
+
 	/**
 	 * Finds a cohort by name
 	 * 
@@ -38,16 +38,18 @@ public interface CohortDAO {
 	 * @return The Cohort with the given name, or null if none exists
 	 */
 	public Cohort getCohort(String name);
-	
+
 	/**
 	 * Gets all cohorts in the database
 	 * 
-	 * @param includeVoided whether to include voided cohorts
+	 * @param includeVoided
+	 *            whether to include voided cohorts
 	 * @return All cohorts in the database, possibly including voided ones
 	 * @throws DAOException
 	 */
-	public List<Cohort> getAllCohorts(boolean includeVoided) throws DAOException;
-	
+	public List<Cohort> getAllCohorts(boolean includeVoided)
+			throws DAOException;
+
 	/**
 	 * Finds all cohorts that contain the given patientId
 	 * 
@@ -55,16 +57,18 @@ public interface CohortDAO {
 	 * @return List&lt;Cohort&gt; object of matching Cohorts
 	 * @throws DAOException
 	 */
-	public List<Cohort> getCohortsContainingPatientId(Integer patientId) throws DAOException;
-	
+	public List<Cohort> getCohortsContainingPatientId(Integer patientId)
+			throws DAOException;
+
 	/**
 	 * Saves a Cohort to the database
 	 * 
-	 * @param cohort Cohort to save
+	 * @param cohort
+	 *            Cohort to save
 	 * @return the saved Cohort
 	 */
 	public Cohort saveCohort(Cohort cohort) throws DAOException;
-	
+
 	/**
 	 * Finds all Cohorts with matching names
 	 * 
@@ -72,7 +76,7 @@ public interface CohortDAO {
 	 * @return List&lt;Cohort&gt; object of matching Cohorts
 	 */
 	public List<Cohort> getCohorts(String nameFragment) throws DAOException;
-	
+
 	/**
 	 * Removes a cohort from the database
 	 * 
@@ -80,11 +84,11 @@ public interface CohortDAO {
 	 * @return the deleted Cohort
 	 */
 	public Cohort deleteCohort(Cohort cohort) throws DAOException;
-	
+
 	/**
 	 * @param uuid
 	 * @return cohort or null
 	 */
 	public Cohort getCohortByUuid(String uuid);
-	
+
 }

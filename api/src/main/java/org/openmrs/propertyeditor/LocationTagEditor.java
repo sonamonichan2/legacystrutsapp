@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,18 +19,18 @@ import org.openmrs.api.context.Context;
 import org.springframework.util.StringUtils;
 
 /**
- * Property editor for {@link LocationTag}s
- * In version 1.9, added ability for this to also retrieve objects by uuid
+ * Property editor for {@link LocationTag}s In version 1.9, added ability for
+ * this to also retrieve objects by uuid
  * 
  * @since 1.7
  */
 public class LocationTagEditor extends PropertyEditorSupport {
-	
+
 	private static Log log = LogFactory.getLog(LocationTagEditor.class);
-	
+
 	public LocationTagEditor() {
 	}
-	
+
 	/**
 	 * @should set using id
 	 * @should set using uuid
@@ -42,20 +42,20 @@ public class LocationTagEditor extends PropertyEditorSupport {
 		if (Context.isAuthenticated() && StringUtils.hasText(text)) {
 			try {
 				setValue(ls.getLocationTag(Integer.valueOf(text)));
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				LocationTag locationTag = ls.getLocationTagByUuid(text);
 				setValue(locationTag);
 				if (locationTag == null) {
 					log.error("Error setting text: " + text, ex);
-					throw new IllegalArgumentException("LocationTag not found: " + ex.getMessage());
+					throw new IllegalArgumentException(
+							"LocationTag not found: " + ex.getMessage());
 				}
 			}
 		} else {
 			setValue(null);
 		}
 	}
-	
+
 	/**
 	 * @see java.beans.PropertyEditorSupport#getAsText()
 	 */
@@ -63,5 +63,5 @@ public class LocationTagEditor extends PropertyEditorSupport {
 		LocationTag t = (LocationTag) getValue();
 		return t == null ? null : t.getLocationTagId().toString();
 	}
-	
+
 }

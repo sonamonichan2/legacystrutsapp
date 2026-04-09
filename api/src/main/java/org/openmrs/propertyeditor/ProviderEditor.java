@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,19 +19,20 @@ import org.openmrs.api.context.Context;
 import org.springframework.util.StringUtils;
 
 /**
- * Allows for serializing/deserializing a provider to a string so that Spring knows how to pass
- * a provider back and forth through an html form or other medium. <br>
+ * Allows for serializing/deserializing a provider to a string so that Spring
+ * knows how to pass a provider back and forth through an html form or other
+ * medium. <br>
  * 
  * @see Provider
  * @since 1.10.0
  */
 public class ProviderEditor extends PropertyEditorSupport {
-	
+
 	private Log log = LogFactory.getLog(this.getClass());
-	
+
 	public ProviderEditor() {
 	}
-	
+
 	/**
 	 * @should set using id
 	 * @should set using uuid
@@ -42,20 +43,22 @@ public class ProviderEditor extends PropertyEditorSupport {
 		if (StringUtils.hasText(text)) {
 			try {
 				setValue(ps.getProvider(Integer.valueOf(text)));
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				Provider p = ps.getProviderByUuid(text);
 				setValue(p);
 				if (p == null) {
-					log.error("Error setting provider with id or uuid: " + text, ex);
-					throw new IllegalArgumentException("Provider not found: " + ex.getMessage());
+					log.error(
+							"Error setting provider with id or uuid: " + text,
+							ex);
+					throw new IllegalArgumentException("Provider not found: "
+							+ ex.getMessage());
 				}
 			}
 		} else {
 			setValue(null);
 		}
 	}
-	
+
 	@Override
 	public String getAsText() {
 		Provider p = (Provider) getValue();
@@ -65,5 +68,5 @@ public class ProviderEditor extends PropertyEditorSupport {
 			return p.getProviderId().toString();
 		}
 	}
-	
+
 }

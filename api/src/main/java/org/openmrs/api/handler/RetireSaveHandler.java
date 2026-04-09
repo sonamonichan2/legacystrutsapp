@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -17,20 +17,22 @@ import org.openmrs.annotation.Handler;
 import org.openmrs.aop.RequiredDataAdvice;
 
 /**
- * This handler makes sure the when a retired object is saved with the retired bit set to true, the
- * other required values (like dateRetired and retiredBy) are filled in. It also makes sure the
- * retired attributes are cleared out if the retired bit is set to false. <br>
+ * This handler makes sure the when a retired object is saved with the retired
+ * bit set to true, the other required values (like dateRetired and retiredBy)
+ * are filled in. It also makes sure the retired attributes are cleared out if
+ * the retired bit is set to false. <br>
  * <br>
- * The {@link RequiredDataAdvice} class uses AOP around each method in every service to check to see
- * if its a save* method. If it is a save* method, and the object being saved implements
- * {@link Retireable}, this class is called to handle setting the
- * {@link Retireable#setRetiredBy(User)}, and {@link Retireable#setDateRetired(Date)} if not set
- * already. <br>
+ * The {@link RequiredDataAdvice} class uses AOP around each method in every
+ * service to check to see if its a save* method. If it is a save* method, and
+ * the object being saved implements {@link Retireable}, this class is called to
+ * handle setting the {@link Retireable#setRetiredBy(User)}, and
+ * {@link Retireable#setDateRetired(Date)} if not set already. <br>
  * <br>
- * Note: The {@link RequiredDataAdvice} class will loop over child collections on this
- * {@link Retireable} that are themselves a {@link Retireable} and retiredBy/dateRetired are set,
- * but <b>ONLY IF</b> the retired bit was set on them as well. Using the associated retire* method
- * in the service on the parent instance is preferred so that all child objects are indeed retired.
+ * Note: The {@link RequiredDataAdvice} class will loop over child collections
+ * on this {@link Retireable} that are themselves a {@link Retireable} and
+ * retiredBy/dateRetired are set, but <b>ONLY IF</b> the retired bit was set on
+ * them as well. Using the associated retire* method in the service on the
+ * parent instance is preferred so that all child objects are indeed retired.
  * 
  * @see RequiredDataAdvice
  * @see SaveHandler
@@ -39,10 +41,10 @@ import org.openmrs.aop.RequiredDataAdvice;
  */
 @Handler(supports = Retireable.class)
 public class RetireSaveHandler implements SaveHandler<Retireable> {
-	
+
 	/**
-	 * This method does not set "retired" to true, but rather only sets the retiredBy/dateRetired if
-	 * they are null and retired==true. <br>
+	 * This method does not set "retired" to true, but rather only sets the
+	 * retiredBy/dateRetired if they are null and retired==true. <br>
 	 * <br>
 	 * If retired is set to false, the retired attributes are cleared nullified.
 	 * 
@@ -59,13 +61,15 @@ public class RetireSaveHandler implements SaveHandler<Retireable> {
 	 * @should set dateRetired to null if retired is true
 	 * @should set retiredBy to null if retired is true
 	 */
-	public void handle(Retireable retireableObject, User currentUser, Date currentDate, String notUsed) {
-		
+	public void handle(Retireable retireableObject, User currentUser,
+			Date currentDate, String notUsed) {
+
 		// retire reason is not set here, it should be set prior to this method
-		
-		// only set the values if the user saved this object and set the retired bit
+
+		// only set the values if the user saved this object and set the retired
+		// bit
 		if (retireableObject.isRetired()) {
-			
+
 			if (retireableObject.getRetiredBy() == null) {
 				retireableObject.setRetiredBy(currentUser);
 			}
@@ -78,7 +82,7 @@ public class RetireSaveHandler implements SaveHandler<Retireable> {
 			retireableObject.setDateRetired(null);
 			retireableObject.setRetireReason(null);
 		}
-		
+
 	}
-	
+
 }

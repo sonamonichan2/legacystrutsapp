@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -17,37 +17,40 @@ import org.springframework.util.StringUtils;
 import java.beans.PropertyEditorSupport;
 
 public class ConceptAttributeTypeEditor extends PropertyEditorSupport {
-	
+
 	/**
 	 * @see java.beans.PropertyEditorSupport#getAsText()
 	 */
 	public String getAsText() {
 		ConceptAttributeType conceptAttributeType = (ConceptAttributeType) getValue();
-		return conceptAttributeType == null ? null : conceptAttributeType.getId().toString();
+		return conceptAttributeType == null ? null : conceptAttributeType
+				.getId().toString();
 	}
-	
+
 	/**
 	 * @should set using id
 	 * @should set using uuid
-	 *
+	 * 
 	 * @see java.beans.PropertyEditorSupport#setAsText(java.lang.String)
 	 */
 	public void setAsText(String text) throws IllegalArgumentException {
 		ConceptService conceptService = Context.getConceptService();
 		if (Context.isAuthenticated() && StringUtils.hasText(text)) {
 			try {
-				setValue(conceptService.getConceptAttributeType(Integer.valueOf(text)));
-			}
-			catch (Exception ex) {
-				ConceptAttributeType conceptAttributeType = conceptService.getConceptAttributeTypeByUuid(text);
+				setValue(conceptService.getConceptAttributeType(Integer
+						.valueOf(text)));
+			} catch (Exception ex) {
+				ConceptAttributeType conceptAttributeType = conceptService
+						.getConceptAttributeTypeByUuid(text);
 				setValue(conceptAttributeType);
 				if (conceptAttributeType == null) {
-					throw new IllegalArgumentException("ConceptAttributeType not found for " + text, ex);
+					throw new IllegalArgumentException(
+							"ConceptAttributeType not found for " + text, ex);
 				}
 			}
 		} else {
 			setValue(null);
 		}
 	}
-	
+
 }

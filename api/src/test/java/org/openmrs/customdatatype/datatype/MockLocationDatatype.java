@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -12,10 +12,11 @@ package org.openmrs.customdatatype.datatype;
 import org.openmrs.Location;
 
 public class MockLocationDatatype extends BaseMetadataDatatype<Location> {
-	
+
 	@Override
 	public Location deserialize(String serializedValue) {
-		//No implementation since we actually use mocks of this class in the tests
+		// No implementation since we actually use mocks of this class in the
+		// tests
 		return null;
 	}
 }

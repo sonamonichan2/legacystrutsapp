@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -17,35 +17,39 @@ import org.openmrs.test.Verifies;
  * This tests methods on the provider object.
  */
 public class ProviderTest {
-	
+
 	/**
 	 * @see Provider#getName()
 	 */
 	@Test
 	@Verifies(value = "return person full name if person is not null or null otherwise", method = "getName()")
-	public void getName_shouldReturnPersonFullNameIfPersonIsNotNullOrNullOtherwise() throws Exception {
+	public void getName_shouldReturnPersonFullNameIfPersonIsNotNullOrNullOtherwise()
+			throws Exception {
 		Provider provider = new Provider();
-		
+
 		Person person = new Person(1);
 		person.addName(new PersonName("givenName", "middleName", "familyName"));
 		provider.setPerson(person);
-		Assert.assertEquals(person.getPersonName().getFullName(), provider.getName());
+		Assert.assertEquals(person.getPersonName().getFullName(),
+				provider.getName());
 	}
-	
+
 	/**
 	 * @see Provider#toString()
 	 */
 	@Test
 	@Verifies(value = "return person all names of person with specific format", method = "toString()")
-	public void toString_shouldReturnPersonAllNamesWithSpecificFormat() throws Exception {
-		
+	public void toString_shouldReturnPersonAllNamesWithSpecificFormat()
+			throws Exception {
+
 		Provider provider = new Provider();
 		provider.setProviderId(1);
-		
+
 		Person person = new Person(1);
 		person.addName(new PersonName("givenName", "middleName", "familyName"));
 		provider.setPerson(person);
-		Assert.assertEquals(provider.toString(), "[Provider: providerId:1 providerName:[givenName middleName familyName] ]");
+		Assert.assertEquals(provider.toString(),
+				"[Provider: providerId:1 providerName:[givenName middleName familyName] ]");
 	}
-	
+
 }

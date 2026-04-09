@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -27,97 +27,108 @@ import org.openmrs.util.OpenmrsConstants;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Contains methods for retrieving registered OpenmrsSerializer instances, and for
- * persisting/retrieving/deleting objects using serialization
+ * Contains methods for retrieving registered OpenmrsSerializer instances, and
+ * for persisting/retrieving/deleting objects using serialization
  */
 @Transactional
-public class SerializationServiceImpl extends BaseOpenmrsService implements SerializationService {
-	
+public class SerializationServiceImpl extends BaseOpenmrsService
+		implements
+			SerializationService {
+
 	public Log log = LogFactory.getLog(this.getClass());
-	
-	//***** Properties (set by spring)
+
+	// ***** Properties (set by spring)
 	private static Map<Class<? extends OpenmrsSerializer>, OpenmrsSerializer> serializerMap;
-	
-	//***** Service method implementations *****
-	
+
+	// ***** Service method implementations *****
+
 	/**
 	 * @see org.openmrs.api.SerializationService#getSerializer(java.lang.Class)
 	 */
-	public OpenmrsSerializer getSerializer(Class<? extends OpenmrsSerializer> serializationClass) {
+	public OpenmrsSerializer getSerializer(
+			Class<? extends OpenmrsSerializer> serializationClass) {
 		if (serializerMap != null) {
 			return serializerMap.get(serializationClass);
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.SerializationService#getDefaultSerializer()
 	 */
 	@Transactional(readOnly = true)
 	public OpenmrsSerializer getDefaultSerializer() {
 		String prop = Context.getAdministrationService().getGlobalProperty(
-		    OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_SERIALIZER);
+				OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_SERIALIZER);
 		if (StringUtils.isNotEmpty(prop)) {
 			try {
 				Class<?> clazz = Context.loadClass(prop);
-				if (clazz != null && OpenmrsSerializer.class.isAssignableFrom(clazz)) {
+				if (clazz != null
+						&& OpenmrsSerializer.class.isAssignableFrom(clazz)) {
 					return (OpenmrsSerializer) clazz.newInstance();
 				}
-			}
-			catch (Exception e) {
-				log.info("Cannot create an instance of " + prop + " - using builtin SimpleXStreamSerializer.");
+			} catch (Exception e) {
+				log.info("Cannot create an instance of " + prop
+						+ " - using builtin SimpleXStreamSerializer.");
 			}
 		} else {
 			log.info("No default serializer specified - using builtin SimpleXStreamSerializer.");
 		}
 		return serializerMap.get(SimpleXStreamSerializer.class);
 	}
-	
+
 	/**
-	 * @see org.openmrs.api.SerializationService#serialize(java.lang.Object, java.lang.Class)
+	 * @see org.openmrs.api.SerializationService#serialize(java.lang.Object,
+	 *      java.lang.Class)
 	 */
-	public String serialize(Object o, Class<? extends OpenmrsSerializer> clazz) throws SerializationException {
-		
+	public String serialize(Object o, Class<? extends OpenmrsSerializer> clazz)
+			throws SerializationException {
+
 		// Get appropriate OpenmrsSerializer implementation
 		OpenmrsSerializer serializer = getSerializer(clazz);
 		if (serializer == null) {
-			throw new SerializationException("OpenmrsSerializer of class <" + clazz + "> not found.");
+			throw new SerializationException("OpenmrsSerializer of class <"
+					+ clazz + "> not found.");
 		}
-		
+
 		// Attempt to Serialize the object
 		try {
 			return serializer.serialize(o);
-		}
-		catch (Exception e) {
-			throw new SerializationException("An error occurred during serialization of object <" + o + ">", e);
+		} catch (Exception e) {
+			throw new SerializationException(
+					"An error occurred during serialization of object <" + o
+							+ ">", e);
 		}
 	}
-	
+
 	/**
-	 * @see org.openmrs.api.SerializationService#deserialize(java.lang.String, java.lang.Class,
-	 *      java.lang.Class)
+	 * @see org.openmrs.api.SerializationService#deserialize(java.lang.String,
+	 *      java.lang.Class, java.lang.Class)
 	 */
-	public <T extends Object> T deserialize(String serializedObject, Class<? extends T> objectClass,
-	        Class<? extends OpenmrsSerializer> serializerClass) throws SerializationException {
-		
+	public <T extends Object> T deserialize(String serializedObject,
+			Class<? extends T> objectClass,
+			Class<? extends OpenmrsSerializer> serializerClass)
+			throws SerializationException {
+
 		// Get appropriate OpenmrsSerializer implementation
 		OpenmrsSerializer serializer = getSerializer(serializerClass);
 		if (serializer == null) {
-			throw new APIException("serializer.not.found", new Object[] { serializerClass });
+			throw new APIException("serializer.not.found",
+					new Object[]{serializerClass});
 		}
-		
+
 		// Attempt to Deserialize the object
 		try {
 			return (T) serializer.deserialize(serializedObject, objectClass);
-		}
-		catch (Exception e) {
-			String msg = "An error occurred during deserialization of data <" + serializedObject + ">";
+		} catch (Exception e) {
+			String msg = "An error occurred during deserialization of data <"
+					+ serializedObject + ">";
 			throw new SerializationException(msg, e);
 		}
 	}
-	
-	//***** Property access *****
-	
+
+	// ***** Property access *****
+
 	/**
 	 * @return the serializers
 	 */
@@ -127,13 +138,15 @@ public class SerializationServiceImpl extends BaseOpenmrsService implements Seri
 		}
 		return new ArrayList<OpenmrsSerializer>(serializerMap.values());
 	}
-	
-	public static void setSerializerMap(Map<Class<? extends OpenmrsSerializer>, OpenmrsSerializer> serializerMap) {
+
+	public static void setSerializerMap(
+			Map<Class<? extends OpenmrsSerializer>, OpenmrsSerializer> serializerMap) {
 		SerializationServiceImpl.serializerMap = serializerMap;
 	}
-	
+
 	/**
-	 * @param serializers the serializers to set
+	 * @param serializers
+	 *            the serializers to set
 	 * @should not reset serializers list when called multiple times
 	 */
 	public void setSerializers(List<? extends OpenmrsSerializer> serializers) {

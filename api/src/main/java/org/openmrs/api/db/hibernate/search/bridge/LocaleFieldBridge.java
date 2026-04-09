@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -17,7 +17,7 @@ import org.hibernate.search.bridge.StringBridge;
  * Indexes locales as {@link Locale#toString()}.
  */
 public class LocaleFieldBridge implements StringBridge {
-	
+
 	/**
 	 * @see org.hibernate.search.bridge.StringBridge#objectToString(java.lang.Object)
 	 */

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -36,57 +36,60 @@ import com.carrotsearch.junitbenchmarks.annotation.BenchmarkHistoryChart;
 @SkipBaseSetup
 @BenchmarkHistoryChart
 public class ConceptServicePT extends BaseContextSensitiveTest {
-	
+
 	@Rule
 	public TestRule benchmarkRule = new BenchmarkRule();
-	
+
 	@Resource(name = "conceptService")
 	ConceptService conceptService;
-	
+
 	static boolean dictionaryLoaded = false;
-	
+
 	private static ConceptServicePT instance;
-	
+
 	@Before
 	public void loadDictionary() throws Exception {
 		if (!dictionaryLoaded) {
 			initializeInMemoryDatabase();
-			
+
 			executeLargeDataSet("org/openmrs/contrib/mvpconceptdictionary/dbunit.xml");
-			
+
 			getConnection().commit();
-			
+
 			updateSearchIndex();
-			
+
 			dictionaryLoaded = true;
-			
+
 			instance = this;
 		}
-		
+
 		authenticate();
 	}
-	
+
 	@Test
 	public void shouldTestGetConceptsByName() {
-		List<Concept> concepts = conceptService.getConceptsByName("hiv positive");
-		
+		List<Concept> concepts = conceptService
+				.getConceptsByName("hiv positive");
+
 		assertThat(concepts, containsInAnyOrder(hasId(138571), hasId(159804)));
 	}
-	
+
 	@Test
 	public void shouldTestGetConceptByName() {
 		Concept concept = conceptService.getConceptByName("hiv positive");
-		
+
 		assertThat(concept, hasId(138571));
 	}
-	
+
 	@Test
 	public void shouldReturnDiabetesMellitusFirstForDiabetesMellit() {
-		List<Concept> concepts = conceptService.getConceptsByName("diabetes mellit", null, false);
-		
-		assertThat(concepts.get(0).getName().getName(), equalToIgnoringCase("diabetes mellitus"));
+		List<Concept> concepts = conceptService.getConceptsByName(
+				"diabetes mellit", null, false);
+
+		assertThat(concepts.get(0).getName().getName(),
+				equalToIgnoringCase("diabetes mellitus"));
 	}
-	
+
 	@AfterClass
 	public static void unloadDictionary() throws Exception {
 		instance.deleteAllData();

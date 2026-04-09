@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -16,13 +16,14 @@ import org.openmrs.customdatatype.InvalidCustomValueException;
 import org.springframework.stereotype.Component;
 
 /**
- * Free-text datatype, represented by a plain String in Java, but stored in the 
+ * Free-text datatype, represented by a plain String in Java, but stored in the
  * database as a CLOB or similar.
+ * 
  * @since 1.9
  */
 @Component
 public class LongFreeTextDatatype implements CustomDatatype<String> {
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.CustomDatatype#setConfiguration(java.lang.String)
 	 */
@@ -30,66 +31,75 @@ public class LongFreeTextDatatype implements CustomDatatype<String> {
 	public void setConfiguration(String config) {
 		// no configuration options
 	}
-	
+
 	/**
-	 * @see org.openmrs.customdatatype.CustomDatatype#save(java.lang.Object, java.lang.String)
+	 * @see org.openmrs.customdatatype.CustomDatatype#save(java.lang.Object,
+	 *      java.lang.String)
 	 */
 	@Override
-	public String save(String typedValue, String existingValueReference) throws InvalidCustomValueException {
+	public String save(String typedValue, String existingValueReference)
+			throws InvalidCustomValueException {
 		// get existing object or create a new one
-		ClobDatatypeStorage storage = existingValueReference != null ? Context.getDatatypeService()
-		        .getClobDatatypeStorageByUuid(existingValueReference) : new ClobDatatypeStorage();
-		
+		ClobDatatypeStorage storage = existingValueReference != null ? Context
+				.getDatatypeService().getClobDatatypeStorageByUuid(
+						existingValueReference) : new ClobDatatypeStorage();
+
 		storage.setValue(typedValue);
 		storage = Context.getDatatypeService().saveClobDatatypeStorage(storage);
-		
+
 		return storage.getUuid();
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.CustomDatatype#getReferenceStringForValue(java.lang.Object)
 	 */
 	@Override
-	public String getReferenceStringForValue(String typedValue) throws UnsupportedOperationException {
-		// this doesn't make sense in this case, because there may be multiple 
+	public String getReferenceStringForValue(String typedValue)
+			throws UnsupportedOperationException {
+		// this doesn't make sense in this case, because there may be multiple
 		// stored clobs with the same value
 		throw new UnsupportedOperationException();
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.CustomDatatype#fromReferenceString(java.lang.String)
 	 */
 	@Override
-	public String fromReferenceString(String referenceString) throws InvalidCustomValueException {
-		return Context.getDatatypeService().getClobDatatypeStorageByUuid(referenceString).getValue();
+	public String fromReferenceString(String referenceString)
+			throws InvalidCustomValueException {
+		return Context.getDatatypeService()
+				.getClobDatatypeStorageByUuid(referenceString).getValue();
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.CustomDatatype#getTextSummary(java.lang.String)
 	 */
 	@Override
 	public CustomDatatype.Summary getTextSummary(String referenceString) {
 		/*
-		 * Use this code snippet instead if we think that fetching the clob is fast enough
+		 * Use this code snippet instead if we think that fetching the clob is
+		 * fast enough
 		 * 
-		ClobDatatypeStorage storage = Context.getDatatypeService().getClobDatatypeStorageByUuid(referenceString);
-		if (storage == null)
-			return Context.getMessageSourceService().getMessage("CustomDatatype.error.missingValue");
-		
-		// truncate the value to render a summary
-		String s = storage.getValue();
-		if (s.length() > 100)
-			return new CustomDatatype.Summary(s.substring(0, 100), false);
-		else
-			return new CustomDatatype.Summary(summary,  true);
-		*/
+		 * ClobDatatypeStorage storage =
+		 * Context.getDatatypeService().getClobDatatypeStorageByUuid
+		 * (referenceString); if (storage == null) return
+		 * Context.getMessageSourceService
+		 * ().getMessage("CustomDatatype.error.missingValue");
+		 * 
+		 * // truncate the value to render a summary String s =
+		 * storage.getValue(); if (s.length() > 100) return new
+		 * CustomDatatype.Summary(s.substring(0, 100), false); else return new
+		 * CustomDatatype.Summary(summary, true);
+		 */
 
-		String ret = Context.getMessageSourceService().getMessage(
-		    "org.openmrs.customdatatype.datatype.LongFreeTextDatatype.placeholderValue", new Object[] { referenceString },
-		    Context.getLocale());
+		String ret = Context
+				.getMessageSourceService()
+				.getMessage(
+						"org.openmrs.customdatatype.datatype.LongFreeTextDatatype.placeholderValue",
+						new Object[]{referenceString}, Context.getLocale());
 		return new CustomDatatype.Summary(ret, false);
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.CustomDatatype#validate(java.lang.Object)
 	 */
@@ -100,5 +110,5 @@ public class LongFreeTextDatatype implements CustomDatatype<String> {
 			throw new InvalidCustomValueException("Cannot be null");
 		}
 	}
-	
+
 }

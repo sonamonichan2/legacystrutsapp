@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,7 +19,7 @@ import org.springframework.validation.Errors;
  * Tests methods on the {@link ConceptDrugValidator} class.
  */
 public class ConceptDrugValidatorTest {
-	
+
 	/**
 	 * @see ConceptDrugValidator#validate(Object,Errors)
 	 * @verifies fail if a concept is not specified
@@ -31,7 +31,7 @@ public class ConceptDrugValidatorTest {
 		new ConceptDrugValidator().validate(drug, errors);
 		Assert.assertTrue(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see ConceptDrugValidator#supports(Class)
 	 * @verifies reject classes not extending Drug
@@ -40,7 +40,7 @@ public class ConceptDrugValidatorTest {
 	public void supports_shouldRejectClassesNotExtendingDrug() throws Exception {
 		Assert.assertFalse(new ConceptDrugValidator().supports(String.class));
 	}
-	
+
 	/**
 	 * @see ConceptDrugValidator#supports(Class)
 	 * @verifies support Drug class
@@ -49,5 +49,5 @@ public class ConceptDrugValidatorTest {
 	public void supports_shouldSupportDrug() throws Exception {
 		Assert.assertTrue(new ConceptDrugValidator().supports(Drug.class));
 	}
-	
+
 }

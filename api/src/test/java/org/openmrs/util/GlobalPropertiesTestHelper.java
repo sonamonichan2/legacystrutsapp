@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -14,29 +14,33 @@ import org.openmrs.GlobalProperty;
 import org.openmrs.api.AdministrationService;
 
 public class GlobalPropertiesTestHelper {
-	
+
 	private AdministrationService administrationService;
-	
-	public GlobalPropertiesTestHelper(AdministrationService administrationService) {
+
+	public GlobalPropertiesTestHelper(
+			AdministrationService administrationService) {
 		this.administrationService = administrationService;
 	}
-	
+
 	public String setGlobalProperty(String propertyName, String propertyValue) {
-		String oldPropertyValue = administrationService.getGlobalProperty(propertyName);
-		
+		String oldPropertyValue = administrationService
+				.getGlobalProperty(propertyName);
+
 		administrationService.setGlobalProperty(propertyName, propertyValue);
-		Assert.assertEquals(propertyValue, administrationService.getGlobalProperty(propertyName));
-		
+		Assert.assertEquals(propertyValue,
+				administrationService.getGlobalProperty(propertyName));
+
 		return oldPropertyValue;
 	}
-	
+
 	public void purgeGlobalProperty(String propertyName) {
-		GlobalProperty globalProperty = administrationService.getGlobalPropertyObject(propertyName);
-		
+		GlobalProperty globalProperty = administrationService
+				.getGlobalPropertyObject(propertyName);
+
 		if (globalProperty != null) {
 			administrationService.purgeGlobalProperty(globalProperty);
 		}
 		Assert.assertNull(administrationService.getGlobalProperty(propertyName));
 	}
-	
+
 }

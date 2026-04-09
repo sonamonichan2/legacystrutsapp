@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,23 +19,23 @@ import java.net.URL;
  * so that you can mock http calls as the URL class cannot be mocked.
  */
 public class HttpUrl {
-	
+
 	private final URL url;
-	
+
 	public HttpUrl(String url) throws MalformedURLException {
 		if (url == null) {
 			throw new MalformedURLException("Url cannot be null");
 		} else if (!url.startsWith("http://")) {
 			throw new MalformedURLException("Not a valid http url");
 		}
-		
+
 		this.url = new URL(url);
 	}
-	
+
 	public HttpURLConnection openConnection() throws IOException {
 		return (HttpURLConnection) url.openConnection();
 	}
-	
+
 	@Override
 	public String toString() {
 		return url.toString();

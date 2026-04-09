@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -24,123 +24,140 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
 public class SimpleDosingInstructionsTest extends BaseContextSensitiveTest {
-	
+
 	@Test
 	public void validate_shouldFailValidationIfAutoExpireDateIsNotSetAndDurationUnitsIsNotMappedToSNOMEDCTDuration()
-	        throws Exception {
+			throws Exception {
 		DrugOrder drugOrder = createValidDrugOrder();
 		drugOrder.setDuration(30);
 		Concept unMappedDurationUnits = new Concept();
 		drugOrder.setDurationUnits(unMappedDurationUnits);
 		drugOrder.setAutoExpireDate(null);
 		Errors errors = new BindException(drugOrder, "drugOrder");
-		
+
 		new SimpleDosingInstructions().validate(drugOrder, errors);
-		
+
 		Assert.assertTrue(errors.hasFieldErrors("durationUnits"));
-		Assert.assertEquals("DrugOrder.error.durationUnitsNotMappedToSnomedCtDurationCode", errors.getFieldError(
-		    "durationUnits").getCode());
+		Assert.assertEquals(
+				"DrugOrder.error.durationUnitsNotMappedToSnomedCtDurationCode",
+				errors.getFieldError("durationUnits").getCode());
 	}
-	
+
 	@Test
 	public void validate_shouldPassValidationIfAutoExpireDateIsSetAndDurationUnitsIsNotMappedToSNOMEDCTDuration()
-	        throws Exception {
+			throws Exception {
 		DrugOrder drugOrder = createValidDrugOrder();
 		drugOrder.setDuration(30);
 		Concept unMappedDurationUnits = new Concept();
 		drugOrder.setDurationUnits(unMappedDurationUnits);
 		drugOrder.setAutoExpireDate(createDateTime("2014-07-01 10:00:00"));
 		Errors errors = new BindException(drugOrder, "drugOrder");
-		
+
 		new SimpleDosingInstructions().validate(drugOrder, errors);
-		
+
 		Assert.assertFalse(errors.hasErrors());
 	}
-	
+
 	@Test
-	public void validate_shouldPassValidationIfAutoExpireDateAndDurationUnitsAreNotSet() throws Exception {
+	public void validate_shouldPassValidationIfAutoExpireDateAndDurationUnitsAreNotSet()
+			throws Exception {
 		DrugOrder drugOrder = createValidDrugOrder();
 		drugOrder.setDurationUnits(null);
 		drugOrder.setAutoExpireDate(null);
 		Errors errors = new BindException(drugOrder, "drugOrder");
-		
+
 		new SimpleDosingInstructions().validate(drugOrder, errors);
-		
+
 		Assert.assertFalse(errors.hasErrors());
 	}
-	
+
 	@Test
-	public void getAutoExpireDate_shouldInferAutoExpireDateForAKnownSNOMEDCTDurationUnit() throws Exception {
+	public void getAutoExpireDate_shouldInferAutoExpireDateForAKnownSNOMEDCTDurationUnit()
+			throws Exception {
 		DrugOrder drugOrder = new DrugOrder();
 		drugOrder.setDateActivated(createDateTime("2014-07-01 10:00:00"));
 		drugOrder.setDuration(30);
-		drugOrder.setDurationUnits(createUnits(Duration.SNOMED_CT_SECONDS_CODE));
-		Date autoExpireDate = new SimpleDosingInstructions().getAutoExpireDate(drugOrder);
+		drugOrder
+				.setDurationUnits(createUnits(Duration.SNOMED_CT_SECONDS_CODE));
+		Date autoExpireDate = new SimpleDosingInstructions()
+				.getAutoExpireDate(drugOrder);
 		assertEquals(createDateTime("2014-07-01 10:00:29"), autoExpireDate);
 	}
-	
+
 	@Test
-	public void getAutoExpireDate_shouldInferAutoExpireDateForScheduledDrugOrder() throws Exception {
+	public void getAutoExpireDate_shouldInferAutoExpireDateForScheduledDrugOrder()
+			throws Exception {
 		DrugOrder drugOrder = new DrugOrder();
 		drugOrder.setDateActivated(createDateTime("2014-07-01 00:00:00"));
 		drugOrder.setScheduledDate(createDateTime("2014-07-05 00:00:00"));
 		drugOrder.setUrgency(Order.Urgency.ON_SCHEDULED_DATE);
 		drugOrder.setDuration(10);
 		drugOrder.setDurationUnits(createUnits(Duration.SNOMED_CT_DAYS_CODE));
-		Date autoExpireDate = new SimpleDosingInstructions().getAutoExpireDate(drugOrder);
+		Date autoExpireDate = new SimpleDosingInstructions()
+				.getAutoExpireDate(drugOrder);
 		assertEquals(createDateTime("2014-07-14 23:59:59"), autoExpireDate);
 	}
-	
+
 	@Test
-	public void getAutoExpireDate_shouldNotInferAutoExpireDateWhenDrugOrderHasOneOrMoreRefill() throws Exception {
+	public void getAutoExpireDate_shouldNotInferAutoExpireDateWhenDrugOrderHasOneOrMoreRefill()
+			throws Exception {
 		DrugOrder drugOrder = new DrugOrder();
 		drugOrder.setDateActivated(createDateTime("2014-07-01 10:00:00"));
 		drugOrder.setDuration(30);
-		drugOrder.setDurationUnits(createUnits(Duration.SNOMED_CT_SECONDS_CODE));
+		drugOrder
+				.setDurationUnits(createUnits(Duration.SNOMED_CT_SECONDS_CODE));
 		drugOrder.setNumRefills(1);
-		
-		Date autoExpireDate = new SimpleDosingInstructions().getAutoExpireDate(drugOrder);
-		
+
+		Date autoExpireDate = new SimpleDosingInstructions()
+				.getAutoExpireDate(drugOrder);
+
 		assertEquals(null, autoExpireDate);
 	}
-	
+
 	@Test
-	public void getAutoExpireDate_shouldNotInferAutoExpireDateWhenDurationDoesNotExist() throws Exception {
+	public void getAutoExpireDate_shouldNotInferAutoExpireDateWhenDurationDoesNotExist()
+			throws Exception {
 		DrugOrder drugOrder = new DrugOrder();
 		drugOrder.setDateActivated(createDateTime("2014-07-01 10:00:00"));
-		drugOrder.setDurationUnits(createUnits(Duration.SNOMED_CT_SECONDS_CODE));
+		drugOrder
+				.setDurationUnits(createUnits(Duration.SNOMED_CT_SECONDS_CODE));
 		drugOrder.setDuration(null);
-		
-		Date autoExpireDate = new SimpleDosingInstructions().getAutoExpireDate(drugOrder);
-		
+
+		Date autoExpireDate = new SimpleDosingInstructions()
+				.getAutoExpireDate(drugOrder);
+
 		assertEquals(null, autoExpireDate);
 	}
-	
+
 	@Test
-	public void getAutoExpireDate_shouldNotInferAutoExpireDateWhenDurationUnitsDoesNotExist() throws Exception {
+	public void getAutoExpireDate_shouldNotInferAutoExpireDateWhenDurationUnitsDoesNotExist()
+			throws Exception {
 		DrugOrder drugOrder = new DrugOrder();
 		drugOrder.setDateActivated(createDateTime("2014-07-01 10:00:00"));
 		drugOrder.setDuration(1);
 		drugOrder.setDurationUnits(null);
-		
-		Date autoExpireDate = new SimpleDosingInstructions().getAutoExpireDate(drugOrder);
-		
+
+		Date autoExpireDate = new SimpleDosingInstructions()
+				.getAutoExpireDate(drugOrder);
+
 		assertEquals(null, autoExpireDate);
 	}
-	
+
 	@Test
 	public void getAutoExpireDate_shouldNotInferAutoExpireDateWhenConceptMappingOfSourceSNOMEDCTDurationDoesNotExist()
-	        throws Exception {
+			throws Exception {
 		DrugOrder drugOrder = new DrugOrder();
 		drugOrder.setDateActivated(createDateTime("2014-07-01 10:00:00"));
 		drugOrder.setDuration(30);
-		drugOrder.setDurationUnits(createUnits("Other.Source", Duration.SNOMED_CT_HOURS_CODE, null));
-		
-		Date autoExpireDate = new SimpleDosingInstructions().getAutoExpireDate(drugOrder);
-		
+		drugOrder.setDurationUnits(createUnits("Other.Source",
+				Duration.SNOMED_CT_HOURS_CODE, null));
+
+		Date autoExpireDate = new SimpleDosingInstructions()
+				.getAutoExpireDate(drugOrder);
+
 		assertEquals(null, autoExpireDate);
 	}
-	
+
 	private DrugOrder createValidDrugOrder() {
 		DrugOrder drugOrder = new DrugOrder();
 		drugOrder.setDose(10.0);
@@ -151,7 +168,7 @@ public class SimpleDosingInstructionsTest extends BaseContextSensitiveTest {
 		drugOrder.setFrequency(frequency);
 		return drugOrder;
 	}
-	
+
 	private Concept createConceptWithName(String name) {
 		Concept concept = new Concept(new Random().nextInt());
 		ConceptName conceptName = new ConceptName();
@@ -161,18 +178,21 @@ public class SimpleDosingInstructionsTest extends BaseContextSensitiveTest {
 		concept.addName(conceptName);
 		return concept;
 	}
-	
+
 	public static Concept createUnits(String code) {
-		return createUnits(Duration.SNOMED_CT_CONCEPT_SOURCE_HL7_CODE, code, null);
+		return createUnits(Duration.SNOMED_CT_CONCEPT_SOURCE_HL7_CODE, code,
+				null);
 	}
-	
-	public static Concept createUnits(String source, String code, String mapTypeUuid) {
+
+	public static Concept createUnits(String source, String code,
+			String mapTypeUuid) {
 		Concept doseUnits = new Concept();
 		doseUnits.addConceptMapping(getConceptMap(source, code, mapTypeUuid));
 		return doseUnits;
 	}
-	
-	private static ConceptMap getConceptMap(String sourceHl7Code, String code, String mapTypeUuid) {
+
+	private static ConceptMap getConceptMap(String sourceHl7Code, String code,
+			String mapTypeUuid) {
 		ConceptMap conceptMap = new ConceptMap();
 		ConceptReferenceTerm conceptReferenceTerm = new ConceptReferenceTerm();
 		ConceptSource conceptSource = new ConceptSource();
@@ -189,21 +209,24 @@ public class SimpleDosingInstructionsTest extends BaseContextSensitiveTest {
 		conceptMap.setConceptMapType(conceptMapType);
 		return conceptMap;
 	}
-	
+
 	/**
 	 * @verifies reject a duration unit with a mapping of an invalid type
-	 * @see SimpleDosingInstructions#validate(DrugOrder, org.springframework.validation.Errors)
+	 * @see SimpleDosingInstructions#validate(DrugOrder,
+	 *      org.springframework.validation.Errors)
 	 */
 	@Test
-	public void validate_shouldRejectADurationUnitWithAMappingOfAnInvalidType() throws Exception {
+	public void validate_shouldRejectADurationUnitWithAMappingOfAnInvalidType()
+			throws Exception {
 		DrugOrder drugOrder = createValidDrugOrder();
 		drugOrder.setDuration(30);
-		Concept durationUnitWithInvalidMapType = createUnits("SCT", Duration.SNOMED_CT_DAYS_CODE, "Some-uuid");
+		Concept durationUnitWithInvalidMapType = createUnits("SCT",
+				Duration.SNOMED_CT_DAYS_CODE, "Some-uuid");
 		drugOrder.setDurationUnits(durationUnitWithInvalidMapType);
 		Errors errors = new BindException(drugOrder, "drugOrder");
-		
+
 		new SimpleDosingInstructions().validate(drugOrder, errors);
-		
+
 		assertEquals(true, errors.hasErrors());
 	}
 }

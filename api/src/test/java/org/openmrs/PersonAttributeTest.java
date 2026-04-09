@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,7 +19,7 @@ import org.openmrs.test.Verifies;
  * Tests methods on the PersonAttribute class
  */
 public class PersonAttributeTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see PersonAttribute#toString()
 	 */
@@ -27,82 +27,92 @@ public class PersonAttributeTest extends BaseContextSensitiveTest {
 	@Verifies(value = "should return toString of hydrated value", method = "toString()")
 	public void toString_shouldReturnToStringOfHydratedValue() throws Exception {
 		// type = CIVIL STATUS, concept = MARRIED
-		PersonAttributeType type = Context.getPersonService().getPersonAttributeType(8);
+		PersonAttributeType type = Context.getPersonService()
+				.getPersonAttributeType(8);
 		PersonAttribute attr = new PersonAttribute(type, "6");
 		Assert.assertEquals("MARRIED", attr.toString());
 	}
-	
+
 	/**
 	 * @see PersonAttribute#equalsContent(PersonAttribute)
 	 */
 	@Test
 	@Verifies(value = "should return true if attributeType value and void status are the same", method = "equalsContent(PersonAttribute)")
-	public void equalsContent_shouldReturnTrueIfAttributeTypeValueAndVoidStatusAreTheSame() throws Exception {
-		PersonAttribute pa = new PersonAttribute(2); // a different personAttributeid than below
+	public void equalsContent_shouldReturnTrueIfAttributeTypeValueAndVoidStatusAreTheSame()
+			throws Exception {
+		PersonAttribute pa = new PersonAttribute(2); // a different
+														// personAttributeid
+														// than below
 		pa.setAttributeType(new PersonAttributeType(1));
 		pa.setValue("1");
 		pa.setVoided(false);
-		PersonAttribute other = new PersonAttribute(1); // a different personAttributeid than above
+		PersonAttribute other = new PersonAttribute(1); // a different
+														// personAttributeid
+														// than above
 		pa.setAttributeType(new PersonAttributeType(1));
 		pa.setValue("1");
 		pa.setVoided(false);
-		
+
 		Assert.assertTrue(pa.equalsContent(other));
 	}
-	
+
 	/**
 	 * @see PersonAttribute#getHydratedObject()
 	 */
 	@Test
 	@Verifies(value = "should load class in format property", method = "getHydratedObject()")
-	public void getHydratedObject_shouldLoadClassInFormatProperty() throws Exception {
+	public void getHydratedObject_shouldLoadClassInFormatProperty()
+			throws Exception {
 		PersonAttributeType type = new PersonAttributeType();
 		type.setFormat("org.openmrs.Concept");
-		
+
 		PersonAttribute pa = new PersonAttribute(2);
 		pa.setAttributeType(type);
 		pa.setValue("5089");
-		
+
 		Concept concept = (Concept) pa.getHydratedObject();
 		Assert.assertEquals(5089, concept.getConceptId().intValue());
 	}
-	
+
 	/**
 	 * @see PersonAttribute#getHydratedObject()
 	 */
 	@Test
 	@Verifies(value = "should load user class in format property", method = "getHydratedObject()")
-	public void getHydratedObject_shouldLoadUserClassInFormatProperty() throws Exception {
+	public void getHydratedObject_shouldLoadUserClassInFormatProperty()
+			throws Exception {
 		PersonAttributeType type = new PersonAttributeType();
 		type.setFormat("org.openmrs.User");
-		
+
 		PersonAttribute pa = new PersonAttribute(2);
-		
+
 		pa.setAttributeType(type);
 		pa.setValue("1");
-		
+
 		Object value = pa.getHydratedObject();
-		Assert.assertTrue("should load user class in format property", (value instanceof User));
+		Assert.assertTrue("should load user class in format property",
+				(value instanceof User));
 	}
-	
+
 	/**
 	 * @see PersonAttribute#getHydratedObject()
 	 */
 	@Test
 	@Verifies(value = "should still load class in format property if not Attributable", method = "getHydratedObject()")
-	public void getHydratedObject_shouldStillLoadClassInFormatPropertyIfNotAttributable() throws Exception {
+	public void getHydratedObject_shouldStillLoadClassInFormatPropertyIfNotAttributable()
+			throws Exception {
 		PersonAttributeType type = new PersonAttributeType();
 		type.setFormat("java.lang.String");
-		
+
 		PersonAttribute pa = new PersonAttribute(2);
-		
+
 		pa.setAttributeType(type);
 		pa.setValue("lalapalooza");
-		
+
 		String value = (String) pa.getHydratedObject();
 		Assert.assertEquals("lalapalooza", value);
 	}
-	
+
 	/**
 	 * @see PersonAttribute#voidAttribute(String)
 	 */
@@ -114,5 +124,5 @@ public class PersonAttributeTest extends BaseContextSensitiveTest {
 		pa.voidAttribute("Because");
 		Assert.assertTrue(pa.isVoided());
 	}
-	
+
 }

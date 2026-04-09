@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -18,37 +18,47 @@ import org.springframework.validation.ValidationUtils;
 
 /**
  * Validates attributes on the {@link ConceptAttributeType} object.
- *
+ * 
  * @since 2.0
  */
 @Handler(supports = {ConceptAttributeType.class}, order = 50)
-public class ConceptAttributeTypeValidator extends BaseAttributeTypeValidator<ConceptAttributeType> {
+public class ConceptAttributeTypeValidator
+		extends
+			BaseAttributeTypeValidator<ConceptAttributeType> {
 
-    /**
-     * Determines if the command object being submitted is a valid type
-     *
-     * @see org.springframework.validation.Validator#supports(Class)
-     * @should pass validation if field lengths are correct
-     * @should fail validation if field lengths are not correct
-     */
-    public boolean supports(Class<?> c) {
-        return ConceptAttributeType.class.isAssignableFrom(c);
-    }
+	/**
+	 * Determines if the command object being submitted is a valid type
+	 * 
+	 * @see org.springframework.validation.Validator#supports(Class)
+	 * @should pass validation if field lengths are correct
+	 * @should fail validation if field lengths are not correct
+	 */
+	public boolean supports(Class<?> c) {
+		return ConceptAttributeType.class.isAssignableFrom(c);
+	}
 
-    public void validate(Object obj, Errors errors) {
-        super.validate(obj, errors);
-        ConceptAttributeType conceptAttributeType = (ConceptAttributeType) obj;
-        ConceptService conceptService = Context.getConceptService();
-        if (conceptAttributeType.getName() != null && !conceptAttributeType.getName().isEmpty()) {
-            ConceptAttributeType attributeType = conceptService.getConceptAttributeTypeByName(conceptAttributeType.getName());
-            if (attributeType != null && !attributeType.getUuid().equals(conceptAttributeType.getUuid())) {
-                errors.rejectValue("name", "ConceptAttributeType.error.nameAlreadyInUse");
-            }
-        } else {
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "ConceptAttributeType.error.nameEmpty");
-        }
+	public void validate(Object obj, Errors errors) {
+		super.validate(obj, errors);
+		ConceptAttributeType conceptAttributeType = (ConceptAttributeType) obj;
+		ConceptService conceptService = Context.getConceptService();
+		if (conceptAttributeType.getName() != null
+				&& !conceptAttributeType.getName().isEmpty()) {
+			ConceptAttributeType attributeType = conceptService
+					.getConceptAttributeTypeByName(conceptAttributeType
+							.getName());
+			if (attributeType != null
+					&& !attributeType.getUuid().equals(
+							conceptAttributeType.getUuid())) {
+				errors.rejectValue("name",
+						"ConceptAttributeType.error.nameAlreadyInUse");
+			}
+		} else {
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name",
+					"ConceptAttributeType.error.nameEmpty");
+		}
 
-        ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "description", "datatypeClassname",
-                "preferredHandlerClassname", "retireReason");
-    }
+		ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name",
+				"description", "datatypeClassname",
+				"preferredHandlerClassname", "retireReason");
+	}
 }

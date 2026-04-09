@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -30,9 +30,10 @@ import java.sql.Statement;
  * This change set is run to encrypt the users.secret_answer column
  */
 public class EncryptSecretAnswersChangeSet implements CustomTaskChange {
-	
-	private final static Log log = LogFactory.getLog(EncryptSecretAnswersChangeSet.class);
-	
+
+	private final static Log log = LogFactory
+			.getLog(EncryptSecretAnswersChangeSet.class);
+
 	/**
 	 * @see CustomTaskChange#execute(Database)
 	 */
@@ -41,50 +42,49 @@ public class EncryptSecretAnswersChangeSet implements CustomTaskChange {
 		JdbcConnection connection = (JdbcConnection) database.getConnection();
 		Statement stmt = null;
 		PreparedStatement pStmt = null;
-		
+
 		try {
 			stmt = connection.createStatement();
 			ResultSet rs = stmt
-			        .executeQuery("SELECT user_id, salt, secret_answer FROM users WHERE secret_answer IS NOT NULL");
-			pStmt = connection.prepareStatement("UPDATE users SET secret_answer = ? WHERE user_id = ?");
+					.executeQuery("SELECT user_id, salt, secret_answer FROM users WHERE secret_answer IS NOT NULL");
+			pStmt = connection
+					.prepareStatement("UPDATE users SET secret_answer = ? WHERE user_id = ?");
 			while (rs.next()) {
 				String answer = rs.getString("secret_answer");
 				String salt = rs.getString("salt");
-				String encryptedAnswer = Security.encodeString(answer.toLowerCase() + salt);
-				
+				String encryptedAnswer = Security.encodeString(answer
+						.toLowerCase() + salt);
+
 				pStmt.setString(1, encryptedAnswer);
 				pStmt.setInt(2, rs.getInt("user_id"));
 				pStmt.addBatch();
 			}
 			pStmt.executeBatch();
-		}
-		catch (DatabaseException e) {
-			throw new CustomChangeException("Failed to update secret answers: " + e);
-		}
-		catch (SQLException e) {
-			throw new CustomChangeException("Failed to update secret answers: " + e);
-		}
-		finally {
+		} catch (DatabaseException e) {
+			throw new CustomChangeException("Failed to update secret answers: "
+					+ e);
+		} catch (SQLException e) {
+			throw new CustomChangeException("Failed to update secret answers: "
+					+ e);
+		} finally {
 			if (stmt != null) {
 				try {
 					stmt.close();
-				}
-				catch (SQLException e) {
+				} catch (SQLException e) {
 					log.warn("Failed to close the statement object");
 				}
 			}
-			
+
 			if (pStmt != null) {
 				try {
 					pStmt.close();
-				}
-				catch (SQLException e) {
+				} catch (SQLException e) {
 					log.warn("Failed to close the prepared statement object");
 				}
 			}
 		}
 	}
-	
+
 	/**
 	 * @see liquibase.change.custom.CustomChange#getConfirmationMessage()
 	 */
@@ -92,21 +92,21 @@ public class EncryptSecretAnswersChangeSet implements CustomTaskChange {
 	public String getConfirmationMessage() {
 		return "Finished encrypting secret answers";
 	}
-	
+
 	/**
 	 * @see liquibase.change.custom.CustomChange#setUp()
 	 */
 	@Override
 	public void setUp() throws SetupException {
 	}
-	
+
 	/**
 	 * @see liquibase.change.custom.CustomChange#setFileOpener(liquibase.resource.ResourceAccessor)
 	 */
 	@Override
 	public void setFileOpener(ResourceAccessor resourceAccessor) {
 	}
-	
+
 	/**
 	 * @see liquibase.change.custom.CustomChange#validate(liquibase.database.Database)
 	 */

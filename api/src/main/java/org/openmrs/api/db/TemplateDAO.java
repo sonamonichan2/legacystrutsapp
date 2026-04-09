@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,32 +19,34 @@ import org.openmrs.notification.Template;
  * @version 1.0
  */
 public interface TemplateDAO {
-	
+
 	/**
 	 * Get all message templates
 	 * 
 	 * @throws DAOException
 	 */
 	public List<Template> getTemplates() throws DAOException;
-	
+
 	/**
 	 * Get message template by id
 	 * 
-	 * @param id internal message template identifier
+	 * @param id
+	 *            internal message template identifier
 	 * @return message template with given internal identifier
 	 * @throws DAOException
 	 */
 	public Template getTemplate(Integer id) throws DAOException;
-	
+
 	/**
 	 * Get message template by name
 	 * 
-	 * @param name message template name
+	 * @param name
+	 *            message template name
 	 * @return message template with given name
 	 * @throws DAOException
 	 */
 	public List<Template> getTemplatesByName(String name) throws DAOException;
-	
+
 	/**
 	 * Create new template.
 	 * 
@@ -52,7 +54,7 @@ public interface TemplateDAO {
 	 * @throws DAOException
 	 */
 	public void createTemplate(Template template) throws DAOException;
-	
+
 	/**
 	 * Update existing template.
 	 * 
@@ -60,7 +62,7 @@ public interface TemplateDAO {
 	 * @throws DAOException
 	 */
 	public void updateTemplate(Template template) throws DAOException;
-	
+
 	/**
 	 * Delete existing template.
 	 * 
@@ -68,5 +70,5 @@ public interface TemplateDAO {
 	 * @throws DAOException
 	 */
 	public void deleteTemplate(Template template) throws DAOException;
-	
+
 }

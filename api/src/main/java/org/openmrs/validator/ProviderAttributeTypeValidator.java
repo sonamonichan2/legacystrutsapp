@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -15,15 +15,17 @@ import org.springframework.validation.Errors;
 
 /**
  * Validates attributes on the {@link ProviderAttributeType} object.
- *
+ * 
  * @since 1.9
  */
-@Handler(supports = { ProviderAttributeType.class }, order = 50)
-public class ProviderAttributeTypeValidator extends BaseAttributeTypeValidator<ProviderAttributeType> {
-	
+@Handler(supports = {ProviderAttributeType.class}, order = 50)
+public class ProviderAttributeTypeValidator
+		extends
+			BaseAttributeTypeValidator<ProviderAttributeType> {
+
 	/**
 	 * Determines if the command object being submitted is a valid type
-	 *
+	 * 
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 * @should pass validation if field lengths are correct
 	 * @should fail validation if field lengths are not correct
@@ -31,12 +33,13 @@ public class ProviderAttributeTypeValidator extends BaseAttributeTypeValidator<P
 	public boolean supports(Class<?> c) {
 		return ProviderAttributeType.class.isAssignableFrom(c);
 	}
-	
+
 	public void validate(Object obj, Errors errors) {
 		if (obj != null) {
 			super.validate(obj, errors);
-			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "description", "datatypeClassname",
-			    "preferredHandlerClassname", "retireReason");
+			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name",
+					"description", "datatypeClassname",
+					"preferredHandlerClassname", "retireReason");
 		}
 	}
 }

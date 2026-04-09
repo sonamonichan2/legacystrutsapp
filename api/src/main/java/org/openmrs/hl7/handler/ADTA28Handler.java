@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -93,134 +93,143 @@ import ca.uhn.hl7v2.model.v25.segment.PID;
  *  NOTE:  The ones with (*) could be useful in the near future.
  */
 public class ADTA28Handler implements Application {
-	
+
 	private Log log = LogFactory.getLog(ADTA28Handler.class);
-	
+
 	/**
-	 * Always returns true, assuming that the router calling this handler will only call this
-	 * handler with ADT_A28 messages.
-	 *
+	 * Always returns true, assuming that the router calling this handler will
+	 * only call this handler with ADT_A28 messages.
+	 * 
 	 * @return true
 	 */
 	public boolean canProcess(Message message) {
 		return message != null && "ADT_A28".equals(message.getName());
 	}
-	
+
 	/**
 	 * Processes an ADT A28 event message
 	 */
 	public Message processMessage(Message message) throws ApplicationException {
-		
+
 		log.debug("Processing ADT_A28 message");
-		
+
 		if (!(message instanceof ADT_A05)) {
-			throw new ApplicationException("Invalid message sent to ADT_A28 handler");
+			throw new ApplicationException(
+					"Invalid message sent to ADT_A28 handler");
 		}
-		
+
 		Message response;
 		try {
 			ADT_A05 adt = (ADT_A05) message;
 			response = processADT_A28(adt);
-		}
-		catch (ClassCastException e) {
-			log.error("Error casting " + message.getClass().getName() + " to ADT_A28", e);
+		} catch (ClassCastException e) {
+			log.error("Error casting " + message.getClass().getName()
+					+ " to ADT_A28", e);
 			throw new ApplicationException("Invalid message type for handler");
-		}
-		catch (HL7Exception e) {
+		} catch (HL7Exception e) {
 			log.error("Error while processing ADT_A28 message", e);
 			throw new ApplicationException(e);
 		}
-		
+
 		log.debug("Finished processing ADT_A28 message");
-		
+
 		return response;
 	}
-	
+
 	private Message processADT_A28(ADT_A05 adt) throws HL7Exception {
-		
+
 		// validate HL7 version
 		validate(adt);
-		
+
 		// extract segments for convenient use below
 		MSH msh = getMSH(adt);
 		PID pid = getPID(adt);
-		
+
 		// Obtain message control id (unique ID for message from sending
 		// application). Eventually avoid replaying the same message.
 		String messageControlId = msh.getMessageControlID().getValue();
-		log.debug("Found HL7 message in inbound queue with control id = " + messageControlId);
-		
+		log.debug("Found HL7 message in inbound queue with control id = "
+				+ messageControlId);
+
 		// Add creator of the patient to application
-		String sendingApp = msh.getSendingApplication().getComponent(0).toString();
+		String sendingApp = msh.getSendingApplication().getComponent(0)
+				.toString();
 		log.debug("SendingApplication = " + sendingApp);
-		
-		// Search for the patient  
+
+		// Search for the patient
 		Integer patientId = findPatientId(pid);
-		
+
 		// Create new patient if the patient id doesn't exist yet
 		if (patientId == null) {
-			log.info("Creating new patient in response to ADT_A28 " + messageControlId);
+			log.info("Creating new patient in response to ADT_A28 "
+					+ messageControlId);
 			Patient patient = createPatient(pid, sendingApp);
 			if (patient == null) {
-				throw new HL7Exception("Couldn't create Patient object from PID");
+				throw new HL7Exception(
+						"Couldn't create Patient object from PID");
 			}
 			Context.getPatientService().savePatient(patient);
-			
+
 		} else {
 			// TODO: Add a global property that enables different behavior here.
-			log.info("Ignoring ADT_A28 message because patient (" + patientId + ") already exists.");
+			log.info("Ignoring ADT_A28 message because patient (" + patientId
+					+ ") already exists.");
 		}
-		
+
 		// Assumption: all observations (OBX) messages will be in the R01
-		
+
 		return adt;
 	}
-	
+
 	// Look for patient using the patient id
 	private Integer findPatientId(PID pid) throws HL7Exception {
-		
+
 		Integer patientId = Context.getHL7Service().resolvePatientId(pid);
-		
+
 		if (patientId == null) {
 			return null;
 		} else {
 			return patientId;
 		}
 	}
-	
+
 	// Create a new patient when this patient doesn't exist in the database
-	private Patient createPatient(PID pid, String creatorName) throws HL7Exception {
-		
+	private Patient createPatient(PID pid, String creatorName)
+			throws HL7Exception {
+
 		Patient patient = new Patient();
-		
+
 		// Try to use the specified username as the creator
 		User creator = Context.getUserService().getUserByUsername(creatorName);
 		if (creator != null) {
 			patient.setCreator(creator);
 		}
-		
+
 		// Create all patient identifiers specified in the message
 		// Copied code from resolvePatientId() in HL7ServiceImpl.java
 		CX[] idList = pid.getPatientIdentifierList();
 		if (idList == null || idList.length < 1) {
 			throw new HL7Exception("Missing patient identifier in PID segment");
 		}
-		
+
 		List<PatientIdentifier> goodIdentifiers = new ArrayList<PatientIdentifier>();
 		for (CX id : idList) {
-			
-			String assigningAuthority = id.getAssigningAuthority().getNamespaceID().getValue();
+
+			String assigningAuthority = id.getAssigningAuthority()
+					.getNamespaceID().getValue();
 			String hl7PatientId = id.getIDNumber().getValue();
-			
-			log.debug("identifier has id=" + hl7PatientId + " assigningAuthority=" + assigningAuthority);
-			
+
+			log.debug("identifier has id=" + hl7PatientId
+					+ " assigningAuthority=" + assigningAuthority);
+
 			if (assigningAuthority != null && assigningAuthority.length() > 0) {
-				
+
 				try {
-					PatientIdentifierType pit = Context.getPatientService().getPatientIdentifierTypeByName(
-					    assigningAuthority);
+					PatientIdentifierType pit = Context.getPatientService()
+							.getPatientIdentifierTypeByName(assigningAuthority);
 					if (pit == null) {
-						log.warn("Can't find PatientIdentifierType named '" + assigningAuthority + "'");
+						log.warn("Can't find PatientIdentifierType named '"
+								+ assigningAuthority + "'");
 						continue; // skip identifiers with unknown type
 					}
 					PatientIdentifier pi = new PatientIdentifier();
@@ -229,26 +238,29 @@ public class ADTA28Handler implements Application {
 					}
 					pi.setIdentifierType(pit);
 					pi.setIdentifier(hl7PatientId);
-					
+
 					// Get default location
-					Location location = Context.getLocationService().getDefaultLocation();
+					Location location = Context.getLocationService()
+							.getDefaultLocation();
 					if (location == null) {
 						throw new HL7Exception("Cannot find default location");
 					}
 					pi.setLocation(location);
-					
+
 					try {
 						PatientIdentifierValidator.validateIdentifier(pi);
 						goodIdentifiers.add(pi);
+					} catch (PatientIdentifierException ex) {
+						log.warn("Patient identifier in PID is invalid: " + pi,
+								ex);
 					}
-					catch (PatientIdentifierException ex) {
-						log.warn("Patient identifier in PID is invalid: " + pi, ex);
-					}
-					
-				}
-				catch (Exception e) {
-					log.error("Uncaught error parsing/creating patient identifier '" + hl7PatientId
-					        + "' for assigning authority '" + assigningAuthority + "'", e);
+
+				} catch (Exception e) {
+					log.error(
+							"Uncaught error parsing/creating patient identifier '"
+									+ hl7PatientId
+									+ "' for assigning authority '"
+									+ assigningAuthority + "'", e);
 				}
 			} else {
 				log.error("PID contains identifier with no assigning authority");
@@ -256,26 +268,28 @@ public class ADTA28Handler implements Application {
 			}
 		}
 		if (goodIdentifiers.size() == 0) {
-			throw new HL7Exception("PID segment has no recognizable patient identifiers.");
+			throw new HL7Exception(
+					"PID segment has no recognizable patient identifiers.");
 		}
 		patient.addIdentifiers(goodIdentifiers);
-		
+
 		// Extract patient name from the message
 		XPN patientNameX = pid.getPatientName(0);
 		if (patientNameX == null) {
 			throw new HL7Exception("Missing patient name in the PID segment");
 		}
-		
+
 		// Patient name
 		PersonName name = new PersonName();
 		name.setFamilyName(patientNameX.getFamilyName().getSurname().getValue());
 		name.setGivenName(patientNameX.getGivenName().getValue());
-		name.setMiddleName(patientNameX.getSecondAndFurtherGivenNamesOrInitialsThereof().getValue());
+		name.setMiddleName(patientNameX
+				.getSecondAndFurtherGivenNamesOrInitialsThereof().getValue());
 		if (creator != null) {
 			name.setCreator(creator);
 		}
 		patient.addName(name);
-		
+
 		// Gender (checks for null, but not for 'M' or 'F')
 		String gender = pid.getAdministrativeSex().getValue();
 		if (gender == null) {
@@ -286,55 +300,66 @@ public class ADTA28Handler implements Application {
 			throw new HL7Exception("Unrecognized gender: " + gender);
 		}
 		patient.setGender(gender);
-		
+
 		// Date of Birth
 		TS dateOfBirth = pid.getDateTimeOfBirth();
-		if (dateOfBirth == null || dateOfBirth.getTime() == null || dateOfBirth.getTime().getValue() == null) {
+		if (dateOfBirth == null || dateOfBirth.getTime() == null
+				|| dateOfBirth.getTime().getValue() == null) {
 			throw new HL7Exception("Missing birth date in the PID segment");
 		}
 		patient.setBirthdate(tsToDate(dateOfBirth));
-		
+
 		// Estimated birthdate?
 		ID precisionTemp = dateOfBirth.getDegreeOfPrecision();
 		if (precisionTemp != null && precisionTemp.getValue() != null) {
 			String precision = precisionTemp.getValue().toUpperCase();
 			log.debug("The birthdate is estimated: " + precision);
-			
+
 			if ("Y".equals(precision) || "L".equals(precision)) {
 				patient.setBirthdateEstimated(true);
 			}
 		}
-		
+
 		return patient;
 	}
-	
-	// TODO:  Move these to hl7 handler utilities
+
+	// TODO: Move these to hl7 handler utilities
 	// Check version, etc.
 	private void validate(Message message) throws HL7Exception {
 		message.getVersion().toString();
 	}
-	
+
 	private MSH getMSH(ADT_A05 adt) {
 		return adt.getMSH();
 	}
-	
+
 	private PID getPID(ADT_A05 adt) {
 		return adt.getPID();
 	}
-	
-	//TODO: Debug (and use) methods in HL7Util instead
+
+	// TODO: Debug (and use) methods in HL7Util instead
 	private Date tsToDate(TS ts) throws HL7Exception {
 		// need to handle timezone
 		String dtm = ts.getTime().getValue();
 		int year = Integer.parseInt(dtm.substring(0, 4));
-		int month = (dtm.length() >= 6 ? Integer.parseInt(dtm.substring(4, 6)) - 1 : 0);
-		int day = (dtm.length() >= 8 ? Integer.parseInt(dtm.substring(6, 8)) : 1);
-		int hour = (dtm.length() >= 10 ? Integer.parseInt(dtm.substring(8, 10)) : 0);
-		int min = (dtm.length() >= 12 ? Integer.parseInt(dtm.substring(10, 12)) : 0);
-		int sec = (dtm.length() >= 14 ? Integer.parseInt(dtm.substring(12, 14)) : 0);
+		int month = (dtm.length() >= 6
+				? Integer.parseInt(dtm.substring(4, 6)) - 1
+				: 0);
+		int day = (dtm.length() >= 8
+				? Integer.parseInt(dtm.substring(6, 8))
+				: 1);
+		int hour = (dtm.length() >= 10
+				? Integer.parseInt(dtm.substring(8, 10))
+				: 0);
+		int min = (dtm.length() >= 12
+				? Integer.parseInt(dtm.substring(10, 12))
+				: 0);
+		int sec = (dtm.length() >= 14
+				? Integer.parseInt(dtm.substring(12, 14))
+				: 0);
 		Calendar cal = Calendar.getInstance();
 		cal.set(year, month, day, hour, min, sec);
-		
+
 		return cal.getTime();
 	}
 }

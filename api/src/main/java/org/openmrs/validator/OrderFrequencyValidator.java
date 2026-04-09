@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -25,12 +25,12 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.10
  */
-@Handler(supports = { OrderFrequency.class })
+@Handler(supports = {OrderFrequency.class})
 public class OrderFrequencyValidator implements Validator {
-	
+
 	/** Log for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -41,7 +41,7 @@ public class OrderFrequencyValidator implements Validator {
 	public boolean supports(Class c) {
 		return OrderFrequency.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Checks the order frequency object for any inconsistencies/errors
 	 * 
@@ -63,20 +63,26 @@ public class OrderFrequencyValidator implements Validator {
 		if (orderFrequency == null) {
 			errors.reject("error.general");
 		} else {
-			ValidationUtils.rejectIfEmpty(errors, "concept", "Concept.noConceptSelected");
-			
+			ValidationUtils.rejectIfEmpty(errors, "concept",
+					"Concept.noConceptSelected");
+
 			Concept concept = orderFrequency.getConcept();
 			if (concept != null) {
-				if (!ConceptClass.FREQUENCY_UUID.equals(concept.getConceptClass().getUuid())) {
-					errors.rejectValue("concept", "OrderFrequency.concept.shouldBeClassFrequency");
+				if (!ConceptClass.FREQUENCY_UUID.equals(concept
+						.getConceptClass().getUuid())) {
+					errors.rejectValue("concept",
+							"OrderFrequency.concept.shouldBeClassFrequency");
 				}
-				
-				OrderFrequency of = Context.getOrderService().getOrderFrequencyByConcept(concept);
+
+				OrderFrequency of = Context.getOrderService()
+						.getOrderFrequencyByConcept(concept);
 				if (of != null && !of.equals(orderFrequency)) {
-					errors.rejectValue("concept", "OrderFrequency.concept.shouldNotBeShared");
+					errors.rejectValue("concept",
+							"OrderFrequency.concept.shouldNotBeShared");
 				}
 			}
-			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "retireReason");
+			ValidateUtil.validateFieldLengths(errors, obj.getClass(),
+					"retireReason");
 		}
 	}
 }

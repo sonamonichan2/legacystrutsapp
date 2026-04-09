@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -10,9 +10,10 @@
 package org.openmrs;
 
 /**
- * In OpenMRS, we distinguish between data and metadata within our data model. Data (as opposed to
- * metadata) generally represent person- or patient-specific data. OpenMRS objects that represent
- * person- or patient-specific data should implement this interface.
+ * In OpenMRS, we distinguish between data and metadata within our data model.
+ * Data (as opposed to metadata) generally represent person- or patient-specific
+ * data. OpenMRS objects that represent person- or patient-specific data should
+ * implement this interface.
  * 
  * @see OpenmrsMetadata
  * @since 1.5

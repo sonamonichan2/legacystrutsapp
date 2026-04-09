@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -16,27 +16,28 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CustomDosingInstructions implements DosingInstructions {
-	
+
 	@Override
 	public String getDosingInstructionsAsString(Locale locale) {
 		return null;
 	}
-	
+
 	@Override
 	public void setDosingInstructions(DrugOrder order) {
-		
+
 	}
-	
+
 	@Override
 	public DosingInstructions getDosingInstructions(DrugOrder order) {
 		return this;
 	}
-	
+
 	@Override
 	public void validate(DrugOrder order, Errors errors) {
-		ValidationUtils.rejectIfEmpty(errors, "brandName", "DrugOrder.error.brandNameIsNull");
+		ValidationUtils.rejectIfEmpty(errors, "brandName",
+				"DrugOrder.error.brandNameIsNull");
 	}
-	
+
 	@Override
 	public Date getAutoExpireDate(DrugOrder order) {
 		return null;

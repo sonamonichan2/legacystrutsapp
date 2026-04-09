@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -16,73 +16,83 @@ import org.openmrs.PersonAttribute;
 import java.util.List;
 
 public class PersonAttributeHelper {
-	
+
 	private static final String QUERY_ALL_PERSON_ATTRIBUTES = "select pa.* from person_attribute pa";
-	
+
 	private static final String QUERY_ALL_VOIDED_PERSON_ATTRIBUTES = "select pa.* from person_attribute pa where voided = true";
-	
+
 	private static final String QUERY_ALL_NON_SEARCHABLE_PERSON_ATTRIBUTES = "select pa.* from person_attribute pa, person_attribute_type pta "
-	        + "where pa.person_attribute_type_id = pta.person_attribute_type_id and pta.searchable = false";
-	
+			+ "where pa.person_attribute_type_id = pta.person_attribute_type_id and pta.searchable = false";
+
 	private SessionFactory sessionFactory;
-	
+
 	public PersonAttributeHelper(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	/**
 	 * @should return true if a person attribute exists
 	 */
 	public boolean personAttributeExists(String value) {
-		return getPersonAttribute(getPersonAttributeList(QUERY_ALL_PERSON_ATTRIBUTES), value) != null;
+		return getPersonAttribute(
+				getPersonAttributeList(QUERY_ALL_PERSON_ATTRIBUTES), value) != null;
 	}
-	
+
 	/**
 	 * @should return true if a voided person attribute exists
 	 */
 	public boolean voidedPersonAttributeExists(String value) {
-		PersonAttribute personAttribute = getPersonAttribute(getPersonAttributeList(QUERY_ALL_VOIDED_PERSON_ATTRIBUTES),
-		    value);
+		PersonAttribute personAttribute = getPersonAttribute(
+				getPersonAttributeList(QUERY_ALL_VOIDED_PERSON_ATTRIBUTES),
+				value);
 		if (personAttribute != null) {
 			return personAttribute.isVoided();
 		}
 		return false;
 	}
-	
+
 	/**
 	 * @should return true if a non-voided person attribute exists
 	 */
 	public boolean nonVoidedPersonAttributeExists(String value) {
-		return personAttributeExists(value) && (!voidedPersonAttributeExists(value));
+		return personAttributeExists(value)
+				&& (!voidedPersonAttributeExists(value));
 	}
-	
+
 	/**
 	 * @should return true if a non-searchable person attribute exists
 	 */
 	public boolean nonSearchablePersonAttributeExists(String value) {
-		return getPersonAttribute(getPersonAttributeList(QUERY_ALL_NON_SEARCHABLE_PERSON_ATTRIBUTES), value) != null;
+		return getPersonAttribute(
+				getPersonAttributeList(QUERY_ALL_NON_SEARCHABLE_PERSON_ATTRIBUTES),
+				value) != null;
 	}
-	
+
 	/**
 	 * @should return true if a searchable person attribute exists
 	 */
 	public boolean searchablePersonAttributeExists(String value) {
-		return personAttributeExists(value) && (!nonSearchablePersonAttributeExists(value));
+		return personAttributeExists(value)
+				&& (!nonSearchablePersonAttributeExists(value));
 	}
-	
+
 	private List<PersonAttribute> getPersonAttributeList(String queryString) {
-		Query query = sessionFactory.getCurrentSession().createSQLQuery(queryString).addEntity(PersonAttribute.class);
-		
+		Query query = sessionFactory.getCurrentSession()
+				.createSQLQuery(queryString).addEntity(PersonAttribute.class);
+
 		return query.list();
 	}
-	
-	private PersonAttribute getPersonAttribute(List<PersonAttribute> personAttributeList, String personAttributeValue) {
+
+	private PersonAttribute getPersonAttribute(
+			List<PersonAttribute> personAttributeList,
+			String personAttributeValue) {
 		for (PersonAttribute personAttribute : personAttributeList) {
-			if (personAttribute.getValue().equalsIgnoreCase(personAttributeValue)) {
+			if (personAttribute.getValue().equalsIgnoreCase(
+					personAttributeValue)) {
 				return personAttribute;
 			}
 		}
 		return null;
 	}
-	
+
 }

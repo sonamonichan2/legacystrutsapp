@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -15,7 +15,7 @@ import org.openmrs.util.OpenmrsUtil;
 
 /**
  * DrugOrder
- *
+ * 
  * @version 1.0
  */
 public class DrugOrder extends Order implements java.io.Serializable {
@@ -110,7 +110,7 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Gets the doseUnits of this drug order
-	 *
+	 * 
 	 * @return doseUnits
 	 */
 	public Concept getDoseUnits() {
@@ -119,7 +119,7 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Sets the doseUnits of this drug order
-	 *
+	 * 
 	 * @param doseUnits
 	 */
 	public void setDoseUnits(Concept doseUnits) {
@@ -128,7 +128,7 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Gets the frequency
-	 *
+	 * 
 	 * @return frequency
 	 * @since 1.10 (signature changed)
 	 */
@@ -138,7 +138,7 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Sets the frequency
-	 *
+	 * 
 	 * @param frequency
 	 * @since 1.10 (signature changed)
 	 */
@@ -148,7 +148,7 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Returns true/false whether the drug is a "pro re nata" drug
-	 *
+	 * 
 	 * @return Boolean
 	 * @since 1.10
 	 */
@@ -157,7 +157,8 @@ public class DrugOrder extends Order implements java.io.Serializable {
 	}
 
 	/**
-	 * @param asNeeded the value to set
+	 * @param asNeeded
+	 *            the value to set
 	 * @since 1.10
 	 */
 	public void setAsNeeded(Boolean asNeeded) {
@@ -166,7 +167,7 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Gets the quantity
-	 *
+	 * 
 	 * @return quantity
 	 */
 	public Double getQuantity() {
@@ -175,7 +176,7 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Sets the quantity
-	 *
+	 * 
 	 * @param quantity
 	 */
 	public void setQuantity(Double quantity) {
@@ -200,7 +201,7 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Gets the drug
-	 *
+	 * 
 	 * @return drug
 	 */
 	public Drug getDrug() {
@@ -209,7 +210,7 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Sets the drug
-	 *
+	 * 
 	 * @param drug
 	 */
 	public void setDrug(Drug drug) {
@@ -228,7 +229,8 @@ public class DrugOrder extends Order implements java.io.Serializable {
 	}
 
 	/**
-	 * @param asNeededCondition the asNeededCondition to set
+	 * @param asNeededCondition
+	 *            the asNeededCondition to set
 	 * @since 1.10
 	 */
 	public void setAsNeededCondition(String asNeededCondition) {
@@ -237,7 +239,7 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Gets the route
-	 *
+	 * 
 	 * @since 1.10
 	 */
 	public Concept getRoute() {
@@ -246,7 +248,7 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Sets the route
-	 *
+	 * 
 	 * @param route
 	 * @since 1.10
 	 */
@@ -264,7 +266,7 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Gets the dosingType
-	 *
+	 * 
 	 * @since 1.10
 	 */
 	public Class<? extends DosingInstructions> getDosingType() {
@@ -273,8 +275,9 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Sets the dosingType
-	 *
-	 * @param dosingType the dosingType to set
+	 * 
+	 * @param dosingType
+	 *            the dosingType to set
 	 * @since 1.10
 	 */
 	public void setDosingType(Class<? extends DosingInstructions> dosingType) {
@@ -283,25 +286,23 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Gets the dosingInstructions instance
-	 *
+	 * 
 	 * @since 1.10
 	 */
 	public DosingInstructions getDosingInstructionsInstance() {
 		try {
 			DosingInstructions instructions = getDosingType().newInstance();
 			return instructions.getDosingInstructions(this);
-		}
-		catch (InstantiationException e) {
+		} catch (InstantiationException e) {
 			throw new IllegalStateException(e);
-		}
-		catch (IllegalAccessException e) {
+		} catch (IllegalAccessException e) {
 			throw new IllegalStateException(e);
 		}
 	}
 
 	/**
 	 * Gets numRefills
-	 *
+	 * 
 	 * @since 1.10
 	 */
 	public Integer getNumRefills() {
@@ -310,8 +311,9 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Sets numRefills
-	 *
-	 * @param numRefills the numRefills to set
+	 * 
+	 * @param numRefills
+	 *            the numRefills to set
 	 * @since 1.10
 	 */
 	public void setNumRefills(Integer numRefills) {
@@ -320,8 +322,9 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Sets the dosingInstructions
-	 *
-	 * @param dosingInstructions to set
+	 * 
+	 * @param dosingInstructions
+	 *            to set
 	 * @since 1.10
 	 */
 	public void setDosingInstructions(String dosingInstructions) {
@@ -330,7 +333,7 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Gets the dosingInstructions
-	 *
+	 * 
 	 * @since 1.10
 	 */
 	public String getDosingInstructions() {
@@ -339,7 +342,7 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Gets the duration of a Drug Order
-	 *
+	 * 
 	 * @since 1.10
 	 */
 	public Integer getDuration() {
@@ -348,8 +351,9 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Sets the duration of a Drug Order
-	 *
-	 * @param duration to set
+	 * 
+	 * @param duration
+	 *            to set
 	 * @since 1.10
 	 */
 	public void setDuration(Integer duration) {
@@ -358,7 +362,7 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Gets durationUnits of a Drug Order
-	 *
+	 * 
 	 * @since 1.10
 	 */
 	public Concept getDurationUnits() {
@@ -367,7 +371,7 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Sets the durationUnits of a Drug Order
-	 *
+	 * 
 	 * @param durationUnits
 	 * @since 1.10
 	 */
@@ -377,7 +381,7 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Gets the brandName
-	 *
+	 * 
 	 * @return brandName
 	 * @since 1.10
 	 */
@@ -387,9 +391,10 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Sets the brandName
-	 *
+	 * 
 	 * @since 1.10
-	 * @param brandName the brandName to set to
+	 * @param brandName
+	 *            the brandName to set to
 	 */
 	public void setBrandName(String brandName) {
 		this.brandName = brandName;
@@ -431,9 +436,9 @@ public class DrugOrder extends Order implements java.io.Serializable {
 	}
 
 	/**
-	 * Creates a DrugOrder for revision from this order, sets the previousOrder, action field and
-	 * other drug order fields.
-	 *
+	 * Creates a DrugOrder for revision from this order, sets the previousOrder,
+	 * action field and other drug order fields.
+	 * 
 	 * @return the newly created order
 	 * @since 1.10
 	 * @should set all the relevant fields
@@ -472,28 +477,41 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Sets autoExpireDate based on duration.
-	 *
+	 * 
 	 * @should delegate calculation to dosingInstructions
 	 * @should not calculate for discontinue action
 	 * @should not calculate if autoExpireDate already set
 	 */
 	public void setAutoExpireDateBasedOnDuration() {
 		if (DISCONTINUE != getAction() && getAutoExpireDate() == null) {
-			setAutoExpireDate(getDosingInstructionsInstance().getAutoExpireDate(this));
+			setAutoExpireDate(getDosingInstructionsInstance()
+					.getAutoExpireDate(this));
 		}
 	}
 
 	public String toString() {
 		String prefix = DISCONTINUE == getAction() ? "DC " : "";
-		return prefix + "DrugOrder(" + getDose() + getDoseUnits() + " of "
-		        + (isNonCodedDrug() ? getDrugNonCoded() : (getDrug() != null ? getDrug().getName() : "[no drug]")) + " from " + getDateActivated() + " to "
-		        + (isDiscontinuedRightNow() ? getDateStopped() : getAutoExpireDate()) + ")";
+		return prefix
+				+ "DrugOrder("
+				+ getDose()
+				+ getDoseUnits()
+				+ " of "
+				+ (isNonCodedDrug() ? getDrugNonCoded() : (getDrug() != null
+						? getDrug().getName()
+						: "[no drug]"))
+				+ " from "
+				+ getDateActivated()
+				+ " to "
+				+ (isDiscontinuedRightNow()
+						? getDateStopped()
+						: getAutoExpireDate()) + ")";
 	}
 
 	/**
 	 * Set dosing instructions to drug order
-	 *
-	 * @param di dosing instruction object to fetch data
+	 * 
+	 * @param di
+	 *            dosing instruction object to fetch data
 	 * @since 1.10
 	 */
 	public void setDosing(DosingInstructions di) {
@@ -502,34 +520,39 @@ public class DrugOrder extends Order implements java.io.Serializable {
 
 	/**
 	 * Checks whether orderable of this drug order is same as other order
-	 *
+	 * 
 	 * @since 1.10
-	 * @param otherOrder the other order to match on
+	 * @param otherOrder
+	 *            the other order to match on
 	 * @return true if the drugs match
 	 * @should return false if the other order is null
 	 * @should return false if the other order is not a drug order
-	 * @should return false if both drugs are null and the concepts are different
+	 * @should return false if both drugs are null and the concepts are
+	 *         different
 	 * @should return false if the concepts match and only this has a drug
 	 * @should return false if the concepts match and only the other has a drug
-	 * @should return false if the concepts match and drugs are different and not null
+	 * @should return false if the concepts match and drugs are different and
+	 *         not null
 	 * @should return true if both drugs are null and the concepts match
 	 * @should return true if the drugs match
 	 */
 	@Override
 	public boolean hasSameOrderableAs(Order otherOrder) {
-        if (!super.hasSameOrderableAs(otherOrder)) {
-            return false;
-        }
-        if (!(otherOrder instanceof DrugOrder)) {
-            return false;
-        }
-        DrugOrder otherDrugOrder = (DrugOrder) otherOrder;
+		if (!super.hasSameOrderableAs(otherOrder)) {
+			return false;
+		}
+		if (!(otherOrder instanceof DrugOrder)) {
+			return false;
+		}
+		DrugOrder otherDrugOrder = (DrugOrder) otherOrder;
 
-        if (isNonCodedDrug() || otherDrugOrder.isNonCodedDrug()) {
-            return OpenmrsUtil.nullSafeEqualsIgnoreCase(this.getDrugNonCoded(), otherDrugOrder.getDrugNonCoded());
-        }
-        return OpenmrsUtil.nullSafeEquals(this.getDrug(), otherDrugOrder.getDrug());
-    }
+		if (isNonCodedDrug() || otherDrugOrder.isNonCodedDrug()) {
+			return OpenmrsUtil.nullSafeEqualsIgnoreCase(this.getDrugNonCoded(),
+					otherDrugOrder.getDrugNonCoded());
+		}
+		return OpenmrsUtil.nullSafeEquals(this.getDrug(),
+				otherDrugOrder.getDrug());
+	}
 
 	/**
 	 * @since 1.12
@@ -540,16 +563,15 @@ public class DrugOrder extends Order implements java.io.Serializable {
 	}
 
 	/**
-	 * @since 1.12
-	 * sets drugNonCoded
+	 * @since 1.12 sets drugNonCoded
 	 */
 	public void setDrugNonCoded(String drugNonCoded) {
-		this.drugNonCoded = StringUtils.isNotBlank(drugNonCoded) ? drugNonCoded.trim() : drugNonCoded;
+		this.drugNonCoded = StringUtils.isNotBlank(drugNonCoded) ? drugNonCoded
+				.trim() : drugNonCoded;
 	}
 
 	/**
-	 * @since 1.12
-	 * return true if a drug is non coded
+	 * @since 1.12 return true if a drug is non coded
 	 */
 	public boolean isNonCodedDrug() {
 		return StringUtils.isNotBlank(this.drugNonCoded);

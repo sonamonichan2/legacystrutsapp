@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -31,72 +31,79 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
  * This class is responsible for loading messages resources from file system
  */
 public class CustomResourceLoader {
-	
-	private static final Log log = LogFactory.getLog(CustomResourceLoader.class);
-	
+
+	private static final Log log = LogFactory
+			.getLog(CustomResourceLoader.class);
+
 	/** */
 	public static final String PREFIX = "messages";
-	
+
 	/** the map that contains resource bundles for each locale */
 	private Map<Locale, ResourceBundle> resources = null;
-	
+
 	/** the set of languages, which is currently supported */
 	private Set<Locale> availablelocales = null;
-	
+
 	private static CustomResourceLoader instance = null;
-	
+
 	/**
 	 * default constructor that initializes inner map of resources
 	 */
 	private CustomResourceLoader(HttpServletRequest httpRequest) {
 		this.resources = new HashMap<Locale, ResourceBundle>();
 		this.availablelocales = new HashSet<Locale>();
-		
+
 		try {
 			PathMatchingResourcePatternResolver patternResolver = new PathMatchingResourcePatternResolver();
-			Resource[] localResources = patternResolver.getResources("classpath*:messages*.properties");
+			Resource[] localResources = patternResolver
+					.getResources("classpath*:messages*.properties");
 			for (Resource localeResource : localResources) {
-				Locale locale = parseLocaleFrom(localeResource.getFilename(), PREFIX);
-				ResourceBundle rb = new PropertyResourceBundle(new InputStreamReader(localeResource.getInputStream(), "UTF-8"));
+				Locale locale = parseLocaleFrom(localeResource.getFilename(),
+						PREFIX);
+				ResourceBundle rb = new PropertyResourceBundle(
+						new InputStreamReader(localeResource.getInputStream(),
+								"UTF-8"));
 				getResource().put(locale, rb);
 				getAvailablelocales().add(locale);
 			}
-		}
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			log.error(ex.getMessage(), ex);
 		}
 	}
-	
+
 	/**
 	 * Returns singleton instance of custom resource loader
-	 *
-	 * @param httpRequest <b>(optional)</b> the absolute path to directory, that contains resources to
-	 *            be loaded. If this isn't specified then <code>${CONTEXT-ROOT}/WEB-INF/</code> will
-	 *            be used
+	 * 
+	 * @param httpRequest
+	 *            <b>(optional)</b> the absolute path to directory, that
+	 *            contains resources to be loaded. If this isn't specified then
+	 *            <code>${CONTEXT-ROOT}/WEB-INF/</code> will be used
 	 * @return the singleton instance of {@link CustomResourceLoader}
 	 */
-	public static CustomResourceLoader getInstance(HttpServletRequest httpRequest) {
+	public static CustomResourceLoader getInstance(
+			HttpServletRequest httpRequest) {
 		if (instance == null) {
 			instance = new CustomResourceLoader(httpRequest);
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * Utility method for deriving a locale from a filename.
-	 *
-	 * @param filename the name to parse
+	 * 
+	 * @param filename
+	 *            the name to parse
 	 * @return Locale derived from the given string
 	 */
 	private Locale parseLocaleFrom(String filename, String basename) {
 		Locale result = null;
-		
+
 		if (filename.startsWith(basename)) {
 			filename = filename.substring(basename.length());
 		}
-		
+
 		String localespec = filename.substring(0, filename.indexOf('.'));
-		
+
 		if ("".equals(localespec)) {
 			result = Locale.ENGLISH;
 		} else {
@@ -105,23 +112,24 @@ public class CustomResourceLoader {
 		}
 		return result;
 	}
-	
+
 	/**
-	 * @param locale the locale for which will be retrieved resource bundle
+	 * @param locale
+	 *            the locale for which will be retrieved resource bundle
 	 * @return resource bundle for specified locale
 	 */
 	public ResourceBundle getResourceBundle(Locale locale) {
 		return resources.get(locale);
 	}
-	
+
 	/**
-	 * @return the map object, which contains locale as key and resources bundle for each locale as
-	 *         value
+	 * @return the map object, which contains locale as key and resources bundle
+	 *         for each locale as value
 	 */
 	public Map<Locale, ResourceBundle> getResource() {
 		return resources;
 	}
-	
+
 	/**
 	 * @return the set of locales which are currently supported by OpenMRS
 	 */

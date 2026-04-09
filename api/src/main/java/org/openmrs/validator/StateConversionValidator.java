@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,11 +22,11 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { ConceptStateConversion.class }, order = 50)
+@Handler(supports = {ConceptStateConversion.class}, order = 50)
 public class StateConversionValidator implements Validator {
-	
+
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -36,7 +36,7 @@ public class StateConversionValidator implements Validator {
 	public boolean supports(Class c) {
 		return c.equals(ConceptStateConversion.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -44,7 +44,8 @@ public class StateConversionValidator implements Validator {
 	 *      org.springframework.validation.Errors)
 	 * @should fail validation if concept is null or empty or whitespace
 	 * @should fail validation if programWorkflow is null or empty or whitespace
-	 * @should fail validation if programWorkflowState is null or empty or whitespace
+	 * @should fail validation if programWorkflowState is null or empty or
+	 *         whitespace
 	 * @should pass validation if all required fields have proper values
 	 */
 	public void validate(Object obj, Errors errors) {
@@ -53,10 +54,13 @@ public class StateConversionValidator implements Validator {
 			log.debug("Rejecting because c is null");
 			errors.rejectValue("conceptStateConversion", "error.general");
 		} else {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "concept", "error.concept");
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "programWorkflow", "error.programWorkflow");
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "programWorkflowState", "error.programWorkflowState");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "concept",
+					"error.concept");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors,
+					"programWorkflow", "error.programWorkflow");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors,
+					"programWorkflowState", "error.programWorkflowState");
 		}
 	}
-	
+
 }

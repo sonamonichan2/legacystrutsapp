@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,43 +22,46 @@ import org.springframework.validation.Errors;
  * Tests methods on the {@link LocationTagValidator} class.
  */
 public class LocationTagValidatorTest extends BaseContextSensitiveTest {
-	
+
 	/**
-	 * @see LocationTagValidator#validate(Object, org.springframework.validation.Errors)
+	 * @see LocationTagValidator#validate(Object,
+	 *      org.springframework.validation.Errors)
 	 */
 	@Test
 	@Verifies(value = "should pass validation if field lengths are correct", method = "validate(Object,Errors)")
-	public void validate_shouldPassValidationIfFieldLengthsAreCorrect() throws Exception {
+	public void validate_shouldPassValidationIfFieldLengthsAreCorrect()
+			throws Exception {
 		LocationTag locationTag = new LocationTag();
-		
+
 		locationTag.setName("name");
 		locationTag.setDescription("description");
 		locationTag.setRetireReason("retireReason");
-		
+
 		Errors errors = new BindException(locationTag, "locationTag");
 		new LocationTagValidator().validate(locationTag, errors);
-		
+
 		Assert.assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see LocationTagValidator#validate(Object,Errors)
 	 */
 	@Test
 	@Verifies(value = "should fail validation if field lengths are not correct", method = "validate(Object,Errors)")
-	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() throws Exception {
+	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect()
+			throws Exception {
 		LocationTag locationTag = new LocationTag();
-		
+
 		locationTag
-		        .setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+				.setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		locationTag
-		        .setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+				.setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		locationTag
-		        .setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
-		
+				.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+
 		Errors errors = new BindException(locationTag, "location");
 		new LocationTagValidator().validate(locationTag, errors);
-		
+
 		Assert.assertTrue(errors.hasFieldErrors("name"));
 		Assert.assertTrue(errors.hasFieldErrors("description"));
 		Assert.assertTrue(errors.hasFieldErrors("retireReason"));

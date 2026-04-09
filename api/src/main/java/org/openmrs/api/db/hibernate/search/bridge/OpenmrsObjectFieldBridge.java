@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -16,7 +16,7 @@ import org.openmrs.OpenmrsObject;
  * Indexes {@link OpenmrsObject} as ID.
  */
 public class OpenmrsObjectFieldBridge implements StringBridge {
-	
+
 	/**
 	 * @see org.hibernate.search.bridge.StringBridge#objectToString(java.lang.Object)
 	 */
@@ -25,5 +25,5 @@ public class OpenmrsObjectFieldBridge implements StringBridge {
 		OpenmrsObject openmrsObject = (OpenmrsObject) obj;
 		return openmrsObject.getId().toString();
 	}
-	
+
 }

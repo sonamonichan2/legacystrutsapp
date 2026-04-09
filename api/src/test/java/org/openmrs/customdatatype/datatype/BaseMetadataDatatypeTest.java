@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -16,13 +16,14 @@ import org.openmrs.OpenmrsMetadata;
 import org.openmrs.customdatatype.CustomDatatype;
 
 public class BaseMetadataDatatypeTest {
-	
+
 	/**
 	 * @verifies use the name in summary instance
 	 * @see BaseMetadataDatatype#doGetTextSummary(org.openmrs.OpenmrsMetadata)
 	 */
 	@Test
-	public void doGetTextSummary_shouldUseTheNameInSummaryInstance() throws Exception {
+	public void doGetTextSummary_shouldUseTheNameInSummaryInstance()
+			throws Exception {
 		OpenmrsMetadata location = new Location();
 		String expectedSummary = "some summary";
 		location.setName(expectedSummary);

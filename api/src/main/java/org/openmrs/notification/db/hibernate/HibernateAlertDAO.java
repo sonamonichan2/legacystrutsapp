@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -28,26 +28,26 @@ import org.openmrs.notification.db.AlertDAO;
  * Hibernate specific implementation of the
  */
 public class HibernateAlertDAO implements AlertDAO {
-	
+
 	private final Log log = LogFactory.getLog(getClass());
-	
+
 	/**
 	 * Hibernate session factory
 	 */
 	private SessionFactory sessionFactory;
-	
+
 	public HibernateAlertDAO() {
 	}
-	
+
 	/**
 	 * Set session factory
-	 *
+	 * 
 	 * @param sessionFactory
 	 */
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	/**
 	 * @see org.openmrs.notification.db.AlertDAO#saveAlert(org.openmrs.notification.Alert)
 	 */
@@ -55,72 +55,82 @@ public class HibernateAlertDAO implements AlertDAO {
 		sessionFactory.getCurrentSession().saveOrUpdate(alert);
 		return alert;
 	}
-	
+
 	/**
 	 * @see org.openmrs.notification.db.AlertDAO#getAlert(java.lang.Integer)
 	 */
 	public Alert getAlert(Integer alertId) throws DAOException {
-		return (Alert) sessionFactory.getCurrentSession().get(Alert.class, alertId);
+		return (Alert) sessionFactory.getCurrentSession().get(Alert.class,
+				alertId);
 	}
-	
+
 	/**
 	 * @see org.openmrs.notification.db.AlertDAO#deleteAlert(org.openmrs.notification.Alert)
 	 */
 	public void deleteAlert(Alert alert) throws DAOException {
 		sessionFactory.getCurrentSession().delete(alert);
 	}
-	
+
 	/**
 	 * @see org.openmrs.notification.AlertService#getAllAlerts(boolean)
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Alert> getAllAlerts(boolean includeExpired) throws DAOException {
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Alert.class);
-		
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+				Alert.class);
+
 		// exclude the expired alerts unless requested
 		if (!includeExpired) {
-			crit.add(Restrictions.or(Restrictions.isNull("dateToExpire"), Restrictions.gt("dateToExpire", new Date())));
+			crit.add(Restrictions.or(Restrictions.isNull("dateToExpire"),
+					Restrictions.gt("dateToExpire", new Date())));
 		}
-		
+
 		return crit.list();
 	}
-	
+
 	/**
-	 * @see org.openmrs.notification.db.AlertDAO#getAlerts(org.openmrs.User, boolean, boolean)
+	 * @see org.openmrs.notification.db.AlertDAO#getAlerts(org.openmrs.User,
+	 *      boolean, boolean)
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Alert> getAlerts(User user, boolean includeRead, boolean includeExpired) throws DAOException {
-		log.debug("Getting alerts for user " + user + " read? " + includeRead + " expired? " + includeExpired);
-		
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(Alert.class, "alert");
-		
+	public List<Alert> getAlerts(User user, boolean includeRead,
+			boolean includeExpired) throws DAOException {
+		log.debug("Getting alerts for user " + user + " read? " + includeRead
+				+ " expired? " + includeExpired);
+
+		Criteria crit = sessionFactory.getCurrentSession().createCriteria(
+				Alert.class, "alert");
+
 		if (user != null && user.getUserId() != null) {
 			crit.createCriteria("recipients", "recipient");
 			crit.add(Restrictions.eq("recipient.recipient", user));
 		} else {
 			// getting here means we passed in no user or a blank user.
 			// a null recipient column means get stuff for the anonymous user
-			//crit.add(Expression.isNull("recipient.recipient"));
-			
-			// returning an empty list for now because the above throws an error.
-			// we may need to remodel how recipients are handled to get anonymous users alerts
+			// crit.add(Expression.isNull("recipient.recipient"));
+
+			// returning an empty list for now because the above throws an
+			// error.
+			// we may need to remodel how recipients are handled to get
+			// anonymous users alerts
 			return Collections.emptyList();
 		}
-		
+
 		// exclude the expired alerts unless requested
 		if (!includeExpired) {
-			crit.add(Restrictions.or(Restrictions.isNull("dateToExpire"), Restrictions.gt("dateToExpire", new Date())));
+			crit.add(Restrictions.or(Restrictions.isNull("dateToExpire"),
+					Restrictions.gt("dateToExpire", new Date())));
 		}
-		
+
 		// exclude the read alerts unless requested
 		if (!includeRead && user.getUserId() != null) {
 			crit.add(Restrictions.eq("alertRead", false));
 			crit.add(Restrictions.eq("recipient.alertRead", false));
 		}
-		
+
 		crit.addOrder(Order.desc("dateChanged"));
-		
+
 		return crit.list();
 	}
-	
+
 }

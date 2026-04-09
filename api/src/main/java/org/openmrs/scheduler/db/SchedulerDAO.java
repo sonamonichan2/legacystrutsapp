@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -21,32 +21,35 @@ import org.openmrs.scheduler.TaskDefinition;
  * @version 1.0
  */
 public interface SchedulerDAO {
-	
+
 	/**
 	 * Creates a new task.
 	 * 
-	 * @param taskDefinition task to be created
+	 * @param taskDefinition
+	 *            task to be created
 	 * @throws DAOException
 	 */
 	public void createTask(TaskDefinition taskDefinition) throws DAOException;
-	
+
 	/**
 	 * Get task by internal identifier
 	 * 
-	 * @param taskId internal task identifier
+	 * @param taskId
+	 *            internal task identifier
 	 * @return task with given internal identifier
 	 * @throws DAOException
 	 */
 	public TaskDefinition getTask(Integer taskId) throws DAOException;
-	
+
 	/**
 	 * Update task
 	 * 
-	 * @param task to be updated
+	 * @param task
+	 *            to be updated
 	 * @throws DAOException
 	 */
 	public void updateTask(TaskDefinition task) throws DAOException;
-	
+
 	/**
 	 * Find all tasks in the database
 	 * 
@@ -54,67 +57,74 @@ public interface SchedulerDAO {
 	 * @throws DAOException
 	 */
 	public List<TaskDefinition> getTasks() throws DAOException;
-	
+
 	/**
 	 * Delete task from database.
 	 * 
-	 * @param task task to be deleted
+	 * @param task
+	 *            task to be deleted
 	 * @throws DAOException
 	 */
 	public void deleteTask(TaskDefinition task) throws DAOException;
-	
+
 	/**
 	 * Delete task from database.
 	 * 
-	 * @param taskId identifier of task to be deleted
+	 * @param taskId
+	 *            identifier of task to be deleted
 	 * @throws DAOException
 	 */
 	public void deleteTask(Integer taskId) throws DAOException;
-	
+
 	/**
 	 * Creates a new schedule.
 	 * 
-	 * @param schedule to be created
+	 * @param schedule
+	 *            to be created
 	 * @throws DAOException
 	 */
-	//public void createSchedule(Schedule schedule) throws DAOException;
+	// public void createSchedule(Schedule schedule) throws DAOException;
 	/**
 	 * Get schedule by internal identifier
 	 * 
-	 * @param scheduleId internal schedule identifier
+	 * @param scheduleId
+	 *            internal schedule identifier
 	 * @return schedule with given internal identifier
 	 * @throws DAOException
 	 */
 	public Schedule getSchedule(Integer scheduleId) throws DAOException;
-	
+
 	/**
 	 * Get task by public name.
 	 * 
-	 * @param name public task name
+	 * @param name
+	 *            public task name
 	 * @return task with given public name
 	 * @throws DAOException
 	 */
 	public TaskDefinition getTaskByName(String name) throws DAOException;
-	
+
 	/**
 	 * Update a schedule.
 	 * 
-	 * @param schedule to be updated
+	 * @param schedule
+	 *            to be updated
 	 * @throws DAOException
 	 */
-	//public void updateSchedule(Schedule schedule) throws DAOException;
+	// public void updateSchedule(Schedule schedule) throws DAOException;
 	/**
 	 * Get all schedules.
 	 * 
 	 * @return set of all schedules in the database
 	 * @throws DAOException
 	 */
-	//public Set<Schedule> getSchedules() throws DAOException;
+	// public Set<Schedule> getSchedules() throws DAOException;
 	/**
 	 * Delete schedule from database.
 	 * 
-	 * @param schedule schedule to be deleted
+	 * @param schedule
+	 *            schedule to be deleted
 	 * @throws DAOException
 	 */
-	//public void deleteSchedule(Schedule schedule) throws DAOException;
+	// public void deleteSchedule(Schedule schedule) throws DAOException;
 }

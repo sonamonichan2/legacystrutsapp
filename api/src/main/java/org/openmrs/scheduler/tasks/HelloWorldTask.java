@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,21 +19,21 @@ import org.apache.commons.logging.LogFactory;
  * 
  */
 public class HelloWorldTask extends AbstractTask {
-	
+
 	private static Log log = LogFactory.getLog(HelloWorldTask.class);
-	
+
 	/**
 	 * Public constructor.
 	 */
 	public HelloWorldTask() {
 		log.debug("hello world task created at " + new Date());
 	}
-	
+
 	public void execute() {
 		log.debug("executing hello world task");
 		super.startExecuting();
 	}
-	
+
 	public void shutdown() {
 		log.debug("shutting down hello world task");
 		this.stopExecuting();

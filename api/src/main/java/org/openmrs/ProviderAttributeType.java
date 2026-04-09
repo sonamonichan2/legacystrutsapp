@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -17,10 +17,12 @@ import org.openmrs.attribute.BaseAttributeType;
  * 
  * @since 1.9
  */
-public class ProviderAttributeType extends BaseAttributeType<Provider> implements AttributeType<Provider> {
-	
+public class ProviderAttributeType extends BaseAttributeType<Provider>
+		implements
+			AttributeType<Provider> {
+
 	private Integer providerAttributeTypeId;
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -28,7 +30,7 @@ public class ProviderAttributeType extends BaseAttributeType<Provider> implement
 	public Integer getId() {
 		return getProviderAttributeTypeId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -36,13 +38,13 @@ public class ProviderAttributeType extends BaseAttributeType<Provider> implement
 	public void setId(Integer id) {
 		setProviderAttributeTypeId(id);
 	}
-	
+
 	public void setProviderAttributeTypeId(Integer providerAttributeTypeId) {
 		this.providerAttributeTypeId = providerAttributeTypeId;
 	}
-	
+
 	public Integer getProviderAttributeTypeId() {
 		return providerAttributeTypeId;
 	}
-	
+
 }

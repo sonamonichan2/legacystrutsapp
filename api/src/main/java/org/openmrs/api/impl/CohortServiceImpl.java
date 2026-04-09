@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -26,19 +26,21 @@ import org.springframework.transaction.annotation.Transactional;
  * API functions related to Cohorts
  */
 @Transactional
-public class CohortServiceImpl extends BaseOpenmrsService implements CohortService {
-	
+public class CohortServiceImpl extends BaseOpenmrsService
+		implements
+			CohortService {
+
 	private Log log = LogFactory.getLog(this.getClass());
-	
+
 	private CohortDAO dao;
-	
+
 	/**
 	 * @see org.openmrs.api.CohortService#setCohortDAO(org.openmrs.api.db.CohortDAO)
 	 */
 	public void setCohortDAO(CohortDAO dao) {
 		this.dao = dao;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.CohortService#saveCohort(org.openmrs.Cohort)
 	 */
@@ -52,15 +54,16 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 			throw new APIException("Cohort.save.nameRequired", (Object[]) null);
 		}
 		if (cohort.getDescription() == null) {
-			throw new APIException("Cohort.save.descriptionRequired", (Object[]) null);
+			throw new APIException("Cohort.save.descriptionRequired",
+					(Object[]) null);
 		}
 		if (log.isInfoEnabled()) {
 			log.info("Saving cohort " + cohort);
 		}
-		
+
 		return dao.saveCohort(cohort);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.CohortService#getCohort(java.lang.Integer)
 	 */
@@ -68,15 +71,16 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	public Cohort getCohort(Integer id) {
 		return dao.getCohort(id);
 	}
-	
+
 	/**
-	 * @see org.openmrs.api.CohortService#voidCohort(org.openmrs.Cohort, java.lang.String)
+	 * @see org.openmrs.api.CohortService#voidCohort(org.openmrs.Cohort,
+	 *      java.lang.String)
 	 */
 	public Cohort voidCohort(Cohort cohort, String reason) {
 		// other setters done by the save handlers
 		return Context.getCohortService().saveCohort(cohort);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.CohortService#getCohortByUuid(java.lang.String)
 	 */
@@ -84,7 +88,7 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	public Cohort getCohortByUuid(String uuid) {
 		return dao.getCohortByUuid(uuid);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.CohortService#addPatientToCohort(org.openmrs.Cohort,
 	 *      org.openmrs.Patient)
@@ -96,7 +100,7 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 		}
 		return cohort;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.CohortService#removePatientFromCohort(org.openmrs.Cohort,
 	 *      org.openmrs.Patient)
@@ -108,7 +112,7 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 		}
 		return cohort;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.CohortService#getCohortsContainingPatient(org.openmrs.Patient)
 	 */
@@ -116,12 +120,12 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	public List<Cohort> getCohortsContainingPatient(Patient patient) {
 		return dao.getCohortsContainingPatientId(patient.getPatientId());
 	}
-	
+
 	@Transactional(readOnly = true)
 	public List<Cohort> getCohortsContainingPatientId(Integer patientId) {
 		return dao.getCohortsContainingPatientId(patientId);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.CohortService#getCohorts(java.lang.String)
 	 */
@@ -129,7 +133,7 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	public List<Cohort> getCohorts(String nameFragment) throws APIException {
 		return dao.getCohorts(nameFragment);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.CohortService#getAllCohorts()
 	 */
@@ -137,15 +141,16 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	public List<Cohort> getAllCohorts() throws APIException {
 		return Context.getCohortService().getAllCohorts(false);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.CohortService#getAllCohorts(boolean)
 	 */
 	@Transactional(readOnly = true)
-	public List<Cohort> getAllCohorts(boolean includeVoided) throws APIException {
+	public List<Cohort> getAllCohorts(boolean includeVoided)
+			throws APIException {
 		return dao.getAllCohorts(includeVoided);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.CohortService#getCohort(java.lang.String)
 	 */
@@ -153,12 +158,12 @@ public class CohortServiceImpl extends BaseOpenmrsService implements CohortServi
 	public Cohort getCohort(String name) throws APIException {
 		return dao.getCohort(name);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.CohortService#purgeCohort(org.openmrs.Cohort)
 	 */
 	public Cohort purgeCohort(Cohort cohort) throws APIException {
 		return dao.deleteCohort(cohort);
 	}
-	
+
 }

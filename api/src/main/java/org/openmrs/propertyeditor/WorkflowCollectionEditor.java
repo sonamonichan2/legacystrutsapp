@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -24,31 +24,32 @@ import org.openmrs.api.context.Context;
 import org.springframework.util.StringUtils;
 
 /**
- * Class to convert the "programid: workflowoneid workflow2id" strings to actual workflows on a
- * program
+ * Class to convert the "programid: workflowoneid workflow2id" strings to actual
+ * workflows on a program
  */
 public class WorkflowCollectionEditor extends PropertyEditorSupport {
-	
+
 	private Log log = LogFactory.getLog(this.getClass());
-	
+
 	public WorkflowCollectionEditor() {
 	}
-	
+
 	private Program program = null;
-	
+
 	/**
 	 * @param program
 	 */
 	public WorkflowCollectionEditor(Program program) {
 		this.program = program;
 	}
-	
+
 	/**
-	 * Takes a "program_id:list" where program_id is the id of the program that this collection is
-	 * for (or not present, if it's a new program) and list is a space-separated list of concept
-	 * ids. This class is a bit of a hack, because I don't know a better way to do this. -DJ The
-	 * purpose is to retire and un-retire workflows where possible rather than deleting and creating
-	 * them.
+	 * Takes a "program_id:list" where program_id is the id of the program that
+	 * this collection is for (or not present, if it's a new program) and list
+	 * is a space-separated list of concept ids. This class is a bit of a hack,
+	 * because I don't know a better way to do this. -DJ The purpose is to
+	 * retire and un-retire workflows where possible rather than deleting and
+	 * creating them.
 	 * 
 	 * @should update workflows in program
 	 */
@@ -64,13 +65,15 @@ public class WorkflowCollectionEditor extends PropertyEditorSupport {
 					// if a program wasn't passed in, try to look it up now
 					program = pws.getProgram(Integer.valueOf(progIdStr));
 				}
+			} catch (Exception ex) {
 			}
-			catch (Exception ex) {}
-			
+
 			String[] conceptIds = text.split(" ");
-			Set<ProgramWorkflow> oldSet = program == null ? new HashSet<ProgramWorkflow>() : program.getAllWorkflows();
+			Set<ProgramWorkflow> oldSet = program == null
+					? new HashSet<ProgramWorkflow>()
+					: program.getAllWorkflows();
 			Set<Integer> newConceptIds = new HashSet<Integer>();
-			
+
 			for (String id : conceptIds) {
 				if (id.trim().length() == 0) {
 					continue;
@@ -78,18 +81,20 @@ public class WorkflowCollectionEditor extends PropertyEditorSupport {
 				log.debug("trying " + id);
 				newConceptIds.add(Integer.valueOf(id.trim()));
 			}
-			
-			// go through oldSet and see what we need to keep and what we need to unvoid
+
+			// go through oldSet and see what we need to keep and what we need
+			// to unvoid
 			Set<Integer> alreadyDone = new HashSet<Integer>();
 			for (ProgramWorkflow pw : oldSet) {
 				if (!newConceptIds.contains(pw.getConcept().getConceptId())) {
 					pw.setRetired(true);
-				} else if (newConceptIds.contains(pw.getConcept().getConceptId()) && pw.isRetired()) {
+				} else if (newConceptIds.contains(pw.getConcept()
+						.getConceptId()) && pw.isRetired()) {
 					pw.setRetired(false);
 				}
 				alreadyDone.add(pw.getConcept().getConceptId());
 			}
-			
+
 			// now add any new ones
 			newConceptIds.removeAll(alreadyDone);
 			for (Integer conceptId : newConceptIds) {
@@ -98,13 +103,13 @@ public class WorkflowCollectionEditor extends PropertyEditorSupport {
 				pw.setConcept(cs.getConcept(conceptId));
 				oldSet.add(pw);
 			}
-			
+
 			setValue(oldSet);
 		} else {
 			setValue(null);
 		}
 	}
-	
+
 	/**
 	 * Convert this program's workflows into "id: wkflowid wkflowid wkflowid"
 	 * 
@@ -118,7 +123,8 @@ public class WorkflowCollectionEditor extends PropertyEditorSupport {
 		} else {
 			Integer progId = null;
 			for (ProgramWorkflow pw : pws) {
-				if (pw.getProgram() != null && pw.getProgram().getProgramId() != null) {
+				if (pw.getProgram() != null
+						&& pw.getProgram().getProgramId() != null) {
 					progId = pw.getProgram().getProgramId();
 					break;
 				}
@@ -134,5 +140,5 @@ public class WorkflowCollectionEditor extends PropertyEditorSupport {
 			return ret.toString().trim();
 		}
 	}
-	
+
 }

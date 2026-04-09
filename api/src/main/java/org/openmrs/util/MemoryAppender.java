@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,36 +19,36 @@ import org.apache.log4j.Layout;
 import org.apache.log4j.spi.LoggingEvent;
 
 /**
- * This class stores a few lines of the output to the log file. This class is set in the log4j
- * descriptor file: /metadata/api/log4j/log4j.xml
+ * This class stores a few lines of the output to the log file. This class is
+ * set in the log4j descriptor file: /metadata/api/log4j/log4j.xml
  */
 public class MemoryAppender extends AppenderSkeleton {
-	
+
 	private CircularFifoBuffer buffer;
-	
+
 	private int bufferSize = 100;
-	
+
 	public MemoryAppender() {
 	}
-	
+
 	protected void append(LoggingEvent loggingEvent) {
 		if (buffer != null) {
 			buffer.add(loggingEvent);
 		}
 	}
-	
+
 	public void close() {
 		buffer.clear();
 	}
-	
+
 	public boolean requiresLayout() {
 		return true;
 	}
-	
+
 	public void activateOptions() {
 		this.buffer = new CircularFifoBuffer(bufferSize);
 	}
-	
+
 	public List<String> getLogLines() {
 		List<String> logLines = new ArrayList<String>(buffer.size());
 		Layout layout = this.getLayout();
@@ -58,11 +58,11 @@ public class MemoryAppender extends AppenderSkeleton {
 		}
 		return logLines;
 	}
-	
+
 	public int getBufferSize() {
 		return bufferSize;
 	}
-	
+
 	public void setBufferSize(int bufferSize) {
 		this.bufferSize = bufferSize;
 	}

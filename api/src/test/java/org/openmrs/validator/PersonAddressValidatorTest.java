@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -27,13 +27,13 @@ import org.springframework.validation.Errors;
  * Consists of tests for the PersonAddressValidator
  */
 public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
-	
+
 	protected static final String PERSON_ADDRESS_VALIDATOR_DATASET_PACKAGE_PATH = "org/openmrs/include/personAddressValidatorTestDataset.xml";
-	
+
 	PersonAddressValidator validator = null;
-	
+
 	PersonService ps = null;
-	
+
 	/**
 	 * Run this before each unit test in this class.
 	 * 
@@ -44,13 +44,14 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 		validator = new PersonAddressValidator();
 		ps = Context.getPersonService();
 	}
-	
+
 	/**
 	 * @see PersonAddressValidator#validate(Object,Errors)
 	 */
 	@Test
 	@Verifies(value = "should fail if the startDate is in the future", method = "validate(Object,Errors)")
-	public void validate_shouldFailIfTheStartDateIsInTheFuture() throws Exception {
+	public void validate_shouldFailIfTheStartDateIsInTheFuture()
+			throws Exception {
 		PersonAddress personAddress = new PersonAddress();
 		Calendar c = Calendar.getInstance();
 		// put the time into the future by a minute
@@ -60,23 +61,24 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(personAddress, errors);
 		Assert.assertEquals(true, errors.hasFieldErrors());
 	}
-	
+
 	/**
 	 * @see PersonAddressValidator#validate(Object,Errors)
 	 */
 	@Test
 	@Verifies(value = "should fail if the endDate is before the startDate", method = "validate(Object,Errors)")
-	public void validate_shouldFailIfTheEndDateIsBeforeTheStartDate() throws Exception {
+	public void validate_shouldFailIfTheEndDateIsBeforeTheStartDate()
+			throws Exception {
 		PersonAddress personAddress = new PersonAddress();
 		Calendar c = Calendar.getInstance();
 		personAddress.setStartDate(c.getTime());
-		c.set(2010, 3, 15);//set to an older date
+		c.set(2010, 3, 15);// set to an older date
 		personAddress.setEndDate(c.getTime());
 		Errors errors = new BindException(personAddress, "personAddress");
 		validator.validate(personAddress, errors);
 		Assert.assertEquals(true, errors.hasFieldErrors());
 	}
-	
+
 	/**
 	 * @see PersonAddressValidator#validate(Object,Errors)
 	 */
@@ -91,13 +93,14 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(personAddress, errors);
 		Assert.assertEquals(false, errors.hasFieldErrors());
 	}
-	
+
 	/**
 	 * @see PersonAddressValidator#validate(Object,Errors)
 	 */
 	@Test
 	@Verifies(value = "should pass if startDate and endDate are both null", method = "validate(Object,Errors)")
-	public void validate_shouldPassIfStartDateAndEndDateAreBothNull() throws Exception {
+	public void validate_shouldPassIfStartDateAndEndDateAreBothNull()
+			throws Exception {
 		PersonAddress personAddress = new PersonAddress();
 		personAddress.setStartDate(null);
 		personAddress.setEndDate(null);
@@ -105,7 +108,7 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(personAddress, errors);
 		Assert.assertEquals(false, errors.hasFieldErrors());
 	}
-	
+
 	/**
 	 * @see PersonAddressValidator#validate(Object,Errors)
 	 */
@@ -120,7 +123,7 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(personAddress, errors);
 		Assert.assertEquals(false, errors.hasFieldErrors());
 	}
-	
+
 	/**
 	 * @see PersonAddressValidator#validate(Object,Errors)
 	 */
@@ -135,42 +138,46 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(personAddress, errors);
 		Assert.assertEquals(false, errors.hasFieldErrors());
 	}
-	
+
 	/**
-	 * @see PersonAddressValidator#validate(Object, org.springframework.validation.Errors)
+	 * @see PersonAddressValidator#validate(Object,
+	 *      org.springframework.validation.Errors)
 	 */
 	@Test
 	@Verifies(value = "should fail if required fields are empty", method = "validate(Object,Errors)")
 	public void validate_shouldFailIfRequiredFieldsAreEmpty() throws Exception {
 		executeDataSet(PERSON_ADDRESS_VALIDATOR_DATASET_PACKAGE_PATH);
 		Address personAddress = new PersonAddress();
-		
+
 		Errors errors = new BindException(personAddress, "personAddress");
 		validator.validate(personAddress, errors);
 		Assert.assertEquals(true, errors.hasErrors());
 	}
-	
+
 	/**
-	 * @see PersonAddressValidator#validate(Object, org.springframework.validation.Errors)
+	 * @see PersonAddressValidator#validate(Object,
+	 *      org.springframework.validation.Errors)
 	 */
 	@Test
 	@Verifies(value = "should pass if required fields are not empty", method = "validate(Object,Errors)")
-	public void validate_shouldPassIfRequiredFieldsAreNotEmpty() throws Exception {
+	public void validate_shouldPassIfRequiredFieldsAreNotEmpty()
+			throws Exception {
 		executeDataSet(PERSON_ADDRESS_VALIDATOR_DATASET_PACKAGE_PATH);
 		Address personAddress = new PersonAddress();
 		personAddress.setAddress1("Address1");
-		
+
 		Errors errors = new BindException(personAddress, "personAddress");
 		validator.validate(personAddress, errors);
 		Assert.assertEquals(false, errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see PersonAddressValidator#validate(Object,Errors)
 	 */
 	@Test
 	@Verifies(value = "should pass validation if field lengths are correct", method = "validate(Object,Errors)")
-	public void validate_shouldPassValidationIfFieldLengthsAreCorrect() throws Exception {
+	public void validate_shouldPassValidationIfFieldLengthsAreCorrect()
+			throws Exception {
 		PersonAddress personAddress = new PersonAddress();
 		personAddress.setStartDate(null);
 		personAddress.setEndDate(null);
@@ -191,13 +198,14 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(personAddress, errors);
 		Assert.assertEquals(false, errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see PersonAddressValidator#validate(Object,Errors)
 	 */
 	@Test
 	@Verifies(value = "should fail validation if field lengths are not correct", method = "validate(Object,Errors)")
-	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() throws Exception {
+	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect()
+			throws Exception {
 		PersonAddress personAddress = new PersonAddress();
 		personAddress.setStartDate(null);
 		personAddress.setEndDate(null);
@@ -240,15 +248,25 @@ public class PersonAddressValidatorTest extends BaseContextSensitiveTest {
 		Assert.assertEquals(true, errors.hasFieldErrors("address3"));
 		Assert.assertEquals(true, errors.hasFieldErrors("address4"));
 		Assert.assertEquals(true, errors.hasFieldErrors("address5"));
-		Assert.assertEquals("address6 missing in errors", true, errors.hasFieldErrors("address6"));
-		Assert.assertEquals("address7 missing in errors", true, errors.hasFieldErrors("address7"));
-		Assert.assertEquals("address8 missing in errors", true, errors.hasFieldErrors("address8"));
-		Assert.assertEquals("address9 missing in errors", true, errors.hasFieldErrors("address9"));
-		Assert.assertEquals("address10 missing in errors", true, errors.hasFieldErrors("address10"));
-		Assert.assertEquals("address11 missing in errors", true, errors.hasFieldErrors("address11"));
-		Assert.assertEquals("address12 missing in errors", true, errors.hasFieldErrors("address12"));
-		Assert.assertEquals("address13 missing in errors", true, errors.hasFieldErrors("address13"));
-		Assert.assertEquals("address14 missing in errors", true, errors.hasFieldErrors("address14"));
-		Assert.assertEquals("address15 missing in errors", true, errors.hasFieldErrors("address15"));
+		Assert.assertEquals("address6 missing in errors", true,
+				errors.hasFieldErrors("address6"));
+		Assert.assertEquals("address7 missing in errors", true,
+				errors.hasFieldErrors("address7"));
+		Assert.assertEquals("address8 missing in errors", true,
+				errors.hasFieldErrors("address8"));
+		Assert.assertEquals("address9 missing in errors", true,
+				errors.hasFieldErrors("address9"));
+		Assert.assertEquals("address10 missing in errors", true,
+				errors.hasFieldErrors("address10"));
+		Assert.assertEquals("address11 missing in errors", true,
+				errors.hasFieldErrors("address11"));
+		Assert.assertEquals("address12 missing in errors", true,
+				errors.hasFieldErrors("address12"));
+		Assert.assertEquals("address13 missing in errors", true,
+				errors.hasFieldErrors("address13"));
+		Assert.assertEquals("address14 missing in errors", true,
+				errors.hasFieldErrors("address14"));
+		Assert.assertEquals("address15 missing in errors", true,
+				errors.hasFieldErrors("address15"));
 	}
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -28,30 +28,31 @@ import static org.junit.Assert.fail;
  * Tests methods on the {@link ValidateUtil} class.
  */
 public class ValidateUtilTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see ValidateUtil#validate(Object)
 	 */
 	@Test(expected = ValidationException.class)
 	@Verifies(value = "should throw ValidationException if errors occur during validation", method = "validate(Object)")
-	public void validate_shouldThrowValidationExceptionIfErrorsOccurDuringValidation() throws Exception {
+	public void validate_shouldThrowValidationExceptionIfErrorsOccurDuringValidation()
+			throws Exception {
 		Location loc = new Location();
 		ValidateUtil.validate(loc);
 	}
-	
+
 	@Test
 	@Verifies(value = "should return Spring errors in ValidationException", method = "validate(Object)")
-	public void validate_shouldThrowAPIExceptionIfErrorsOccurDuringValidation() throws Exception {
+	public void validate_shouldThrowAPIExceptionIfErrorsOccurDuringValidation()
+			throws Exception {
 		Location loc = new Location();
-		
+
 		try {
 			ValidateUtil.validate(loc);
-		}
-		catch (ValidationException validationException) {
+		} catch (ValidationException validationException) {
 			assertNotNull(validationException.getErrors());
 			assertTrue(validationException.getErrors().hasErrors());
 		}
-		
+
 	}
 
 	/**
@@ -73,37 +74,46 @@ public class ValidateUtilTest extends BaseContextSensitiveTest {
 
 		ValidateUtil.setDisableValidation(prevVal);
 	}
-	
+
 	/**
-	 * @see ValidateUtil#validateFieldLengths(org.springframework.validation.Errors, Class, String...)
+	 * @see ValidateUtil#validateFieldLengths(org.springframework.validation.Errors,
+	 *      Class, String...)
 	 */
 	@Test
 	@Verifies(value = "fail validation if name field length is too long", method = "validateFieldLengths(org.springframework.validation.Errors, Class, String...)")
 	public void validateFieldLength_shouldRejectValueWhenNameIsToLong() {
 		PatientIdentifierType patientIdentifierType = new PatientIdentifierType();
-		patientIdentifierType.setName("asdfghjkl asdfghjkl asdfghjkl asdfghjkl asdfghjkl xx");
-		
-		BindException errors = new BindException(patientIdentifierType, "patientIdentifierType");
-		ValidateUtil.validateFieldLengths(errors, PatientIdentifierType.class, "name");
+		patientIdentifierType
+				.setName("asdfghjkl asdfghjkl asdfghjkl asdfghjkl asdfghjkl xx");
+
+		BindException errors = new BindException(patientIdentifierType,
+				"patientIdentifierType");
+		ValidateUtil.validateFieldLengths(errors, PatientIdentifierType.class,
+				"name");
 		assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
-	 * @see ValidateUtil#validateFieldLengths(org.springframework.validation.Errors, Class, String...)
+	 * @see ValidateUtil#validateFieldLengths(org.springframework.validation.Errors,
+	 *      Class, String...)
 	 */
 	@Test
 	@Verifies(value = "pass validation if name field length is equal to maximum length", method = "validateFieldLengths(org.springframework.validation.Errors, Class, String...)")
 	public void validateFieldLength_shouldNotRejectValueWhenNameIsEqualMax() {
 		PatientIdentifierType patientIdentifierType = new PatientIdentifierType();
-		patientIdentifierType.setName("asdfghjkl asdfghjkl asdfghjkl asdfghjkl asdfghjkl ");
-		
-		BindException errors = new BindException(patientIdentifierType, "patientIdentifierType");
-		ValidateUtil.validateFieldLengths(errors, PatientIdentifierType.class, "name");
+		patientIdentifierType
+				.setName("asdfghjkl asdfghjkl asdfghjkl asdfghjkl asdfghjkl ");
+
+		BindException errors = new BindException(patientIdentifierType,
+				"patientIdentifierType");
+		ValidateUtil.validateFieldLengths(errors, PatientIdentifierType.class,
+				"name");
 		assertFalse(errors.hasFieldErrors("name"));
 	}
 
 	/**
-	 * @see ValidateUtil#validateFieldLengths(org.springframework.validation.Errors, Class, String...)
+	 * @see ValidateUtil#validateFieldLengths(org.springframework.validation.Errors,
+	 *      Class, String...)
 	 */
 	@Test
 	@Verifies(value = "should return immediately if validation is disabled and have no errors", method = "validateFieldLengths(org.springframework.validation.Errors, Class, String...)")
@@ -112,15 +122,18 @@ public class ValidateUtilTest extends BaseContextSensitiveTest {
 		ValidateUtil.setDisableValidation(true);
 
 		PatientIdentifierType patientIdentifierType = new PatientIdentifierType();
-		patientIdentifierType.setName("asdfghjkl asdfghjkl asdfghjkl asdfghjkl asdfghjkl +1");
+		patientIdentifierType
+				.setName("asdfghjkl asdfghjkl asdfghjkl asdfghjkl asdfghjkl +1");
 
-		BindException errors = new BindException(patientIdentifierType, "patientIdentifierType");
-		ValidateUtil.validateFieldLengths(errors, PatientIdentifierType.class, "name");
+		BindException errors = new BindException(patientIdentifierType,
+				"patientIdentifierType");
+		ValidateUtil.validateFieldLengths(errors, PatientIdentifierType.class,
+				"name");
 		assertFalse(errors.hasFieldErrors("name"));
 
 		ValidateUtil.setDisableValidation(prevVal);
 	}
-	
+
 	/**
 	 * @see ValidateUtil#validate(Object,Errors)
 	 * @verifies populate errors if object invalid
@@ -130,7 +143,7 @@ public class ValidateUtilTest extends BaseContextSensitiveTest {
 		Location loc = new Location();
 		Errors errors = new BindException(loc, "");
 		ValidateUtil.validate(loc, errors);
-		
+
 		assertTrue(errors.hasErrors());
 	}
 

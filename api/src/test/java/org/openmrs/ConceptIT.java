@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -20,20 +20,23 @@ import static org.junit.Assert.assertEquals;
  * Contains integration tests of the Concept class.
  */
 public class ConceptIT extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @verifies return a name in the matching locale if exact is set to false
 	 * @see Concept#getName(java.util.Locale, boolean)
 	 */
 	@Test
-	public void getName_shouldReturnANameInTheMatchingLocaleIfExactIsSetToFalse() throws Exception {
+	public void getName_shouldReturnANameInTheMatchingLocaleIfExactIsSetToFalse()
+			throws Exception {
 		Concept concept = new Concept();
-		ConceptName frenchConceptName = new ConceptName("frenchName", Locale.FRENCH);
-		ConceptName englishConceptName = new ConceptName("enqlishName", Locale.ENGLISH);
-		
+		ConceptName frenchConceptName = new ConceptName("frenchName",
+				Locale.FRENCH);
+		ConceptName englishConceptName = new ConceptName("enqlishName",
+				Locale.ENGLISH);
+
 		concept.addName(englishConceptName);
 		concept.addName(frenchConceptName);
-		
+
 		assertEquals(frenchConceptName, concept.getName(Locale.FRENCH));
 	}
 }

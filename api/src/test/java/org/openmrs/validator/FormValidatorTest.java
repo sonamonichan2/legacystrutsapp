@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -21,7 +21,7 @@ import org.springframework.validation.Errors;
  * Tests methods on the {@link FormValidator} class.
  */
 public class FormValidatorTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see FormValidator#validate(Object,Errors)
 	 */
@@ -30,14 +30,14 @@ public class FormValidatorTest extends BaseContextSensitiveTest {
 	public void validate_shouldFailValidationIfNameIsNull() throws Exception {
 		Form form = new Form();
 		form.setVersion("1.0");
-		
+
 		Errors errors = new BindException(form, "form");
 		new FormValidator().validate(form, errors);
-		
+
 		Assert.assertTrue(errors.hasFieldErrors("name"));
 		Assert.assertFalse(errors.hasFieldErrors("version"));
 	}
-	
+
 	/**
 	 * @see FormValidator#validate(Object,Errors)
 	 */
@@ -46,120 +46,123 @@ public class FormValidatorTest extends BaseContextSensitiveTest {
 	public void validate_shouldFailValidationIfVersionIsNull() throws Exception {
 		Form form = new Form();
 		form.setName("test");
-		
+
 		Errors errors = new BindException(form, "form");
 		new FormValidator().validate(form, errors);
-		
+
 		Assert.assertFalse(errors.hasFieldErrors("name"));
 		Assert.assertTrue(errors.hasFieldErrors("version"));
 	}
-	
+
 	/**
 	 * @see FormValidator#validate(Object,Errors)
 	 */
 	@Test
 	@Verifies(value = "should fail validation if version does not match regex", method = "validate(Object,Errors)")
-	public void validate_shouldFailValidationIfVersionDoesNotMatchRegex() throws Exception {
+	public void validate_shouldFailValidationIfVersionDoesNotMatchRegex()
+			throws Exception {
 		Form form = new Form();
 		form.setName("test");
 		form.setVersion("first");
-		
+
 		Errors errors = new BindException(form, "form");
 		new FormValidator().validate(form, errors);
-		
+
 		Assert.assertFalse(errors.hasFieldErrors("name"));
 		Assert.assertTrue(errors.hasFieldErrors("version"));
 	}
-	
+
 	/**
 	 * @see FormValidator#validate(Object,Errors)
 	 */
 	@Test
 	@Verifies(value = "should fail validation if retiredReason is null", method = "validate(Object,Errors)")
-	public void validate_shouldFailValidationIfRetiredReasonIsNull() throws Exception {
+	public void validate_shouldFailValidationIfRetiredReasonIsNull()
+			throws Exception {
 		Form form = new Form();
 		form.setName("test");
 		form.setVersion("1.0");
 		form.setRetired(true);
-		
+
 		Errors errors = new BindException(form, "form");
 		new FormValidator().validate(form, errors);
-		
+
 		Assert.assertFalse(errors.hasFieldErrors("name"));
 		Assert.assertFalse(errors.hasFieldErrors("version"));
 		Assert.assertTrue(errors.hasFieldErrors("retireReason"));
 	}
-	
+
 	/**
 	 * @see FormValidator#validate(Object,Errors)
 	 */
 	@Test
 	@Verifies(value = "should pass validation if all fields are correct", method = "validate(Object,Errors)")
-	public void validate_shouldPassValidationIfAllFieldsAreCorrect() throws Exception {
+	public void validate_shouldPassValidationIfAllFieldsAreCorrect()
+			throws Exception {
 		Form form = new Form();
 		form.setName("test");
 		form.setVersion("1.0");
-		
+
 		Errors errors = new BindException(form, "form");
 		new FormValidator().validate(form, errors);
-		
+
 		Assert.assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see FormValidator#validate(Object,Errors)
 	 */
 	@Test
 	@Verifies(value = "should fail validation if retiredReason is empty", method = "validate(Object,Errors)")
-	public void validate_shouldFailValidationIfRetiredReasonIsEmpty() throws Exception {
+	public void validate_shouldFailValidationIfRetiredReasonIsEmpty()
+			throws Exception {
 		Form form = new Form();
 		form.setName("test");
 		form.setVersion("1.0");
 		form.setRetired(true);
 		form.setRetireReason("");
-		
+
 		Errors errors = new BindException(form, "form");
 		new FormValidator().validate(form, errors);
-		
+
 		Assert.assertTrue(errors.hasFieldErrors("retireReason"));
 	}
-	
+
 	/**
 	 * @see FormValidator#validate(Object,Errors)
 	 */
 	@Test
 	@Verifies(value = "should pass validation if field lengths are correct", method = "validate(Object,Errors)")
-	public void validate_shouldPassValidationIfFieldLengthsAreCorrect() throws Exception {
+	public void validate_shouldPassValidationIfFieldLengthsAreCorrect()
+			throws Exception {
 		Form form = new Form();
 		form.setName("name");
 		form.setVersion("1.0");
 		form.setDescription("description");
 		form.setRetireReason("retireReason");
-		
+
 		Errors errors = new BindException(form, "form");
 		new FormValidator().validate(form, errors);
-		
+
 		Assert.assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see FormValidator#validate(Object,Errors)
 	 */
 	@Test
 	@Verifies(value = "should fail validation if field lengths are not correct", method = "validate(Object,Errors)")
-	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() throws Exception {
+	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect()
+			throws Exception {
 		Form form = new Form();
-		form
-		        .setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+		form.setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		form.setVersion("1111111111111111111111111111111111111111111111111111");
-		form
-		        .setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
-		form
-		        .setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
-		
+		form.setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+		form.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+
 		Errors errors = new BindException(form, "form");
 		new FormValidator().validate(form, errors);
-		
+
 		Assert.assertTrue(errors.hasFieldErrors("name"));
 		Assert.assertTrue(errors.hasFieldErrors("version"));
 		Assert.assertTrue(errors.hasFieldErrors("description"));

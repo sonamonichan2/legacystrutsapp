@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -16,12 +16,13 @@ package org.openmrs.logic.op;
  * <code>
  *  Collection answers = Collection.asList("ADULTRETURN");<br>
  *  logicService.parseString(EncounterDataSource.ENCOUNTER_KEY).in(typeNames);<br>
- * </code> The above criteria will test whether a patient have EncounterType in the list
+ * </code> The above criteria will test whether a patient have EncounterType in
+ * the list
  */
 public class In implements ComparisonOperator {
-	
+
 	public String toString() {
 		return "IN";
 	}
-	
+
 }

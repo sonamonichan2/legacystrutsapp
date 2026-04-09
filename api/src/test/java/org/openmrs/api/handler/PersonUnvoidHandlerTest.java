@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -21,7 +21,7 @@ import org.openmrs.test.Verifies;
  * Tests the {@link PersonUnvoidHandler} class.
  */
 public class PersonUnvoidHandlerTest {
-	
+
 	/**
 	 * @see PersonUnvoidHandler#handle(Person,User,Date,String)
 	 */
@@ -34,7 +34,7 @@ public class PersonUnvoidHandlerTest {
 		handler.handle(person, null, null, null);
 		Assert.assertFalse(person.isPersonVoided());
 	}
-	
+
 	/**
 	 * @see PersonUnvoidHandler#handle(Person,User,Date,String)
 	 */
@@ -48,7 +48,7 @@ public class PersonUnvoidHandlerTest {
 		handler.handle(person, null, null, null);
 		Assert.assertNull(person.getPersonVoidedBy());
 	}
-	
+
 	/**
 	 * @see PersonUnvoidHandler#handle(Person,User,Date,String)
 	 */
@@ -62,7 +62,7 @@ public class PersonUnvoidHandlerTest {
 		handler.handle(person, null, null, null);
 		Assert.assertNull(person.getPersonDateVoided());
 	}
-	
+
 	/**
 	 * @see PersonUnvoidHandler#handle(Person,User,Date,String)
 	 */
@@ -76,7 +76,7 @@ public class PersonUnvoidHandlerTest {
 		handler.handle(person, null, null, null);
 		Assert.assertNull(person.getPersonVoidReason());
 	}
-	
+
 	/**
 	 * @see PersonUnvoidHandler#handle(Person,User,Date,String)
 	 */
@@ -89,20 +89,22 @@ public class PersonUnvoidHandlerTest {
 		handler.handle(person, null, null, "SOME REASON");
 		Assert.assertNull(person.getPersonVoidReason());
 	}
-	
+
 	/**
 	 * @see PersonUnvoidHandler#handle(Person,User,Date,String)
 	 */
 	@Test
 	@Verifies(value = "should not act on objects with a different personPersonDateVoided", method = "handle(Voidable,User,Date,String)")
-	public void handle_shouldNotActOnObjectsWithADifferentPersonDateVoided() throws Exception {
-		Date d = new Date(new Date().getTime() - 1000); // a time that isn't right now
-		
+	public void handle_shouldNotActOnObjectsWithADifferentPersonDateVoided()
+			throws Exception {
+		Date d = new Date(new Date().getTime() - 1000); // a time that isn't
+														// right now
+
 		UnvoidHandler<Person> handler = new PersonUnvoidHandler();
 		Person person = new Person();
 		person.setPersonVoided(true);
 		person.setPersonDateVoided(d);
-		
+
 		handler.handle(person, null, new Date(), "SOME REASON");
 		Assert.assertTrue(person.isPersonVoided());
 	}

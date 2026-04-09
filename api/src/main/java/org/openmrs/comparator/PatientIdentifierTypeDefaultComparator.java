@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -16,61 +16,73 @@ import org.apache.commons.collections.comparators.NullComparator;
 import org.openmrs.PatientIdentifierType;
 
 /**
- * Orders {@link PatientIdentifierType} by retired (true last), required (true first), name and
- * id.
+ * Orders {@link PatientIdentifierType} by retired (true last), required (true
+ * first), name and id.
  * 
  * @since 1.9.2, 1.8.5
  */
-public class PatientIdentifierTypeDefaultComparator implements Comparator<PatientIdentifierType> {
-	
+public class PatientIdentifierTypeDefaultComparator
+		implements
+			Comparator<PatientIdentifierType> {
+
 	private final ComparatorChain comparatorChain;
-	
+
 	public PatientIdentifierTypeDefaultComparator() {
 		comparatorChain = new ComparatorChain();
-		
+
 		final NullComparator nullHigherComparator = new NullComparator();
 		final NullComparator nullLowerComparator = new NullComparator(false);
-		
-		//Retired higher
+
+		// Retired higher
 		comparatorChain.addComparator(new Comparator<PatientIdentifierType>() {
-			
+
 			@Override
-			public int compare(PatientIdentifierType o1, PatientIdentifierType o2) {
-				return nullLowerComparator.compare(o1.getRetired(), o2.getRetired());
+			public int compare(PatientIdentifierType o1,
+					PatientIdentifierType o2) {
+				return nullLowerComparator.compare(o1.getRetired(),
+						o2.getRetired());
 			}
 		});
-		
-		//Required lower
+
+		// Required lower
 		comparatorChain.addComparator(new Comparator<PatientIdentifierType>() {
-			
+
 			@Override
-			public int compare(PatientIdentifierType o1, PatientIdentifierType o2) {
-				return nullLowerComparator.compare(o1.getRequired(), o2.getRequired());
+			public int compare(PatientIdentifierType o1,
+					PatientIdentifierType o2) {
+				return nullLowerComparator.compare(o1.getRequired(),
+						o2.getRequired());
 			}
 		}, true);
-		
-		//By name
+
+		// By name
 		comparatorChain.addComparator(new Comparator<PatientIdentifierType>() {
-			
+
 			@Override
-			public int compare(PatientIdentifierType o1, PatientIdentifierType o2) {
-				String o1Name = (o1.getName() != null) ? o1.getName().toLowerCase() : null;
-				String o2Name = (o2.getName() != null) ? o2.getName().toLowerCase() : null;
-				
+			public int compare(PatientIdentifierType o1,
+					PatientIdentifierType o2) {
+				String o1Name = (o1.getName() != null) ? o1.getName()
+						.toLowerCase() : null;
+				String o2Name = (o2.getName() != null) ? o2.getName()
+						.toLowerCase() : null;
+
 				return nullHigherComparator.compare(o1Name, o2Name);
 			}
 		});
-		
-		//By id
+
+		// By id
 		comparatorChain.addComparator(new Comparator<PatientIdentifierType>() {
-			
+
 			@Override
-			public int compare(PatientIdentifierType o1, PatientIdentifierType o2) {
-				return nullHigherComparator.compare(o1.getPatientIdentifierTypeId(), o2.getPatientIdentifierTypeId());
+			public int compare(PatientIdentifierType o1,
+					PatientIdentifierType o2) {
+				return nullHigherComparator.compare(
+						o1.getPatientIdentifierTypeId(),
+						o2.getPatientIdentifierTypeId());
 			}
 		});
 	}
-	
+
 	/**
 	 * Orders by retired (true last), required (true first), name and id.
 	 * 

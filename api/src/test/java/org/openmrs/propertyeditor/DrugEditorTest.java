@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,21 +19,22 @@ import org.openmrs.test.Verifies;
  * 
  */
 public class DrugEditorTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see DrugEditor#setAsText(String)
 	 */
 	@Test
 	@Verifies(value = "should set value to the drug with the specified identifier", method = "setAsText(String)")
-	public void xsetAsText_shouldSetValueToTheDrugWithTheSpecifiedIdentifier() throws Exception {
+	public void xsetAsText_shouldSetValueToTheDrugWithTheSpecifiedIdentifier()
+			throws Exception {
 		DrugEditor drugEditor = new DrugEditor();
 		drugEditor.setAsText("2");
 		Drug drug = (Drug) drugEditor.getValue();
-		
+
 		Assert.assertNotNull(drug);
 		Assert.assertEquals("", Integer.valueOf(2), drug.getDrugId());
 	}
-	
+
 	/**
 	 * @see DrugEditor#setAsText(String)
 	 * @verifies set using uuid

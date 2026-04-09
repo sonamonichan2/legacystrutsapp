@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -73,27 +73,27 @@ import org.springframework.context.ApplicationContext;
  * Tests the {@link RequiredDataAdvice} class.
  */
 public class RequiredDataAdviceTest extends BaseContextMockTest {
-	
+
 	@Mock
 	AdministrationService administrationService;
-	
+
 	@Mock
 	ApplicationContext applicationContext;
-	
+
 	@Mock
 	Context context;
-	
+
 	@Mock
 	ServiceContext serviceContext;
-	
+
 	@Spy
 	OpenmrsObjectSaveHandler saveHandler;
-	
+
 	@Spy
 	BaseVoidHandler voidHandler;
-	
+
 	RequiredDataAdvice requiredDataAdvice = new RequiredDataAdvice();
-	
+
 	@Before
 	public void setUp() {
 
@@ -101,10 +101,10 @@ public class RequiredDataAdviceTest extends BaseContextMockTest {
 		context.setServiceContext(serviceContext);
 		context.setContext(serviceContext);
 		serviceContext.setApplicationContext(applicationContext);
-		
-		//when(context.getUserContext()).thenReturn(userContext);
-		//when(serviceContext.getApplicationContext()).thenReturn(applicationContext);
-		
+
+		// when(context.getUserContext()).thenReturn(userContext);
+		// when(serviceContext.getApplicationContext()).thenReturn(applicationContext);
+
 		User user = new User();
 		user.setUuid("1010d442-e134-11de-babe-001e378eb67e");
 		user.setUserId(1);
@@ -121,583 +121,681 @@ public class RequiredDataAdviceTest extends BaseContextMockTest {
 		user.setPerson(person);
 		when(userContext.getAuthenticatedUser()).thenReturn(user);
 		when(userContext.isAuthenticated()).thenReturn(true);
-		
+
 		Map<String, SaveHandler> saveHandlers = new HashMap<String, SaveHandler>();
 		saveHandlers.put("saveHandler", saveHandler);
-		when(applicationContext.getBeansOfType(SaveHandler.class)).thenReturn(saveHandlers);
-		
+		when(applicationContext.getBeansOfType(SaveHandler.class)).thenReturn(
+				saveHandlers);
+
 		Map<String, VoidHandler> voidHandlers = new HashMap<String, VoidHandler>();
 		voidHandlers.put("voidHandler", voidHandler);
-		when(applicationContext.getBeansOfType(VoidHandler.class)).thenReturn(voidHandlers);
-		
-		//Clear cache since handlers are updated
+		when(applicationContext.getBeansOfType(VoidHandler.class)).thenReturn(
+				voidHandlers);
+
+		// Clear cache since handlers are updated
 		HandlerUtil.clearCachedHandlers();
 	}
-	
+
 	/**
 	 * Class with a private field without getter
 	 */
 	private class MiniOpenmrsObject extends BaseOpenmrsObject {
-		
+
 		@AllowDirectAccess
 		private List<Location> locations;
-		
+
 		public void setLocations(List<Location> locs) {
 			this.locations = locs;
 		}
-		
+
 		public Integer getId() {
 			return null;
 		}
-		
+
 		public void setId(Integer id) {
 		}
 	}
-	
+
 	/**
 	 * @see RequiredDataAdvice#getChildCollection(OpenmrsObject, Field)
 	 */
 	@Test
 	@Verifies(value = "should get value of given child collection on given field", method = "getChildCollection(OpenmrsObject,Field)")
-	public void getChildCollection_shouldGetValueOfGivenChildCollectionOnGivenField() throws Exception {
+	public void getChildCollection_shouldGetValueOfGivenChildCollectionOnGivenField()
+			throws Exception {
 		MiniOpenmrsObject oo = new MiniOpenmrsObject();
 		List<Location> locs = new ArrayList<Location>();
 		Location location = new Location(1);
 		locs.add(location);
 		oo.setLocations(locs);
-		Collection<OpenmrsObject> fetchedLocations = RequiredDataAdvice.getChildCollection(oo, MiniOpenmrsObject.class
-		        .getDeclaredField("locations"));
+		Collection<OpenmrsObject> fetchedLocations = RequiredDataAdvice
+				.getChildCollection(oo,
+						MiniOpenmrsObject.class.getDeclaredField("locations"));
 		Assert.assertTrue(fetchedLocations.contains(location));
 	}
-	
+
 	/**
 	 * @see RequiredDataAdvice#getChildCollection(OpenmrsObject,Field)
 	 * @verifies should be able to get annotated private fields
 	 */
 	@Test
-	public void getChildCollection_shouldShouldBeAbleToGetAnnotatedPrivateFields() throws Exception {
+	public void getChildCollection_shouldShouldBeAbleToGetAnnotatedPrivateFields()
+			throws Exception {
 		MiniOpenmrsObject oo = new MiniOpenmrsObject();
 		oo.setLocations(new ArrayList<Location>());
-		Assert.assertNotNull(RequiredDataAdvice
-		        .getChildCollection(oo, MiniOpenmrsObject.class.getDeclaredField("locations")));
+		Assert.assertNotNull(RequiredDataAdvice.getChildCollection(oo,
+				MiniOpenmrsObject.class.getDeclaredField("locations")));
 	}
-	
+
 	/**
-	 * Class that has a mismatched getter name instead of the correct getter name
+	 * Class that has a mismatched getter name instead of the correct getter
+	 * name
 	 */
 	private class ClassWithBadGetter extends BaseOpenmrsObject {
-		
+
 		private Set<Location> locations;
-		
+
 		public Set<Location> getMyLocations() {
 			return locations;
 		}
-		
+
 		public void setMyLocations(Set<Location> locs) {
 			this.locations = locs;
 		}
-		
+
 		public Integer getId() {
 			return null;
 		}
-		
+
 		public void setId(Integer id) {
 		}
 	}
-	
+
 	/**
 	 * @see RequiredDataAdvice#getChildCollection(OpenmrsObject, Field)
 	 */
 	@Test(expected = APIException.class)
 	@Verifies(value = "should throw APIException if getter method not found", method = "getChildCollection(OpenmrsObject,Field)")
-	public void getChildCollection_shouldThrowAPIExceptionIfGetterMethodNotFound() throws Exception {
+	public void getChildCollection_shouldThrowAPIExceptionIfGetterMethodNotFound()
+			throws Exception {
 		ClassWithBadGetter oo = new ClassWithBadGetter();
 		oo.setMyLocations(new HashSet<Location>());
-		RequiredDataAdvice.getChildCollection(oo, ClassWithBadGetter.class.getDeclaredField("locations"));
+		RequiredDataAdvice.getChildCollection(oo,
+				ClassWithBadGetter.class.getDeclaredField("locations"));
 	}
-	
+
 	/**
 	 * A class that has normal fields and non{@link OpenmrsObject} on it.
 	 */
-	@SuppressWarnings( { "UnusedDeclaration" })
+	@SuppressWarnings({"UnusedDeclaration"})
 	private class ClassWithOtherFields extends BaseOpenmrsObject {
-		
+
 		private Set<Locale> locales;
-		
+
 		private List<Map<String, String>> nestedGenericProperty;
-		
+
 		private Integer id;
-		
+
 		public List<Map<String, String>> getNestedGenericProperty() {
 			return nestedGenericProperty;
 		}
-		
-		public void setNestedGenericProperty(List<Map<String, String>> nestedGenericProperty) {
+
+		public void setNestedGenericProperty(
+				List<Map<String, String>> nestedGenericProperty) {
 			this.nestedGenericProperty = nestedGenericProperty;
 		}
-		
+
 		public Set<Locale> getLocales() {
 			return locales;
 		}
-		
+
 		public void setLocales(Set<Locale> locs) {
 			this.locales = locs;
 		}
-		
+
 		public Integer getId() {
 			return id;
 		}
-		
+
 		public void setId(Integer id) {
 			this.id = id;
 		}
 	}
-	
+
 	/**
 	 * @see RequiredDataAdvice#isOpenmrsObjectCollection(Field)
 	 */
 	@Test
 	@Verifies(value = "should return false if field is collection of other objects", method = "isOpenmrsObjectCollection(Field)")
-	public void isOpenmrsObjectCollection_shouldReturnFalseIfFieldIsCollectionOfOtherObjects() throws Exception {
-		Assert.assertFalse(RequiredDataAdvice.isOpenmrsObjectCollection(ClassWithOtherFields.class
-		        .getDeclaredField("locales")));
+	public void isOpenmrsObjectCollection_shouldReturnFalseIfFieldIsCollectionOfOtherObjects()
+			throws Exception {
+		Assert.assertFalse(RequiredDataAdvice
+				.isOpenmrsObjectCollection(ClassWithOtherFields.class
+						.getDeclaredField("locales")));
 		List<String> list = new LinkedList<String>();
 		list.add("Test");
 		Assert.assertFalse(RequiredDataAdvice.isOpenmrsObjectCollection(list));
-		
+
 	}
-	
+
 	/**
 	 * @see RequiredDataAdvice#isOpenmrsObjectCollection(Field)
 	 */
 	@Test
 	@Verifies(value = "should return false if field is collection of parameterized type", method = "isOpenmrsObjectCollection(Field)")
-	public void isOpenmrsObjectCollection_shouldReturnFalseIfFieldIsCollectionOfParameterizedType() throws Exception {
-		Assert.assertFalse(RequiredDataAdvice.isOpenmrsObjectCollection(ClassWithOtherFields.class
-		        .getDeclaredField("nestedGenericProperty")));
+	public void isOpenmrsObjectCollection_shouldReturnFalseIfFieldIsCollectionOfParameterizedType()
+			throws Exception {
+		Assert.assertFalse(RequiredDataAdvice
+				.isOpenmrsObjectCollection(ClassWithOtherFields.class
+						.getDeclaredField("nestedGenericProperty")));
 	}
-	
+
 	/**
 	 * @see RequiredDataAdvice#isOpenmrsObjectCollection(Field)
 	 */
 	@Test
 	@Verifies(value = "should return false if field is not a collection", method = "isOpenmrsObjectCollection(Field)")
-	public void isOpenmrsObjectCollection_shouldReturnFalseIfFieldIsNotACollection() throws Exception {
-		Assert.assertFalse(RequiredDataAdvice.isOpenmrsObjectCollection(ClassWithOtherFields.class.getDeclaredField("id")));
+	public void isOpenmrsObjectCollection_shouldReturnFalseIfFieldIsNotACollection()
+			throws Exception {
+		Assert.assertFalse(RequiredDataAdvice
+				.isOpenmrsObjectCollection(ClassWithOtherFields.class
+						.getDeclaredField("id")));
 	}
-	
+
 	/**
 	 * @see RequiredDataAdvice#isOpenmrsObjectCollection(Class<*>,Object)
 	 */
 	@Test
 	@Verifies(value = "should return true if class is openmrsObject list", method = "isOpenmrsObjectCollection(Object)")
-	public void isOpenmrsObjectCollection_shouldReturnTrueIfClassIsOpenmrsObjectList() throws Exception {
+	public void isOpenmrsObjectCollection_shouldReturnTrueIfClassIsOpenmrsObjectList()
+			throws Exception {
 		List<Location> locations = new ArrayList<Location>();
 		Location location = new Location();
 		locations.add(location);
-		Assert.assertTrue(RequiredDataAdvice.isOpenmrsObjectCollection(locations));
+		Assert.assertTrue(RequiredDataAdvice
+				.isOpenmrsObjectCollection(locations));
 	}
-	
+
 	/**
 	 * @see RequiredDataAdvice#isOpenmrsObjectCollection(Class<*>,Object)
 	 */
 	@Test
 	@Verifies(value = "should return true if class is openmrsObject set", method = "isOpenmrsObjectCollection(Object)")
-	public void isOpenmrsObjectCollection_shouldReturnTrueIfClassIsOpenmrsObjectSet() throws Exception {
+	public void isOpenmrsObjectCollection_shouldReturnTrueIfClassIsOpenmrsObjectSet()
+			throws Exception {
 		Set<Location> locations = new HashSet<Location>();
 		Location location = new Location();
 		locations.add(location);
-		Assert.assertTrue(RequiredDataAdvice.isOpenmrsObjectCollection(locations));
+		Assert.assertTrue(RequiredDataAdvice
+				.isOpenmrsObjectCollection(locations));
 	}
-	
+
 	/**
 	 * @see RequiredDataAdvice#isOpenmrsObjectCollection(Class<*>,Object)
 	 */
 	@Test
 	@Verifies(value = "should return false if collection is empty regardless of type held", method = "isOpenmrsObjectCollection(Object)")
-	public void isOpenmrsObjectCollection_shouldReturnFalseIfCollectionIsEmptyRegardlessOfTypeHeld() throws Exception {
+	public void isOpenmrsObjectCollection_shouldReturnFalseIfCollectionIsEmptyRegardlessOfTypeHeld()
+			throws Exception {
 		Set<Location> locations = new HashSet<Location>();
-		Assert.assertFalse(RequiredDataAdvice.isOpenmrsObjectCollection(locations));
+		Assert.assertFalse(RequiredDataAdvice
+				.isOpenmrsObjectCollection(locations));
 	}
-	
+
 	/**
 	 * Some OpenmrsData with a collection annotated with @DisableHandlers
 	 */
 	private class ClassWithDisableHandlersAnnotation extends BaseOpenmrsData {
-		
-		@DisableHandlers(handlerTypes = { VoidHandler.class, SaveHandler.class })
+
+		@DisableHandlers(handlerTypes = {VoidHandler.class, SaveHandler.class})
 		private List<Person> persons;
-		
+
 		private List<Person> notAnnotatedPersons;
-		
+
 		public List<Person> getPersons() {
 			return persons;
 		}
-		
+
 		public void setPersons(List<Person> persons) {
 			this.persons = persons;
 		}
-		
+
 		public List<Person> getNotAnnotatedPersons() {
 			return notAnnotatedPersons;
 		}
-		
+
 		public void setNotAnnotatedPersons(List<Person> notAnnotatedPersons) {
 			this.notAnnotatedPersons = notAnnotatedPersons;
 		}
-		
+
 		public Integer getId() {
 			return null;
 		}
-		
+
 		public void setId(Integer id) {
 		}
 	}
-	
+
 	/**
-	 * @see RequiredDataAdvice#isHandlerMarkedAsDisabled(Class, java.lang.reflect.Field)
+	 * @see RequiredDataAdvice#isHandlerMarkedAsDisabled(Class,
+	 *      java.lang.reflect.Field)
 	 */
 	@Test
 	public void isHandlerMarkedAsDisabled_shouldReturnTrueIfHandlerDisabled() {
-		
+
 		Field persons = null;
-		
-		for (Field field : Reflect.getAllFields(ClassWithDisableHandlersAnnotation.class)) {
+
+		for (Field field : Reflect
+				.getAllFields(ClassWithDisableHandlersAnnotation.class)) {
 			if (field.getName().equals("persons")) {
 				persons = field;
 			}
 		}
-		
-		Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(SaveHandler.class, persons));
-		Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(VoidHandler.class, persons));
+
+		Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(
+				SaveHandler.class, persons));
+		Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(
+				VoidHandler.class, persons));
 	}
-	
+
 	/**
-	 * @see RequiredDataAdvice#isHandlerMarkedAsDisabled(Class, java.lang.reflect.Field)
+	 * @see RequiredDataAdvice#isHandlerMarkedAsDisabled(Class,
+	 *      java.lang.reflect.Field)
 	 */
 	@Test
 	public void isHandlerMarkedAsDisabled_shouldReturnFalseIfHandlerNotDisabled() {
-		
+
 		Field persons = null;
-		
-		for (Field field : Reflect.getAllFields(ClassWithDisableHandlersAnnotation.class)) {
+
+		for (Field field : Reflect
+				.getAllFields(ClassWithDisableHandlersAnnotation.class)) {
 			if (field.getName().equals("persons")) {
 				persons = field;
 			}
 		}
-		
-		Assert.assertFalse(RequiredDataAdvice.isHandlerMarkedAsDisabled(RetireHandler.class, persons));
+
+		Assert.assertFalse(RequiredDataAdvice.isHandlerMarkedAsDisabled(
+				RetireHandler.class, persons));
 	}
-	
+
 	/**
-	 * @see RequiredDataAdvice#isHandlerMarkedAsDisabled(Class, java.lang.reflect.Field)
+	 * @see RequiredDataAdvice#isHandlerMarkedAsDisabled(Class,
+	 *      java.lang.reflect.Field)
 	 */
 	@Test
 	public void isHandlerMarkedAsDisabled_shouldReturnFalseIfFieldNotAnnotated() {
-		
+
 		Field persons = null;
-		
-		for (Field field : Reflect.getAllFields(ClassWithDisableHandlersAnnotation.class)) {
+
+		for (Field field : Reflect
+				.getAllFields(ClassWithDisableHandlersAnnotation.class)) {
 			if (field.getName().equals("notAnnotatedPersons")) {
 				persons = field;
 			}
 		}
-		
-		Assert.assertFalse(RequiredDataAdvice.isHandlerMarkedAsDisabled(RetireHandler.class, persons));
+
+		Assert.assertFalse(RequiredDataAdvice.isHandlerMarkedAsDisabled(
+				RetireHandler.class, persons));
 	}
-	
+
 	/**
 	 * Some OpenmrsData with a collection annotated with @DisableHandlers
 	 */
-	private class ClassWithDisableHandlersAnnotationForSupertype extends BaseOpenmrsData {
-		
+	private class ClassWithDisableHandlersAnnotationForSupertype
+			extends
+				BaseOpenmrsData {
+
 		// this should disable all handlers
-		@DisableHandlers(handlerTypes = { RequiredDataHandler.class })
+		@DisableHandlers(handlerTypes = {RequiredDataHandler.class})
 		private List<Person> persons;
-		
+
 		private List<Person> notAnnotatedPersons;
-		
+
 		public List<Person> getPersons() {
 			return persons;
 		}
-		
+
 		public void setPersons(List<Person> persons) {
 			this.persons = persons;
 		}
-		
+
 		public List<Person> getNotAnnotatedPersons() {
 			return notAnnotatedPersons;
 		}
-		
+
 		public void setNotAnnotatedPersons(List<Person> notAnnotatedPersons) {
 			this.notAnnotatedPersons = notAnnotatedPersons;
 		}
-		
+
 		public Integer getId() {
 			return null;
 		}
-		
+
 		public void setId(Integer id) {
 		}
 	}
-	
+
 	/**
-	 * @see RequiredDataAdvice#isHandlerMarkedAsDisabled(Class, java.lang.reflect.Field)
+	 * @see RequiredDataAdvice#isHandlerMarkedAsDisabled(Class,
+	 *      java.lang.reflect.Field)
 	 */
 	@Test
 	public void isHandlerMarkedAsDisabled_shouldReturnTrueIfSupertypeHandlerDisabled() {
-		
+
 		Field persons = null;
-		
-		for (Field field : Reflect.getAllFields(ClassWithDisableHandlersAnnotationForSupertype.class)) {
+
+		for (Field field : Reflect
+				.getAllFields(ClassWithDisableHandlersAnnotationForSupertype.class)) {
 			if (field.getName().equals("persons")) {
 				persons = field;
 			}
 		}
-		
-		// all the handlers should be marked as disabled, since the supertype (RequiredDataHandler) was specified to be ignored
-		Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(SaveHandler.class, persons));
-		Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(VoidHandler.class, persons));
-		Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(UnvoidHandler.class, persons));
-		Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(RetireHandler.class, persons));
-		Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(UnretireHandler.class, persons));
+
+		// all the handlers should be marked as disabled, since the supertype
+		// (RequiredDataHandler) was specified to be ignored
+		Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(
+				SaveHandler.class, persons));
+		Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(
+				VoidHandler.class, persons));
+		Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(
+				UnvoidHandler.class, persons));
+		Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(
+				RetireHandler.class, persons));
+		Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(
+				UnretireHandler.class, persons));
 	}
-	
+
 	/**
 	 * Some OpenmrsMetadata with a collection annotated with @DisableHandlers
 	 */
-	private class MetadataClassWithDisableHandlersAnnotation extends BaseOpenmrsMetadata {
-		
-		@DisableHandlers(handlerTypes = { UnretireHandler.class })
+	private class MetadataClassWithDisableHandlersAnnotation
+			extends
+				BaseOpenmrsMetadata {
+
+		@DisableHandlers(handlerTypes = {UnretireHandler.class})
 		private List<Concept> concepts;
-		
+
 		public List<Concept> getConcepts() {
 			return concepts;
 		}
-		
+
 		public void setConcepts(List<Concept> concepts) {
 			this.concepts = concepts;
 		}
-		
+
 		public Integer getId() {
 			return null;
 		}
-		
+
 		public void setId(Integer id) {
 		}
 	}
-	
+
 	/**
-	 * @see RequiredDataAdvice#isHandlerMarkedAsDisabled(Class, java.lang.reflect.Field)
+	 * @see RequiredDataAdvice#isHandlerMarkedAsDisabled(Class,
+	 *      java.lang.reflect.Field)
 	 */
 	@Test
 	public void isHandlerMarkedAsDisabled_shouldReturnTrueIfHandlerDisabledOnMetadata() {
-		
+
 		Field persons = null;
-		
-		for (Field field : Reflect.getAllFields(MetadataClassWithDisableHandlersAnnotation.class)) {
+
+		for (Field field : Reflect
+				.getAllFields(MetadataClassWithDisableHandlersAnnotation.class)) {
 			if (field.getName().equals("concepts")) {
 				persons = field;
 			}
 		}
-		
-		Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(UnretireHandler.class, persons));
+
+		Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(
+				UnretireHandler.class, persons));
 	}
-	
+
 	/**
-	 * @see RequiredDataAdvice#isHandlerMarkedAsDisabled(Class, java.lang.reflect.Field)
+	 * @see RequiredDataAdvice#isHandlerMarkedAsDisabled(Class,
+	 *      java.lang.reflect.Field)
 	 */
 	@Test
 	public void isHandlerMarkedAsDisabled_shouldReturnFalseIfHandlerNotDisabledOnMetatdata() {
-		
+
 		Field persons = null;
-		
-		for (Field field : Reflect.getAllFields(MetadataClassWithDisableHandlersAnnotation.class)) {
+
+		for (Field field : Reflect
+				.getAllFields(MetadataClassWithDisableHandlersAnnotation.class)) {
 			if (field.getName().equals("concepts")) {
 				persons = field;
 			}
 		}
-		
-		Assert.assertFalse(RequiredDataAdvice.isHandlerMarkedAsDisabled(RetireHandler.class, persons));
+
+		Assert.assertFalse(RequiredDataAdvice.isHandlerMarkedAsDisabled(
+				RetireHandler.class, persons));
 	}
-	
+
 	/**
 	 * @see RequiredDataAdvice#before(Method, null, Object)
 	 */
 	@Test
 	@Verifies(value = "should not fail on update method with no arguments", method = "before(Method,null,Object)")
-	public void before_shouldNotFailOnUpdateMethodWithNoArguments() throws Throwable {
-		Method method = ConceptServiceImpl.class.getMethod("updateConceptIndexes", (Class[]) null);
+	public void before_shouldNotFailOnUpdateMethodWithNoArguments()
+			throws Throwable {
+		Method method = ConceptServiceImpl.class.getMethod(
+				"updateConceptIndexes", (Class[]) null);
 		requiredDataAdvice.before(method, null, new ConceptServiceImpl());
-		requiredDataAdvice.before(method, new Object[] {}, new ConceptServiceImpl());
+		requiredDataAdvice.before(method, new Object[]{},
+				new ConceptServiceImpl());
 	}
-	
+
 	@Test
-	public void before_shouldNotCallHandlerOnSaveWithNullOrNoArguments() throws Throwable {
-		
-		Method m = WithAppropriatelyNamedMethod.class.getMethod("saveSomeOpenmrsData", SomeOpenmrsData.class);
+	public void before_shouldNotCallHandlerOnSaveWithNullOrNoArguments()
+			throws Throwable {
+
+		Method m = WithAppropriatelyNamedMethod.class.getMethod(
+				"saveSomeOpenmrsData", SomeOpenmrsData.class);
 		SomeOpenmrsData openmrsObject = new SomeOpenmrsData();
 		requiredDataAdvice.before(m, null, new WithAppropriatelyNamedMethod());
-		requiredDataAdvice.before(m, new Object[] {}, new WithAppropriatelyNamedMethod());
-		verify(saveHandler, never()).handle(eq(openmrsObject), Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
-		    anyString());
+		requiredDataAdvice.before(m, new Object[]{},
+				new WithAppropriatelyNamedMethod());
+		verify(saveHandler, never()).handle(eq(openmrsObject),
+				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				anyString());
 	}
-	
+
 	@Test
-	public void before_shouldCallHandlerOnSaveWithOpenmrsObjectArgument() throws Throwable {
-		
-		Method m = WithAppropriatelyNamedMethod.class.getMethod("saveSomeOpenmrsData", SomeOpenmrsData.class);
+	public void before_shouldCallHandlerOnSaveWithOpenmrsObjectArgument()
+			throws Throwable {
+
+		Method m = WithAppropriatelyNamedMethod.class.getMethod(
+				"saveSomeOpenmrsData", SomeOpenmrsData.class);
 		SomeOpenmrsData openmrsObject = new SomeOpenmrsData();
-		requiredDataAdvice.before(m, new Object[] { openmrsObject }, new WithAppropriatelyNamedMethod());
-		verify(saveHandler, times(1)).handle(eq(openmrsObject), Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
-		    anyString());
+		requiredDataAdvice.before(m, new Object[]{openmrsObject},
+				new WithAppropriatelyNamedMethod());
+		verify(saveHandler, times(1)).handle(eq(openmrsObject),
+				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				anyString());
 	}
-	
+
 	@Test
-	public void before_shouldNotCallHandlerOnSaveMethodNameNotMatchingDomainObject() throws Throwable {
-		
-		Method m = WithAppropriatelyNamedMethod.class.getMethod("saveSomeOpenmrsDataButNotReally", SomeOpenmrsData.class);
+	public void before_shouldNotCallHandlerOnSaveMethodNameNotMatchingDomainObject()
+			throws Throwable {
+
+		Method m = WithAppropriatelyNamedMethod.class.getMethod(
+				"saveSomeOpenmrsDataButNotReally", SomeOpenmrsData.class);
 		SomeOpenmrsData openmrsObject = new SomeOpenmrsData();
-		requiredDataAdvice.before(m, new Object[] { openmrsObject }, new WithAppropriatelyNamedMethod());
-		verify(saveHandler, never()).handle(eq(openmrsObject), Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
-		    anyString());
+		requiredDataAdvice.before(m, new Object[]{openmrsObject},
+				new WithAppropriatelyNamedMethod());
+		verify(saveHandler, never()).handle(eq(openmrsObject),
+				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				anyString());
 	}
-	
+
 	@Test
-	public void before_shouldCallHandlerOnSaveMethodNameWithCollectionArgument() throws Throwable {
-		
-		Method m = WithAppropriatelyNamedMethod.class.getMethod("saveSomeOpenmrsDatas", List.class);
-		List<SomeOpenmrsData> openmrsObjects = Arrays.asList(new SomeOpenmrsData(), new SomeOpenmrsData());
-		requiredDataAdvice.before(m, new Object[] { openmrsObjects }, new WithAppropriatelyNamedMethod());
-		verify(saveHandler, times(2)).handle(Matchers.<SomeOpenmrsData> anyObject(), Matchers.<User> anyObject(),
-		    Matchers.<Date> anyObject(), anyString());
+	public void before_shouldCallHandlerOnSaveMethodNameWithCollectionArgument()
+			throws Throwable {
+
+		Method m = WithAppropriatelyNamedMethod.class.getMethod(
+				"saveSomeOpenmrsDatas", List.class);
+		List<SomeOpenmrsData> openmrsObjects = Arrays.asList(
+				new SomeOpenmrsData(), new SomeOpenmrsData());
+		requiredDataAdvice.before(m, new Object[]{openmrsObjects},
+				new WithAppropriatelyNamedMethod());
+		verify(saveHandler, times(2)).handle(
+				Matchers.<SomeOpenmrsData> anyObject(),
+				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				anyString());
 	}
-	
+
 	@Test
-	public void before_shouldNotCallHandlerOnVoidWithNullOrNoArguments() throws Throwable {
-		
-		Method m = WithAppropriatelyNamedMethod.class.getMethod("voidSomeOpenmrsData", SomeOpenmrsData.class);
+	public void before_shouldNotCallHandlerOnVoidWithNullOrNoArguments()
+			throws Throwable {
+
+		Method m = WithAppropriatelyNamedMethod.class.getMethod(
+				"voidSomeOpenmrsData", SomeOpenmrsData.class);
 		SomeOpenmrsData openmrsObject = new SomeOpenmrsData();
 		requiredDataAdvice.before(m, null, new WithAppropriatelyNamedMethod());
-		requiredDataAdvice.before(m, new Object[] {}, new WithAppropriatelyNamedMethod());
-		verify(voidHandler, never()).handle(eq(openmrsObject), Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
-		    anyString());
+		requiredDataAdvice.before(m, new Object[]{},
+				new WithAppropriatelyNamedMethod());
+		verify(voidHandler, never()).handle(eq(openmrsObject),
+				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				anyString());
 	}
-	
+
 	@Test
-	public void before_shouldCallHandlerOnVoidMethodNameMatchingDomainObject() throws Throwable {
-		
-		Method m = WithAppropriatelyNamedMethod.class.getMethod("voidSomeOpenmrsData", SomeOpenmrsData.class);
+	public void before_shouldCallHandlerOnVoidMethodNameMatchingDomainObject()
+			throws Throwable {
+
+		Method m = WithAppropriatelyNamedMethod.class.getMethod(
+				"voidSomeOpenmrsData", SomeOpenmrsData.class);
 		SomeOpenmrsData openmrsObject = new SomeOpenmrsData();
-		requiredDataAdvice.before(m, new Object[] { openmrsObject, "void reason" }, new WithAppropriatelyNamedMethod());
-		verify(voidHandler, times(1)).handle(eq(openmrsObject), Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
-		    anyString());
+		requiredDataAdvice.before(m,
+				new Object[]{openmrsObject, "void reason"},
+				new WithAppropriatelyNamedMethod());
+		verify(voidHandler, times(1)).handle(eq(openmrsObject),
+				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				anyString());
 	}
-	
+
 	@Test
-	public void before_shouldCallHandlerOnVoidMethodWhenDomainObjectIsAssignableFromMethodNameObject() throws Throwable {
-		
-		Method m = WithAppropriatelyNamedMethod.class.getMethod("voidSomeOpenmrsData", SomeOpenmrsData.class);
+	public void before_shouldCallHandlerOnVoidMethodWhenDomainObjectIsAssignableFromMethodNameObject()
+			throws Throwable {
+
+		Method m = WithAppropriatelyNamedMethod.class.getMethod(
+				"voidSomeOpenmrsData", SomeOpenmrsData.class);
 		SomeOpenmrsData openmrsObjectSubClass = new SomeOpenmrsDataSubClass();
-		requiredDataAdvice.before(m, new Object[] { openmrsObjectSubClass, "void reason" },
-		    new WithAppropriatelyNamedMethod());
-		verify(voidHandler, times(1)).handle(eq(openmrsObjectSubClass), Matchers.<User> anyObject(),
-		    Matchers.<Date> anyObject(), anyString());
+		requiredDataAdvice.before(m, new Object[]{openmrsObjectSubClass,
+				"void reason"}, new WithAppropriatelyNamedMethod());
+		verify(voidHandler, times(1)).handle(eq(openmrsObjectSubClass),
+				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				anyString());
 	}
-	
+
 	@Test
-	public void before_shouldNotCallHandlerOnVoidMethodNameNotMatchingDomainObject() throws Throwable {
-		
-		Method m = WithAppropriatelyNamedMethod.class.getMethod("voidSomeOpenmrsDataButNotReally", SomeOpenmrsData.class);
+	public void before_shouldNotCallHandlerOnVoidMethodNameNotMatchingDomainObject()
+			throws Throwable {
+
+		Method m = WithAppropriatelyNamedMethod.class.getMethod(
+				"voidSomeOpenmrsDataButNotReally", SomeOpenmrsData.class);
 		SomeOpenmrsData openmrsObject = new SomeOpenmrsData();
-		requiredDataAdvice.before(m, new Object[] { openmrsObject }, new WithAppropriatelyNamedMethod());
-		verify(voidHandler, never()).handle(eq(openmrsObject), Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
-		    anyString());
+		requiredDataAdvice.before(m, new Object[]{openmrsObject},
+				new WithAppropriatelyNamedMethod());
+		verify(voidHandler, never()).handle(eq(openmrsObject),
+				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				anyString());
 	}
-	
+
 	@Test
-	public void before_shouldNotCallHandlersAnnotatedAsDisabled() throws Throwable {
-		
-		Method m = WithAppropriatelyNamedMethod.class.getMethod("voidClassWithDisableHandlersAnnotation",
-		    ClassWithDisableHandlersAnnotation.class);
-		
+	public void before_shouldNotCallHandlersAnnotatedAsDisabled()
+			throws Throwable {
+
+		Method m = WithAppropriatelyNamedMethod.class.getMethod(
+				"voidClassWithDisableHandlersAnnotation",
+				ClassWithDisableHandlersAnnotation.class);
+
 		ClassWithDisableHandlersAnnotation openmrsObject = new ClassWithDisableHandlersAnnotation();
-		
+
 		// create a couple locations and associate them with this openmrsObject
 		List<Person> persons = new ArrayList<Person>();
 		Person person = new Person();
 		persons.add(person);
 		openmrsObject.setPersons(persons);
-		
-		requiredDataAdvice.before(m, new Object[] { openmrsObject, "void reason" }, new WithAppropriatelyNamedMethod());
-		
+
+		requiredDataAdvice.before(m,
+				new Object[]{openmrsObject, "void reason"},
+				new WithAppropriatelyNamedMethod());
+
 		// verify that the handle method was never called on this object
-		verify(voidHandler, never()).handle(eq(person), Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
-		    anyString());
-		
+		verify(voidHandler, never()).handle(eq(person),
+				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				anyString());
+
 	}
-	
+
 	@Test
-	public void before_shouldCallHandlersNotAnnotatedAsDisabled() throws Throwable {
-		
-		Method m = WithAppropriatelyNamedMethod.class.getMethod("voidClassWithDisableHandlersAnnotation",
-		    ClassWithDisableHandlersAnnotation.class);
-		
+	public void before_shouldCallHandlersNotAnnotatedAsDisabled()
+			throws Throwable {
+
+		Method m = WithAppropriatelyNamedMethod.class.getMethod(
+				"voidClassWithDisableHandlersAnnotation",
+				ClassWithDisableHandlersAnnotation.class);
+
 		ClassWithDisableHandlersAnnotation openmrsObject = new ClassWithDisableHandlersAnnotation();
-		
+
 		// create a couple locations and associate them with this openmrsObject
 		List<Person> persons = new ArrayList<Person>();
 		Person person = new Person();
 		persons.add(person);
 		openmrsObject.setNotAnnotatedPersons(persons);
-		
-		requiredDataAdvice.before(m, new Object[] { openmrsObject, "void reason" }, new WithAppropriatelyNamedMethod());
-		
+
+		requiredDataAdvice.before(m,
+				new Object[]{openmrsObject, "void reason"},
+				new WithAppropriatelyNamedMethod());
+
 		// verify that the handle method was called on this object
-		verify(voidHandler, times(1)).handle(eq(person), Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
-		    anyString());
-		
+		verify(voidHandler, times(1)).handle(eq(person),
+				Matchers.<User> anyObject(), Matchers.<Date> anyObject(),
+				anyString());
+
 	}
-	
+
 	class SomeOpenmrsData extends BaseOpenmrsData {
-		
+
 		@Override
 		public Integer getId() {
 			return null;
 		}
-		
+
 		@Override
 		public void setId(Integer id) {
 		}
 	}
-	
+
 	public class SomeOpenmrsDataSubClass extends SomeOpenmrsData {
 
 	}
-	
-	@SuppressWarnings( { "UnusedDeclaration" })
+
+	@SuppressWarnings({"UnusedDeclaration"})
 	public class WithAppropriatelyNamedMethod {
-		
+
 		public void saveSomeOpenmrsData(SomeOpenmrsData oo) {
 		}
-		
+
 		public void saveSomeOpenmrsData(SomeOpenmrsData oo, String reason) {
 		}
-		
+
 		public void saveSomeOpenmrsDatas(List<SomeOpenmrsData> list) {
 		}
-		
+
 		public void saveSomeOpenmrsDataButNotReally(SomeOpenmrsData oo) {
 		}
-		
+
 		public void voidSomeOpenmrsData(SomeOpenmrsData oo) {
 		}
-		
+
 		public void voidSomeOpenmrsDataButNotReally(SomeOpenmrsData oo) {
 		}
-		
-		public void voidClassWithDisableHandlersAnnotation(ClassWithDisableHandlersAnnotation oo) {
+
+		public void voidClassWithDisableHandlersAnnotation(
+				ClassWithDisableHandlersAnnotation oo) {
 		}
 	}
-	
+
 }

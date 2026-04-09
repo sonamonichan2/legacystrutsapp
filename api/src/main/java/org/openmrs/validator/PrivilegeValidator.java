@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,12 +22,12 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { Privilege.class }, order = 50)
+@Handler(supports = {Privilege.class}, order = 50)
 public class PrivilegeValidator implements Validator {
-	
+
 	/** Log for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -37,7 +37,7 @@ public class PrivilegeValidator implements Validator {
 	public boolean supports(Class c) {
 		return c.equals(Privilege.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -54,9 +54,11 @@ public class PrivilegeValidator implements Validator {
 		if (privilege == null) {
 			errors.rejectValue("privilege", "error.general");
 		} else {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "privilege", "error.privilege");
-			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "privilege", "description");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "privilege",
+					"error.privilege");
+			ValidateUtil.validateFieldLengths(errors, obj.getClass(),
+					"privilege", "description");
 		}
 	}
-	
+
 }

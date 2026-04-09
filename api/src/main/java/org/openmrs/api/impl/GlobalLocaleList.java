@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,53 +19,56 @@ import org.openmrs.util.LocaleUtility;
 import org.openmrs.util.OpenmrsConstants;
 
 /**
- * A utility class which caches the current list of allowed locales, rebuilding the list whenever
- * the global properties are updated.
+ * A utility class which caches the current list of allowed locales, rebuilding
+ * the list whenever the global properties are updated.
  */
 public class GlobalLocaleList implements GlobalPropertyListener {
-	
+
 	private Set<Locale> allowedLocales = null;
-	
+
 	/**
 	 * @see org.openmrs.api.GlobalPropertyListener#globalPropertyChanged(org.openmrs.GlobalProperty)
 	 */
 	public void globalPropertyChanged(GlobalProperty newValue) {
 		allowedLocales = new LinkedHashSet<Locale>();
-		for (String allowedLocaleString : newValue.getPropertyValue().split(",")) {
+		for (String allowedLocaleString : newValue.getPropertyValue()
+				.split(",")) {
 			try {
-				Locale allowedLocale = LocaleUtility.fromSpecification(allowedLocaleString.trim());
+				Locale allowedLocale = LocaleUtility
+						.fromSpecification(allowedLocaleString.trim());
 				if (allowedLocale != null) {
 					allowedLocales.add(allowedLocale);
 				}
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				// bad locale spec? just ignore it. the UI should take care of
 				// guiding the user.
 			}
 		}
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.GlobalPropertyListener#globalPropertyDeleted(java.lang.String)
 	 */
 	public void globalPropertyDeleted(String propertyName) {
 		allowedLocales = null;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.GlobalPropertyListener#supportsPropertyName(java.lang.String)
 	 */
 	public boolean supportsPropertyName(String propertyName) {
-		return OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST.equals(propertyName);
+		return OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST
+				.equals(propertyName);
 	}
-	
+
 	/**
 	 * Gets the current list of allowed locales.
 	 * 
-	 * @return List&lt;Locale&gt; object with allowed Locales defined by the administrator
+	 * @return List&lt;Locale&gt; object with allowed Locales defined by the
+	 *         administrator
 	 */
 	public Set<Locale> getAllowedLocales() {
 		return allowedLocales;
 	}
-	
+
 }

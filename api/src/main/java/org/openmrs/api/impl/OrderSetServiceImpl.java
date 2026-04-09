@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -25,38 +25,42 @@ import org.springframework.util.StringUtils;
 import java.util.Date;
 import java.util.List;
 
-public class OrderSetServiceImpl extends BaseOpenmrsService implements OrderSetService {
-	
+public class OrderSetServiceImpl extends BaseOpenmrsService
+		implements
+			OrderSetService {
+
 	protected OrderSetDAO dao;
-	
+
 	/**
 	 * @see org.openmrs.api.OrderSetService#setOrderSetDAO(org.openmrs.api.db.OrderSetDAO)
 	 */
 	public void setOrderSetDAO(OrderSetDAO dao) {
 		this.dao = dao;
 	}
-	
+
 	@Override
 	@Transactional(readOnly = false)
 	public OrderSet saveOrderSet(OrderSet orderSet) throws APIException {
 		return saveOrderSetInternal(orderSet);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.OrderSetService#retireOrderSet(OrderSet, String)
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public OrderSet retireOrderSet(OrderSet orderSet, String retireReason) throws APIException {
+	public OrderSet retireOrderSet(OrderSet orderSet, String retireReason)
+			throws APIException {
 		if (!StringUtils.hasLength(retireReason)) {
-			throw new IllegalArgumentException("retire reason cannot be empty or null");
+			throw new IllegalArgumentException(
+					"retire reason cannot be empty or null");
 		}
 		for (OrderSetMember orderSetMember : orderSet.getOrderSetMembers()) {
 			orderSet.retireOrderSetMember(orderSetMember);
 		}
 		return saveOrderSetInternal(orderSet);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.OrderSetService#unretireOrderSet(OrderSet)
 	 */
@@ -65,11 +69,12 @@ public class OrderSetServiceImpl extends BaseOpenmrsService implements OrderSetS
 	public OrderSet unretireOrderSet(OrderSet orderSet) throws APIException {
 		return saveOrderSetInternal(orderSet);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.OrderSetService#saveOrderSet(OrderSet)
 	 */
-	private synchronized OrderSet saveOrderSetInternal(OrderSet orderSet) throws APIException {
+	private synchronized OrderSet saveOrderSetInternal(OrderSet orderSet)
+			throws APIException {
 		if (CollectionUtils.isEmpty(orderSet.getOrderSetMembers())) {
 			return dao.save(orderSet);
 		}
@@ -84,20 +89,21 @@ public class OrderSetServiceImpl extends BaseOpenmrsService implements OrderSetS
 				orderSetMember.setDateRetired(new Date());
 			}
 		}
-		
+
 		return dao.save(orderSet);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.OrderSetService#getOrderSets(boolean)
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<OrderSet> getOrderSets(boolean includeRetired) throws APIException {
+	public List<OrderSet> getOrderSets(boolean includeRetired)
+			throws APIException {
 		List<OrderSet> orderSets = dao.getOrderSets(includeRetired);
 		return orderSets;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.OrderSetService#getOrderSet(Integer)
 	 */
@@ -106,7 +112,7 @@ public class OrderSetServiceImpl extends BaseOpenmrsService implements OrderSetS
 	public OrderSet getOrderSet(Integer orderSetId) throws APIException {
 		return dao.getOrderSetById(orderSetId);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.OrderSetService#getOrderSetByUuid(String)
 	 */

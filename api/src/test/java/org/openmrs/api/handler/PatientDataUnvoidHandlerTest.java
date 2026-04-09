@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -33,47 +33,49 @@ import org.openmrs.test.Verifies;
  * Contains the tests for the {@link PatientDataUnvoidHandler}
  */
 public class PatientDataUnvoidHandlerTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see PatientDataUnvoidHandler#handle(Patient,User,Date,String)
 	 */
 	@Test
 	@Verifies(value = "should unvoid the orders and encounters associated with the patient", method = "handle(Patient,User,Date,String)")
-	public void handle_shouldUnvoidTheOrdersAndEncountersAssociatedWithThePatient() throws Exception {
+	public void handle_shouldUnvoidTheOrdersAndEncountersAssociatedWithThePatient()
+			throws Exception {
 		Patient patient = Context.getPatientService().getPatient(7);
-		patient = Context.getPatientService().voidPatient(patient, "Void Reason");
+		patient = Context.getPatientService().voidPatient(patient,
+				"Void Reason");
 		Assert.assertTrue(patient.isVoided());
-		
+
 		EncounterService es = Context.getEncounterService();
 		EncounterSearchCriteria encounterSearchCriteria = new EncounterSearchCriteriaBuilder()
-			.setPatient(patient)
-			.setIncludeVoided(true)
-			.createEncounterSearchCriteria();
+				.setPatient(patient).setIncludeVoided(true)
+				.createEncounterSearchCriteria();
 		List<Encounter> encounters = es.getEncounters(encounterSearchCriteria);
 		Assert.assertTrue(CollectionUtils.isNotEmpty(encounters));
-		//all encounters void related fields should be null
+		// all encounters void related fields should be null
 		for (Encounter encounter : encounters) {
 			Assert.assertTrue(encounter.isVoided());
 			Assert.assertNotNull(encounter.getDateVoided());
 			Assert.assertNotNull(encounter.getVoidedBy());
 			Assert.assertNotNull(encounter.getVoidReason());
 		}
-		
+
 		OrderService os = Context.getOrderService();
 		List<Order> orders = os.getAllOrdersByPatient(patient);
 		Assert.assertFalse(orders.isEmpty());
-		//all order void related fields should be null
+		// all order void related fields should be null
 		for (Order order : orders) {
 			Assert.assertTrue(order.isVoided());
 			Assert.assertNotNull(order.getDateVoided());
 			Assert.assertNotNull(order.getVoidedBy());
 			Assert.assertNotNull(order.getVoidReason());
 		}
-		
+
 		User user = Context.getUserService().getUser(1);
-		new PatientDataUnvoidHandler().handle(patient, user, patient.getDateVoided(), null);
-		
-		//check that the voided related fields were set null 
+		new PatientDataUnvoidHandler().handle(patient, user,
+				patient.getDateVoided(), null);
+
+		// check that the voided related fields were set null
 		for (Encounter encounter : encounters) {
 			Assert.assertFalse(encounter.isVoided());
 			Assert.assertNull(encounter.getDateVoided());
@@ -87,61 +89,66 @@ public class PatientDataUnvoidHandlerTest extends BaseContextSensitiveTest {
 			Assert.assertNull(order.getVoidReason());
 		}
 	}
-	
+
 	/**
 	 * @see PatientDataUnvoidHandler#handle(Patient,User,Date,String)
 	 */
 	@Test
 	@Verifies(value = "should not unvoid the orders and encounters that never got voided with the patient", method = "handle(Patient,User,Date,String)")
-	public void handle_shouldNotUnvoidTheOrdersAndEncountersThatNeverGotVoidedWithThePatient() throws Exception {
+	public void handle_shouldNotUnvoidTheOrdersAndEncountersThatNeverGotVoidedWithThePatient()
+			throws Exception {
 		executeDataSet("org/openmrs/api/include/OrderServiceTest-otherEncounters.xml");
 		Patient patient = Context.getPatientService().getPatient(7);
-		
+
 		EncounterService es = Context.getEncounterService();
 		OrderService os = Context.getOrderService();
-		
+
 		Encounter testEncounter = es.getEncountersByPatient(patient).get(0);
-		//santy checks
+		// santy checks
 		Assert.assertFalse(testEncounter.isVoided());
 		Assert.assertNull(testEncounter.getDateVoided());
 		Assert.assertNull(testEncounter.getVoidedBy());
 		Assert.assertNull(testEncounter.getVoidReason());
-		
-		//void one of the encounter orders be voided at a different time for testing purposes
+
+		// void one of the encounter orders be voided at a different time for
+		// testing purposes
 		Assert.assertFalse(testEncounter.getOrders().isEmpty());
 		Order testOrder = testEncounter.getOrders().iterator().next();
 		Assert.assertFalse(testOrder.isVoided());
 		Context.getOrderService().voidOrder(testOrder, "testing");
 		Assert.assertTrue(testOrder.isVoided());
 		TestUtil.waitForClockTick();
-		
-		//void one of the unvoided encounters for testing purposes
+
+		// void one of the unvoided encounters for testing purposes
 		es.voidEncounter(testEncounter, "random reason");
 		Assert.assertTrue(testEncounter.isVoided());
 		Assert.assertTrue(testOrder.isVoided());
-		
+
 		List<Patient> patients = new ArrayList<Patient>();
 		patients.add(patient);
-		
-		//wait a bit so that the patient isn't voided on the same millisecond
+
+		// wait a bit so that the patient isn't voided on the same millisecond
 		TestUtil.waitForClockTick();
-		
-		//now void the patient for testing purposes
-		patient = Context.getPatientService().voidPatient(patient, "Void Reason");
+
+		// now void the patient for testing purposes
+		patient = Context.getPatientService().voidPatient(patient,
+				"Void Reason");
 		Assert.assertTrue(patient.isVoided());
-		new PatientDataUnvoidHandler().handle(patient, patient.getVoidedBy(), patient.getDateVoided(), null);
-		//the encounter that was initially voided separately should still be voided
+		new PatientDataUnvoidHandler().handle(patient, patient.getVoidedBy(),
+				patient.getDateVoided(), null);
+		// the encounter that was initially voided separately should still be
+		// voided
 		testEncounter = es.getEncounter(testEncounter.getId());
 		Assert.assertTrue(testEncounter.isVoided());
 		Assert.assertNotNull(testEncounter.getDateVoided());
 		Assert.assertNotNull(testEncounter.getVoidedBy());
 		Assert.assertNotNull(testEncounter.getVoidReason());
-		
-		//the order that was initially voided separately should still be voided
+
+		// the order that was initially voided separately should still be voided
 		Assert.assertTrue(testOrder.isVoided());
 		Assert.assertNotNull(testOrder.getDateVoided());
 		Assert.assertNotNull(testOrder.getVoidedBy());
 		Assert.assertNotNull(testOrder.getVoidReason());
-		
+
 	}
 }

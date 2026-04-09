@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -14,26 +14,26 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * Represents a person who may provide care to a patient during an encounter
- *
+ * 
  * @since 1.9
  */
 public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
-	
+
 	private final Log log = LogFactory.getLog(getClass());
-	
+
 	private Integer providerId;
-	
+
 	private Person person;
-	
+
 	private String identifier;
-	
+
 	public Provider() {
 	}
-	
+
 	public Provider(Integer providerId) {
 		this.providerId = providerId;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -41,7 +41,7 @@ public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
 	public Integer getId() {
 		return getProviderId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -49,49 +49,52 @@ public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
 	public void setId(Integer id) {
 		setProviderId(id);
 	}
-	
+
 	/**
-	 * @param providerId the providerId to set
+	 * @param providerId
+	 *            the providerId to set
 	 */
 	public void setProviderId(Integer providerId) {
 		this.providerId = providerId;
 	}
-	
+
 	/**
 	 * @return the providerId
 	 */
 	public Integer getProviderId() {
 		return providerId;
 	}
-	
+
 	/**
-	 * @param person the person to set
+	 * @param person
+	 *            the person to set
 	 */
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-	
+
 	/**
 	 * @return the person
 	 */
 	public Person getPerson() {
 		return person;
 	}
-	
+
 	/**
-	 * @param identifier the identifier to set
+	 * @param identifier
+	 *            the identifier to set
 	 */
 	public void setIdentifier(String identifier) {
 		this.identifier = identifier;
 	}
-	
+
 	/**
 	 * @return the identifier
 	 */
 	public String getIdentifier() {
 		return identifier;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -100,12 +103,12 @@ public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
 		sb.append((person != null) ? person.getNames() : "");
 		return "[Provider: providerId:" + sb.toString() + " ]";
 	}
-	
+
 	/**
 	 * @see org.openmrs.BaseOpenmrsMetadata#getName()
 	 * @should return person full name if person is not null or null otherwise
 	 */
-	
+
 	@Override
 	public String getName() {
 		if (getPerson() != null && getPerson().getPersonName() != null) {

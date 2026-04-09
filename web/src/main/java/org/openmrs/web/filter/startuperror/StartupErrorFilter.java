@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -38,49 +38,58 @@ import org.openmrs.web.Listener;
 import org.openmrs.web.filter.StartupFilter;
 
 /**
- * This is the second filter that is processed. It is only active when OpenMRS has some liquibase
- * updates that need to be run. If updates are needed, this filter/wizard asks for a super user to
- * authenticate and review the updates before continuing.
+ * This is the second filter that is processed. It is only active when OpenMRS
+ * has some liquibase updates that need to be run. If updates are needed, this
+ * filter/wizard asks for a super user to authenticate and review the updates
+ * before continuing.
  */
 public class StartupErrorFilter extends StartupFilter {
-	
+
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
 	/**
-	 * The velocity macro page to redirect to if an error occurs or on initial startup
+	 * The velocity macro page to redirect to if an error occurs or on initial
+	 * startup
 	 */
 	private static final String DEFAULT_PAGE = "generalerror.vm";
-	
+
 	/**
-	 * Called by {@link #doFilter(ServletRequest, ServletResponse, FilterChain)} on GET requests
-	 *
+	 * Called by {@link #doFilter(ServletRequest, ServletResponse, FilterChain)}
+	 * on GET requests
+	 * 
 	 * @param httpRequest
 	 * @param httpResponse
 	 */
-	protected void doGet(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws IOException,
-	        ServletException {
-		
+	protected void doGet(HttpServletRequest httpRequest,
+			HttpServletResponse httpResponse) throws IOException,
+			ServletException {
+
 		if (getModel().errorAtStartup instanceof OpenmrsCoreModuleException) {
-			renderTemplate("coremoduleerror.vm", new HashMap<String, Object>(), httpResponse);
+			renderTemplate("coremoduleerror.vm", new HashMap<String, Object>(),
+					httpResponse);
 		} else {
-			renderTemplate(DEFAULT_PAGE, new HashMap<String, Object>(), httpResponse);
+			renderTemplate(DEFAULT_PAGE, new HashMap<String, Object>(),
+					httpResponse);
 		}
 	}
-	
+
 	/**
 	 * @see org.openmrs.web.filter.StartupFilter#doPost(javax.servlet.http.HttpServletRequest,
 	 *      javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doPost(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws IOException,
-	        ServletException {
+	protected void doPost(HttpServletRequest httpRequest,
+			HttpServletResponse httpResponse) throws IOException,
+			ServletException {
 		// if they are uploading modules
 		if (getModel().errorAtStartup instanceof OpenmrsCoreModuleException) {
-			RequestContext requestContext = new ServletRequestContext(httpRequest);
+			RequestContext requestContext = new ServletRequestContext(
+					httpRequest);
 			if (!ServletFileUpload.isMultipartContent(requestContext)) {
-				throw new ServletException("The request is not a valid multipart/form-data upload request");
+				throw new ServletException(
+						"The request is not a valid multipart/form-data upload request");
 			}
-			
+
 			FileItemFactory factory = new DiskFileItemFactory();
 			ServletFileUpload upload = new ServletFileUpload(factory);
 			try {
@@ -90,22 +99,21 @@ public class StartupErrorFilter extends StartupFilter {
 					InputStream uploadedStream = item.getInputStream();
 					ModuleUtil.insertModuleFile(uploadedStream, item.getName());
 				}
-			}
-			catch (FileUploadException ex) {
+			} catch (FileUploadException ex) {
 				throw new ServletException("Error while uploading file(s)", ex);
-			}
-			finally {
+			} finally {
 				Context.closeSession();
 			}
-			
+
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("success", Boolean.TRUE);
 			renderTemplate("coremoduleerror.vm", map, httpResponse);
-			
-			// TODO restart openmrs here instead of going to coremodulerror template
+
+			// TODO restart openmrs here instead of going to coremodulerror
+			// template
 		}
 	}
-	
+
 	/**
 	 * @see org.openmrs.web.filter.StartupFilter#getModel()
 	 */
@@ -113,19 +121,19 @@ public class StartupErrorFilter extends StartupFilter {
 		// this object was initialized in the #init(FilterConfig) method
 		return new StartupErrorFilterModel(Listener.getErrorAtStartup());
 	}
-	
+
 	/**
 	 * @see org.openmrs.web.filter.StartupFilter#skipFilter(HttpServletRequest)
 	 */
 	public boolean skipFilter(HttpServletRequest request) {
 		return !Listener.errorOccurredAtStartup();
 	}
-	
+
 	/**
 	 * @see org.openmrs.web.filter.StartupFilter#getTemplatePrefix()
 	 */
 	protected String getTemplatePrefix() {
 		return "org/openmrs/web/filter/startuperror/";
 	}
-	
+
 }

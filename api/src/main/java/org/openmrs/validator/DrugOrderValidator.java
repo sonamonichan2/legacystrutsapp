@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -33,12 +33,12 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { DrugOrder.class }, order = 50)
+@Handler(supports = {DrugOrder.class}, order = 50)
 public class DrugOrderValidator extends OrderValidator implements Validator {
-	
+
 	/** Log for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -48,7 +48,7 @@ public class DrugOrderValidator extends OrderValidator implements Validator {
 	public boolean supports(Class c) {
 		return DrugOrder.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -57,13 +57,18 @@ public class DrugOrderValidator extends OrderValidator implements Validator {
 	 * @should fail validation if asNeeded is null
 	 * @should fail validation if dosingType is null
 	 * @should fail validation if drug concept is different from order concept
-	 * @should fail validation if dose is null for SimpleDosingInstructions dosingType
-	 * @should fail validation if doseUnits is null for SimpleDosingInstructions dosingType
-	 * @should fail validation if route is null for SimpleDosingInstructions dosingType
-	 * @should fail validation if frequency is null for SimpleDosingInstructions dosingType
-	 * @should fail validation if dosingInstructions is null for FreeTextDosingInstructions
+	 * @should fail validation if dose is null for SimpleDosingInstructions
 	 *         dosingType
-	 * @should fail validation if numberOfRefills is null for outpatient careSetting
+	 * @should fail validation if doseUnits is null for SimpleDosingInstructions
+	 *         dosingType
+	 * @should fail validation if route is null for SimpleDosingInstructions
+	 *         dosingType
+	 * @should fail validation if frequency is null for SimpleDosingInstructions
+	 *         dosingType
+	 * @should fail validation if dosingInstructions is null for
+	 *         FreeTextDosingInstructions dosingType
+	 * @should fail validation if numberOfRefills is null for outpatient
+	 *         careSetting
 	 * @should fail validation if quantity is null for outpatient careSetting
 	 * @should fail validation if doseUnits is null when dose is present
 	 * @should fail validation if doseUnits is not a dose unit concept
@@ -77,14 +82,15 @@ public class DrugOrderValidator extends OrderValidator implements Validator {
 	 * @should fail if concept is null and drug is not specified
 	 * @should fail if concept is null and cannot infer it from drug
 	 * @should pass if concept is null and drug is set
-	 * @should not validate a custom dosing type against any other dosing type validation
+	 * @should not validate a custom dosing type against any other dosing type
+	 *         validation
 	 * @should apply validation for a custom dosing type
 	 * @should pass validation if field lengths are correct
 	 * @should fail validation if field lengths are not correct
 	 */
 	public void validate(Object obj, Errors errors) {
 		super.validate(obj, errors);
-		
+
 		DrugOrder order = (DrugOrder) obj;
 		if (order == null) {
 			errors.reject("error.general");
@@ -92,102 +98,129 @@ public class DrugOrderValidator extends OrderValidator implements Validator {
 			// for the following elements Order.hbm.xml says: not-null="true"
 			ValidationUtils.rejectIfEmpty(errors, "asNeeded", "error.null");
 			if (order.getAction() != Order.Action.DISCONTINUE) {
-				ValidationUtils.rejectIfEmpty(errors, "dosingType", "error.null");
+				ValidationUtils.rejectIfEmpty(errors, "dosingType",
+						"error.null");
 			}
 			if (order.getDrug() == null || order.getDrug().getConcept() == null) {
 				ValidationUtils.rejectIfEmpty(errors, "concept", "error.null");
 			}
-			
-			if (order.getConcept() != null && order.getDrug() != null && order.getDrug().getConcept() != null
-			        && !order.getDrug().getConcept().equals(order.getConcept())) {
+
+			if (order.getConcept() != null && order.getDrug() != null
+					&& order.getDrug().getConcept() != null
+					&& !order.getDrug().getConcept().equals(order.getConcept())) {
 				errors.rejectValue("drug", "error.general");
 				errors.rejectValue("concept", "error.concept");
 			}
-			if (order.getAction() != Order.Action.DISCONTINUE && order.getDosingType() != null) {
-				DosingInstructions dosingInstructions = order.getDosingInstructionsInstance();
+			if (order.getAction() != Order.Action.DISCONTINUE
+					&& order.getDosingType() != null) {
+				DosingInstructions dosingInstructions = order
+						.getDosingInstructionsInstance();
 				dosingInstructions.validate(order, errors);
 			}
 			validateFieldsForOutpatientCareSettingType(order, errors);
 			validatePairedFields(order, errors);
 			validateUnitsAreAmongAllowedConcepts(errors, order);
-            validateForRequireDrug(errors, order);
-			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "asNeededCondition", "brandName");
+			validateForRequireDrug(errors, order);
+			ValidateUtil.validateFieldLengths(errors, obj.getClass(),
+					"asNeededCondition", "brandName");
 		}
 	}
 
 	private void validateForRequireDrug(Errors errors, DrugOrder order) {
-		//Reject if global property is set to specify a formulation for drug order
-		boolean requireDrug = Context.getAdministrationService().getGlobalPropertyValue(
-				OpenmrsConstants.GLOBAL_PROPERTY_DRUG_ORDER_REQUIRE_DRUG, false);
+		// Reject if global property is set to specify a formulation for drug
+		// order
+		boolean requireDrug = Context
+				.getAdministrationService()
+				.getGlobalPropertyValue(
+						OpenmrsConstants.GLOBAL_PROPERTY_DRUG_ORDER_REQUIRE_DRUG,
+						false);
 		OrderService orderService = Context.getOrderService();
 
-
-		if(requireDrug){
-			if(order.getConcept() != null && OpenmrsUtil.nullSafeEquals(orderService.getNonCodedDrugConcept(), order.getConcept())){
-				if(order.getDrug() == null && !order.isNonCodedDrug()){
-					errors.rejectValue("drugNonCoded", "DrugOrder.error.drugNonCodedIsRequired");
+		if (requireDrug) {
+			if (order.getConcept() != null
+					&& OpenmrsUtil.nullSafeEquals(
+							orderService.getNonCodedDrugConcept(),
+							order.getConcept())) {
+				if (order.getDrug() == null && !order.isNonCodedDrug()) {
+					errors.rejectValue("drugNonCoded",
+							"DrugOrder.error.drugNonCodedIsRequired");
+				} else if (order.getDrug() != null) {
+					errors.rejectValue("concept",
+							"DrugOrder.error.onlyOneOfDrugOrNonCodedShouldBeSet");
 				}
-				else if(order.getDrug() != null){
-					errors.rejectValue("concept", "DrugOrder.error.onlyOneOfDrugOrNonCodedShouldBeSet");
-				}
-			}else{
-				if(order.getDrug() == null && !order.isNonCodedDrug()){
+			} else {
+				if (order.getDrug() == null && !order.isNonCodedDrug()) {
 					errors.rejectValue("drug", "DrugOrder.error.drugIsRequired");
-				}
-				else if(order.getDrug() != null && order.isNonCodedDrug()){
-					errors.rejectValue("concept", "DrugOrder.error.onlyOneOfDrugOrNonCodedShouldBeSet");
+				} else if (order.getDrug() != null && order.isNonCodedDrug()) {
+					errors.rejectValue("concept",
+							"DrugOrder.error.onlyOneOfDrugOrNonCodedShouldBeSet");
 				}
 			}
 		}
 	}
-	
-	private void validateFieldsForOutpatientCareSettingType(DrugOrder order, Errors errors) {
-		if (order.getAction() != Order.Action.DISCONTINUE && order.getCareSetting() != null
-		        && order.getCareSetting().getCareSettingType().equals(CareSetting.CareSettingType.OUTPATIENT)) {
-			ValidationUtils.rejectIfEmpty(errors, "quantity", "DrugOrder.error.quantityIsNullForOutPatient");
-			ValidationUtils.rejectIfEmpty(errors, "numRefills", "DrugOrder.error.numRefillsIsNullForOutPatient");
+
+	private void validateFieldsForOutpatientCareSettingType(DrugOrder order,
+			Errors errors) {
+		if (order.getAction() != Order.Action.DISCONTINUE
+				&& order.getCareSetting() != null
+				&& order.getCareSetting().getCareSettingType()
+						.equals(CareSetting.CareSettingType.OUTPATIENT)) {
+			ValidationUtils.rejectIfEmpty(errors, "quantity",
+					"DrugOrder.error.quantityIsNullForOutPatient");
+			ValidationUtils.rejectIfEmpty(errors, "numRefills",
+					"DrugOrder.error.numRefillsIsNullForOutPatient");
 		}
 	}
-	
+
 	private void validatePairedFields(DrugOrder order, Errors errors) {
 		if (order.getDose() != null) {
-			ValidationUtils.rejectIfEmpty(errors, "doseUnits", "DrugOrder.error.doseUnitsRequiredWithDose");
+			ValidationUtils.rejectIfEmpty(errors, "doseUnits",
+					"DrugOrder.error.doseUnitsRequiredWithDose");
 		}
 		if (order.getQuantity() != null) {
-			ValidationUtils.rejectIfEmpty(errors, "quantityUnits", "DrugOrder.error.quantityUnitsRequiredWithQuantity");
+			ValidationUtils.rejectIfEmpty(errors, "quantityUnits",
+					"DrugOrder.error.quantityUnitsRequiredWithQuantity");
 		}
 		if (order.getDuration() != null) {
-			ValidationUtils.rejectIfEmpty(errors, "durationUnits", "DrugOrder.error.durationUnitsRequiredWithDuration");
+			ValidationUtils.rejectIfEmpty(errors, "durationUnits",
+					"DrugOrder.error.durationUnitsRequiredWithDuration");
 		}
 	}
-	
-	private void validateUnitsAreAmongAllowedConcepts(Errors errors, DrugOrder order) {
+
+	private void validateUnitsAreAmongAllowedConcepts(Errors errors,
+			DrugOrder order) {
 		OrderService orderService = Context.getOrderService();
 		if (order.getDoseUnits() != null) {
 			List<Concept> drugDosingUnits = orderService.getDrugDosingUnits();
 			if (!drugDosingUnits.contains(order.getDoseUnits())) {
-				errors.rejectValue("doseUnits", "DrugOrder.error.notAmongAllowedConcepts");
+				errors.rejectValue("doseUnits",
+						"DrugOrder.error.notAmongAllowedConcepts");
 			}
 		}
 		if (order.getQuantityUnits() != null) {
-			List<Concept> drugDispensingUnits = orderService.getDrugDispensingUnits();
+			List<Concept> drugDispensingUnits = orderService
+					.getDrugDispensingUnits();
 			if (!drugDispensingUnits.contains(order.getQuantityUnits())) {
-				errors.rejectValue("quantityUnits", "DrugOrder.error.notAmongAllowedConcepts");
+				errors.rejectValue("quantityUnits",
+						"DrugOrder.error.notAmongAllowedConcepts");
 			}
 		}
 		if (order.getDurationUnits() != null) {
 			List<Concept> drugDurationUnits = orderService.getDurationUnits();
 			if (!drugDurationUnits.contains(order.getDurationUnits())) {
-				errors.rejectValue("durationUnits", "DrugOrder.error.notAmongAllowedConcepts");
+				errors.rejectValue("durationUnits",
+						"DrugOrder.error.notAmongAllowedConcepts");
 			}
 			if (Duration.getCode(order.getDurationUnits()) == null) {
-				errors.rejectValue("durationUnits", "DrugOrder.error.durationUnitsNotMappedToSnomedCtDurationCode");
+				errors.rejectValue("durationUnits",
+						"DrugOrder.error.durationUnitsNotMappedToSnomedCtDurationCode");
 			}
 		}
 		if (order.getRoute() != null) {
 			List<Concept> routes = orderService.getDrugRoutes();
 			if (!routes.contains(order.getRoute())) {
-				errors.rejectValue("route", "DrugOrder.error.routeNotAmongAllowedConcepts");
+				errors.rejectValue("route",
+						"DrugOrder.error.routeNotAmongAllowedConcepts");
 			}
 		}
 	}

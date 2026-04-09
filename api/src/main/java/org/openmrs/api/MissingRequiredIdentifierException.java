@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -11,25 +11,28 @@ package org.openmrs.api;
 
 import org.openmrs.PatientIdentifier;
 
-public class MissingRequiredIdentifierException extends PatientIdentifierException {
-	
+public class MissingRequiredIdentifierException
+		extends
+			PatientIdentifierException {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	public MissingRequiredIdentifierException() {
 	}
-	
+
 	public MissingRequiredIdentifierException(String message) {
 		super(message);
 	}
-	
-	public MissingRequiredIdentifierException(String message, PatientIdentifier identifier) {
+
+	public MissingRequiredIdentifierException(String message,
+			PatientIdentifier identifier) {
 		super(message, identifier);
 	}
-	
+
 	public MissingRequiredIdentifierException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	public MissingRequiredIdentifierException(Throwable cause) {
 		super(cause);
 	}

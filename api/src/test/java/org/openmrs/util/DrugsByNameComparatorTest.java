@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -18,14 +18,14 @@ import org.openmrs.Drug;
  * The Class DrugsByNameComparatorTest. Contains tests for DrugsByNameCOmparator
  */
 public class DrugsByNameComparatorTest {
-	
+
 	/**
 	 * @see DrugsByNameComparator#compareDrugNamesIgnoringNumericals(Drug,Drug)
 	 * @verifies return negative if name for drug1 comes before that of drug2
 	 */
 	@Test
 	public void compareDrugNamesIgnoringNumericals_shouldReturnNegativeIfNameForDrug1ComesBeforeThatOfDrug2()
-	        throws Exception {
+			throws Exception {
 		Drug drug1 = new Drug();
 		drug1.setName("ABCD");
 		Drug drug2 = new Drug();
@@ -34,13 +34,14 @@ public class DrugsByNameComparatorTest {
 		int actualValue = dComparator.compare(drug1, drug2);
 		Assert.assertEquals(actualValue, -1);
 	}
-	
+
 	/**
 	 * @see DrugsByNameComparator#compareDrugNamesIgnoringNumericals(Drug,Drug)
 	 * @verifies return zero if name for drug1 comes before that of drug2
 	 */
 	@Test
-	public void compareDrugNamesIgnoringNumericals_shouldReturnZeroIfNameForDrug1ComesBeforeThatOfDrug2() throws Exception {
+	public void compareDrugNamesIgnoringNumericals_shouldReturnZeroIfNameForDrug1ComesBeforeThatOfDrug2()
+			throws Exception {
 		Drug drug1 = new Drug();
 		drug1.setName("ABCD");
 		Drug drug2 = new Drug();
@@ -49,14 +50,15 @@ public class DrugsByNameComparatorTest {
 		int actualValue = dComparator.compare(drug1, drug2);
 		Assert.assertEquals(actualValue, 0);
 	}
-	
+
 	/**
 	 * @see DrugsByNameComparator#compareDrugNamesIgnoringNumericals(Drug,Drug)
-	 * @verifies return positive if name for drug1 comes before that of drug2 ignoring dashes
+	 * @verifies return positive if name for drug1 comes before that of drug2
+	 *           ignoring dashes
 	 */
 	@Test
 	public void compareDrugNamesIgnoringNumericals_shouldReturnPositiveIfNameForDrug1ComesBeforeThatOfDrug2IgnoringDashes()
-	        throws Exception {
+			throws Exception {
 		Drug drug1 = new Drug();
 		drug1.setName("AB-AB");
 		Drug drug2 = new Drug();
@@ -65,14 +67,15 @@ public class DrugsByNameComparatorTest {
 		int actualValue = dComparator.compare(drug1, drug2);
 		Assert.assertEquals(actualValue, 1);
 	}
-	
+
 	/**
 	 * @see DrugsByNameComparator#compareDrugNamesIgnoringNumericals(Drug,Drug)
-	 * @verifies return positive if name for drug1 comes before that of drug2 ignoring numerics
+	 * @verifies return positive if name for drug1 comes before that of drug2
+	 *           ignoring numerics
 	 */
 	@Test
 	public void compareDrugNamesIgnoringNumericals_shouldReturnPositiveIfNameForDrug1ComesBeforeThatOfDrug2IgnoringNumerics()
-	        throws Exception {
+			throws Exception {
 		Drug drug1 = new Drug();
 		drug1.setName("AB1AB");
 		Drug drug2 = new Drug();
@@ -81,5 +84,5 @@ public class DrugsByNameComparatorTest {
 		int actualValue = dComparator.compare(drug1, drug2);
 		Assert.assertEquals(actualValue, 1);
 	}
-	
+
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -84,11 +84,11 @@ import org.springframework.web.bind.support.WebBindingInitializer;
 import org.springframework.web.context.request.WebRequest;
 
 /**
- * Shared WebBindingInitializer that allows all OpenMRS annotated controllers to use our custom
- * editors.
+ * Shared WebBindingInitializer that allows all OpenMRS annotated controllers to
+ * use our custom editors.
  */
 public class OpenmrsBindingInitializer implements WebBindingInitializer {
-	
+
 	/**
 	 * @see org.springframework.web.bind.support.WebBindingInitializer#initBinder(org.springframework.web.bind.WebDataBinder,
 	 *      org.springframework.web.context.request.WebRequest)
@@ -99,42 +99,58 @@ public class OpenmrsBindingInitializer implements WebBindingInitializer {
 		wdb.registerCustomEditor(Concept.class, new ConceptEditor());
 		wdb.registerCustomEditor(ConceptAnswer.class, new ConceptAnswerEditor());
 		wdb.registerCustomEditor(ConceptClass.class, new ConceptClassEditor());
-		wdb.registerCustomEditor(ConceptDatatype.class, new ConceptDatatypeEditor());
+		wdb.registerCustomEditor(ConceptDatatype.class,
+				new ConceptDatatypeEditor());
 		wdb.registerCustomEditor(ConceptName.class, new ConceptNameEditor());
-		wdb.registerCustomEditor(ConceptNumeric.class, new ConceptNumericEditor());
+		wdb.registerCustomEditor(ConceptNumeric.class,
+				new ConceptNumericEditor());
 		wdb.registerCustomEditor(ConceptSource.class, new ConceptSourceEditor());
 		wdb.registerCustomEditor(Drug.class, new DrugEditor());
 		wdb.registerCustomEditor(Encounter.class, new EncounterEditor());
 		wdb.registerCustomEditor(Form.class, new FormEditor());
 		wdb.registerCustomEditor(Location.class, new LocationEditor());
 		wdb.registerCustomEditor(LocationTag.class, new LocationTagEditor());
-		wdb.registerCustomEditor(LocationAttributeType.class, new LocationAttributeTypeEditor());
+		wdb.registerCustomEditor(LocationAttributeType.class,
+				new LocationAttributeTypeEditor());
 		wdb.registerCustomEditor(Order.class, new OrderEditor());
 		wdb.registerCustomEditor(Patient.class, new PatientEditor());
-		wdb.registerCustomEditor(PatientIdentifierType.class, new PatientIdentifierTypeEditor());
-		wdb.registerCustomEditor(PersonAttribute.class, new PersonAttributeEditor());
-		wdb.registerCustomEditor(PersonAttributeType.class, new PersonAttributeTypeEditor());
+		wdb.registerCustomEditor(PatientIdentifierType.class,
+				new PatientIdentifierTypeEditor());
+		wdb.registerCustomEditor(PersonAttribute.class,
+				new PersonAttributeEditor());
+		wdb.registerCustomEditor(PersonAttributeType.class,
+				new PersonAttributeTypeEditor());
 		wdb.registerCustomEditor(Person.class, new PersonEditor());
 		wdb.registerCustomEditor(Privilege.class, new PrivilegeEditor());
 		wdb.registerCustomEditor(Program.class, new ProgramEditor());
-		wdb.registerCustomEditor(ProgramWorkflow.class, new ProgramWorkflowEditor());
-		wdb.registerCustomEditor(ProgramWorkflowState.class, new ProgramWorkflowStateEditor());
+		wdb.registerCustomEditor(ProgramWorkflow.class,
+				new ProgramWorkflowEditor());
+		wdb.registerCustomEditor(ProgramWorkflowState.class,
+				new ProgramWorkflowStateEditor());
 		wdb.registerCustomEditor(Provider.class, new ProviderEditor());
 		wdb.registerCustomEditor(Role.class, new RoleEditor());
 		wdb.registerCustomEditor(User.class, new UserEditor());
-		wdb.registerCustomEditor(java.lang.Integer.class, new CustomNumberEditor(java.lang.Integer.class, NumberFormat
-		        .getInstance(Context.getLocale()), true));
+		wdb.registerCustomEditor(
+				java.lang.Integer.class,
+				new CustomNumberEditor(java.lang.Integer.class, NumberFormat
+						.getInstance(Context.getLocale()), true));
 		wdb.registerCustomEditor(Date.class, new DateOrDatetimeEditor());
-		wdb.registerCustomEditor(PatientIdentifierType.class, new PatientIdentifierTypeEditor());
-		wdb.registerCustomEditor(ConceptMapType.class, new ConceptMapTypeEditor());
+		wdb.registerCustomEditor(PatientIdentifierType.class,
+				new PatientIdentifierTypeEditor());
+		wdb.registerCustomEditor(ConceptMapType.class,
+				new ConceptMapTypeEditor());
 		wdb.registerCustomEditor(ConceptSource.class, new ConceptSourceEditor());
-		wdb.registerCustomEditor(ConceptReferenceTerm.class, new ConceptReferenceTermEditor());
-		wdb.registerCustomEditor(ConceptAttributeType.class, new ConceptAttributeTypeEditor());
+		wdb.registerCustomEditor(ConceptReferenceTerm.class,
+				new ConceptReferenceTermEditor());
+		wdb.registerCustomEditor(ConceptAttributeType.class,
+				new ConceptAttributeTypeEditor());
 		wdb.registerCustomEditor(VisitType.class, new VisitTypeEditor());
 		wdb.registerCustomEditor(Visit.class, new VisitEditor());
-		
-		// can't really do this because PropertyEditors are not told what type of class they are changing :-(
-		//wdb.registerCustomEditor(OpenmrsObject.class, new OpenmrsObjectByUuidEditor());
+
+		// can't really do this because PropertyEditors are not told what type
+		// of class they are changing :-(
+		// wdb.registerCustomEditor(OpenmrsObject.class, new
+		// OpenmrsObjectByUuidEditor());
 	}
-	
+
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,7 +19,7 @@ import org.openmrs.test.BaseContextSensitiveTest;
  * Tests {@link WorkflowCollectionEditor}
  */
 public class WorkflowCollectionEditorTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see WorkflowCollectionEditor#setAsText(String)
 	 * @verifies update workflows in program
@@ -28,14 +28,15 @@ public class WorkflowCollectionEditorTest extends BaseContextSensitiveTest {
 	public void setAsText_shouldUpdateWorkflowsInProgram() throws Exception {
 		Program program = Context.getProgramWorkflowService().getProgram(1);
 		WorkflowCollectionEditor editor = new WorkflowCollectionEditor();
-		
+
 		Assert.assertEquals(2, program.getWorkflows().size());
-		
+
 		editor.setAsText("1:3");
-		
+
 		Assert.assertEquals(1, program.getWorkflows().size());
-		Assert.assertEquals(3, program.getWorkflows().iterator().next().getConcept().getConceptId().intValue());
+		Assert.assertEquals(3, program.getWorkflows().iterator().next()
+				.getConcept().getConceptId().intValue());
 		Assert.assertEquals(3, program.getAllWorkflows().size());
 	}
-	
+
 }

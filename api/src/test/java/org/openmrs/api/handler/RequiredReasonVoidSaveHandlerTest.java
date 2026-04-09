@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -26,61 +26,66 @@ import org.openmrs.test.Verifies;
  * Tests for the {@link RequireVoidReasonSaveHandler} class.
  */
 public class RequiredReasonVoidSaveHandlerTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see RequireVoidReasonSaveHandler#handle(Voidable,User,Date,String)
 	 */
 	@Test(expected = APIException.class)
 	@Verifies(value = "should throw APIException if Patient voidReason is null", method = "handle(Voidable,User,Date,String)")
-	public void handle_shouldThrowAPIExceptionIfPatientVoidReasonIsNull() throws Exception {
+	public void handle_shouldThrowAPIExceptionIfPatientVoidReasonIsNull()
+			throws Exception {
 		Patient p = Context.getPatientService().getPatient(2);
 		p.setVoided(true);
 		p.setVoidReason(null);
 		Context.getPatientService().savePatient(p);
 	}
-	
+
 	/**
 	 * @see RequireVoidReasonSaveHandler#handle(Voidable,User,Date,String)
 	 */
 	@Test(expected = APIException.class)
 	@Verifies(value = "should throw APIException if Encounter voidReason is empty", method = "handle(Voidable,User,Date,String)")
-	public void handle_shouldThrowAPIExceptionIfEncounterVoidReasonIsEmpty() throws Exception {
+	public void handle_shouldThrowAPIExceptionIfEncounterVoidReasonIsEmpty()
+			throws Exception {
 		Encounter e = Context.getEncounterService().getEncounter(3);
 		e.setVoided(true);
 		e.setVoidReason("");
 		Context.getEncounterService().saveEncounter(e);
 	}
-	
+
 	/**
 	 * @see RequireVoidReasonSaveHandler#handle(Voidable,User,Date,String)
 	 */
 	@Test(expected = APIException.class)
 	@Verifies(value = "should throw APIException if Encounter voidReason is blank", method = "handle(Voidable,User,Date,String)")
-	public void handle_shouldThrowAPIExceptionIfObsVoidReasonIsBlank() throws Exception {
+	public void handle_shouldThrowAPIExceptionIfObsVoidReasonIsBlank()
+			throws Exception {
 		Encounter e = Context.getEncounterService().getEncounter(3);
 		e.setVoided(true);
 		e.setVoidReason("  ");
 		Context.getEncounterService().saveEncounter(e);
 	}
-	
+
 	/**
 	 * @see RequireVoidReasonSaveHandler#handle(Voidable,User,Date,String)
 	 */
 	@Test
 	@Verifies(value = "should not throw Exception if voidReason is not blank", method = "handle(Voidable,User,Date,String)")
-	public void handle_shouldNotThrowExceptionIfVoidReasonIsNotBlank() throws Exception {
+	public void handle_shouldNotThrowExceptionIfVoidReasonIsNotBlank()
+			throws Exception {
 		Encounter e = Context.getEncounterService().getEncounter(3);
 		e.setVoided(true);
 		e.setVoidReason("Some Reason");
 		Context.getEncounterService().saveEncounter(e);
 	}
-	
+
 	/**
 	 * @see RequireVoidReasonSaveHandler#handle(Voidable,User,Date,String)
 	 */
 	@Test
 	@Verifies(value = "not throw Exception if voidReason is null for unsupported types", method = "handle(Voidable,User,Date,String)")
-	public void handle_shouldNotThrowExceptionIfVoidReasonIsNullForUnsupportedTypes() throws Exception {
+	public void handle_shouldNotThrowExceptionIfVoidReasonIsNullForUnsupportedTypes()
+			throws Exception {
 		Person p = Context.getPersonService().getPerson(1);
 		p.setVoided(true);
 		p.setVoidReason(null);

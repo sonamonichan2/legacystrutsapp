@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -14,12 +14,17 @@ import org.springframework.test.context.ContextConfiguration;
 
 /**
  * Web tests for controllers, etc should use this class instead of the general
- * {@link BaseWebContextSensitiveTest} one. The {@link ContextConfiguration} annotation adds in the
- * openmrs-servlet.xml context file to the config locations so that controller tests can pick up the
- * right type of controller, etc.
+ * {@link BaseWebContextSensitiveTest} one. The {@link ContextConfiguration}
+ * annotation adds in the openmrs-servlet.xml context file to the config
+ * locations so that controller tests can pick up the right type of controller,
+ * etc.
  */
-// put refernce to openmrs-servlet in the parent class to make this class really do nothing
-//@ContextConfiguration(locations = { "classpath:openmrs-servlet.xml" }, inheritLocations = true)
-public abstract class BaseWebContextSensitiveTest extends BaseContextSensitiveTest {
+// put refernce to openmrs-servlet in the parent class to make this class really
+// do nothing
+// @ContextConfiguration(locations = { "classpath:openmrs-servlet.xml" },
+// inheritLocations = true)
+public abstract class BaseWebContextSensitiveTest
+		extends
+			BaseContextSensitiveTest {
 
 }

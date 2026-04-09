@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -29,11 +29,13 @@ import org.openmrs.aop.RequiredDataAdvice;
  * @see UnvoidHandler
  * @since 1.5
  */
-@Handler(supports = { Patient.class, Encounter.class, Obs.class, Cohort.class, Order.class }, order = 1 /* low order so this is run first */)
+@Handler(supports = {Patient.class, Encounter.class, Obs.class, Cohort.class,
+		Order.class}, order = 1 /* low order so this is run first */)
 public class RequireVoidReasonVoidHandler implements VoidHandler<Voidable> {
-	
+
 	/**
-	 * Validates that the voidReason is non-null and non-empty for supported objects
+	 * Validates that the voidReason is non-null and non-empty for supported
+	 * objects
 	 * 
 	 * @should throw IllegalArgumentException if Patient voidReason is null
 	 * @should throw IllegalArgumentException if Encounter voidReason is empty
@@ -41,11 +43,13 @@ public class RequireVoidReasonVoidHandler implements VoidHandler<Voidable> {
 	 * @should not throw Exception if voidReason is not blank
 	 * @should not throw Exception if voidReason is null for unsupported types
 	 */
-	public void handle(Voidable voidableObject, User voidingUser, Date voidedDate, String voidReason) {
-		
+	public void handle(Voidable voidableObject, User voidingUser,
+			Date voidedDate, String voidReason) {
+
 		if (StringUtils.isBlank(voidReason)) {
-			throw new IllegalArgumentException("The 'reason' argument is required");
+			throw new IllegalArgumentException(
+					"The 'reason' argument is required");
 		}
 	}
-	
+
 }

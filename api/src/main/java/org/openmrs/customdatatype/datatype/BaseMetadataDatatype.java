@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -17,8 +17,10 @@ import org.openmrs.customdatatype.CustomDatatype;
  * 
  * @since 2.0.0
  */
-public abstract class BaseMetadataDatatype<T extends OpenmrsMetadata> extends BaseOpenmrsDatatype<T> {
-	
+public abstract class BaseMetadataDatatype<T extends OpenmrsMetadata>
+		extends
+			BaseOpenmrsDatatype<T> {
+
 	/**
 	 * @see BaseOpenmrsDatatype#doGetTextSummary(Object)
 	 * @should use the name in summary instance
@@ -27,5 +29,5 @@ public abstract class BaseMetadataDatatype<T extends OpenmrsMetadata> extends Ba
 	public Summary doGetTextSummary(T typedValue) {
 		return new CustomDatatype.Summary(typedValue.getName(), true);
 	}
-	
+
 }

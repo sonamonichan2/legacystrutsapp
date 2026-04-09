@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -25,111 +25,132 @@ import org.openmrs.api.context.Context;
 import org.openmrs.test.BaseContextSensitiveTest;
 
 public class DurationTest extends BaseContextSensitiveTest {
-	
+
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
-	
+
 	@Test
-	public void addToDate_shouldAddSecondsWhenUnitIsSeconds() throws ParseException {
+	public void addToDate_shouldAddSecondsWhenUnitIsSeconds()
+			throws ParseException {
 		Duration duration = new Duration(30, Duration.SNOMED_CT_SECONDS_CODE);
-		
-		Date autoExpireDate = duration.addToDate(createDateTime("2014-07-01 10:00:00"), null);
-		
+
+		Date autoExpireDate = duration.addToDate(
+				createDateTime("2014-07-01 10:00:00"), null);
+
 		assertEquals(createDateTime("2014-07-01 10:00:30"), autoExpireDate);
 	}
-	
+
 	@Test
-	public void addToDate_shouldAddMinutesWhenUnitIsMinutes() throws ParseException {
+	public void addToDate_shouldAddMinutesWhenUnitIsMinutes()
+			throws ParseException {
 		Duration duration = new Duration(30, Duration.SNOMED_CT_MINUTES_CODE);
-		
-		Date autoExpireDate = duration.addToDate(createDateTime("2014-07-01 10:00:00"), null);
-		
+
+		Date autoExpireDate = duration.addToDate(
+				createDateTime("2014-07-01 10:00:00"), null);
+
 		assertEquals(createDateTime("2014-07-01 10:30:00"), autoExpireDate);
 	}
-	
+
 	@Test
 	public void addToDate_shouldAddHoursWhenUnitIsHours() throws ParseException {
 		Duration duration = new Duration(10, Duration.SNOMED_CT_HOURS_CODE);
-		
-		Date autoExpireDate = duration.addToDate(createDateTime("2014-07-01 10:00:00"), null);
-		
+
+		Date autoExpireDate = duration.addToDate(
+				createDateTime("2014-07-01 10:00:00"), null);
+
 		assertEquals(createDateTime("2014-07-01 20:00:00"), autoExpireDate);
 	}
-	
+
 	@Test
 	public void addToDate_shouldAddDaysWhenUnitIsDays() throws ParseException {
 		Duration duration = new Duration(30, Duration.SNOMED_CT_DAYS_CODE);
-		
-		Date autoExpireDate = duration.addToDate(createDateTime("2014-07-01 10:00:00"), null);
-		
+
+		Date autoExpireDate = duration.addToDate(
+				createDateTime("2014-07-01 10:00:00"), null);
+
 		assertEquals(createDateTime("2014-07-31 10:00:00"), autoExpireDate);
 	}
-	
+
 	@Test
-	public void addToDate_shouldAddMonthsWhenUnitIsMonths() throws ParseException {
+	public void addToDate_shouldAddMonthsWhenUnitIsMonths()
+			throws ParseException {
 		Duration duration = new Duration(3, Duration.SNOMED_CT_MONTHS_CODE);
-		
-		Date autoExpireDate = duration.addToDate(createDateTime("2014-07-01 10:00:00"), null);
-		
+
+		Date autoExpireDate = duration.addToDate(
+				createDateTime("2014-07-01 10:00:00"), null);
+
 		assertEquals(createDateTime("2014-10-01 10:00:00"), autoExpireDate);
 	}
-	
+
 	@Test
 	public void addToDate_shouldAddYearsWhenUnitIsYears() throws ParseException {
 		Duration duration = new Duration(3, Duration.SNOMED_CT_YEARS_CODE);
-		
-		Date autoExpireDate = duration.addToDate(createDateTime("2014-07-01 10:00:00"), null);
-		
+
+		Date autoExpireDate = duration.addToDate(
+				createDateTime("2014-07-01 10:00:00"), null);
+
 		assertEquals(createDateTime("2017-07-01 10:00:00"), autoExpireDate);
 	}
-	
+
 	@Test
-	public void addToDate_shouldAddTimeBasedOnFrequencyWhenUnitIsRecurringInterval() throws ParseException {
-		Duration duration = new Duration(3, Duration.SNOMED_CT_RECURRING_INTERVAL_CODE); // 3 Times
+	public void addToDate_shouldAddTimeBasedOnFrequencyWhenUnitIsRecurringInterval()
+			throws ParseException {
+		Duration duration = new Duration(3,
+				Duration.SNOMED_CT_RECURRING_INTERVAL_CODE); // 3 Times
 		Date startDate = createDateTime("2014-07-01 10:00:00");
 		OrderFrequency onceAWeek = createFrequency(1 / 7.0);
-		
-		assertEquals(createDateTime("2014-07-22 10:00:00"), duration.addToDate(startDate, onceAWeek));
+
+		assertEquals(createDateTime("2014-07-22 10:00:00"),
+				duration.addToDate(startDate, onceAWeek));
 	}
-	
+
 	@Test
-	public void addToDate_shouldFailWhenUnitIsRecurringAndFrequencyIsUnknown() throws ParseException {
-		Duration duration = new Duration(3, Duration.SNOMED_CT_RECURRING_INTERVAL_CODE); // 3 Times
+	public void addToDate_shouldFailWhenUnitIsRecurringAndFrequencyIsUnknown()
+			throws ParseException {
+		Duration duration = new Duration(3,
+				Duration.SNOMED_CT_RECURRING_INTERVAL_CODE); // 3 Times
 		Date startDate = createDateTime("2014-07-01 10:00:00");
 		OrderFrequency frequency = null;
-		
+
 		expectedException.expect(APIException.class);
-		expectedException.expectMessage(Matchers.is(Context.getMessageSourceService().getMessage("Duration.error.frequency.null")));
+		expectedException.expectMessage(Matchers.is(Context
+				.getMessageSourceService().getMessage(
+						"Duration.error.frequency.null")));
 		duration.addToDate(startDate, frequency);
 	}
-	
+
 	@Test
 	public void addToDate_shouldFailWhenUnitIsUnknown() throws ParseException {
 		Duration duration = new Duration(3, "J");
-		
+
 		expectedException.expect(APIException.class);
-		expectedException.expectMessage(Matchers.is(Context.getMessageSourceService().getMessage("Duration.unknown.code", new Object[] { "J" }, null)));
+		expectedException.expectMessage(Matchers.is(Context
+				.getMessageSourceService().getMessage("Duration.unknown.code",
+						new Object[]{"J"}, null)));
 		duration.addToDate(createDateTime("2014-07-01 10:00:00"), null);
 	}
-	
+
 	private OrderFrequency createFrequency(double frequencyPerDay) {
 		OrderFrequency frequency = new OrderFrequency();
 		frequency.setFrequencyPerDay(frequencyPerDay);
 		return frequency;
 	}
-	
+
 	/**
-	 * @verifies return null if the concept has no mapping to the SNOMED CT source
+	 * @verifies return null if the concept has no mapping to the SNOMED CT
+	 *           source
 	 * @see Duration#getCode(Concept)
 	 */
 	@Test
 	public void getCode_shouldReturnNullIfTheConceptHasNoMappingToTheSNOMEDCTSource() {
 		final String daysCode = Duration.SNOMED_CT_DAYS_CODE;
-		assertNull(Duration.getCode(SimpleDosingInstructionsTest.createUnits("some-uuid", daysCode, null)));
+		assertNull(Duration.getCode(SimpleDosingInstructionsTest.createUnits(
+				"some-uuid", daysCode, null)));
 	}
-	
+
 	/**
-	 * @verifies return the code for the term of the mapping to the SNOMED CT source
+	 * @verifies return the code for the term of the mapping to the SNOMED CT
+	 *           source
 	 * @see Duration#getCode(Concept)
 	 */
 	@Test

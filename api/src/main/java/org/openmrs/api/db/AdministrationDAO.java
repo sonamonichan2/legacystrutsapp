@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -23,61 +23,68 @@ import org.springframework.validation.Errors;
  * @see org.openmrs.api.AdministrationService
  */
 public interface AdministrationDAO {
-	
+
 	/**
 	 * @see org.openmrs.api.AdministrationService#getGlobalProperty(String)
 	 */
 	public String getGlobalProperty(String propertyName) throws DAOException;
-	
+
 	/**
 	 * @see org.openmrs.api.AdministrationService#getGlobalPropertyObject(java.lang.String)
 	 */
 	public GlobalProperty getGlobalPropertyObject(String propertyName);
-	
+
 	/**
 	 * @see org.openmrs.api.AdministrationService#getAllGlobalProperties()
 	 */
 	public List<GlobalProperty> getAllGlobalProperties() throws DAOException;
-	
-	public GlobalProperty getGlobalPropertyByUuid(String uuid) throws DAOException;
-	
+
+	public GlobalProperty getGlobalPropertyByUuid(String uuid)
+			throws DAOException;
+
 	/**
 	 * @see org.openmrs.api.AdministrationService#getGlobalPropertiesByPrefix(java.lang.String)
 	 */
 	public List<GlobalProperty> getGlobalPropertiesByPrefix(String prefix);
-	
+
 	/**
 	 * @see org.openmrs.api.AdministrationService#getGlobalPropertiesBySuffix(java.lang.String)
 	 */
 	public List<GlobalProperty> getGlobalPropertiesBySuffix(String suffix);
-	
+
 	/**
 	 * @see org.openmrs.api.AdministrationService#purgeGlobalProperty(org.openmrs.GlobalProperty)
 	 */
 	public void deleteGlobalProperty(GlobalProperty gp) throws DAOException;
-	
+
 	/**
 	 * @see org.openmrs.api.AdministrationService#saveGlobalProperty(org.openmrs.GlobalProperty)
 	 */
-	public GlobalProperty saveGlobalProperty(GlobalProperty gp) throws DAOException;
-	
+	public GlobalProperty saveGlobalProperty(GlobalProperty gp)
+			throws DAOException;
+
 	/**
-	 * @see org.openmrs.api.db.AdministrationDAO#executeSQL(java.lang.String, boolean)
+	 * @see org.openmrs.api.db.AdministrationDAO#executeSQL(java.lang.String,
+	 *      boolean)
 	 */
-	public List<List<Object>> executeSQL(String sql, boolean selectOnly) throws DAOException;
-	
+	public List<List<Object>> executeSQL(String sql, boolean selectOnly)
+			throws DAOException;
+
 	/**
-	 * @see org.openmrs.api.AdministrationService#getMaximumPropertyLength(Class, String)
+	 * @see org.openmrs.api.AdministrationService#getMaximumPropertyLength(Class,
+	 *      String)
 	 */
-	public int getMaximumPropertyLength(Class<? extends OpenmrsObject> aClass, String fieldName);
-	
+	public int getMaximumPropertyLength(Class<? extends OpenmrsObject> aClass,
+			String fieldName);
+
 	/**
 	 * @see org.openmrs.api.AdministrationService#validate(Object, Errors)
 	 */
 	public void validate(Object object, Errors errors) throws DAOException;
-	
+
 	/**
 	 * @see AdministrationService#isDatabaseStringComparisonCaseSensitive()
 	 */
-	public boolean isDatabaseStringComparisonCaseSensitive() throws DAOException;
+	public boolean isDatabaseStringComparisonCaseSensitive()
+			throws DAOException;
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -21,17 +21,18 @@ import org.openmrs.notification.MessagePreparator;
 import org.openmrs.notification.Template;
 
 public class VelocityMessagePreparator implements MessagePreparator {
-	
+
 	/**
 	 * Logger
 	 */
-	private static final Log log = LogFactory.getLog(VelocityMessagePreparator.class);
-	
+	private static final Log log = LogFactory
+			.getLog(VelocityMessagePreparator.class);
+
 	/**
 	 * Velocity template engine
 	 */
 	private VelocityEngine engine;
-	
+
 	/**
 	 * Public constructor TODO: needs better error handling
 	 * 
@@ -41,36 +42,37 @@ public class VelocityMessagePreparator implements MessagePreparator {
 		try {
 			engine = new VelocityEngine();
 			engine.init();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.error("Failed to create velocity engine " + e.getMessage(), e);
 			throw new MessageException(e);
 		}
 	}
-	
+
 	// TODO: need better error handling
 	public Message prepare(Template template) throws MessageException {
-		
+
 		VelocityContext context = new VelocityContext(template.getData());
 		StringWriter writer = new StringWriter();
-		
+
 		try {
-			engine.evaluate(context, writer, "template", // I have no idea what this is used for
-			    template.getTemplate());
-		}
-		catch (Exception e) {
+			engine.evaluate(context, writer, "template", // I have no idea what
+															// this is used for
+					template.getTemplate());
+		} catch (Exception e) {
 			// need better error handling
-			log.error("Failed to prepare message using template " + e.getMessage(), e);
+			log.error(
+					"Failed to prepare message using template "
+							+ e.getMessage(), e);
 			throw new MessageException(e);
 		}
-		
+
 		// Prepare the message
 		Message message = new Message();
 		message.setSubject(template.getSubject());
 		message.setRecipients(template.getRecipients());
 		message.setSender(template.getSender());
 		message.setContent(writer.toString());
-		
+
 		return message;
 	}
 }

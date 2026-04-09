@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -18,11 +18,11 @@ import org.apache.commons.lang.StringUtils;
 import org.openmrs.api.context.Context;
 
 /**
- * Allows a java.util.Date to be converted to/from a String. It tries both Date and Date+Time formats
- * but it does not permit partial dates. 
+ * Allows a java.util.Date to be converted to/from a String. It tries both Date
+ * and Date+Time formats but it does not permit partial dates.
  */
 public class DateOrDatetimeEditor extends PropertyEditorSupport {
-	
+
 	/**
 	 * @see java.beans.PropertyEditorSupport#setAsText(java.lang.String)
 	 * @should handle date
@@ -39,19 +39,17 @@ public class DateOrDatetimeEditor extends PropertyEditorSupport {
 		try {
 			// first try date+time
 			setValue(Context.getDateTimeFormat().parse(asString));
-		}
-		catch (ParseException dateTimeEx) {
+		} catch (ParseException dateTimeEx) {
 			// next try just date
 			try {
 				setValue(Context.getDateFormat().parse(asString));
-			}
-			catch (ParseException dateEx) {
+			} catch (ParseException dateEx) {
 				// those were the only two options, so we fail
 				throw new IllegalArgumentException(dateTimeEx);
 			}
 		}
 	}
-	
+
 	/**
 	 * @see java.beans.PropertyEditorSupport#getAsText()
 	 * @should print date without time
@@ -69,5 +67,5 @@ public class DateOrDatetimeEditor extends PropertyEditorSupport {
 			return Context.getDateTimeFormat().format(date);
 		}
 	}
-	
+
 }

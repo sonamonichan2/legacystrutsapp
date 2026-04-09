@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -18,9 +18,11 @@ import org.springframework.validation.Errors;
  * 
  * @since 1.9
  */
-@Handler(supports = { VisitAttributeType.class }, order = 50)
-public class VisitAttributeTypeValidator extends BaseAttributeTypeValidator<VisitAttributeType> {
-	
+@Handler(supports = {VisitAttributeType.class}, order = 50)
+public class VisitAttributeTypeValidator
+		extends
+			BaseAttributeTypeValidator<VisitAttributeType> {
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -29,7 +31,7 @@ public class VisitAttributeTypeValidator extends BaseAttributeTypeValidator<Visi
 	public boolean supports(Class<?> c) {
 		return c.equals(VisitAttributeType.class);
 	}
-	
+
 	/**
 	 * @should pass validation if field lengths are correct
 	 * @should fail validation if field lengths are not correct
@@ -37,8 +39,9 @@ public class VisitAttributeTypeValidator extends BaseAttributeTypeValidator<Visi
 	public void validate(Object obj, Errors errors) {
 		if (obj != null) {
 			super.validate(obj, errors);
-			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "description", "datatypeClassname",
-			    "preferredHandlerClassname", "retireReason");
+			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name",
+					"description", "datatypeClassname",
+					"preferredHandlerClassname", "retireReason");
 		}
 	}
 }

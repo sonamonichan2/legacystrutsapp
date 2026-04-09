@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -16,86 +16,93 @@ import java.util.Date;
  * 
  * @since 1.9
  */
-public abstract class BaseConceptMap extends BaseOpenmrsObject implements Auditable {
-	
+public abstract class BaseConceptMap extends BaseOpenmrsObject
+		implements
+			Auditable {
+
 	private ConceptMapType conceptMapType;
-	
+
 	private User creator;
-	
+
 	private User changedBy;
-	
+
 	private Date dateCreated;
-	
+
 	private Date dateChanged;
-	
+
 	/**
 	 * @return the conceptMapType
 	 */
 	public ConceptMapType getConceptMapType() {
 		return conceptMapType;
 	}
-	
+
 	/**
-	 * @param conceptMapType the conceptMapType to set
+	 * @param conceptMapType
+	 *            the conceptMapType to set
 	 */
 	public void setConceptMapType(ConceptMapType conceptMapType) {
 		this.conceptMapType = conceptMapType;
 	}
-	
+
 	/**
 	 * @return the creator
 	 */
 	public User getCreator() {
 		return creator;
 	}
-	
+
 	/**
-	 * @param creator the creator to set
+	 * @param creator
+	 *            the creator to set
 	 */
 	public void setCreator(User creator) {
 		this.creator = creator;
 	}
-	
+
 	/**
 	 * @return the changedBy
 	 */
 	public User getChangedBy() {
 		return changedBy;
 	}
-	
+
 	/**
-	 * @param changedBy the changedBy to set
+	 * @param changedBy
+	 *            the changedBy to set
 	 */
 	public void setChangedBy(User changedBy) {
 		this.changedBy = changedBy;
 	}
-	
+
 	/**
 	 * @return the dateCreated
 	 */
 	public Date getDateCreated() {
 		return dateCreated;
 	}
-	
+
 	/**
-	 * @param dateCreated the dateCreated to set
+	 * @param dateCreated
+	 *            the dateCreated to set
 	 */
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
-	
+
 	/**
 	 * @return the dateChanged
 	 */
 	public Date getDateChanged() {
 		return dateChanged;
 	}
-	
+
 	/**
-	 * @param dateChanged the dateChanged to set
+	 * @param dateChanged
+	 *            the dateChanged to set
 	 */
 	public void setDateChanged(Date dateChanged) {
 		this.dateChanged = dateChanged;
 	}
-	
+
 }

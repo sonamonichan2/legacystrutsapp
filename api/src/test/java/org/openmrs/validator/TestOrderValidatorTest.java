@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -34,13 +34,15 @@ import org.springframework.validation.Errors;
  *
  */
 public class TestOrderValidatorTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @verifies fail validation if the specimen source is invalid
-	 * @see TestOrderValidator#validate(Object, org.springframework.validation.Errors)
+	 * @see TestOrderValidator#validate(Object,
+	 *      org.springframework.validation.Errors)
 	 */
 	@Test
-	public void validate_shouldFailValidationIfTheSpecimenSourceIsInvalid() throws Exception {
+	public void validate_shouldFailValidationIfTheSpecimenSourceIsInvalid()
+			throws Exception {
 		ConceptService conceptService = Context.getConceptService();
 		Concept specimenSource = conceptService.getConcept(3);
 		OrderService orderService = Context.getOrderService();
@@ -57,20 +59,23 @@ public class TestOrderValidatorTest extends BaseContextSensitiveTest {
 		order.setEncounter(encounter);
 		order.setDateActivated(new Date());
 		order.setSpecimenSource(specimenSource);
-		
+
 		Errors errors = new BindException(order, "order");
 		new TestOrderValidator().validate(order, errors);
 		Assert.assertTrue(errors.hasFieldErrors("specimenSource"));
-		Assert.assertEquals("TestOrder.error.specimenSourceNotAmongAllowedConcepts", errors.getFieldError("specimenSource")
-		        .getCode());
+		Assert.assertEquals(
+				"TestOrder.error.specimenSourceNotAmongAllowedConcepts", errors
+						.getFieldError("specimenSource").getCode());
 	}
-	
+
 	/**
 	 * @verifies pass validation if the specimen source is valid
-	 * @see TestOrderValidator#validate(Object, org.springframework.validation.Errors)
+	 * @see TestOrderValidator#validate(Object,
+	 *      org.springframework.validation.Errors)
 	 */
 	@Test
-	public void validate_shouldPassValidationIfTheSpecimenSourceIsValid() throws Exception {
+	public void validate_shouldPassValidationIfTheSpecimenSourceIsValid()
+			throws Exception {
 		ConceptService conceptService = Context.getConceptService();
 		Concept specimenSource = conceptService.getConcept(22);
 		OrderService orderService = Context.getOrderService();
@@ -87,7 +92,7 @@ public class TestOrderValidatorTest extends BaseContextSensitiveTest {
 		order.setEncounter(encounter);
 		order.setDateActivated(new Date());
 		order.setSpecimenSource(specimenSource);
-		
+
 		Errors errors = new BindException(order, "order");
 		new TestOrderValidator().validate(order, errors);
 		Assert.assertFalse(errors.hasFieldErrors());

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -16,12 +16,13 @@ import org.openmrs.test.Verifies;
 import java.util.Date;
 
 /**
- * This class tests the all of the {@link EncounterProvider} non-trivial object methods.
- *
+ * This class tests the all of the {@link EncounterProvider} non-trivial object
+ * methods.
+ * 
  * @see EncounterProvider
  */
 public class EncounterProviderTest {
-	
+
 	/**
 	 * @see EncounterProvider#copy()
 	 */
@@ -29,32 +30,42 @@ public class EncounterProviderTest {
 	@Verifies(value = "should copy all EncounterProvider data", method = "copy()")
 	public void copy_shouldCopyAllEncounterProviderData() throws Exception {
 		EncounterProvider encounterProvider = new EncounterProvider();
-		
+
 		encounterProvider.setCreator(new User());
 		encounterProvider.setDateCreated(new Date());
 		encounterProvider.setChangedBy(new User());
 		encounterProvider.setDateChanged(new Date());
 		encounterProvider.setVoidReason("void");
 		encounterProvider.setDateVoided(new Date());
-		
+
 		encounterProvider.setEncounter(new Encounter());
 		encounterProvider.setEncounterRole(new EncounterRole());
 		encounterProvider.setProvider(new Provider());
-		
+
 		EncounterProvider encounterProviderCopy = encounterProvider.copy();
-		
+
 		Assert.assertNotEquals(encounterProvider, encounterProviderCopy);
-		
-		Assert.assertEquals(encounterProvider.getCreator(), encounterProviderCopy.getCreator());
-		Assert.assertEquals(encounterProvider.getDateCreated(), encounterProviderCopy.getDateCreated());
-		Assert.assertEquals(encounterProvider.getChangedBy(), encounterProviderCopy.getChangedBy());
-		Assert.assertEquals(encounterProvider.getDateChanged(), encounterProviderCopy.getDateChanged());
-		Assert.assertEquals(encounterProvider.getVoided(), encounterProviderCopy.getVoided());
-		Assert.assertEquals(encounterProvider.getVoidReason(), encounterProviderCopy.getVoidReason());
-		Assert.assertEquals(encounterProvider.getDateVoided(), encounterProviderCopy.getDateVoided());
-		
-		Assert.assertEquals(encounterProvider.getEncounter(), encounterProviderCopy.getEncounter());
-		Assert.assertEquals(encounterProvider.getEncounterRole(), encounterProviderCopy.getEncounterRole());
-		Assert.assertEquals(encounterProvider.getProvider(), encounterProviderCopy.getProvider());
+
+		Assert.assertEquals(encounterProvider.getCreator(),
+				encounterProviderCopy.getCreator());
+		Assert.assertEquals(encounterProvider.getDateCreated(),
+				encounterProviderCopy.getDateCreated());
+		Assert.assertEquals(encounterProvider.getChangedBy(),
+				encounterProviderCopy.getChangedBy());
+		Assert.assertEquals(encounterProvider.getDateChanged(),
+				encounterProviderCopy.getDateChanged());
+		Assert.assertEquals(encounterProvider.getVoided(),
+				encounterProviderCopy.getVoided());
+		Assert.assertEquals(encounterProvider.getVoidReason(),
+				encounterProviderCopy.getVoidReason());
+		Assert.assertEquals(encounterProvider.getDateVoided(),
+				encounterProviderCopy.getDateVoided());
+
+		Assert.assertEquals(encounterProvider.getEncounter(),
+				encounterProviderCopy.getEncounter());
+		Assert.assertEquals(encounterProvider.getEncounterRole(),
+				encounterProviderCopy.getEncounterRole());
+		Assert.assertEquals(encounterProvider.getProvider(),
+				encounterProviderCopy.getProvider());
 	}
 }

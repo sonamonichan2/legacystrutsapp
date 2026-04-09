@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -16,13 +16,13 @@ import org.openmrs.PersonName;
 import java.util.Set;
 
 public class NameMatcher extends TypeSafeMatcher<Set<PersonName>> {
-	
+
 	private String fullName;
-	
+
 	public NameMatcher(String fullName) {
 		this.fullName = fullName;
 	}
-	
+
 	@Override
 	public boolean matchesSafely(Set<PersonName> personNames) {
 		for (PersonName personName : personNames) {
@@ -32,12 +32,12 @@ public class NameMatcher extends TypeSafeMatcher<Set<PersonName>> {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public void describeTo(Description description) {
 		description.appendText(fullName);
 	}
-	
+
 	public static NameMatcher containsFullName(String fullName) {
 		return new NameMatcher(fullName);
 	}

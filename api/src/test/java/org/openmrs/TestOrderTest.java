@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -21,7 +21,7 @@ import org.openmrs.order.OrderUtilTest;
  * Contains tests for TestOrder class
  */
 public class TestOrderTest {
-	
+
 	/**
 	 * @verifies copy all test order fields
 	 * @see TestOrder#copy()
@@ -30,59 +30,71 @@ public class TestOrderTest {
 	public void copy_shouldCopyAllTestOrderFields() throws Exception {
 		OrderTest.assertThatAllFieldsAreCopied(new TestOrder(), null);
 	}
-	
+
 	/**
 	 * @verifies set all the relevant fields
 	 * @see TestOrder#cloneForRevision()
 	 */
 	@Test
-	public void cloneForRevision_shouldSetAllTheRelevantFields() throws Exception {
+	public void cloneForRevision_shouldSetAllTheRelevantFields()
+			throws Exception {
 		TestOrder newTestOrder = new TestOrder();
-		
+
 		OrderGroup orderGroup = new OrderGroup();
 		newTestOrder.setOrderGroup(orderGroup);
-		
+
 		TestOrder revisedTestOrder = newTestOrder.cloneForRevision();
-		
-		OrderTest.assertThatAllFieldsAreCopied(revisedTestOrder, "cloneForRevision", "creator", "dateCreated", "action",
-		    "changedBy", "dateChanged", "voided", "dateVoided", "voidedBy", "voidReason", "encounter", "orderNumber",
-		    "orderer", "previousOrder", "dateActivated", "dateStopped", "accessionNumber");
+
+		OrderTest.assertThatAllFieldsAreCopied(revisedTestOrder,
+				"cloneForRevision", "creator", "dateCreated", "action",
+				"changedBy", "dateChanged", "voided", "dateVoided", "voidedBy",
+				"voidReason", "encounter", "orderNumber", "orderer",
+				"previousOrder", "dateActivated", "dateStopped",
+				"accessionNumber");
 	}
-	
+
 	/**
 	 * @verifies set all the relevant fields
 	 * @see TestOrder#cloneForDiscontinuing()
 	 */
 	@Test
-	public void cloneForDiscontinuing_shouldSetAllTheRelevantFields() throws Exception {
+	public void cloneForDiscontinuing_shouldSetAllTheRelevantFields()
+			throws Exception {
 		TestOrder anOrder = new TestOrder();
 		anOrder.setPatient(new Patient());
 		anOrder.setCareSetting(new CareSetting());
 		anOrder.setConcept(new Concept());
 		anOrder.setOrderType(new OrderType());
-		
+
 		Order orderThatCanDiscontinueTheOrder = anOrder.cloneForDiscontinuing();
-		
-		assertEquals(anOrder.getPatient(), orderThatCanDiscontinueTheOrder.getPatient());
-		
-		assertEquals(anOrder.getConcept(), orderThatCanDiscontinueTheOrder.getConcept());
-		
-		assertEquals("should set previous order to anOrder", anOrder, orderThatCanDiscontinueTheOrder.getPreviousOrder());
-		
-		assertEquals("should set new order action to new", orderThatCanDiscontinueTheOrder.getAction(),
-		    Order.Action.DISCONTINUE);
-		
-		assertEquals(anOrder.getCareSetting(), orderThatCanDiscontinueTheOrder.getCareSetting());
-		
-		assertEquals(anOrder.getOrderType(), orderThatCanDiscontinueTheOrder.getOrderType());
+
+		assertEquals(anOrder.getPatient(),
+				orderThatCanDiscontinueTheOrder.getPatient());
+
+		assertEquals(anOrder.getConcept(),
+				orderThatCanDiscontinueTheOrder.getConcept());
+
+		assertEquals("should set previous order to anOrder", anOrder,
+				orderThatCanDiscontinueTheOrder.getPreviousOrder());
+
+		assertEquals("should set new order action to new",
+				orderThatCanDiscontinueTheOrder.getAction(),
+				Order.Action.DISCONTINUE);
+
+		assertEquals(anOrder.getCareSetting(),
+				orderThatCanDiscontinueTheOrder.getCareSetting());
+
+		assertEquals(anOrder.getOrderType(),
+				orderThatCanDiscontinueTheOrder.getOrderType());
 	}
-	
+
 	/**
 	 * @verifies set the relevant fields for a DC order
 	 * @see TestOrder#cloneForRevision()
 	 */
 	@Test
-	public void cloneForRevision_shouldSetTheRelevantFieldsForADCOrder() throws Exception {
+	public void cloneForRevision_shouldSetTheRelevantFieldsForADCOrder()
+			throws Exception {
 		Order order = new TestOrder();
 		order.setAction(Order.Action.DISCONTINUE);
 		Date date = new Date();
@@ -91,7 +103,7 @@ public class TestOrderTest {
 		order.setAccessionNumber("some number");
 		OrderUtilTest.setDateStopped(order, date);
 		order.setPreviousOrder(new Order());
-		
+
 		Order clone = order.cloneForRevision();
 		assertEquals(Order.Action.DISCONTINUE, clone.getAction());
 		assertEquals(order.getDateActivated(), clone.getDateActivated());

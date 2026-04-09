@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -30,33 +30,33 @@ import org.springframework.validation.Validator;
 
 /**
  * Validates attributes on the User object
- *
+ * 
  * @since 1.5
  */
-@Handler(supports = { User.class }, order = 50)
+@Handler(supports = {User.class}, order = 50)
 public class UserValidator implements Validator {
-	
+
 	/** Log for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
 	private static final Pattern EMAIL_PATTERN = Pattern
-	        .compile("^.+@.+\\..+$");
-	
+			.compile("^.+@.+\\..+$");
+
 	@Autowired
 	private PersonValidator personValidator;
 
 	/**
 	 * Determines if the command object being submitted is a valid type
-	 *
+	 * 
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
 	public boolean supports(Class<?> clazz) {
 		return User.class.isAssignableFrom(clazz);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
-	 *
+	 * 
 	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
 	 *      org.springframework.validation.Errors)
 	 * @should fail validation if retired and retireReason is null
@@ -91,7 +91,9 @@ public class UserValidator implements Validator {
 				if (person.getVoided() == null) {
 					errors.rejectValue("person.voided", "error.null");
 				}
-				if (person.getPersonName() == null || StringUtils.isEmpty(person.getPersonName().getFullName())) {
+				if (person.getPersonName() == null
+						|| StringUtils.isEmpty(person.getPersonName()
+								.getFullName())) {
 					errors.rejectValue("person", "Person.names.length");
 				}
 				errors.pushNestedPath("person");
@@ -100,22 +102,25 @@ public class UserValidator implements Validator {
 				} finally {
 					errors.popNestedPath();
 				}
-					
+
 			}
-			
+
 			AdministrationService as = Context.getAdministrationService();
 			boolean emailAsUsername = false;
 			try {
 				Context.addProxyPrivilege(PrivilegeConstants.GET_GLOBAL_PROPERTIES);
-				emailAsUsername = Boolean.parseBoolean(as.getGlobalProperty(
-				    OpenmrsConstants.GLOBAL_PROPERTY_USER_REQUIRE_EMAIL_AS_USERNAME, "false"));
-			}
-			finally {
+				emailAsUsername = Boolean
+						.parseBoolean(as
+								.getGlobalProperty(
+										OpenmrsConstants.GLOBAL_PROPERTY_USER_REQUIRE_EMAIL_AS_USERNAME,
+										"false"));
+			} finally {
 				Context.removeProxyPrivilege(PrivilegeConstants.GET_GLOBAL_PROPERTIES);
 			}
-			
+
 			if (emailAsUsername) {
-				boolean isValidUserName = isUserNameAsEmailValid(user.getUsername());
+				boolean isValidUserName = isUserNameAsEmailValid(user
+						.getUsername());
 				if (!isValidUserName) {
 					errors.rejectValue("username", "error.username.email");
 				}
@@ -125,19 +130,26 @@ public class UserValidator implements Validator {
 					errors.rejectValue("username", "error.username.pattern");
 				}
 			}
-			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "username", "systemId", "retireReason");
+			ValidateUtil.validateFieldLengths(errors, obj.getClass(),
+					"username", "systemId", "retireReason");
 		}
 	}
-	
+
 	/**
-	 * Convenience method to check the given username against the regular expression. <br>
+	 * Convenience method to check the given username against the regular
+	 * expression. <br>
 	 * <br>
-	 * A valid username will have following: <ul><li>Begins with Alphanumeric characters <li>only
-	 * followed by more alphanumeric characters (may include . - _) <li>can be at most 50 characters
-	 * <li>minimum 2 chars case-insensitive Examples: <li>The following username will pass
-	 * validation: A123_.-XYZ9</ul>
-	 *
-	 * @param username the username string to check
+	 * A valid username will have following:
+	 * <ul>
+	 * <li>Begins with Alphanumeric characters
+	 * <li>only followed by more alphanumeric characters (may include . - _)
+	 * <li>can be at most 50 characters
+	 * <li>minimum 2 chars case-insensitive Examples:
+	 * <li>The following username will pass validation: A123_.-XYZ9
+	 * </ul>
+	 * 
+	 * @param username
+	 *            the username string to check
 	 * @return true if the username is ok
 	 * @should validate username with only alpha numerics
 	 * @should validate username with alpha dash and underscore
@@ -151,36 +163,37 @@ public class UserValidator implements Validator {
 	 * @should not validate when username is whitespace only
 	 */
 	public boolean isUserNameValid(String username) {
-		//Initialize reg ex for userName pattern
+		// Initialize reg ex for userName pattern
 		// ^ = start of line
 		// \w = [a-zA-Z_0-9]
-		// \Q = quote everything until \E 
+		// \Q = quote everything until \E
 		// $ = end of line
-		// complete meaning = 2-50 characters, the first must be a letter, digit, or _, and the rest may also be - or .
+		// complete meaning = 2-50 characters, the first must be a letter,
+		// digit, or _, and the rest may also be - or .
 		String expression = "^[\\w][\\Q_\\E\\w-\\.]{1,49}$";
 		// empty usernames are allowed
 		if (StringUtils.isEmpty(username)) {
 			return true;
 		}
-		
+
 		try {
-			//Make the comparison case-insensitive.
-			Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+			// Make the comparison case-insensitive.
+			Pattern pattern = Pattern.compile(expression,
+					Pattern.CASE_INSENSITIVE);
 			Matcher matcher = pattern.matcher(username);
 			return matcher.matches();
-		}
-		catch (PatternSyntaxException pex) {
+		} catch (PatternSyntaxException pex) {
 			log.error("Username Pattern Syntax exception in UserValidator", pex);
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Returns true if the given username is a valid e-mail.
-	 *
+	 * 
 	 * @param username
 	 * @return true if valid
-	 *
+	 * 
 	 * @should return false if email invalid
 	 * @should return true if email valid
 	 */
@@ -188,7 +201,7 @@ public class UserValidator implements Validator {
 		if (StringUtils.isBlank(username)) {
 			return false;
 		}
-		
+
 		Matcher matcher = EMAIL_PATTERN.matcher(username);
 		return matcher.matches();
 	}

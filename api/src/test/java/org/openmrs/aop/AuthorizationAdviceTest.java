@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -35,50 +35,62 @@ import org.springframework.stereotype.Component;
  * Tests {@link AuthorizationAdvice}.
  */
 public class AuthorizationAdviceTest extends BaseContextSensitiveTest {
-	
+
 	@Resource(name = "listener1")
 	Listener1 listener1;
-	
+
 	@Resource(name = "listener2")
 	Listener2 listener2;
-	
+
 	@Test
 	@Verifies(value = "notify listeners about checked privileges", method = "before(Method, Object[], Object)")
 	public void before_shouldNotifyListenersAboutCheckedPrivileges() {
 		listener1.hasPrivileges.clear();
 		listener1.lacksPrivileges.clear();
-		
+
 		listener2.hasPrivileges.clear();
 		listener2.lacksPrivileges.clear();
-		
+
 		Concept concept = Context.getConceptService().getConcept(3);
-		
-		assertThat("listener1", listener1.hasPrivileges, containsInAnyOrder("Get Concepts"));
-		assertThat("listener2", listener2.hasPrivileges, containsInAnyOrder("Get Concepts"));
+
+		assertThat("listener1", listener1.hasPrivileges,
+				containsInAnyOrder("Get Concepts"));
+		assertThat("listener2", listener2.hasPrivileges,
+				containsInAnyOrder("Get Concepts"));
 		assertThat(listener1.lacksPrivileges, empty());
 		assertThat(listener2.lacksPrivileges, empty());
-		
+
 		listener1.hasPrivileges.clear();
 		listener2.hasPrivileges.clear();
-		
+
 		Context.getConceptService().saveConcept(concept);
-		
-		assertThat("listener1", listener1.hasPrivileges, containsInAnyOrder("Manage Concepts", "Get Observations", "Get Concept Attribute Types"));
-		assertThat("listener2", listener2.hasPrivileges, containsInAnyOrder("Manage Concepts", "Get Observations", "Get Concept Attribute Types"));
+
+		assertThat(
+				"listener1",
+				listener1.hasPrivileges,
+				containsInAnyOrder("Manage Concepts", "Get Observations",
+						"Get Concept Attribute Types"));
+		assertThat(
+				"listener2",
+				listener2.hasPrivileges,
+				containsInAnyOrder("Manage Concepts", "Get Observations",
+						"Get Concept Attribute Types"));
 		assertThat(listener1.lacksPrivileges, empty());
 		assertThat(listener2.lacksPrivileges, empty());
 	}
-	
+
 	@Component("listener1")
 	public static class Listener1 implements PrivilegeListener {
-		
-		//We need to preserve order due to the semantics of Assert.assertArrayEquals
+
+		// We need to preserve order due to the semantics of
+		// Assert.assertArrayEquals
 		public Set<String> hasPrivileges = new LinkedHashSet<String>();
-		
+
 		public Set<String> lacksPrivileges = new LinkedHashSet<String>();
-		
+
 		@Override
-		public void privilegeChecked(User user, String privilege, boolean hasPrivilege) {
+		public void privilegeChecked(User user, String privilege,
+				boolean hasPrivilege) {
 			if (hasPrivilege) {
 				hasPrivileges.add(privilege);
 			} else {
@@ -86,7 +98,8 @@ public class AuthorizationAdviceTest extends BaseContextSensitiveTest {
 			}
 		}
 	}
-	
+
 	@Component("listener2")
-	public static class Listener2 extends Listener1 {}
+	public static class Listener2 extends Listener1 {
+	}
 }

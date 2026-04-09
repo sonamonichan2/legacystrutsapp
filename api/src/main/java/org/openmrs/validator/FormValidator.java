@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -18,28 +18,29 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- * This checks a Form object to make sure that it passes all API requirements. E.g. it must have a
- * name and version, if it is retired it must have metadata about that, etc.
+ * This checks a Form object to make sure that it passes all API requirements.
+ * E.g. it must have a name and version, if it is retired it must have metadata
+ * about that, etc.
  */
-@Handler(supports = { Form.class }, order = 50)
+@Handler(supports = {Form.class}, order = 50)
 public class FormValidator implements Validator {
-	
+
 	/** Log for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
-	 *
+	 * 
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
 	@SuppressWarnings("unchecked")
 	public boolean supports(Class c) {
 		return c.equals(Form.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
-	 *
+	 * 
 	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
 	 *      org.springframework.validation.Errors)
 	 * @should fail validation if name is null
@@ -56,19 +57,24 @@ public class FormValidator implements Validator {
 		if (form == null) {
 			errors.rejectValue("form", "error.general");
 		} else {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.name");
-			
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "version", "error.null");
-			
-			if (form.getVersion() != null && !form.getVersion().matches("^\\d.*$")) {
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name",
+					"error.name");
+
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "version",
+					"error.null");
+
+			if (form.getVersion() != null
+					&& !form.getVersion().matches("^\\d.*$")) {
 				errors.rejectValue("version", "Form.version.invalid");
 			}
-			
+
 			if (form.isRetired()) {
-				ValidationUtils.rejectIfEmptyOrWhitespace(errors, "retireReason", "general.retiredReason.empty");
+				ValidationUtils.rejectIfEmptyOrWhitespace(errors,
+						"retireReason", "general.retiredReason.empty");
 			}
-			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "version", "description", "retireReason");
+			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name",
+					"version", "description", "retireReason");
 		}
 	}
-	
+
 }

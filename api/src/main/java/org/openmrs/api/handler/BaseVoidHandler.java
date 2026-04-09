@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -17,19 +17,22 @@ import org.openmrs.annotation.Handler;
 import org.openmrs.aop.RequiredDataAdvice;
 
 /**
- * This is the super interface for all void* actions that take place on all services. The
- * {@link RequiredDataAdvice} class uses AOP around each method in every service to check to see if
- * its a void* method. If it is a void* method, this class is called to handle setting the
- * {@link Voidable#isVoided()}, {@link Voidable#setVoidReason(String)},
- * {@link Voidable#setVoidedBy(User)}, and {@link Voidable#setDateVoided(Date)}. <br>
+ * This is the super interface for all void* actions that take place on all
+ * services. The {@link RequiredDataAdvice} class uses AOP around each method in
+ * every service to check to see if its a void* method. If it is a void* method,
+ * this class is called to handle setting the {@link Voidable#isVoided()},
+ * {@link Voidable#setVoidReason(String)}, {@link Voidable#setVoidedBy(User)},
+ * and {@link Voidable#setDateVoided(Date)}. <br>
  * <br>
- * Child collections on this {@link Voidable} that are themselves a {@link Voidable} are looped over
- * and also voided by the {@link RequiredDataAdvice} class.<br>
+ * Child collections on this {@link Voidable} that are themselves a
+ * {@link Voidable} are looped over and also voided by the
+ * {@link RequiredDataAdvice} class.<br>
  * <br>
- * This class will only set the voidedBy and dateVoided attributes if voided is set to false. If
- * voided is set to true it is assumed that this object is in a list of things that is getting
- * voided but that it itself was previously voided. The workaround to this is that if the voided bit
- * is true OR the voidedBy is null, the voidedBy, dateVoided, and voidReason will be set.
+ * This class will only set the voidedBy and dateVoided attributes if voided is
+ * set to false. If voided is set to true it is assumed that this object is in a
+ * list of things that is getting voided but that it itself was previously
+ * voided. The workaround to this is that if the voided bit is true OR the
+ * voidedBy is null, the voidedBy, dateVoided, and voidReason will be set.
  * 
  * @see RequiredDataAdvice
  * @see UnvoidHandler
@@ -37,7 +40,7 @@ import org.openmrs.aop.RequiredDataAdvice;
  */
 @Handler(supports = Voidable.class)
 public class BaseVoidHandler implements VoidHandler<Voidable> {
-	
+
 	/**
 	 * Sets all void attributes to the given parameters.
 	 * 
@@ -52,14 +55,15 @@ public class BaseVoidHandler implements VoidHandler<Voidable> {
 	 * @should not set the voidReason if already voided
 	 * @should set voidedBy even if voided bit is set but voidedBy is null
 	 */
-	public void handle(Voidable voidableObject, User voidingUser, Date voidedDate, String voidReason) {
-		
+	public void handle(Voidable voidableObject, User voidingUser,
+			Date voidedDate, String voidReason) {
+
 		// skip over all work if the object is already voided
 		if (!voidableObject.isVoided() || voidableObject.getVoidedBy() == null) {
-			
+
 			voidableObject.setVoided(true);
 			voidableObject.setVoidReason(voidReason);
-			
+
 			if (voidableObject.getVoidedBy() == null) {
 				voidableObject.setVoidedBy(voidingUser);
 			}
@@ -68,5 +72,5 @@ public class BaseVoidHandler implements VoidHandler<Voidable> {
 			}
 		}
 	}
-	
+
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -12,23 +12,25 @@ package org.openmrs;
 import org.openmrs.attribute.AttributeType;
 import org.openmrs.attribute.BaseAttributeType;
 
-public class ConceptAttributeType extends BaseAttributeType<Concept> implements AttributeType<Concept> {
-	
+public class ConceptAttributeType extends BaseAttributeType<Concept>
+		implements
+			AttributeType<Concept> {
+
 	private Integer conceptAttributeTypeId;
-	
+
 	public Integer getConceptAttributeTypeId() {
 		return conceptAttributeTypeId;
 	}
-	
+
 	public void setConceptAttributeTypeId(Integer conceptAttributeTypeId) {
 		this.conceptAttributeTypeId = conceptAttributeTypeId;
 	}
-	
+
 	@Override
 	public Integer getId() {
 		return getConceptAttributeTypeId();
 	}
-	
+
 	@Override
 	public void setId(Integer id) {
 		setConceptAttributeTypeId(id);

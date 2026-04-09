@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -23,7 +23,7 @@ import org.openmrs.OpenmrsObject;
  * @since 1.9.4
  */
 public class OpenmrsMatchers {
-	
+
 	/**
 	 * Matches by id.
 	 * 
@@ -31,16 +31,15 @@ public class OpenmrsMatchers {
 	 * @return the matcher
 	 */
 	public static Matcher<OpenmrsObject> hasId(final Integer id) {
-		return new FeatureMatcher<OpenmrsObject, Integer>(
-		                                                  is(id), "id", "id") {
-			
+		return new FeatureMatcher<OpenmrsObject, Integer>(is(id), "id", "id") {
+
 			@Override
 			protected Integer featureValueOf(final OpenmrsObject actual) {
 				return actual.getId();
 			}
 		};
 	}
-	
+
 	/**
 	 * Matches by uuid.
 	 * 
@@ -48,26 +47,27 @@ public class OpenmrsMatchers {
 	 * @return the uuid
 	 */
 	public static Matcher<OpenmrsObject> hasUuid(final String uuid) {
-		return new FeatureMatcher<OpenmrsObject, String>(
-		                                                 is(uuid), "uuid", "uuid") {
-			
+		return new FeatureMatcher<OpenmrsObject, String>(is(uuid), "uuid",
+				"uuid") {
+
 			@Override
 			protected String featureValueOf(final OpenmrsObject actual) {
 				return actual.getUuid();
 			}
 		};
 	}
-	
+
 	/**
 	 * Matches by concept.
 	 * 
 	 * @param concept
 	 * @return the concept
 	 */
-	public static Matcher<ConceptSearchResult> hasConcept(final Matcher<Concept> concept) {
-		return new FeatureMatcher<ConceptSearchResult, Concept>(
-		                                                        concept, "concept", "concept") {
-			
+	public static Matcher<ConceptSearchResult> hasConcept(
+			final Matcher<Concept> concept) {
+		return new FeatureMatcher<ConceptSearchResult, Concept>(concept,
+				"concept", "concept") {
+
 			@Override
 			protected Concept featureValueOf(ConceptSearchResult actual) {
 				return actual.getConcept();

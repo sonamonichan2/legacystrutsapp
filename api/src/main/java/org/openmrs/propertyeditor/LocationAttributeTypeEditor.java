@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,7 +22,7 @@ import org.springframework.util.StringUtils;
  * @since 1.9
  */
 public class LocationAttributeTypeEditor extends PropertyEditorSupport {
-	
+
 	/**
 	 * @see java.beans.PropertyEditorSupport#getAsText()
 	 */
@@ -30,7 +30,7 @@ public class LocationAttributeTypeEditor extends PropertyEditorSupport {
 		LocationAttributeType lat = (LocationAttributeType) getValue();
 		return lat == null ? null : lat.getId().toString();
 	}
-	
+
 	/**
 	 * @should set using id
 	 * @should set using uuid
@@ -42,17 +42,18 @@ public class LocationAttributeTypeEditor extends PropertyEditorSupport {
 		if (Context.isAuthenticated() && StringUtils.hasText(text)) {
 			try {
 				setValue(ls.getLocationAttributeType(Integer.valueOf(text)));
-			}
-			catch (Exception ex) {
-				LocationAttributeType lat = ls.getLocationAttributeTypeByUuid(text);
+			} catch (Exception ex) {
+				LocationAttributeType lat = ls
+						.getLocationAttributeTypeByUuid(text);
 				setValue(lat);
 				if (lat == null) {
-					throw new IllegalArgumentException("LocationAttributeType not found for " + text, ex);
+					throw new IllegalArgumentException(
+							"LocationAttributeType not found for " + text, ex);
 				}
 			}
 		} else {
 			setValue(null);
 		}
 	}
-	
+
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -21,20 +21,21 @@ import org.openmrs.aop.RequiredDataAdvice;
 import org.openmrs.api.APIException;
 
 /**
- * This handler makes sure the when a voided object is saved, that the reason field is entered for
- * supported objects Note: Obs is not included in the supported types because the ObsService handles
- * this explicitly
+ * This handler makes sure the when a voided object is saved, that the reason
+ * field is entered for supported objects Note: Obs is not included in the
+ * supported types because the ObsService handles this explicitly
  * 
  * @see RequiredDataAdvice
  * @see SaveHandler
  * @see RequiredDataAdvice
  * @since 1.5
  */
-@Handler(supports = { Patient.class, Encounter.class })
+@Handler(supports = {Patient.class, Encounter.class})
 public class RequireVoidReasonSaveHandler implements SaveHandler<Voidable> {
-	
+
 	/**
-	 * Validates that the voidReason is non-null and non-empty for supported objects
+	 * Validates that the voidReason is non-null and non-empty for supported
+	 * objects
 	 * 
 	 * @should throw APIException if Patient voidReason is null
 	 * @should throw APIException if Encounter voidReason is empty
@@ -42,11 +43,14 @@ public class RequireVoidReasonSaveHandler implements SaveHandler<Voidable> {
 	 * @should not throw Exception if voidReason is not blank
 	 * @should not throw Exception if voidReason is null for unsupported types
 	 */
-	public void handle(Voidable voidableObject, User currentUser, Date currentDate, String notUsed) {
-		
-		if (voidableObject.isVoided() && StringUtils.isBlank(voidableObject.getVoidReason())) {
-			throw new APIException("voided.bit.was.set.true", new Object[] { voidableObject, voidableObject.getClass() });
+	public void handle(Voidable voidableObject, User currentUser,
+			Date currentDate, String notUsed) {
+
+		if (voidableObject.isVoided()
+				&& StringUtils.isBlank(voidableObject.getVoidReason())) {
+			throw new APIException("voided.bit.was.set.true", new Object[]{
+					voidableObject, voidableObject.getClass()});
 		}
 	}
-	
+
 }

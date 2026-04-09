@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -16,16 +16,16 @@ import org.openmrs.notification.AlertService;
 import org.openmrs.test.BaseContextSensitiveTest;
 
 /**
- * This class tests the hibernate alert data access. TODO Consider changing this and all subsequent
- * tests to use dbunit
+ * This class tests the hibernate alert data access. TODO Consider changing this
+ * and all subsequent tests to use dbunit
  */
 public class HibernateAlertDAOTest extends BaseContextSensitiveTest {
-	
+
 	@Before
 	public void runBeforeEachTest() throws Exception {
 		authenticate();
 	}
-	
+
 	/**
 	 * Test that you can get alerts
 	 * 
@@ -33,10 +33,10 @@ public class HibernateAlertDAOTest extends BaseContextSensitiveTest {
 	 */
 	@Test
 	public void shouldGetAlerts() throws Exception {
-		
+
 		AlertService as = Context.getAlertService();
-		//System.out.println(as.getAllAlerts());
-		
+		// System.out.println(as.getAllAlerts());
+
 	}
-	
+
 }

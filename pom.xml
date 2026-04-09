@@ -557,27 +557,27 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.18.1</version>
+					<version>3.2.5</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
-					<version>2.4</version>
+					<version>3.3.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.1</version>
+					<version>3.13.0</version>
 					<configuration>
-						<target>${javaCompilerVersion}</target>
 						<source>${javaCompilerVersion}</source>
+						<target>${javaCompilerVersion}</target>
 						<encoding>UTF-8</encoding>
 					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.3.2</version>
+					<version>3.3.0</version>
 					<configuration>
 						<archive>
 							<manifestEntries>
@@ -598,12 +598,12 @@
 				<plugin>
 			        <groupId>org.apache.maven.plugins</groupId>
 			        <artifactId>maven-war-plugin</artifactId>
-			        <version>2.4</version>
+			        <version>3.4.0</version>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>buildnumber-maven-plugin</artifactId>
-					<version>1.1</version>
+					<version>3.2.0</version>
 					<configuration>
 						<buildNumberPropertyName>revisionNumber</buildNumberPropertyName>
 						<getRevisionOnlyOnce>true</getRevisionOnlyOnce>
@@ -619,31 +619,13 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>build-helper-maven-plugin</artifactId>
-					<version>1.5</version>
+					<version>3.5.0</version>
 				</plugin>
-				<plugin>
-					<groupId>com.googlecode.maven-java-formatter-plugin</groupId>
-					<artifactId>maven-java-formatter-plugin</artifactId>
-					<version>0.3</version>
-					<configuration>
-						<compilerSource>${javaCompilerVersion}</compilerSource>
-						<compilerCompliance>${javaCompilerVersion}</compilerCompliance>
-						<compilerTargetPlatform>${javaCompilerVersion}</compilerTargetPlatform>
-						<configFile>eclipse/OpenMRSFormatter.xml</configFile>
-						<overrideConfigCompilerVersion>true</overrideConfigCompilerVersion>
-					</configuration>
-					<dependencies>
-						<dependency>
-							<groupId>org.openmrs.tools</groupId>
-							<artifactId>openmrs-tools</artifactId>
-							<version>${project.version}</version>
-						</dependency>
-					</dependencies>
-				</plugin>
+				<!-- maven-java-formatter-plugin disabled - incompatible with Java 21 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-checkstyle-plugin</artifactId>
-					<version>2.9.1</version>
+					<version>3.3.1</version>
 					<configuration>
 						<configLocation>checkstyle/openmrs-checkstyle.xml</configLocation>
 						<propertiesLocation>checkstyle/openmrs-checkstyle.properties</propertiesLocation>
@@ -673,7 +655,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
-					<version>2.1.2</version>
+					<version>3.3.0</version>
 					<executions>
 						<execution>
 							<id>attach-sources</id>
@@ -686,7 +668,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.10.3</version>
+					<version>3.6.3</version>
 					<configuration>
 						<!-- For some reason some packages from org.springframework are being
 						included and causing errors. -->
@@ -784,7 +766,7 @@
 				<plugin>
 					<groupId>org.jacoco</groupId>
 					<artifactId>jacoco-maven-plugin</artifactId>
-					<version>0.7.4.201502262128</version>
+					<version>0.8.11</version>
 				</plugin>	
 			</plugins>
 		</pluginManagement>
@@ -793,43 +775,52 @@
 			<plugin>
 				<groupId>com.mycila</groupId>
 				<artifactId>license-maven-plugin</artifactId>
-				<version>2.6</version>
+				<version>4.3</version>
 				<configuration>
-					<header>license-header.txt</header>
-					<includes>
-						<include>**/*.java</include>
-						<include>**/*.txt</include>
-						<include>**/*.xml</include>
-					</includes>
-					<excludes>
-						<exclude>**/list-repos-using-refapp-import.txt</exclude>
-						<exclude>**/license-header.txt</exclude>
-						<exclude>.git/**</exclude>
-						<exclude>**/NaturalStrings.java</exclude>
-						<exclude>puppet/**</exclude>
-						<exclude>src/main/java/org/springframework/**</exclude>
-						<exclude>src/main/webapp/WEB-INF/view/scripts/dojo/**</exclude>
-						<exclude>src/main/webapp/WEB-INF/view/scripts/jquery/**</exclude>
-						<exclude>src/main/webapp/WEB-INF/view/scripts/jquery-ui/**</exclude>
-						<exclude>src/main/webapp/WEB-INF/view/module/**</exclude>
-						<!-- From gitignore -->
-						<exclude>.idea/**</exclude>
-						<exclude>target/**</exclude>
-						<exclude>bin/**</exclude>
-						<exclude>tmp/**</exclude>
-						<exclude>.settings/**</exclude>
-						<exclude>.externalToolBuilders/</exclude>
-						<exclude>nbproject/private/</exclude>
-						<exclude>build/</exclude>
-						<exclude>bin/</exclude>
-						<exclude>nbbuild/</exclude>
-						<exclude>dist/</exclude>
-						<exclude>nbdist/</exclude>
-						<exclude>nbactions.xml</exclude>
-						<exclude>nb-configuration.xml</exclude>
-						<exclude>**/dwr-modules.xml</exclude>
-                        <exclude>build-number.txt</exclude>
-					</excludes>
+					<licenseSets>
+						<licenseSet>
+							<header>license-header.txt</header>
+							<includes>
+								<include>**/*.java</include>
+								<include>**/*.txt</include>
+								<include>**/*.xml</include>
+							</includes>
+							<excludes>
+								<exclude>**/list-repos-using-refapp-import.txt</exclude>
+								<exclude>**/license-header.txt</exclude>
+								<exclude>.git/**</exclude>
+								<exclude>**/NaturalStrings.java</exclude>
+								<exclude>puppet/**</exclude>
+								<exclude>src/main/java/org/springframework/**</exclude>
+								<exclude>src/main/webapp/WEB-INF/view/scripts/dojo/**</exclude>
+								<exclude>src/main/webapp/WEB-INF/view/scripts/jquery/**</exclude>
+								<exclude>src/main/webapp/WEB-INF/view/scripts/jquery-ui/**</exclude>
+								<exclude>src/main/webapp/WEB-INF/view/module/**</exclude>
+								<!-- From gitignore -->
+								<exclude>.idea/**</exclude>
+								<exclude>target/**</exclude>
+								<exclude>bin/**</exclude>
+								<exclude>tmp/**</exclude>
+								<exclude>.settings/**</exclude>
+								<exclude>.externalToolBuilders/</exclude>
+								<exclude>nbproject/private/</exclude>
+								<exclude>build/</exclude>
+								<exclude>bin/</exclude>
+								<exclude>nbbuild/</exclude>
+								<exclude>dist/</exclude>
+								<exclude>nbdist/</exclude>
+								<exclude>nbactions.xml</exclude>
+								<exclude>nb-configuration.xml</exclude>
+								<exclude>**/dwr-modules.xml</exclude>
+								<exclude>build-number.txt</exclude>
+								<exclude>release-test/**</exclude>
+								<exclude>build.log</exclude>
+								<exclude>velocity.log</exclude>
+								<exclude>atx-config*.yaml</exclude>
+								<exclude>ATXDocumentation/**</exclude>
+							</excludes>
+						</licenseSet>
+					</licenseSets>
 				</configuration>
 				<executions>
 					<execution>
@@ -866,7 +857,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.2-beta-5</version>
+				<version>3.7.1</version>
 				<configuration>
 					<descriptorRefs>
 						<descriptorRef>project</descriptorRef>
@@ -1025,7 +1016,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.3</version>
+				<version>3.6.3</version>
 				<configuration>
 					<docfilessubdirs>true</docfilessubdirs>
 					<bottom>&lt;em&gt;&lt;small&gt; Generated ${TIMESTAMP} NOTE - these

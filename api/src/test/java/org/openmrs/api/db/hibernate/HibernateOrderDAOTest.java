@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -28,17 +28,17 @@ import static junit.framework.Assert.assertNull;
  * Tests the saving of orders as part of the OrderGroup
  */
 public class HibernateOrderDAOTest extends BaseContextSensitiveTest {
-	
+
 	@Autowired
 	private HibernateOrderDAO dao;
-	
+
 	private static final String ORDER_SET = "org/openmrs/api/include/OrderSetServiceTest-general.xml";
-	
+
 	@Before
 	public void setUp() throws Exception {
 		executeDataSet(ORDER_SET);
 	}
-	
+
 	/**
 	 * @see {@link HibernateOrderDAO#saveOrderGroup(OrderGroup)}
 	 * @throws Exception
@@ -47,24 +47,28 @@ public class HibernateOrderDAOTest extends BaseContextSensitiveTest {
 	@Verifies(value = "saves the order group ", method = "saveOrderGroup(OrderGroup)")
 	public void saveOrderGroup_shouldSaveOrderGroup() throws Exception {
 		OrderGroup newOrderGroup = new OrderGroup();
-		
-		final Order order = new OrderBuilder().withAction(Order.Action.NEW).withPatient(7).withConcept(1000)
-		        .withCareSetting(1).withOrderer(1).withEncounter(3).withDateActivated(new Date()).withOrderType(17)
-		        .withUrgency(Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).build();
-		
+
+		final Order order = new OrderBuilder().withAction(Order.Action.NEW)
+				.withPatient(7).withConcept(1000).withCareSetting(1)
+				.withOrderer(1).withEncounter(3).withDateActivated(new Date())
+				.withOrderType(17).withUrgency(Order.Urgency.ON_SCHEDULED_DATE)
+				.withScheduledDate(new Date()).build();
+
 		newOrderGroup.setOrders(new ArrayList<Order>() {
-			
+
 			{
 				add(order);
 			}
 		});
-		
+
 		OrderGroup savedOrderGroup = dao.saveOrderGroup(newOrderGroup);
-		assertNotNull("OrderGroup gets saved", savedOrderGroup.getOrderGroupId());
-		
+		assertNotNull("OrderGroup gets saved",
+				savedOrderGroup.getOrderGroupId());
+
 		for (Order savedOrder : savedOrderGroup.getOrders()) {
-			assertNull("Order is not saved as a part of Order Group", savedOrder.getOrderId());
+			assertNull("Order is not saved as a part of Order Group",
+					savedOrder.getOrderId());
 		}
-		
+
 	}
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -17,9 +17,10 @@ import org.openmrs.annotation.Handler;
 import org.openmrs.aop.RequiredDataAdvice;
 
 /**
- * This class unsets the personVoid* attributes on the given {@link Person} object when an unvoid*
- * method is called with this class. This differs from the {@link BaseUnvoidHandler} because the
- * Person object contains personVoided* attributes instead of the normal voided attributes. <br>
+ * This class unsets the personVoid* attributes on the given {@link Person}
+ * object when an unvoid* method is called with this class. This differs from
+ * the {@link BaseUnvoidHandler} because the Person object contains
+ * personVoided* attributes instead of the normal voided attributes. <br>
  * 
  * @see RequiredDataAdvice
  * @see VoidHandler
@@ -27,7 +28,7 @@ import org.openmrs.aop.RequiredDataAdvice;
  */
 @Handler(supports = Person.class)
 public class PersonUnvoidHandler implements UnvoidHandler<Person> {
-	
+
 	/**
 	 * Called around every unvoid* method to set everything to null.<br>
 	 * <br>
@@ -41,18 +42,21 @@ public class PersonUnvoidHandler implements UnvoidHandler<Person> {
 	 * @should only act on already personVoided objects
 	 * @should not act on objects with a different personDateVoided
 	 */
-	public void handle(Person person, User unvoidingUser, Date origParentVoidedDate, String unused) {
-		
+	public void handle(Person person, User unvoidingUser,
+			Date origParentVoidedDate, String unused) {
+
 		// only operate on voided objects
 		if (person.isPersonVoided()
-		        && (origParentVoidedDate == null || origParentVoidedDate.equals(person.getPersonDateVoided()))) {
-			
-			// only unvoid objects that were voided at the same time as the parent object
+				&& (origParentVoidedDate == null || origParentVoidedDate
+						.equals(person.getPersonDateVoided()))) {
+
+			// only unvoid objects that were voided at the same time as the
+			// parent object
 			person.setPersonVoided(false);
 			person.setPersonVoidedBy(null);
 			person.setPersonDateVoided(null);
 			person.setPersonVoidReason(null);
 		}
 	}
-	
+
 }

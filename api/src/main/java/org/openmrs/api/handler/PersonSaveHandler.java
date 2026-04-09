@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,9 +22,10 @@ import org.openmrs.api.APIException;
 import org.springframework.util.StringUtils;
 
 /**
- * This class deals with {@link Person} objects when they are saved via a save* method in an Openmrs
- * Service. This handler is automatically called by the {@link RequiredDataAdvice} AOP class. <br>
- *
+ * This class deals with {@link Person} objects when they are saved via a save*
+ * method in an Openmrs Service. This handler is automatically called by the
+ * {@link RequiredDataAdvice} AOP class. <br>
+ * 
  * @see RequiredDataHandler
  * @see SaveHandler
  * @see Person
@@ -32,46 +33,49 @@ import org.springframework.util.StringUtils;
  */
 @Handler(supports = Person.class)
 public class PersonSaveHandler implements SaveHandler<Person> {
-	
+
 	/**
-	 * @see org.openmrs.api.handler.SaveHandler#handle(org.openmrs.OpenmrsObject, org.openmrs.User,
-	 *      java.util.Date, java.lang.String)
+	 * @see org.openmrs.api.handler.SaveHandler#handle(org.openmrs.OpenmrsObject,
+	 *      org.openmrs.User, java.util.Date, java.lang.String)
 	 */
-	public void handle(Person person, User creator, Date dateCreated, String other) {
-		
+	public void handle(Person person, User creator, Date dateCreated,
+			String other) {
+
 		// address collection
 		if (person.getAddresses() != null && person.getAddresses().size() > 0) {
 			for (PersonAddress pAddress : person.getAddresses()) {
 				pAddress.setPerson(person);
 			}
 		}
-		
+
 		// name collection
 		if (person.getNames() != null && person.getNames().size() > 0) {
 			for (PersonName pName : person.getNames()) {
 				pName.setPerson(person);
 			}
 		}
-		
+
 		// attribute collection
 		if (person.getAttributes() != null && person.getAttributes().size() > 0) {
 			for (PersonAttribute pAttr : person.getAttributes()) {
 				pAttr.setPerson(person);
 			}
 		}
-		
-		//if the patient was marked as dead and reversed, drop the cause of death
+
+		// if the patient was marked as dead and reversed, drop the cause of
+		// death
 		if (!person.isDead() && person.getCauseOfDeath() != null) {
 			person.setCauseOfDeath(null);
 		}
-		
+
 		// do the checks for voided attributes (also in PersonVoidHandler)
 		if (person.isPersonVoided()) {
-			
+
 			if (!StringUtils.hasLength(person.getPersonVoidReason())) {
-				throw new APIException("Person.voided.bit", new Object[] { person });
+				throw new APIException("Person.voided.bit",
+						new Object[]{person});
 			}
-			
+
 			if (person.getPersonVoidedBy() == null) {
 				person.setPersonVoidedBy(creator);
 			}

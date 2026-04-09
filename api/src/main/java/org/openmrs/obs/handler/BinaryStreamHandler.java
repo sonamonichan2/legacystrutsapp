@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -33,65 +33,72 @@ import org.openmrs.util.OpenmrsUtil;
  * @see OpenmrsConstants#GLOBAL_PROPERTY_COMPLEX_OBS_DIR
  * @since 1.8
  */
-public class BinaryStreamHandler extends AbstractHandler implements ComplexObsHandler {
-	
+public class BinaryStreamHandler extends AbstractHandler
+		implements
+			ComplexObsHandler {
+
 	/** Views supported by this handler */
-	private static final String[] supportedViews = { ComplexObsHandler.RAW_VIEW, };
-	
+	private static final String[] supportedViews = {ComplexObsHandler.RAW_VIEW,};
+
 	public static final Log log = LogFactory.getLog(BinaryStreamHandler.class);
-	
+
 	/**
-	 * Constructor initializes formats for alternative file names to protect from unintentionally
-	 * overwriting existing files.
+	 * Constructor initializes formats for alternative file names to protect
+	 * from unintentionally overwriting existing files.
 	 */
 	public BinaryStreamHandler() {
 		super();
 	}
-	
+
 	/**
-	 * Returns the same ComplexData for all views. The title is the original filename, and the data
-	 * is the raw byte[] of data (If the view is set to "download", all commas and whitespace are
-	 * stripped out of the filename to fix an issue where the browser wasn't handling a filename
-	 * with whitespace properly) Note that if the method cannot find the file associated with the
-	 * obs, it returns the obs with the ComplexData = null
+	 * Returns the same ComplexData for all views. The title is the original
+	 * filename, and the data is the raw byte[] of data (If the view is set to
+	 * "download", all commas and whitespace are stripped out of the filename to
+	 * fix an issue where the browser wasn't handling a filename with whitespace
+	 * properly) Note that if the method cannot find the file associated with
+	 * the obs, it returns the obs with the ComplexData = null
 	 * 
 	 * @see ComplexObsHandler#getObs(Obs, String)
 	 */
 	@Override
 	public Obs getObs(Obs obs, String view) {
 		ComplexData complexData = null;
-		
+
 		// Raw stream
 		if (ComplexObsHandler.RAW_VIEW.equals(view)) {
 			try {
 				File file = getComplexDataFile(obs);
 				String[] names = obs.getValueComplex().split("\\|");
 				String originalFilename = names[0];
-				originalFilename = originalFilename.replace(",", "").replace(" ", "");
-				
+				originalFilename = originalFilename.replace(",", "").replace(
+						" ", "");
+
 				if (file.exists()) {
 					FileInputStream fileInputStream = new FileInputStream(file);
-					complexData = new ComplexData(originalFilename, fileInputStream);
+					complexData = new ComplexData(originalFilename,
+							fileInputStream);
 				} else {
-					log.error("Unable to find file associated with complex obs " + obs.getId());
+					log.error("Unable to find file associated with complex obs "
+							+ obs.getId());
 				}
-			}
-			catch (Exception e) {
-				throw new APIException("Obs.error.while.trying.get.binary.complex", null, e);
+			} catch (Exception e) {
+				throw new APIException(
+						"Obs.error.while.trying.get.binary.complex", null, e);
 			}
 		} else {
 			// No other view supported
-			// NOTE: if adding support for another view, don't forget to update supportedViews list above
+			// NOTE: if adding support for another view, don't forget to update
+			// supportedViews list above
 			return null;
 		}
-		
+
 		Assert.notNull(complexData, "Complex data must not be null");
 		complexData.setMimeType("application/octet-stream");
 		obs.setComplexData(complexData);
-		
+
 		return obs;
 	}
-	
+
 	/**
 	 * @see org.openmrs.obs.ComplexObsHandler#getSupportedViews()
 	 */
@@ -99,7 +106,7 @@ public class BinaryStreamHandler extends AbstractHandler implements ComplexObsHa
 	public String[] getSupportedViews() {
 		return supportedViews;
 	}
-	
+
 	/**
 	 * @see ComplexObsHandler#saveObs(Obs)
 	 */
@@ -111,19 +118,19 @@ public class BinaryStreamHandler extends AbstractHandler implements ComplexObsHa
 			File outfile = getOutputFileToWrite(obs);
 			OutputStream out = new FileOutputStream(outfile, false);
 			OpenmrsUtil.copyFile(in, out);
-			
+
 			// Store the filename in the Obs
 			obs.setComplexData(null);
 			obs.setValueComplex(fileName + "|" + outfile.getName());
-			
+
 			// close the stream
 			out.close();
+		} catch (Exception e) {
+			throw new APIException("Obs.error.writing.binary.data.complex",
+					null, e);
 		}
-		catch (Exception e) {
-			throw new APIException("Obs.error.writing.binary.data.complex", null, e);
-		}
-		
+
 		return obs;
 	}
-	
+
 }

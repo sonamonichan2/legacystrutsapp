@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -13,16 +13,21 @@ import org.openmrs.attribute.Attribute;
 import org.openmrs.attribute.BaseAttribute;
 
 /**
- * A value for a user-defined {@link VisitAttributeType} that is stored on a {@link Visit}.
+ * A value for a user-defined {@link VisitAttributeType} that is stored on a
+ * {@link Visit}.
+ * 
  * @see Attribute
  * @since 1.9
  */
-public class VisitAttribute extends BaseAttribute<VisitAttributeType, Visit> implements Attribute<VisitAttributeType, Visit> {
-	
+public class VisitAttribute extends BaseAttribute<VisitAttributeType, Visit>
+		implements
+			Attribute<VisitAttributeType, Visit> {
+
 	private Integer visitAttributeId;
-	
-	// BaseAttribute<Visit> has an "owner" property of type Visit, which we re-expose as "visit"
-	
+
+	// BaseAttribute<Visit> has an "owner" property of type Visit, which we
+	// re-expose as "visit"
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -30,7 +35,7 @@ public class VisitAttribute extends BaseAttribute<VisitAttributeType, Visit> imp
 	public Integer getId() {
 		return getVisitAttributeId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -38,33 +43,35 @@ public class VisitAttribute extends BaseAttribute<VisitAttributeType, Visit> imp
 	public void setId(Integer id) {
 		setVisitAttributeId(id);
 	}
-	
+
 	/**
 	 * @return the visit
 	 */
 	public Visit getVisit() {
 		return getOwner();
 	}
-	
+
 	/**
-	 * @param visit the visit to set
+	 * @param visit
+	 *            the visit to set
 	 */
 	public void setVisit(Visit visit) {
 		setOwner(visit);
 	}
-	
+
 	/**
 	 * @return the visitAttributeId
 	 */
 	public Integer getVisitAttributeId() {
 		return visitAttributeId;
 	}
-	
+
 	/**
-	 * @param visitAttributeId the visitAttributeId to set
+	 * @param visitAttributeId
+	 *            the visitAttributeId to set
 	 */
 	public void setVisitAttributeId(Integer visitAttributeId) {
 		this.visitAttributeId = visitAttributeId;
 	}
-	
+
 }

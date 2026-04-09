@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -20,9 +20,10 @@ import org.openmrs.aop.RequiredDataAdvice;
 import org.openmrs.api.context.Context;
 
 /**
- * This class sets the void attributes on the given {@link Visit} object when a void* method is
- * called with this class. This differs from the {@link BaseVoidHandler} because voiding the Visit
- * object implies voiding encounters.
+ * This class sets the void attributes on the given {@link Visit} object when a
+ * void* method is called with this class. This differs from the
+ * {@link BaseVoidHandler} because voiding the Visit object implies voiding
+ * encounters.
  * 
  * @see RequiredDataAdvice
  * @see VoidHandler
@@ -30,14 +31,16 @@ import org.openmrs.api.context.Context;
  */
 @Handler(supports = Visit.class)
 public class VisitVoidHandler implements VoidHandler<Visit> {
-	
+
 	@Override
-	public void handle(Visit voidableObject, User voidingUser, Date voidedDate, String voidReason) {
-		List<Encounter> encountersByVisit = Context.getEncounterService().getEncountersByVisit(voidableObject, false);
+	public void handle(Visit voidableObject, User voidingUser, Date voidedDate,
+			String voidReason) {
+		List<Encounter> encountersByVisit = Context.getEncounterService()
+				.getEncountersByVisit(voidableObject, false);
 		for (Encounter encounter : encountersByVisit) {
 			encounter.setDateVoided(voidedDate);
 			Context.getEncounterService().voidEncounter(encounter, voidReason);
 		}
 	}
-	
+
 }

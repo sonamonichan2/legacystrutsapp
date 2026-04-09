@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -18,20 +18,21 @@ import org.openmrs.api.context.Context;
 import org.springframework.util.StringUtils;
 
 /**
- * Allows for serializing/deserializing an object to a string so that Spring knows how to pass
- * an object back and forth through an html form or other medium. <br>
+ * Allows for serializing/deserializing an object to a string so that Spring
+ * knows how to pass an object back and forth through an html form or other
+ * medium. <br>
  * <br>
  * In version 1.9, added ability for this to also retrieve objects by uuid
  * 
  * @see Cohort
  */
 public class CohortEditor extends PropertyEditorSupport {
-	
+
 	private Log log = LogFactory.getLog(this.getClass());
-	
+
 	public CohortEditor() {
 	}
-	
+
 	/**
 	 * @should set using id
 	 * @should set using uuid
@@ -39,21 +40,23 @@ public class CohortEditor extends PropertyEditorSupport {
 	public void setAsText(String text) throws IllegalArgumentException {
 		if (StringUtils.hasText(text)) {
 			try {
-				setValue(Context.getCohortService().getCohort(Integer.valueOf(text)));
-			}
-			catch (Exception ex) {
-				Cohort cohort = Context.getCohortService().getCohortByUuid(text);
+				setValue(Context.getCohortService().getCohort(
+						Integer.valueOf(text)));
+			} catch (Exception ex) {
+				Cohort cohort = Context.getCohortService()
+						.getCohortByUuid(text);
 				setValue(cohort);
 				if (cohort == null) {
 					log.error("Error setting text: " + text, ex);
-					throw new IllegalArgumentException("Cohort not found: " + ex.getMessage());
+					throw new IllegalArgumentException("Cohort not found: "
+							+ ex.getMessage());
 				}
 			}
 		} else {
 			setValue(null);
 		}
 	}
-	
+
 	public String getAsText() {
 		Cohort c = (Cohort) getValue();
 		if (c == null) {
@@ -62,5 +65,5 @@ public class CohortEditor extends PropertyEditorSupport {
 			return c.getCohortId().toString();
 		}
 	}
-	
+
 }

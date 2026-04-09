@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -30,7 +30,7 @@ import org.openmrs.hl7.HL7Constants;
 
 /**
  * OpenMRS utilities related to forms.
- *
+ * 
  * @see org.openmrs.Form
  * @see org.openmrs.FormField
  * @see org.openmrs.Field
@@ -38,31 +38,32 @@ import org.openmrs.hl7.HL7Constants;
  * @see org.openmrs.FieldAnswer
  */
 public class FormUtil {
-	
+
 	private static final String DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
 	/**
 	 * Converts a string into a valid XML token (tag name)
-	 *
-	 * @param s string to convert into XML token
+	 * 
+	 * @param s
+	 *            string to convert into XML token
 	 * @return valid XML token based on s
 	 */
 	public static String getXmlToken(String s) {
 		// Converts a string into a valid XML token (tag name)
 		// No spaces, start with a letter or underscore, not 'xml*'
-		
+
 		// if len(s) < 1, return '_blank'
 		if (s == null || s.length() < 1) {
 			return "_blank";
 		}
-		
+
 		// xml tokens must start with a letter
 		String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_";
-		
+
 		// after the leading letter, xml tokens may have
 		// digits, period, or hyphen
 		String nameChars = letters + "0123456789.-";
-		
+
 		// special characters that should be replaced with valid text
 		// all other invalid characters will be removed
 		Map<String, String> swapChars = new HashMap<String, String>();
@@ -77,10 +78,11 @@ public class FormUtil {
 		swapChars.put("=", "eq");
 		swapChars.put("/", "slash");
 		swapChars.put("\\\\", "backslash");
-		
+
 		// start by cleaning whitespace and converting to lowercase
-		s = s.replaceAll("^\\s+", "").replaceAll("\\s+$", "").replaceAll("\\s+", "_").toLowerCase();
-		
+		s = s.replaceAll("^\\s+", "").replaceAll("\\s+$", "")
+				.replaceAll("\\s+", "_").toLowerCase();
+
 		// swap characters
 		Set<Entry<String, String>> swaps = swapChars.entrySet();
 		for (Entry<String, String> entry : swaps) {
@@ -90,40 +92,44 @@ public class FormUtil {
 				s = s.replaceAll(String.valueOf(entry.getKey()), "");
 			}
 		}
-		
+
 		// ensure that invalid characters and consecutive underscores are
 		// removed
 		StringBuilder token = new StringBuilder("");
 		boolean underscoreFlag = false;
 		for (int i = 0; i < s.length(); i++) {
-			if (nameChars.indexOf(s.charAt(i)) != -1 && (s.charAt(i) != '_' || !underscoreFlag)) {
+			if (nameChars.indexOf(s.charAt(i)) != -1
+					&& (s.charAt(i) != '_' || !underscoreFlag)) {
 				token.append(s.charAt(i));
 				underscoreFlag = (s.charAt(i) == '_');
 			}
 		}
-		
+
 		// remove extraneous underscores before returning token
 		String tokenStr = token.toString();
 		tokenStr = tokenStr.replaceAll("_+", "_");
 		tokenStr = tokenStr.replaceAll("_+$", "");
-		
+
 		// make sure token starts with valid letter
-		if (letters.indexOf(tokenStr.charAt(0)) == -1 || tokenStr.startsWith("xml")) {
+		if (letters.indexOf(tokenStr.charAt(0)) == -1
+				|| tokenStr.startsWith("xml")) {
 			tokenStr = "_" + tokenStr;
 		}
-		
+
 		// return token
 		return tokenStr;
 	}
-	
+
 	/**
 	 * Generates a new, unique tag name for any given string
-	 *
-	 * @param s string to convert into a unique XML tag
-	 * @param tagList java.util.Vector containing all previously created tags. If the tagList is
-	 *            null, it will be initialized automatically
-	 * @return unique XML tag name from given string (guaranteed not to duplicate any tag names
-	 *         already within <code>tagList</code>)
+	 * 
+	 * @param s
+	 *            string to convert into a unique XML tag
+	 * @param tagList
+	 *            java.util.Vector containing all previously created tags. If
+	 *            the tagList is null, it will be initialized automatically
+	 * @return unique XML tag name from given string (guaranteed not to
+	 *         duplicate any tag names already within <code>tagList</code>)
 	 */
 	public static String getNewTag(String s, Vector<String> tagList) {
 		String token = getXmlToken(s);
@@ -140,25 +146,28 @@ public class FormUtil {
 			return token;
 		}
 	}
-	
+
 	/**
-	 * Returns a sorted and structured map of <code>FormField</code>s for the given OpenMRS form.
-	 * The root sections of the schema are stored under a key of zero (i.e.,
-	 * <code>java.lang.Integer.<em>valueOf(0)</em></code>). All other entries represent sequences of
-	 * children stored under the identifier (<code>formField.<em>getFormFieldId()</em></code>) of
-	 * their parent FormField. The form structure is sorted by the natural sorting order of the
-	 * <code>FormField</code>s (as defined by the <em>.equals()</em> and <em>.compareTo()</em>
-	 * methods).
-	 *
-	 * @param form form for which structure is requested
-	 * @return sorted map of <code>FormField</code>s, where the top-level fields are under the key
-	 *         zero and all other leaves are stored under their parent <code>FormField</code>'s id.
+	 * Returns a sorted and structured map of <code>FormField</code>s for the
+	 * given OpenMRS form. The root sections of the schema are stored under a
+	 * key of zero (i.e., <code>java.lang.Integer.<em>valueOf(0)</em></code>).
+	 * All other entries represent sequences of children stored under the
+	 * identifier (<code>formField.<em>getFormFieldId()</em></code>) of their
+	 * parent FormField. The form structure is sorted by the natural sorting
+	 * order of the <code>FormField</code>s (as defined by the
+	 * <em>.equals()</em> and <em>.compareTo()</em> methods).
+	 * 
+	 * @param form
+	 *            form for which structure is requested
+	 * @return sorted map of <code>FormField</code>s, where the top-level fields
+	 *         are under the key zero and all other leaves are stored under
+	 *         their parent <code>FormField</code>'s id.
 	 */
 	public static Map<Integer, TreeSet<FormField>> getFormStructure(Form form) {
 		Map<Integer, TreeSet<FormField>> formStructure = new TreeMap<Integer, TreeSet<FormField>>();
 		Integer base = Integer.valueOf(0);
 		formStructure.put(base, new TreeSet<FormField>());
-		
+
 		for (FormField formField : form.getFormFields()) {
 			FormField parent = formField.getParent();
 			if (parent == null) {
@@ -167,21 +176,20 @@ public class FormUtil {
 			} else {
 				// child branches/leaves are added to their parent's branch
 				if (!formStructure.containsKey(parent.getFormFieldId())) {
-					formStructure.put(parent.getFormFieldId(), new TreeSet<FormField>());
+					formStructure.put(parent.getFormFieldId(),
+							new TreeSet<FormField>());
 				}
 				formStructure.get(parent.getFormFieldId()).add(formField);
 			}
 		}
-		
+
 		return formStructure;
 	}
-	
+
 	public static String dateToString() {
 		return dateToString(new Date());
 	}
-	
-	
-	
+
 	public static String dateToString(Date date) {
 		DateFormat dateFormatter = new SimpleDateFormat(DATE_TIME_FORMAT);
 		String dateString = dateFormatter.format(new Date());
@@ -189,48 +197,61 @@ public class FormUtil {
 		// include the colon, so we need to insert it
 		return dateString.substring(0, 22) + ":" + dateString.substring(22);
 	}
-	
+
 	/**
-	 * Get a string somewhat unique to this form. Combines the form's id and version and build
-	 *
-	 * @param form Form to get the uri for
+	 * Get a string somewhat unique to this form. Combines the form's id and
+	 * version and build
+	 * 
+	 * @param form
+	 *            Form to get the uri for
 	 * @return String representing this form
 	 */
 	public static String getFormUriWithoutExtension(Form form) {
-		return form.getFormId() + "-" + form.getVersion() + "-" + form.getBuild();
+		return form.getFormId() + "-" + form.getVersion() + "-"
+				+ form.getBuild();
 	}
-	
+
 	/**
 	 * Turn the given concept into a string acceptable to for hl7 and forms
-	 *
-	 * @param concept Concept to convert to a string
-	 * @param locale Locale to use for the concept name
+	 * 
+	 * @param concept
+	 *            Concept to convert to a string
+	 * @param locale
+	 *            Locale to use for the concept name
 	 * @return String representation of the given concept
 	 */
 	public static String conceptToString(Concept concept, Locale locale) {
 		ConceptName localizedName = concept.getName(locale, false);
 		return conceptToString(concept, localizedName);
 	}
-	
+
 	/**
-	 * Turn the given concept/concept-name pair into a string acceptable for hl7 and forms
-	 *
-	 * @param concept Concept to convert to a string
-	 * @param localizedName specific localized concept-name
+	 * Turn the given concept/concept-name pair into a string acceptable for hl7
+	 * and forms
+	 * 
+	 * @param concept
+	 *            Concept to convert to a string
+	 * @param localizedName
+	 *            specific localized concept-name
 	 * @return String representation of the given concept
 	 */
-	public static String conceptToString(Concept concept, ConceptName localizedName) {
-		return concept.getConceptId() + "^" + localizedName.getName() + "^" + HL7Constants.HL7_LOCAL_CONCEPT; // + "^"
-		// + localizedName.getConceptNameId() + "^" + localizedName.getName() + "^" + FormConstants.HL7_LOCAL_CONCEPT_NAME;
+	public static String conceptToString(Concept concept,
+			ConceptName localizedName) {
+		return concept.getConceptId() + "^" + localizedName.getName() + "^"
+				+ HL7Constants.HL7_LOCAL_CONCEPT; // + "^"
+		// + localizedName.getConceptNameId() + "^" + localizedName.getName() +
+		// "^" + FormConstants.HL7_LOCAL_CONCEPT_NAME;
 	}
-	
+
 	/**
 	 * Turn the given drug into a string acceptable for hl7 and forms
-	 *
-	 * @param drug Drug to convert to a string
+	 * 
+	 * @param drug
+	 *            Drug to convert to a string
 	 * @return String representation of the given drug
 	 */
 	public static String drugToString(Drug drug) {
-		return drug.getDrugId() + "^" + drug.getName() + "^" + HL7Constants.HL7_LOCAL_DRUG;
+		return drug.getDrugId() + "^" + drug.getName() + "^"
+				+ HL7Constants.HL7_LOCAL_DRUG;
 	}
 }

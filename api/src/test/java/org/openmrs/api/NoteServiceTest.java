@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -25,28 +25,29 @@ import org.openmrs.test.Verifies;
 @SuppressWarnings("deprecation")
 @Ignore("TRUNK-4106")
 public class NoteServiceTest extends BaseContextSensitiveTest {
-	
+
 	protected static final String INITIAL_NOTE_XML = "org/openmrs/api/include/NoteServiceTest-initial.xml";
-	
+
 	/**
 	 * @see NoteService#voidNote(Note,String)
 	 */
 	@Test
 	@Verifies(value = "should void the Note and set the voidReason", method = "voidNote(Note,String)")
-	public void voidNote_shouldVoidTheNoteAndSetTheVoidReason() throws Exception {
+	public void voidNote_shouldVoidTheNoteAndSetTheVoidReason()
+			throws Exception {
 		executeDataSet(INITIAL_NOTE_XML);
-		
+
 		NoteService noteService = Context.getNoteService();
-		
+
 		Note note = noteService.getNote(8);
-		
+
 		Assert.assertFalse(note.isVoided());
 		Assert.assertNull(note.getVoidReason());
 		Assert.assertNull(note.getDateVoided());
 		Assert.assertNull(note.getDateVoided());
-		
+
 		noteService.voidNote(note, "test reason");
-		
+
 		assertTrue(note.isVoided());
 		assertEquals("test reason", note.getVoidReason());
 		assertEquals(Context.getAuthenticatedUser(), note.getVoidedBy());

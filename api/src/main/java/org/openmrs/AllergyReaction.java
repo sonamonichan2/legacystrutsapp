@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -17,37 +17,42 @@ import org.openmrs.util.OpenmrsUtil;
 /**
  * Represent allergy reactions
  */
-public class AllergyReaction extends BaseOpenmrsObject implements java.io.Serializable{
-	
+public class AllergyReaction extends BaseOpenmrsObject
+		implements
+			java.io.Serializable {
+
 	public static final long serialVersionUID = 1;
 
-
 	private Integer allergyReactionId;
-	
+
 	private Allergy allergy;
-	
+
 	private Concept reaction;
-	
+
 	private String reactionNonCoded;
-	
+
 	/**
 	 * Default constructor
 	 */
-	public AllergyReaction(){
-		
+	public AllergyReaction() {
+
 	}
-	
+
 	/**
-	 * @param allergy the allergy to set
-	 * @param reaction the reaction to set
-	 * @param reactionNonCoded the reactionNonCoded to set
+	 * @param allergy
+	 *            the allergy to set
+	 * @param reaction
+	 *            the reaction to set
+	 * @param reactionNonCoded
+	 *            the reactionNonCoded to set
 	 */
-	public AllergyReaction(Allergy allergy, Concept reaction, String reactionNonCoded) {
+	public AllergyReaction(Allergy allergy, Concept reaction,
+			String reactionNonCoded) {
 		this.allergy = allergy;
 		this.reaction = reaction;
 		this.reactionNonCoded = reactionNonCoded;
 	}
-	
+
 	public Integer getAllergyReactionId() {
 		return allergyReactionId;
 	}
@@ -71,82 +76,89 @@ public class AllergyReaction extends BaseOpenmrsObject implements java.io.Serial
 	public void setId(Integer allergyReactionId) {
 		this.allergyReactionId = allergyReactionId;
 	}
-	
+
 	/**
 	 * @return Returns the allergy
 	 */
 	public Allergy getAllergy() {
 		return allergy;
 	}
-	
+
 	/**
-	 * @param allergy the allergy to set
+	 * @param allergy
+	 *            the allergy to set
 	 */
 	public void setAllergy(Allergy allergy) {
 		this.allergy = allergy;
 	}
-	
+
 	/**
 	 * @return Returns the reaction
 	 */
 	public Concept getReaction() {
 		return reaction;
 	}
-	
+
 	/**
-	 * @param reaction the reaction to set
+	 * @param reaction
+	 *            the reaction to set
 	 */
 	public void setReaction(Concept reaction) {
 		this.reaction = reaction;
 	}
-	
+
 	/**
 	 * @return Returns the reactionNonCoded
 	 */
 	public String getReactionNonCoded() {
 		return reactionNonCoded;
 	}
-	
+
 	/**
-	 * @param reactionNonCoded the reactionNonCoded to set
+	 * @param reactionNonCoded
+	 *            the reactionNonCoded to set
 	 */
 	public void setReactionNonCoded(String reactionNonCoded) {
 		this.reactionNonCoded = reactionNonCoded;
 	}
-	
+
 	@Override
-    public String toString() {
-	    if (StringUtils.isNotBlank(reactionNonCoded)) {
-	    	return reactionNonCoded;
-	    }
-	    return reaction.getName().getName();
-    }
-	
+	public String toString() {
+		if (StringUtils.isNotBlank(reactionNonCoded)) {
+			return reactionNonCoded;
+		}
+		return reaction.getName().getName();
+	}
+
 	/**
 	 * Checks if this reaction has the same values as the given one
 	 * 
-	 * @param reaction the reaction whose values to compare with
+	 * @param reaction
+	 *            the reaction whose values to compare with
 	 * @return true if the values match, else false
 	 */
 	public boolean hasSameValues(AllergyReaction reaction) {
-		if (!OpenmrsUtil.nullSafeEquals(getAllergyReactionId(), reaction.getAllergyReactionId())) {
+		if (!OpenmrsUtil.nullSafeEquals(getAllergyReactionId(),
+				reaction.getAllergyReactionId())) {
 			return false;
 		}
 		if (!OpenmrsUtil.nullSafeEquals(getReaction(), reaction.getReaction())) {
-			//if object instances are different but with the same concept id, then not changed
+			// if object instances are different but with the same concept id,
+			// then not changed
 			if (getReaction() != null && reaction.getReaction() != null) {
-				if (!OpenmrsUtil.nullSafeEquals(getReaction().getConceptId(), reaction.getReaction().getConceptId())) {
+				if (!OpenmrsUtil.nullSafeEquals(getReaction().getConceptId(),
+						reaction.getReaction().getConceptId())) {
 					return false;
 				}
-			}
-			else {
+			} else {
 				return false;
 			}
 		}
-		if (!OpenmrsUtil.nullSafeEquals(getReactionNonCoded(), reaction.getReactionNonCoded())) {
+		if (!OpenmrsUtil.nullSafeEquals(getReactionNonCoded(),
+				reaction.getReactionNonCoded())) {
 			return false;
 		}
-		
+
 		return true;
 	}
 }

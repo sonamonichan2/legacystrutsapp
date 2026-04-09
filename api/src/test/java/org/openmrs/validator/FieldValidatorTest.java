@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,7 +22,7 @@ import org.springframework.validation.Errors;
  * Tests methods on the {@link FieldValidator} class.
  */
 public class FieldValidatorTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see FieldValidator#validate(Object,Errors)
 	 */
@@ -38,13 +38,13 @@ public class FieldValidatorTest extends BaseContextSensitiveTest {
 		ff.setRetired(retired);
 		Boolean multiple = new Boolean(false);
 		ff.setSelectMultiple(multiple);
-		
+
 		Errors errors = new BindException(ff, "name");
 		new FieldValidator().validate(ff, errors);
-		
+
 		Assert.assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
 	 * @see FieldValidator#validate(Object,Errors)
 	 */
@@ -60,19 +60,20 @@ public class FieldValidatorTest extends BaseContextSensitiveTest {
 		ff.setRetired(retired);
 		Boolean multiple = new Boolean(false);
 		ff.setSelectMultiple(multiple);
-		
+
 		Errors errors = new BindException(ff, "name");
 		new FieldValidator().validate(ff, errors);
-		
+
 		Assert.assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
 	 * @see FieldValidator#validate(Object,Errors)
 	 */
 	@Test
 	@Verifies(value = "should fail if name is all whitespace", method = "validate(Object,Errors)")
-	public void validate_shouldFailValidationIfNameIsAllWhitespace() throws Exception {
+	public void validate_shouldFailValidationIfNameIsAllWhitespace()
+			throws Exception {
 		Field ff = new Field();
 		ff.setName("    ");
 		FieldType ft = new FieldType();
@@ -82,19 +83,20 @@ public class FieldValidatorTest extends BaseContextSensitiveTest {
 		ff.setRetired(retired);
 		Boolean multiple = new Boolean(false);
 		ff.setSelectMultiple(multiple);
-		
+
 		Errors errors = new BindException(ff, "name");
 		new FieldValidator().validate(ff, errors);
-		
+
 		Assert.assertTrue(errors.hasFieldErrors("name"));
 	}
-	
+
 	/**
 	 * @see FieldValidator#validate(Object,Errors)
 	 */
 	@Test
 	@Verifies(value = "should fail if selectMultiple is null", method = "validate(Object,Errors)")
-	public void validate_shouldFailValidationIfSelectMultipleIsNull() throws Exception {
+	public void validate_shouldFailValidationIfSelectMultipleIsNull()
+			throws Exception {
 		Field ff = new Field();
 		ff.setName("good");
 		FieldType ft = new FieldType();
@@ -105,13 +107,13 @@ public class FieldValidatorTest extends BaseContextSensitiveTest {
 		ff.setRetired(retired);
 		Boolean multiple = null;
 		ff.setSelectMultiple(multiple);
-		
+
 		Errors errors = new BindException(ff, "selectMultiple");
 		new FieldValidator().validate(ff, errors);
-		
+
 		Assert.assertTrue(errors.hasFieldErrors("selectMultiple"));
 	}
-	
+
 	/**
 	 * @see FieldValidator#validate(Object,Errors)
 	 */
@@ -128,19 +130,20 @@ public class FieldValidatorTest extends BaseContextSensitiveTest {
 		ff.setRetired(retired);
 		Boolean multiple = new Boolean(true);
 		ff.setSelectMultiple(multiple);
-		
+
 		Errors errors = new BindException(ff, "retired");
 		new FieldValidator().validate(ff, errors);
-		
+
 		Assert.assertTrue(errors.hasFieldErrors("retired"));
 	}
-	
+
 	/**
 	 * @see FieldValidator#validate(Object,Errors)
 	 */
 	@Test
 	@Verifies(value = "should pass if name is ok and fieldType, selectMultiple, and retired are non-null", method = "validate(Object,Errors)")
-	public void validate_shouldPassValidationIfAllFieldsAreCorrect() throws Exception {
+	public void validate_shouldPassValidationIfAllFieldsAreCorrect()
+			throws Exception {
 		Field ff = new Field();
 		FieldType ft = new FieldType();
 		Boolean retired = new Boolean(false);
@@ -150,19 +153,20 @@ public class FieldValidatorTest extends BaseContextSensitiveTest {
 		ff.setRetired(retired);
 		Boolean multiple = new Boolean(false);
 		ff.setSelectMultiple(multiple);
-		
+
 		Errors errors = new BindException(ff, "name");
 		new FieldValidator().validate(ff, errors);
-		
+
 		Assert.assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see FieldValidator#validate(Object,Errors)
 	 */
 	@Test
 	@Verifies(value = "should pass validation if field lengths are correct", method = "validate(Object,Errors)")
-	public void validate_shouldPassValidationIfFieldLengthsAreCorrect() throws Exception {
+	public void validate_shouldPassValidationIfFieldLengthsAreCorrect()
+			throws Exception {
 		Field ff = new Field();
 		FieldType ft = new FieldType();
 		Boolean retired = new Boolean(false);
@@ -175,39 +179,36 @@ public class FieldValidatorTest extends BaseContextSensitiveTest {
 		ff.setTableName("tableName");
 		ff.setAttributeName("attributeName");
 		ff.setRetireReason("retireReason");
-		
+
 		Errors errors = new BindException(ff, "field");
 		new FieldValidator().validate(ff, errors);
-		
+
 		Assert.assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see FieldValidator#validate(Object,Errors)
 	 */
 	@Test
 	@Verifies(value = "should fail validation if field lengths are not correct", method = "validate(Object,Errors)")
-	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() throws Exception {
+	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect()
+			throws Exception {
 		Field ff = new Field();
 		FieldType ft = new FieldType();
 		Boolean retired = new Boolean(false);
 		ft.setId(0xdeadcafe);
 		ff.setFieldType(ft);
-		ff
-		        .setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+		ff.setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
 		ff.setRetired(retired);
 		Boolean multiple = new Boolean(false);
 		ff.setSelectMultiple(multiple);
-		ff
-		        .setTableName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
-		ff
-		        .setAttributeName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
-		ff
-		        .setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
-		
+		ff.setTableName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+		ff.setAttributeName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+		ff.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+
 		Errors errors = new BindException(ff, "field");
 		new FieldValidator().validate(ff, errors);
-		
+
 		Assert.assertTrue(errors.hasFieldErrors("name"));
 		Assert.assertTrue(errors.hasFieldErrors("tableName"));
 		Assert.assertTrue(errors.hasFieldErrors("attributeName"));

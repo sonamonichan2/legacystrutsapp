@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -24,41 +24,45 @@ import org.apache.commons.logging.LogFactory;
  * This class represents a list of patientIds.
  */
 public class Cohort extends BaseOpenmrsData implements Serializable {
-	
+
 	public static final long serialVersionUID = 0L;
-	
+
 	private static final Log log = LogFactory.getLog(Cohort.class);
-	
+
 	private Integer cohortId;
-	
+
 	private String name;
-	
+
 	private String description;
-	
+
 	private Set<Integer> memberIds;
-	
+
 	public Cohort() {
 		memberIds = new TreeSet<Integer>();
 	}
-	
+
 	/**
-	 * Convenience constructor to create a Cohort object that has an primarykey/internal identifier
-	 * of <code>cohortId</code>
+	 * Convenience constructor to create a Cohort object that has an
+	 * primarykey/internal identifier of <code>cohortId</code>
 	 * 
-	 * @param cohortId the internal identifier for this cohort
+	 * @param cohortId
+	 *            the internal identifier for this cohort
 	 */
 	public Cohort(Integer cohortId) {
 		this();
 		this.cohortId = cohortId;
 	}
-	
+
 	/**
-	 * This constructor does not check whether the database contains patients with the given ids,
-	 * but
+	 * This constructor does not check whether the database contains patients
+	 * with the given ids, but
 	 * {@link org.openmrs.api.CohortService#saveCohort(Cohort)} will.
+	 * 
 	 * @param name
-	 * @param description optional description
-	 * @param ids option array of Integer ids
+	 * @param description
+	 *            optional description
+	 * @param ids
+	 *            option array of Integer ids
 	 */
 	public Cohort(String name, String description, Integer[] ids) {
 		this();
@@ -68,14 +72,17 @@ public class Cohort extends BaseOpenmrsData implements Serializable {
 			memberIds.addAll(Arrays.asList(ids));
 		}
 	}
-	
+
 	/**
-	 * This constructor does not check whether the database contains patients with the given ids,
-	 * but
+	 * This constructor does not check whether the database contains patients
+	 * with the given ids, but
 	 * {@link org.openmrs.api.CohortService#saveCohort(Cohort)} will.
+	 * 
 	 * @param name
-	 * @param description optional description
-	 * @param patients optional array of patients
+	 * @param description
+	 *            optional description
+	 * @param patients
+	 *            optional array of patients
 	 */
 	public Cohort(String name, String description, Patient[] patients) {
 		this(name, description, (Integer[]) null);
@@ -85,27 +92,34 @@ public class Cohort extends BaseOpenmrsData implements Serializable {
 			}
 		}
 	}
-	
+
 	/**
-	 * This constructor does not check whether the database contains patients with the given ids,
-	 * but
+	 * This constructor does not check whether the database contains patients
+	 * with the given ids, but
 	 * {@link org.openmrs.api.CohortService#saveCohort(Cohort)} will.
-	 * @param patientsOrIds optional collection which may contain Patients, or patientIds which may
-	 *            be Integers, Strings, or anything whose toString() can be parsed to an Integer.
+	 * 
+	 * @param patientsOrIds
+	 *            optional collection which may contain Patients, or patientIds
+	 *            which may be Integers, Strings, or anything whose toString()
+	 *            can be parsed to an Integer.
 	 */
 	@SuppressWarnings("unchecked")
 	public Cohort(Collection patientsOrIds) {
 		this(null, null, patientsOrIds);
 	}
-	
+
 	/**
-	 * This constructor does not check whether the database contains patients with the given ids,
-	 * but
+	 * This constructor does not check whether the database contains patients
+	 * with the given ids, but
 	 * {@link org.openmrs.api.CohortService#saveCohort(Cohort)} will.
+	 * 
 	 * @param name
-	 * @param description optional description
-	 * @param patientsOrIds optional collection which may contain Patients, or patientIds which may
-	 *            be Integers, Strings, or anything whose toString() can be parsed to an Integer.
+	 * @param description
+	 *            optional description
+	 * @param patientsOrIds
+	 *            optional collection which may contain Patients, or patientIds
+	 *            which may be Integers, Strings, or anything whose toString()
+	 *            can be parsed to an Integer.
 	 */
 	@SuppressWarnings("unchecked")
 	public Cohort(String name, String description, Collection patientsOrIds) {
@@ -122,21 +136,24 @@ public class Cohort extends BaseOpenmrsData implements Serializable {
 			}
 		}
 	}
-	
+
 	/**
-	 * Convenience contructor taking in a string that is a list of comma separated patient ids This
-	 * constructor does not check whether the database contains patients with the given ids, but
+	 * Convenience contructor taking in a string that is a list of comma
+	 * separated patient ids This constructor does not check whether the
+	 * database contains patients with the given ids, but
 	 * {@link org.openmrs.api.CohortService#saveCohort(Cohort)} will.
+	 * 
 	 * @param commaSeparatedIds
 	 */
 	public Cohort(String commaSeparatedIds) {
 		this();
-		for (StringTokenizer st = new StringTokenizer(commaSeparatedIds, ","); st.hasMoreTokens();) {
+		for (StringTokenizer st = new StringTokenizer(commaSeparatedIds, ","); st
+				.hasMoreTokens();) {
 			String id = st.nextToken();
 			memberIds.add(Integer.valueOf(id.trim()));
 		}
 	}
-	
+
 	/**
 	 * @return Returns a comma-separated list of patient ids in the cohort.
 	 */
@@ -150,15 +167,16 @@ public class Cohort extends BaseOpenmrsData implements Serializable {
 		}
 		return sb.toString();
 	}
-	
+
 	public boolean contains(Patient patient) {
-		return getMemberIds() != null && getMemberIds().contains(patient.getPatientId());
+		return getMemberIds() != null
+				&& getMemberIds().contains(patient.getPatientId());
 	}
-	
+
 	public boolean contains(Integer patientId) {
 		return getMemberIds() != null && getMemberIds().contains(patientId);
 	}
-	
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder("Cohort id=" + getCohortId());
 		if (getName() != null) {
@@ -169,34 +187,36 @@ public class Cohort extends BaseOpenmrsData implements Serializable {
 		}
 		return sb.toString();
 	}
-	
+
 	public void addMember(Integer memberId) {
 		getMemberIds().add(memberId);
 	}
-	
+
 	public void removeMember(Integer memberId) {
 		getMemberIds().remove(memberId);
 	}
-	
+
 	public int size() {
 		return getMemberIds() == null ? 0 : getMemberIds().size();
 	}
-	
+
 	public int getSize() {
 		return size();
 	}
-	
+
 	public boolean isEmpty() {
 		return size() == 0;
 	}
-	
+
 	// static utility methods
-	
+
 	/**
 	 * Returns the union of two cohorts
 	 * 
-	 * @param a The first Cohort
-	 * @param b The second Cohort
+	 * @param a
+	 *            The first Cohort
+	 * @param b
+	 *            The second Cohort
 	 * @return Cohort
 	 */
 	public static Cohort union(Cohort a, Cohort b) {
@@ -212,29 +232,34 @@ public class Cohort extends BaseOpenmrsData implements Serializable {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * Returns the intersection of two cohorts, treating null as an empty cohort
 	 * 
-	 * @param a The first Cohort
-	 * @param b The second Cohort
+	 * @param a
+	 *            The first Cohort
+	 * @param b
+	 *            The second Cohort
 	 * @return Cohort
 	 */
 	public static Cohort intersect(Cohort a, Cohort b) {
 		Cohort ret = new Cohort();
-		ret.setName("(" + (a == null ? "NULL" : a.getName()) + " * " + (b == null ? "NULL" : b.getName()) + ")");
+		ret.setName("(" + (a == null ? "NULL" : a.getName()) + " * "
+				+ (b == null ? "NULL" : b.getName()) + ")");
 		if (a != null && b != null) {
 			ret.getMemberIds().addAll(a.getMemberIds());
 			ret.getMemberIds().retainAll(b.getMemberIds());
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * Subtracts a cohort from a cohort
 	 * 
-	 * @param a the original Cohort
-	 * @param b the Cohort to subtract
+	 * @param a
+	 *            the original Cohort
+	 * @param b
+	 *            the Cohort to subtract
 	 * @return Cohort
 	 */
 	public static Cohort subtract(Cohort a, Cohort b) {
@@ -248,56 +273,56 @@ public class Cohort extends BaseOpenmrsData implements Serializable {
 		}
 		return ret;
 	}
-	
+
 	// getters and setters
-	
+
 	public Integer getCohortId() {
 		return cohortId;
 	}
-	
+
 	public void setCohortId(Integer cohortId) {
 		this.cohortId = cohortId;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public Set<Integer> getMemberIds() {
 		return memberIds;
 	}
-	
+
 	public void setMemberIds(Set<Integer> memberIds) {
 		this.memberIds = new TreeSet<Integer>(memberIds);
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
 	public Integer getId() {
-		
+
 		return getCohortId();
 	}
-	
+
 	/**
 	 * @since 1.5
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
 	public void setId(Integer id) {
 		setCohortId(id);
-		
+
 	}
 }

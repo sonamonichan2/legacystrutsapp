@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,20 +22,21 @@ import org.openmrs.User;
 import org.openmrs.test.Verifies;
 
 /**
- * This test class (should) contain tests for all of the {@link UserByNameComparator} methods.
+ * This test class (should) contain tests for all of the
+ * {@link UserByNameComparator} methods.
  */
 public class UserByNameComparatorTest {
-	
+
 	/**
-	 * This tests sorting with the {@link UserByNameComparator} given a set of users with
-	 * personNames
+	 * This tests sorting with the {@link UserByNameComparator} given a set of
+	 * users with personNames
 	 * 
 	 * @see UserByNameComparator#compare(User,User)
 	 */
 	@Test
 	@Verifies(value = "should sort users by personNames", method = "compare(User,User)")
 	public void compare_shouldSortUsersByPersonNames() throws Exception {
-		
+
 		Person person1 = new Person();
 		person1.addName(new PersonName("givenName", "middleName", "familyName"));
 		User user1 = new User(person1);
@@ -48,23 +49,30 @@ public class UserByNameComparatorTest {
 		Person person4 = new Person();
 		person4.addName(new PersonName("givenName", "middleNamh", "familyName"));
 		User user4 = new User(person4);
-		
+
 		List<User> listToSort = new ArrayList<User>();
 		// add the users randomly
 		listToSort.add(user3);
 		listToSort.add(user1);
 		listToSort.add(user4);
 		listToSort.add(user2);
-		
+
 		// sort the list with userByNameComparator
 		Collections.sort(listToSort, new UserByNameComparator());
-		
+
 		// make sure that the users are sorted in the expected order
 		Iterator<User> it = listToSort.iterator();
-		Assert.assertTrue("Expected user1 to be the first in the sorted user list but wasn't", user1.equals(it.next()));
-		Assert.assertTrue("Expected user2 to be the second in the sorted user list but wasn't", user2.equals(it.next()));
-		Assert.assertTrue("Expected user3 to be the third in the sorted user list but wasn't", user3.equals(it.next()));
-		Assert.assertTrue("Expected user4 to be the fourth in the sorted user list but wasn't", user4.equals(it.next()));
-		;
+		Assert.assertTrue(
+				"Expected user1 to be the first in the sorted user list but wasn't",
+				user1.equals(it.next()));
+		Assert.assertTrue(
+				"Expected user2 to be the second in the sorted user list but wasn't",
+				user2.equals(it.next()));
+		Assert.assertTrue(
+				"Expected user3 to be the third in the sorted user list but wasn't",
+				user3.equals(it.next()));
+		Assert.assertTrue(
+				"Expected user4 to be the fourth in the sorted user list but wasn't",
+				user4.equals(it.next()));;
 	}
 }

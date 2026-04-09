@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -24,29 +24,30 @@ import org.springframework.validation.Validator;
 
 /**
  * This class validates a Person object.
- *
+ * 
  * @since 1.9
  */
-@Handler(supports = { Person.class }, order = 50)
+@Handler(supports = {Person.class}, order = 50)
 public class PersonValidator implements Validator {
-	
+
 	private Logger log = Logger.getLogger(PersonValidator.class);
-	
+
 	@Autowired
 	private PersonNameValidator personNameValidator;
-	
+
 	@Autowired
 	private PersonAddressValidator personAddressValidator;
-	
+
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return Person.class.isAssignableFrom(clazz);
 	}
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
 	 *      org.springframework.validation.Errors)
-	 * @should fail validation if birthdate makes patient older that 120 years old
+	 * @should fail validation if birthdate makes patient older that 120 years
+	 *         old
 	 * @should fail validation if birthdate is a future date
 	 * @should fail validation if voidReason is blank when patient is voided
 	 * @should fail validation if causeOfDeath is blank when patient is dead
@@ -59,13 +60,13 @@ public class PersonValidator implements Validator {
 		if (log.isDebugEnabled()) {
 			log.debug(this.getClass().getName() + ".validate...");
 		}
-		
+
 		if (target == null) {
 			return;
 		}
-		
+
 		Person person = (Person) target;
-		
+
 		int index = 0;
 		boolean atLeastOneNonVoidPersonNameLeft = false;
 		for (PersonName personName : person.getNames()) {
@@ -78,39 +79,46 @@ public class PersonValidator implements Validator {
 			index++;
 		}
 		if (!person.isVoided() && !atLeastOneNonVoidPersonNameLeft) {
-			errors.rejectValue("names", "Person.shouldHaveAtleastOneNonVoidedName");
+			errors.rejectValue("names",
+					"Person.shouldHaveAtleastOneNonVoidedName");
 		}
-		
-		//validate the personAddress
+
+		// validate the personAddress
 		index = 0;
 		for (PersonAddress address : person.getAddresses()) {
 			try {
 				errors.pushNestedPath("addresses[" + index + "]");
-				ValidationUtils.invokeValidator(personAddressValidator, address, errors);
-			}
-			finally {
+				ValidationUtils.invokeValidator(personAddressValidator,
+						address, errors);
+			} finally {
 				errors.popNestedPath();
 				index++;
 			}
 		}
-		
+
 		validateBirthDate(errors, person.getBirthdate());
-		
+
 		if (person.isVoided()) {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "voidReason", "error.null");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "voidReason",
+					"error.null");
 		}
 		if (person.isDead()) {
-			ValidationUtils.rejectIfEmpty(errors, "causeOfDeath", "Person.dead.causeOfDeathNull");
+			ValidationUtils.rejectIfEmpty(errors, "causeOfDeath",
+					"Person.dead.causeOfDeathNull");
 		}
-		
-		ValidateUtil.validateFieldLengths(errors, Person.class, "gender", "personVoidReason");
+
+		ValidateUtil.validateFieldLengths(errors, Person.class, "gender",
+				"personVoidReason");
 	}
-	
+
 	/**
-	 * Checks if the birth date specified is in the future or older than 120 years old..
-	 *
-	 * @param birthDate The birthdate to validate.
-	 * @param errors Stores information about errors encountered during validation.
+	 * Checks if the birth date specified is in the future or older than 120
+	 * years old..
+	 * 
+	 * @param birthDate
+	 *            The birthdate to validate.
+	 * @param errors
+	 *            Stores information about errors encountered during validation.
 	 */
 	private void validateBirthDate(Errors errors, Date birthDate) {
 		if (birthDate != null) {
@@ -126,5 +134,5 @@ public class PersonValidator implements Validator {
 			}
 		}
 	}
-	
+
 }

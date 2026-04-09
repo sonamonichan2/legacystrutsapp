@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -17,20 +17,20 @@ import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
  * Wraps Request for GZipFilter
- *
+ * 
  */
 public class GZIPRequestWrapper extends HttpServletRequestWrapper {
-	
+
 	protected ServletInputStream stream = null;
-	
+
 	public GZIPRequestWrapper(HttpServletRequest request) throws IOException {
 		super(request);
 		stream = new GZIPRequestStream(request);
 	}
-	
+
 	@Override
 	public ServletInputStream getInputStream() throws IOException {
 		return stream;
 	}
-	
+
 }

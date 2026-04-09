@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,20 +19,21 @@ import org.openmrs.api.context.Context;
 import org.springframework.util.StringUtils;
 
 /**
- * Allows for serializing/deserializing an object to a string so that Spring knows how to pass
- * an object back and forth through an html form or other medium. <br>
+ * Allows for serializing/deserializing an object to a string so that Spring
+ * knows how to pass an object back and forth through an html form or other
+ * medium. <br>
  * <br>
  * In version 1.9, added ability for this to also retrieve objects by uuid
- *
+ * 
  * @see Privilege
  */
 public class PrivilegeEditor extends PropertyEditorSupport {
-	
+
 	private Log log = LogFactory.getLog(this.getClass());
-	
+
 	public PrivilegeEditor() {
 	}
-	
+
 	/**
 	 * @should set using name
 	 * @should set using uuid
@@ -43,24 +44,25 @@ public class PrivilegeEditor extends PropertyEditorSupport {
 			try {
 				Privilege p = es.getPrivilege(text);
 				setValue(p);
-				//when a privilege is not found, no exception is generated. throw one to execute the catch block
+				// when a privilege is not found, no exception is generated.
+				// throw one to execute the catch block
 				if (p == null) {
 					throw new Exception();
 				}
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				Privilege p = es.getPrivilegeByUuid(text);
 				setValue(p);
 				if (p == null) {
 					log.error("Error setting text: " + text, ex);
-					throw new IllegalArgumentException("Privilege not found: " + ex.getMessage());
+					throw new IllegalArgumentException("Privilege not found: "
+							+ ex.getMessage());
 				}
 			}
 		} else {
 			setValue(null);
 		}
 	}
-	
+
 	public String getAsText() {
 		Privilege p = (Privilege) getValue();
 		if (p == null) {
@@ -69,5 +71,5 @@ public class PrivilegeEditor extends PropertyEditorSupport {
 			return p.getPrivilege();
 		}
 	}
-	
+
 }

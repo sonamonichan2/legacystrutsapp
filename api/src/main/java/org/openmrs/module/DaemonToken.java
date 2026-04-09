@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -20,15 +20,15 @@ import org.openmrs.api.context.Daemon;
  * @since 1.9.2
  */
 public class DaemonToken implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private final String id;
-	
+
 	public DaemonToken(String id) {
 		this.id = id;
 	}
-	
+
 	/**
 	 * @return the id
 	 */

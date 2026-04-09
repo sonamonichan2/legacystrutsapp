@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -23,10 +23,13 @@ import org.openmrs.test.BaseContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * We can't easily test the full behavior against different database versions, so we just verify that milliseconds are
- * zeroed out when saving or updating an item.
+ * We can't easily test the full behavior against different database versions,
+ * so we just verify that milliseconds are zeroed out when saving or updating an
+ * item.
  */
-public class DropMillisecondsHibernateInterceptorTest extends BaseContextSensitiveTest {
+public class DropMillisecondsHibernateInterceptorTest
+		extends
+			BaseContextSensitiveTest {
 
 	@Autowired
 	PersonService personService;
@@ -48,7 +51,8 @@ public class DropMillisecondsHibernateInterceptorTest extends BaseContextSensiti
 	}
 
 	@Test
-	public void shouldClearMillisecondsWhenUpdatingAnExistingObject() throws Exception {
+	public void shouldClearMillisecondsWhenUpdatingAnExistingObject()
+			throws Exception {
 		Date dateWithMillisecond = new Date(567l);
 		Date dateWithoutMillisecond = new Date(0l);
 

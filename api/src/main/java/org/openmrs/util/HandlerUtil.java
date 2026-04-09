@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -26,38 +26,39 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 /**
- * Utility class that provides useful methods for working with classes that are annotated with the
- * {@link Handler} annotation
+ * Utility class that provides useful methods for working with classes that are
+ * annotated with the {@link Handler} annotation
  * 
  * @since 1.5
  */
 @Component
 public class HandlerUtil implements ApplicationListener<ContextRefreshedEvent> {
-	
+
 	private static final Log log = LogFactory.getLog(HandlerUtil.class);
-	
+
 	private static volatile Map<Key, List<?>> cachedHandlers = new WeakHashMap<HandlerUtil.Key, List<?>>();
-	
+
 	private static class Key {
-		
+
 		public final Class<?> handlerType;
-		
+
 		public final Class<?> type;
-		
+
 		public Key(Class<?> handlerType, Class<?> type) {
 			this.handlerType = handlerType;
 			this.type = type;
 		}
-		
+
 		@Override
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + ((handlerType == null) ? 0 : handlerType.hashCode());
+			result = prime * result
+					+ ((handlerType == null) ? 0 : handlerType.hashCode());
 			result = prime * result + ((type == null) ? 0 : type.hashCode());
 			return result;
 		}
-		
+
 		@Override
 		public boolean equals(Object obj) {
 			if (this == obj) {
@@ -86,42 +87,51 @@ public class HandlerUtil implements ApplicationListener<ContextRefreshedEvent> {
 			}
 			return true;
 		}
-		
+
 	}
-	
+
 	public static void clearCachedHandlers() {
 		cachedHandlers = new WeakHashMap<HandlerUtil.Key, List<?>>();
 	}
-	
+
 	/**
-	 * Retrieves a List of all registered components from the Context that are of the passed
-	 * handlerType and one or more of the following is true:
+	 * Retrieves a List of all registered components from the Context that are
+	 * of the passed handlerType and one or more of the following is true:
 	 * <ul>
-	 * <li>The handlerType is annotated as a {@link Handler} that supports the passed type</li>
-	 * <li>The passed type is null - this effectively returns all components of the passed
-	 * handlerType</li>
+	 * <li>The handlerType is annotated as a {@link Handler} that supports the
+	 * passed type</li>
+	 * <li>The passed type is null - this effectively returns all components of
+	 * the passed handlerType</li>
 	 * </ul>
-	 * The returned handlers are ordered in the list based upon the order property.
+	 * The returned handlers are ordered in the list based upon the order
+	 * property.
 	 * 
-	 * @param handlerType Indicates the type of class to return
-	 * @param type Indicates the type that the given handlerType must support (or null for any)
-	 * @return a List of all matching Handlers for the given parameters, ordered by Handler#order
+	 * @param handlerType
+	 *            Indicates the type of class to return
+	 * @param type
+	 *            Indicates the type that the given handlerType must support (or
+	 *            null for any)
+	 * @return a List of all matching Handlers for the given parameters, ordered
+	 *         by Handler#order
 	 * @should return a list of all classes that can handle the passed type
 	 * @should return classes registered in a module
 	 * @should return an empty list if no classes can handle the passed type
 	 */
-	public static <H, T> List<H> getHandlersForType(Class<H> handlerType, Class<T> type) {
+	public static <H, T> List<H> getHandlersForType(Class<H> handlerType,
+			Class<T> type) {
 		List<?> list = cachedHandlers.get(new Key(handlerType, type));
 		if (list != null) {
 			return (List<H>) list;
 		}
-		
+
 		List<H> handlers = new ArrayList<H>();
-		
+
 		// First get all registered components of the passed class
-		log.debug("Getting handlers of type " + handlerType + (type == null ? "" : " for class " + type.getName()));
+		log.debug("Getting handlers of type " + handlerType
+				+ (type == null ? "" : " for class " + type.getName()));
 		for (H handler : Context.getRegisteredComponents(handlerType)) {
-			Handler handlerAnnotation = handler.getClass().getAnnotation(Handler.class);
+			Handler handlerAnnotation = handler.getClass().getAnnotation(
+					Handler.class);
 			// Only consider those that have been annotated as Handlers
 			if (handlerAnnotation != null) {
 				// If no type is passed in return all handlers
@@ -141,62 +151,73 @@ public class HandlerUtil implements ApplicationListener<ContextRefreshedEvent> {
 				}
 			}
 		}
-		
-		// Return the list of handlers based on the order specified in the Handler annotation
+
+		// Return the list of handlers based on the order specified in the
+		// Handler annotation
 		Collections.sort(handlers, new Comparator<H>() {
-			
+
 			public int compare(H o1, H o2) {
-				return getOrderOfHandler(o1.getClass()).compareTo(getOrderOfHandler(o2.getClass()));
+				return getOrderOfHandler(o1.getClass()).compareTo(
+						getOrderOfHandler(o2.getClass()));
 			}
 		});
-		
-		Map<Key, List<?>> newCachedHandlers = new WeakHashMap<Key, List<?>>(cachedHandlers);
+
+		Map<Key, List<?>> newCachedHandlers = new WeakHashMap<Key, List<?>>(
+				cachedHandlers);
 		newCachedHandlers.put(new Key(handlerType, type), handlers);
 		cachedHandlers = newCachedHandlers;
-		
+
 		return handlers;
 	}
-	
+
 	/**
-	 * Retrieves the preferred Handler for a given handlerType and type. A <em>preferred</em>
-	 * handler is the Handler that has the lowest defined <em>order</em> attribute in it's
-	 * annotation. If multiple Handlers are found for the passed parameters at the lowest specified
-	 * order, then an APIException is thrown.
+	 * Retrieves the preferred Handler for a given handlerType and type. A
+	 * <em>preferred</em> handler is the Handler that has the lowest defined
+	 * <em>order</em> attribute in it's annotation. If multiple Handlers are
+	 * found for the passed parameters at the lowest specified order, then an
+	 * APIException is thrown.
 	 * 
-	 * @param handlerType the class that is an annotated {@link Handler} to retrieve
-	 * @param type the class that the annotated {@link Handler} must support
-	 * @return the class of the passed hanlerType with the lowest configured order
+	 * @param handlerType
+	 *            the class that is an annotated {@link Handler} to retrieve
+	 * @param type
+	 *            the class that the annotated {@link Handler} must support
+	 * @return the class of the passed hanlerType with the lowest configured
+	 *         order
 	 * @should return the preferred handler for the passed handlerType and type
 	 * @should throw a APIException if no handler is found
 	 * @should throw a APIException if multiple preferred handlers are found
 	 * @should should return patient validator for patient
 	 * @should should return person validator for person
 	 */
-	public static <H, T> H getPreferredHandler(Class<H> handlerType, Class<T> type) {
-		
+	public static <H, T> H getPreferredHandler(Class<H> handlerType,
+			Class<T> type) {
+
 		if (handlerType == null || type == null) {
-			throw new IllegalArgumentException("You must specify both a handlerType and a type");
+			throw new IllegalArgumentException(
+					"You must specify both a handlerType and a type");
 		}
 		List<H> handlers = getHandlersForType(handlerType, type);
 		if (handlers == null || handlers.isEmpty()) {
-			throw new APIException("handler.type.not.found", new Object[] { handlerType, type });
+			throw new APIException("handler.type.not.found", new Object[]{
+					handlerType, type});
 		}
-		
+
 		if (handlers.size() > 1) {
 			int order1 = getOrderOfHandler(handlers.get(0).getClass());
 			int order2 = getOrderOfHandler(handlers.get(1).getClass());
 			if (order1 == order2) {
-				throw new APIException("handler.type.multiple", new Object[] { handlerType, type });
+				throw new APIException("handler.type.multiple", new Object[]{
+						handlerType, type});
 			}
 		}
-		
+
 		return handlers.get(0);
 	}
-	
+
 	/**
-	 * Utility method to return the order attribute of the {@link Handler} annotation on the passed
-	 * class. If the passed class does not have a {@link Handler} annotation, a RuntimeException is
-	 * thrown
+	 * Utility method to return the order attribute of the {@link Handler}
+	 * annotation on the passed class. If the passed class does not have a
+	 * {@link Handler} annotation, a RuntimeException is thrown
 	 * 
 	 * @param handlerClass
 	 * @return the order attribute value
@@ -204,11 +225,12 @@ public class HandlerUtil implements ApplicationListener<ContextRefreshedEvent> {
 	public static Integer getOrderOfHandler(Class<?> handlerClass) {
 		Handler annotation = handlerClass.getAnnotation(Handler.class);
 		if (annotation == null) {
-			throw new APIException("class.not.annotated.as.handler", new Object[] { handlerClass });
+			throw new APIException("class.not.annotated.as.handler",
+					new Object[]{handlerClass});
 		}
 		return annotation.order();
 	}
-	
+
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		clearCachedHandlers();

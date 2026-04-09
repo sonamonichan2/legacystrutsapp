@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -14,13 +14,16 @@ import org.openmrs.attribute.BaseAttributeType;
 
 /**
  * A user-defined extension to the {@link Location} class.
+ * 
  * @see AttributeType
  * @since 1.9
  */
-public class LocationAttributeType extends BaseAttributeType<Location> implements AttributeType<Location> {
-	
+public class LocationAttributeType extends BaseAttributeType<Location>
+		implements
+			AttributeType<Location> {
+
 	private Integer locationAttributeTypeId;
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -28,7 +31,7 @@ public class LocationAttributeType extends BaseAttributeType<Location> implement
 	public Integer getId() {
 		return getLocationAttributeTypeId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -36,19 +39,20 @@ public class LocationAttributeType extends BaseAttributeType<Location> implement
 	public void setId(Integer id) {
 		setLocationAttributeTypeId(id);
 	}
-	
+
 	/**
 	 * @return the locationAttributeTypeId
 	 */
 	public Integer getLocationAttributeTypeId() {
 		return locationAttributeTypeId;
 	}
-	
+
 	/**
-	 * @param locationAttributeTypeId the locationAttributeTypeId to set
+	 * @param locationAttributeTypeId
+	 *            the locationAttributeTypeId to set
 	 */
 	public void setLocationAttributeTypeId(Integer locationAttributeTypeId) {
 		this.locationAttributeTypeId = locationAttributeTypeId;
 	}
-	
+
 }

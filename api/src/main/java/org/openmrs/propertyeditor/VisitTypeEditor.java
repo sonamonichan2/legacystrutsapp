@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -25,12 +25,12 @@ import org.springframework.util.StringUtils;
  * @since 1.9
  */
 public class VisitTypeEditor extends PropertyEditorSupport {
-	
+
 	private static final Log log = LogFactory.getLog(VisitTypeEditor.class);
-	
+
 	public VisitTypeEditor() {
 	}
-	
+
 	/**
 	 * @should set using id
 	 * @should set using uuid
@@ -40,19 +40,19 @@ public class VisitTypeEditor extends PropertyEditorSupport {
 		if (StringUtils.hasText(text)) {
 			try {
 				setValue(vs.getVisitType(Integer.valueOf(text)));
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				VisitType v = vs.getVisitTypeByUuid(text);
 				setValue(v);
 				if (v == null) {
-					throw new IllegalArgumentException("Visit Type not found: " + ex.getMessage());
+					throw new IllegalArgumentException("Visit Type not found: "
+							+ ex.getMessage());
 				}
 			}
 		} else {
 			setValue(null);
 		}
 	}
-	
+
 	public String getAsText() {
 		VisitType vt = (VisitType) getValue();
 		if (vt == null) {
@@ -61,5 +61,5 @@ public class VisitTypeEditor extends PropertyEditorSupport {
 			return vt.getVisitTypeId().toString();
 		}
 	}
-	
+
 }

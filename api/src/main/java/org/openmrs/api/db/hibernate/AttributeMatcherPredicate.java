@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -17,17 +17,21 @@ import org.openmrs.attribute.AttributeType;
 import org.openmrs.customdatatype.Customizable;
 
 /**
- * Used in conjunction with commons-collections filter to find attributes with values in the given map.
+ * Used in conjunction with commons-collections filter to find attributes with
+ * values in the given map.
+ * 
  * @since 1.9
  */
-public class AttributeMatcherPredicate<T extends Customizable, AT extends AttributeType> implements Predicate {
-	
+public class AttributeMatcherPredicate<T extends Customizable, AT extends AttributeType>
+		implements
+			Predicate {
+
 	private final Map<AT, String> serializedAttributeValues;
-	
+
 	public AttributeMatcherPredicate(Map<AT, String> serializedAttributeValues) {
 		this.serializedAttributeValues = serializedAttributeValues;
 	}
-	
+
 	@Override
 	public boolean evaluate(Object o) {
 		final T customizable = (T) o;

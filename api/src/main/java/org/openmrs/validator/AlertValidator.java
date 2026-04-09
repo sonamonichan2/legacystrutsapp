@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,26 +19,27 @@ import org.springframework.validation.Validator;
 
 /**
  * Validates attributes on the {@link Alert} object.
- *
+ * 
  * @since 1.10
  */
-@Handler(supports = { Alert.class }, order = 50)
+@Handler(supports = {Alert.class}, order = 50)
 public class AlertValidator implements Validator {
-	
+
 	/** Log for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
-	 *
+	 * 
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
 	public boolean supports(Class<?> c) {
 		return Alert.class.isAssignableFrom(c);
 	}
-	
+
 	/**
-	 * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
+	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
+	 *      org.springframework.validation.Errors)
 	 * @should fail validation if Alert Text is null or empty or whitespace
 	 * @should pass validation if all required values are set
 	 * @should pass validation if field lengths are correct
@@ -49,7 +50,8 @@ public class AlertValidator implements Validator {
 		if (alert == null) {
 			errors.rejectValue("alert", "error.general");
 		} else {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "text", "Alert.text.required");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "text",
+					"Alert.text.required");
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "text");
 		}
 	}

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -23,9 +23,9 @@ import org.openmrs.collection.ListPart;
  * @since 1.11
  */
 public abstract class CriteriaQuery<T> extends SearchQuery<T> {
-	
+
 	private final Criteria criteria;
-	
+
 	/**
 	 * @param session
 	 */
@@ -34,55 +34,55 @@ public abstract class CriteriaQuery<T> extends SearchQuery<T> {
 		criteria = getSession().createCriteria(getType());
 		prepareCriteria(criteria);
 	}
-	
+
 	public abstract void prepareCriteria(Criteria criteria);
-	
+
 	@Override
 	public List<T> list() {
 		criteria.setProjection(null);
 		criteria.setResultTransformer(Criteria.ROOT_ENTITY);
-		
+
 		@SuppressWarnings("unchecked")
 		List<T> list = criteria.list();
-		
+
 		return list;
 	}
-	
+
 	@Override
 	public ListPart<T> listPart(Long firstResult, Long maxResults) {
 		criteria.setProjection(null);
 		criteria.setResultTransformer(Criteria.ROOT_ENTITY);
-		
+
 		if (firstResult != null) {
 			criteria.setFirstResult(firstResult.intValue());
 		}
-		
+
 		if (maxResults != null) {
 			criteria.setMaxResults(maxResults.intValue());
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		List<T> list = criteria.list();
-		
+
 		return ListPart.newListPart(list, firstResult, maxResults, null, null);
 	}
-	
+
 	@Override
 	public T uniqueResult() throws HibernateException {
 		@SuppressWarnings("unchecked")
 		T result = (T) criteria.uniqueResult();
-		
+
 		return result;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.db.hibernate.search.SearchQuery#resultSize()
 	 */
 	@Override
 	public long resultSize() {
 		criteria.setProjection(Projections.rowCount());
-		
+
 		return ((Number) criteria.uniqueResult()).longValue();
 	}
-	
+
 }

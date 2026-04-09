@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -16,13 +16,13 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- * Validates objects and requires that "name" be filled in. Used by other validators so that they
- * don't have to check the name every time.
+ * Validates objects and requires that "name" be filled in. Used by other
+ * validators so that they don't have to check the name every time.
  * 
  * @since 1.5
  */
 public class RequireNameValidator implements Validator {
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
@@ -36,11 +36,11 @@ public class RequireNameValidator implements Validator {
 				return false;
 			}
 			return true;
+		} catch (Exception ex) {
 		}
-		catch (Exception ex) {}
 		return false;
 	}
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
 	 *      org.springframework.validation.Errors)
@@ -50,5 +50,5 @@ public class RequireNameValidator implements Validator {
 	public void validate(Object o, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.name");
 	}
-	
+
 }

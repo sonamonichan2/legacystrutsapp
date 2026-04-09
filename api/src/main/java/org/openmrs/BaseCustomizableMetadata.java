@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -20,14 +20,19 @@ import org.openmrs.customdatatype.CustomValueDescriptor;
 import org.openmrs.customdatatype.Customizable;
 
 /**
- * Extension of {@link org.openmrs.BaseOpenmrsMetadata} for classes that support customization via user-defined attributes.
- * @param <A> the type of attribute held
+ * Extension of {@link org.openmrs.BaseOpenmrsMetadata} for classes that support
+ * customization via user-defined attributes.
+ * 
+ * @param <A>
+ *            the type of attribute held
  * @since 1.9
  */
-public abstract class BaseCustomizableMetadata<A extends Attribute> extends BaseOpenmrsMetadata implements Customizable<A> {
-	
+public abstract class BaseCustomizableMetadata<A extends Attribute>
+		extends
+			BaseOpenmrsMetadata implements Customizable<A> {
+
 	private Set<A> attributes = new LinkedHashSet<A>();
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.Customizable#getAttributes()
 	 */
@@ -35,14 +40,15 @@ public abstract class BaseCustomizableMetadata<A extends Attribute> extends Base
 	public Set<A> getAttributes() {
 		return attributes;
 	}
-	
+
 	/**
-	 * @param attributes the attributes to set
+	 * @param attributes
+	 *            the attributes to set
 	 */
 	public void setAttributes(Set<A> attributes) {
 		this.attributes = attributes;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.Customizable#getActiveAttributes()
 	 */
@@ -58,7 +64,7 @@ public abstract class BaseCustomizableMetadata<A extends Attribute> extends Base
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.Customizable#getActiveAttributes(org.openmrs.customdatatype.CustomValueDescriptor)
 	 */
@@ -74,7 +80,7 @@ public abstract class BaseCustomizableMetadata<A extends Attribute> extends Base
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.Customizable#addAttribute(Attribute)
 	 */
@@ -87,14 +93,17 @@ public abstract class BaseCustomizableMetadata<A extends Attribute> extends Base
 		getAttributes().add(attribute);
 		attribute.setOwner(this);
 	}
-	
+
 	/**
-	 * Convenience method that voids all existing attributes of the given type, and sets this new one.
-	 * TODO fail if minOccurs &gt; 1
-	 * TODO decide whether this should require maxOccurs=1
-	 * @should void the attribute if an attribute with same attribute type already exists and the maxOccurs is set to 1
-	 * @should work for attributes with datatypes whose values are stored in other tables
-	 *
+	 * Convenience method that voids all existing attributes of the given type,
+	 * and sets this new one. TODO fail if minOccurs &gt; 1 TODO decide whether
+	 * this should require maxOccurs=1
+	 * 
+	 * @should void the attribute if an attribute with same attribute type
+	 *         already exists and the maxOccurs is set to 1
+	 * @should work for attributes with datatypes whose values are stored in
+	 *         other tables
+	 * 
 	 * @param attribute
 	 */
 	public void setAttribute(A attribute) {
@@ -102,9 +111,10 @@ public abstract class BaseCustomizableMetadata<A extends Attribute> extends Base
 			addAttribute(attribute);
 			return;
 		}
-		
+
 		if (getActiveAttributes(attribute.getAttributeType()).size() == 1) {
-			A existing = getActiveAttributes(attribute.getAttributeType()).get(0);
+			A existing = getActiveAttributes(attribute.getAttributeType()).get(
+					0);
 			if (existing.getValue().equals(attribute.getValue())) {
 				// do nothing, since the value is already as-specified
 			} else {
@@ -116,10 +126,11 @@ public abstract class BaseCustomizableMetadata<A extends Attribute> extends Base
 				getAttributes().add(attribute);
 				attribute.setOwner(this);
 			}
-			
+
 		} else {
 			for (A existing : getActiveAttributes(attribute.getAttributeType())) {
-				if (existing.getAttributeType().equals(attribute.getAttributeType())) {
+				if (existing.getAttributeType().equals(
+						attribute.getAttributeType())) {
 					if (existing.getId() != null) {
 						existing.setVoided(true);
 					} else {
@@ -131,5 +142,5 @@ public abstract class BaseCustomizableMetadata<A extends Attribute> extends Base
 			attribute.setOwner(this);
 		}
 	}
-	
+
 }

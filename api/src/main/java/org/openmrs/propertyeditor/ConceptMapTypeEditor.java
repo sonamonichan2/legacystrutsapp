@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -18,33 +18,35 @@ import org.openmrs.api.context.Context;
 import org.springframework.util.StringUtils;
 
 public class ConceptMapTypeEditor extends PropertyEditorSupport {
-	
-	private final static Log log = LogFactory.getLog(ConceptMapTypeEditor.class);
-	
+
+	private final static Log log = LogFactory
+			.getLog(ConceptMapTypeEditor.class);
+
 	public ConceptMapTypeEditor() {
 	}
-	
+
 	public void setAsText(String text) throws IllegalArgumentException {
 		log.debug("Setting text: " + text);
 		if (StringUtils.hasText(text)) {
 			try {
-				setValue(Context.getConceptService().getConceptMapType(Integer.valueOf(text)));
-			}
-			catch (Exception ex) {
-				throw new IllegalArgumentException("ConceptMapType not found: " + text, ex);
+				setValue(Context.getConceptService().getConceptMapType(
+						Integer.valueOf(text)));
+			} catch (Exception ex) {
+				throw new IllegalArgumentException("ConceptMapType not found: "
+						+ text, ex);
 			}
 		} else {
 			setValue(null);
 		}
 	}
-	
+
 	public String getAsText() {
 		ConceptMapType mapType = (ConceptMapType) getValue();
 		if (mapType == null || mapType.getConceptMapTypeId() == null) {
 			return "";
 		}
-		
+
 		return mapType.getConceptMapTypeId().toString();
 	}
-	
+
 }

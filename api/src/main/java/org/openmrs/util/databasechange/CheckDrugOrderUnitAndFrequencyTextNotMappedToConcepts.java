@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -23,57 +23,68 @@ import org.openmrs.util.DatabaseUtil;
 import org.openmrs.util.UpgradeUtil;
 
 /**
- * This changesets finds all free text drug order dose units and frequencies and checks that they
- * are all mapped to concepts ids via the OpenmrsConstants#GP_ORDER_ENTRY_UNITS_TO_CONCEPTS_MAPPINGS
- * global property prior to upgrading to version 1.10. It MUST be the first 1.10.x changeset to be
- * executed
+ * This changesets finds all free text drug order dose units and frequencies and
+ * checks that they are all mapped to concepts ids via the
+ * OpenmrsConstants#GP_ORDER_ENTRY_UNITS_TO_CONCEPTS_MAPPINGS global property
+ * prior to upgrading to version 1.10. It MUST be the first 1.10.x changeset to
+ * be executed
  */
-public class CheckDrugOrderUnitAndFrequencyTextNotMappedToConcepts implements CustomPrecondition {
-	
+public class CheckDrugOrderUnitAndFrequencyTextNotMappedToConcepts
+		implements
+			CustomPrecondition {
+
 	@Override
-	public void check(Database database) throws CustomPreconditionFailedException, CustomPreconditionErrorException {
+	public void check(Database database)
+			throws CustomPreconditionFailedException,
+			CustomPreconditionErrorException {
 		JdbcConnection connection = (JdbcConnection) database.getConnection();
 		try {
-			Set<String> doseUnits = DatabaseUtil.getUniqueNonNullColumnValues("units", "drug_order", String.class,
-			    connection.getUnderlyingConnection());
-			Set<String> unmappedDoseUnits = getUnMappedText(doseUnits, connection);
+			Set<String> doseUnits = DatabaseUtil.getUniqueNonNullColumnValues(
+					"units", "drug_order", String.class,
+					connection.getUnderlyingConnection());
+			Set<String> unmappedDoseUnits = getUnMappedText(doseUnits,
+					connection);
 			if (unmappedDoseUnits.size() > 0) {
 				throw new CustomPreconditionFailedException(
-				        "Upgrade failed because of the following unmapped drug order dose units that were found: ["
-				                + StringUtils.join(unmappedDoseUnits, ", ")
-				                + "]. Please make sure you have mapped all free text dose units and "
-				                + "frequencies via the global property named orderEntry.unitsToConceptsMappings"
-				                + " or use 1.10 upgrade helper module to map them");
+						"Upgrade failed because of the following unmapped drug order dose units that were found: ["
+								+ StringUtils.join(unmappedDoseUnits, ", ")
+								+ "]. Please make sure you have mapped all free text dose units and "
+								+ "frequencies via the global property named orderEntry.unitsToConceptsMappings"
+								+ " or use 1.10 upgrade helper module to map them");
 			}
-			
-			Set<String> frequencies = DatabaseUtil.getUniqueNonNullColumnValues("frequency", "drug_order", String.class,
-			    connection.getUnderlyingConnection());
-			Set<String> unmappedFrequencies = getUnMappedText(frequencies, connection);
+
+			Set<String> frequencies = DatabaseUtil
+					.getUniqueNonNullColumnValues("frequency", "drug_order",
+							String.class, connection.getUnderlyingConnection());
+			Set<String> unmappedFrequencies = getUnMappedText(frequencies,
+					connection);
 			if (unmappedFrequencies.size() > 0) {
 				throw new CustomPreconditionFailedException(
-				        "Upgrade failed because of the following unmapped drug order frequencies that were found: ["
-				                + StringUtils.join(unmappedFrequencies, ", ")
-				                + "]. Please make sure you have mapped all free text dose units and "
-				                + "frequencies via the global property named orderEntry.unitsToConceptsMappings"
-				                + " or use 1.10 upgrade helper module to map them");
+						"Upgrade failed because of the following unmapped drug order frequencies that were found: ["
+								+ StringUtils.join(unmappedFrequencies, ", ")
+								+ "]. Please make sure you have mapped all free text dose units and "
+								+ "frequencies via the global property named orderEntry.unitsToConceptsMappings"
+								+ " or use 1.10 upgrade helper module to map them");
 			}
-		}
-		catch (Exception e) {
-			throw new CustomPreconditionErrorException("An error occurred while checking for unmapped free text drug "
-			        + "order dose units and frequencies", e);
+		} catch (Exception e) {
+			throw new CustomPreconditionErrorException(
+					"An error occurred while checking for unmapped free text drug "
+							+ "order dose units and frequencies", e);
 		}
 	}
-	
-	private Set<String> getUnMappedText(Set<String> textList, JdbcConnection connection) {
+
+	private Set<String> getUnMappedText(Set<String> textList,
+			JdbcConnection connection) {
 		Set<String> unmappedText = new HashSet<String>(textList.size());
 		for (String text : textList) {
-			if (StringUtils.isBlank(text) || UpgradeUtil.getConceptIdForUnits(text) != null) {
+			if (StringUtils.isBlank(text)
+					|| UpgradeUtil.getConceptIdForUnits(text) != null) {
 				continue;
 			}
-			
+
 			unmappedText.add(text);
 		}
 		return unmappedText;
 	}
-	
+
 }

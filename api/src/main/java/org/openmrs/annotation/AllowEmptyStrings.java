@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -29,13 +29,13 @@ import org.openmrs.api.handler.OpenmrsObjectSaveHandler;
  * Note: This should be annotated on the setter methods.<br>
  * <br>
  * If this annotation is not present the the property will be set to null by the
- * {@link OpenmrsObjectSaveHandler} if the value is an empty string.  
+ * {@link OpenmrsObjectSaveHandler} if the value is an empty string.
  * 
  * @since 1.9
  * @see AllowLeadingOrTrailingWhitespace
  * @see OpenmrsObjectSaveHandler
  */
-@Target( { ElementType.METHOD })
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented

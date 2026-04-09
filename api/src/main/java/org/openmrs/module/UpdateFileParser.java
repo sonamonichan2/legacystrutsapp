@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -27,34 +27,36 @@ import org.xml.sax.InputSource;
 
 /**
  * This class will parse an xml update.rdf file
- *
+ * 
  * @version 1.0
  */
 public class UpdateFileParser {
-	
+
 	private static Log log = LogFactory.getLog(UpdateFileParser.class);
-	
+
 	private String content;
-	
-	// these properties store the 'best fit' (most recent update that will fit with the current code version)
+
+	// these properties store the 'best fit' (most recent update that will fit
+	// with the current code version)
 	private String moduleId = null;
-	
+
 	private String currentVersion = null;
-	
+
 	private String downloadURL = null;
-	
+
 	/**
 	 * Default constructor
-	 *
-	 * @param s String to parse (Contents of update.rdf file)
+	 * 
+	 * @param s
+	 *            String to parse (Contents of update.rdf file)
 	 */
 	public UpdateFileParser(String s) {
 		this.content = s;
 	}
-	
+
 	/**
 	 * Parse the contents of the update.rdf file.
-	 *
+	 * 
 	 * @throws ModuleException
 	 */
 	public void parse() throws ModuleException {
@@ -65,78 +67,89 @@ public class UpdateFileParser {
 				stringReader = new StringReader(content);
 				InputSource inputSource = new InputSource(stringReader);
 				inputSource.setSystemId("./");
-				
-				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
+				DocumentBuilderFactory dbf = DocumentBuilderFactory
+						.newInstance();
 				DocumentBuilder db = dbf.newDocumentBuilder();
-				
-				// Disable resolution of external entities. See TRUNK-3942 
+
+				// Disable resolution of external entities. See TRUNK-3942
 				db.setEntityResolver(new EntityResolver() {
-					
-					public InputSource resolveEntity(String publicId, String systemId) {
+
+					public InputSource resolveEntity(String publicId,
+							String systemId) {
 						return new InputSource(new StringReader(""));
 					}
 				});
-				
+
 				updateDoc = db.parse(inputSource);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				log.warn("Unable to parse content");
-				throw new ModuleException("Error parsing update.rdf file: " + content, e);
+				throw new ModuleException("Error parsing update.rdf file: "
+						+ content, e);
 			}
-			
+
 			Element rootNode = updateDoc.getDocumentElement();
-			
+
 			String configVersion = rootNode.getAttribute("configVersion");
-			
+
 			if (!validConfigVersions().contains(configVersion)) {
-				throw new ModuleException("Invalid configVersion: '" + configVersion + "' found In content: " + content);
+				throw new ModuleException("Invalid configVersion: '"
+						+ configVersion + "' found In content: " + content);
 			}
-			
+
 			if ("1.0".equals(configVersion)) {
 				// the only update in the xml file is the 'best fit'
 				this.moduleId = getElement(rootNode, configVersion, "moduleId");
-				this.currentVersion = getElement(rootNode, configVersion, "currentVersion");
-				this.downloadURL = getElement(rootNode, configVersion, "downloadURL");
+				this.currentVersion = getElement(rootNode, configVersion,
+						"currentVersion");
+				this.downloadURL = getElement(rootNode, configVersion,
+						"downloadURL");
 			} else if ("1.1".equals(configVersion)) {
-				
+
 				this.moduleId = rootNode.getAttribute("moduleId");
-				
+
 				NodeList nodes = rootNode.getElementsByTagName("update");
-				this.currentVersion = ""; // default to the lowest version possible
-				
+				this.currentVersion = ""; // default to the lowest version
+											// possible
+
 				// loop over all 'update' tags
 				for (Integer i = 0; i < nodes.getLength(); i++) {
 					Element currentNode = (Element) nodes.item(i);
-					String currentVersion = getElement(currentNode, configVersion, "currentVersion");
-					// if the currently saved version is less than the current tag
-					if (ModuleUtil.compareVersion(this.currentVersion, currentVersion) < 0) {
-						String requireOpenMRSVersion = getElement(currentNode, configVersion, "requireOpenMRSVersion");
-						// if the openmrs code version is compatible, this node is a winner
+					String currentVersion = getElement(currentNode,
+							configVersion, "currentVersion");
+					// if the currently saved version is less than the current
+					// tag
+					if (ModuleUtil.compareVersion(this.currentVersion,
+							currentVersion) < 0) {
+						String requireOpenMRSVersion = getElement(currentNode,
+								configVersion, "requireOpenMRSVersion");
+						// if the openmrs code version is compatible, this node
+						// is a winner
 						if (requireOpenMRSVersion == null
-						        || ModuleUtil.matchRequiredVersions(OpenmrsConstants.OPENMRS_VERSION_SHORT,
-						            requireOpenMRSVersion)) {
+								|| ModuleUtil.matchRequiredVersions(
+										OpenmrsConstants.OPENMRS_VERSION_SHORT,
+										requireOpenMRSVersion)) {
 							this.currentVersion = currentVersion;
-							this.downloadURL = getElement(currentNode, configVersion, "downloadURL");
+							this.downloadURL = getElement(currentNode,
+									configVersion, "downloadURL");
 						}
 					}
 				}
 			}
-		}
-		catch (ModuleException e) {
+		} catch (ModuleException e) {
 			// rethrow the moduleException
 			throw e;
-		}
-		finally {
+		} finally {
 			if (stringReader != null) {
 				stringReader.close();
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * Generic method to get a module tag
-	 *
+	 * 
 	 * @param element
 	 * @param version
 	 * @param tag
@@ -148,10 +161,10 @@ public class UpdateFileParser {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * List of the valid sqldiff versions
-	 *
+	 * 
 	 * @return
 	 */
 	private static List<String> validConfigVersions() {
@@ -160,26 +173,26 @@ public class UpdateFileParser {
 		versions.add("1.1");
 		return versions;
 	}
-	
+
 	/**
 	 * @return the downloadURL
 	 */
 	public String getDownloadURL() {
 		return downloadURL;
 	}
-	
+
 	/**
 	 * @return the moduleId
 	 */
 	public String getModuleId() {
 		return moduleId;
 	}
-	
+
 	/**
 	 * @return the version
 	 */
 	public String getCurrentVersion() {
 		return currentVersion;
 	}
-	
+
 }

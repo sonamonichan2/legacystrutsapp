@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -26,13 +26,13 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.10
  */
-@Handler(supports = { TestOrder.class }, order = 50)
+@Handler(supports = {TestOrder.class}, order = 50)
 @Component("testOrderValidator")
 public class TestOrderValidator extends OrderValidator implements Validator {
-	
+
 	/** Log for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
 	/**
 	 * Determines if the object being submitted is a valid type
 	 * 
@@ -42,7 +42,7 @@ public class TestOrderValidator extends OrderValidator implements Validator {
 	public boolean supports(Class c) {
 		return TestOrder.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -58,9 +58,11 @@ public class TestOrderValidator extends OrderValidator implements Validator {
 			errors.reject("error.general");
 		} else {
 			if (order.getSpecimenSource() != null) {
-				List<Concept> specimenSources = Context.getOrderService().getTestSpecimenSources();
+				List<Concept> specimenSources = Context.getOrderService()
+						.getTestSpecimenSources();
 				if (!specimenSources.contains(order.getSpecimenSource())) {
-					errors.rejectValue("specimenSource", "TestOrder.error.specimenSourceNotAmongAllowedConcepts");
+					errors.rejectValue("specimenSource",
+							"TestOrder.error.specimenSourceNotAmongAllowedConcepts");
 				}
 			}
 		}

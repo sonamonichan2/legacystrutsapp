@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,7 +22,7 @@ import org.openmrs.test.Verifies;
  * Tests the {@link BaseUnvoidHandler} class.
  */
 public class BaseUnvoidHandlerTest {
-	
+
 	/**
 	 * @see BaseUnvoidHandler#handle(Voidable,User,Date,String)
 	 */
@@ -35,7 +35,7 @@ public class BaseUnvoidHandlerTest {
 		handler.handle(voidable, null, null, null);
 		Assert.assertFalse(voidable.isVoided());
 	}
-	
+
 	/**
 	 * @see BaseUnvoidHandler#handle(Voidable,User,Date,String)
 	 */
@@ -49,7 +49,7 @@ public class BaseUnvoidHandlerTest {
 		handler.handle(voidable, null, null, null);
 		Assert.assertNull(voidable.getVoidedBy());
 	}
-	
+
 	/**
 	 * @see BaseUnvoidHandler#handle(Voidable,User,Date,String)
 	 */
@@ -63,7 +63,7 @@ public class BaseUnvoidHandlerTest {
 		handler.handle(voidable, null, null, null);
 		Assert.assertNull(voidable.getDateVoided());
 	}
-	
+
 	/**
 	 * @see BaseUnvoidHandler#handle(Voidable,User,Date,String)
 	 */
@@ -77,7 +77,7 @@ public class BaseUnvoidHandlerTest {
 		handler.handle(voidable, null, null, null);
 		Assert.assertNull(voidable.getVoidReason());
 	}
-	
+
 	/**
 	 * @see BaseUnvoidHandler#handle(Voidable,User,Date,String)
 	 */
@@ -90,20 +90,22 @@ public class BaseUnvoidHandlerTest {
 		handler.handle(voidable, null, null, "SOME REASON");
 		Assert.assertNull(voidable.getVoidReason());
 	}
-	
+
 	/**
 	 * @see BaseUnvoidHandler#handle(Voidable,User,Date,String)
 	 */
 	@Test
 	@Verifies(value = "should not act on objects with a different dateVoided", method = "handle(Voidable,User,Date,String)")
-	public void handle_shouldNotActOnObjectsWithADifferentDateVoided() throws Exception {
-		Date d = new Date(new Date().getTime() - 1000); // a time that isn't right now
-		
+	public void handle_shouldNotActOnObjectsWithADifferentDateVoided()
+			throws Exception {
+		Date d = new Date(new Date().getTime() - 1000); // a time that isn't
+														// right now
+
 		UnvoidHandler<Voidable> handler = new BaseUnvoidHandler();
 		Voidable voidable = new Person();
 		voidable.setVoided(true);
 		voidable.setDateVoided(d);
-		
+
 		handler.handle(voidable, null, new Date(), "SOME REASON");
 		Assert.assertTrue(voidable.isVoided());
 	}

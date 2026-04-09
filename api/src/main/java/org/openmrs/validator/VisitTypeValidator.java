@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,12 +22,12 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.9
  */
-@Handler(supports = { VisitType.class }, order = 50)
+@Handler(supports = {VisitType.class}, order = 50)
 public class VisitTypeValidator implements Validator {
-	
+
 	/** Log for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -37,7 +37,7 @@ public class VisitTypeValidator implements Validator {
 	public boolean supports(Class c) {
 		return c.equals(VisitType.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -54,8 +54,10 @@ public class VisitTypeValidator implements Validator {
 		if (visitType == null) {
 			errors.rejectValue("visitType", "error.general");
 		} else {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.name");
-			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "description", "retireReason");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name",
+					"error.name");
+			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name",
+					"description", "retireReason");
 		}
 	}
 }

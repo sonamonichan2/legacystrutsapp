@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,11 +22,11 @@ import org.openmrs.aop.RequiredDataAdvice;
 import org.openmrs.api.context.Context;
 
 /**
- * This class deals with {@link ConceptName} objects when they are saved via a save* method in an
- * Openmrs Service. This handler is automatically called by the {@link RequiredDataAdvice} AOP
- * class. <br>
- * This class does a lookup on all tag name for all child {@link ConceptNameTag}s that have a null
- * {@link ConceptNameTag#getConceptNameTagId()}.
+ * This class deals with {@link ConceptName} objects when they are saved via a
+ * save* method in an Openmrs Service. This handler is automatically called by
+ * the {@link RequiredDataAdvice} AOP class. <br>
+ * This class does a lookup on all tag name for all child {@link ConceptNameTag}
+ * s that have a null {@link ConceptNameTag#getConceptNameTagId()}.
  * 
  * @see RequiredDataHandler
  * @see SaveHandler
@@ -35,10 +35,11 @@ import org.openmrs.api.context.Context;
  */
 @Handler(supports = ConceptName.class)
 public class ConceptNameSaveHandler implements SaveHandler<ConceptName> {
-	
+
 	/**
-	 * This method does a lookup on all tag name for all child {@link ConceptNameTag}s that have a
-	 * null {@link ConceptNameTag#getConceptNameTagId()}.
+	 * This method does a lookup on all tag name for all child
+	 * {@link ConceptNameTag}s that have a null
+	 * {@link ConceptNameTag#getConceptNameTagId()}.
 	 * 
 	 * @see org.openmrs.api.handler.RequiredDataHandler#handle(org.openmrs.OpenmrsObject,
 	 *      org.openmrs.User, java.util.Date, java.lang.String)
@@ -47,30 +48,33 @@ public class ConceptNameSaveHandler implements SaveHandler<ConceptName> {
 	 * @should not replace tags without ids that are not in the database
 	 * @should not replace tags that have ids
 	 */
-	public void handle(ConceptName conceptName, User currentUser, Date currentDate, String reason) {
-		
-		// put Integer conceptNameTagIds onto ConceptNameTags that are missing them
+	public void handle(ConceptName conceptName, User currentUser,
+			Date currentDate, String reason) {
+
+		// put Integer conceptNameTagIds onto ConceptNameTags that are missing
+		// them
 		if (conceptName.getTags() != null) {
 			Collection<ConceptNameTag> replacementTags = new ArrayList<ConceptNameTag>();
-			
+
 			Iterator<ConceptNameTag> tagsIt = conceptName.getTags().iterator();
 			while (tagsIt.hasNext()) {
 				ConceptNameTag tag = tagsIt.next();
-				
+
 				if (tag.getConceptNameTagId() == null) {
-					ConceptNameTag replacementTag = Context.getConceptService().getConceptNameTagByName(tag.getTag());
-					
+					ConceptNameTag replacementTag = Context.getConceptService()
+							.getConceptNameTagByName(tag.getTag());
+
 					if (replacementTag != null) {
 						tagsIt.remove();
 						replacementTags.add(replacementTag);
 					}
 				}
 			}
-			
+
 			if (!replacementTags.isEmpty()) {
 				conceptName.getTags().addAll(replacementTags);
 			}
 		}
 	}
-	
+
 }

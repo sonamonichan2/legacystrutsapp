@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,29 +22,32 @@ import java.util.Date;
 import java.util.List;
 
 public class ProgramWorkflowDAOTest extends BaseContextSensitiveTest {
-	
+
 	private ProgramWorkflowDAO dao = null;
-	
+
 	/**
 	 * Run this before each unit test in this class. The "@Before" method in
-	 * {@link org.openmrs.test.BaseContextSensitiveTest} is run right before this method.
-	 *
+	 * {@link org.openmrs.test.BaseContextSensitiveTest} is run right before
+	 * this method.
+	 * 
 	 * @throws Exception
 	 */
 	@Before
 	public void runBeforeEachTest() throws Exception {
 		// fetch the dao from the spring application context
-		// this bean name matches the name in /metadata/spring/applicationContext-service.xml
-		dao = (ProgramWorkflowDAO) applicationContext.getBean("programWorkflowDAO");
+		// this bean name matches the name in
+		// /metadata/spring/applicationContext-service.xml
+		dao = (ProgramWorkflowDAO) applicationContext
+				.getBean("programWorkflowDAO");
 	}
-	
+
 	@Test
 	@Verifies(value = "should get saved personAttributeType name from database", method = "saveProgram")
 	public void saveProgram_shouldSaveProgram() throws Exception {
 		Program program = createProgram();
 		dao.saveProgram(program);
 	}
-	
+
 	private Program createProgram() {
 		Program program = new Program();
 		program.setName("OpenMRS");
@@ -52,7 +55,7 @@ public class ProgramWorkflowDAOTest extends BaseContextSensitiveTest {
 		program.setDateCreated(new Date());
 		return program;
 	}
-	
+
 	@Test
 	@Verifies(value = "should assign a concept to a program and save it to the database", method = "saveProgram")
 	public void saveProgram_shouldAlsoSaveOutcomesConcept() {
@@ -60,12 +63,13 @@ public class ProgramWorkflowDAOTest extends BaseContextSensitiveTest {
 		Program program = createProgram();
 		program.setOutcomesConcept(outcomesConcept);
 		int id = dao.saveProgram(program).getId();
-		
+
 		clearHibernateCache();
 		Program savedProgram = dao.getProgram(id);
-		Assert.assertEquals(3, savedProgram.getOutcomesConcept().getId().intValue());
+		Assert.assertEquals(3, savedProgram.getOutcomesConcept().getId()
+				.intValue());
 	}
-	
+
 	@Test
 	@Verifies(value = "should return an empty list when there is no program in the dB with given name", method = "getProgramsByName")
 	public void getProgramsByName_whenThereAreNoProgramsWithTheGivenName_shouldReturnAnEmptyList() {
@@ -77,7 +81,7 @@ public class ProgramWorkflowDAOTest extends BaseContextSensitiveTest {
 		Assert.assertNotNull(programs);
 		Assert.assertEquals(0, programs.size());
 	}
-	
+
 	@Test
 	@Verifies(value = "should return only and exactly the programs with the given name", method = "getProgramsByName")
 	public void getProgramsByName_whenThereAreProgramsWithTheGivenName_shouldReturnAllProgramsWithTheGivenName() {
@@ -96,5 +100,5 @@ public class ProgramWorkflowDAOTest extends BaseContextSensitiveTest {
 		Assert.assertEquals(program1, programs.get(0));
 		Assert.assertEquals(program2, programs.get(1));
 	}
-	
+
 }

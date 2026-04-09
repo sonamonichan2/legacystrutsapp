@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -18,26 +18,26 @@ import org.openmrs.layout.LayoutTemplate;
  * @since 1.12
  */
 public class AddressTemplate extends LayoutTemplate implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	public AddressTemplate(String string) {
 		super(string);
 	}
-	
+
 	public String getLayoutToken() {
 		return "IS_ADDR_TOKEN";
 	}
-	
+
 	public String getNonLayoutToken() {
 		return "IS_NOT_ADDR_TOKEN";
 	}
-	
+
 	@Override
 	public LayoutSupport<?> getLayoutSupportInstance() {
 		return AddressSupport.getInstance();
 	}
-	
+
 	public String getCodeName() {
 		if (this.codeName == null) {
 			this.codeName = "default";

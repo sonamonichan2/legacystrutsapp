@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -15,26 +15,26 @@ package org.openmrs.logic.op;
  * @see Operator
  */
 public interface ComparisonOperator extends Operator {
-	
+
 	// comparison operators
 	public static final ComparisonOperator CONTAINS = new Contains();
-	
+
 	public static final ComparisonOperator EQUALS = new Equals();
-	
+
 	public static final ComparisonOperator WITHIN = new Within();
-	
+
 	public static final ComparisonOperator GT = new GreaterThan();
-	
+
 	public static final ComparisonOperator GTE = new GreaterThanEquals();
-	
+
 	public static final ComparisonOperator LT = new LessThan();
-	
+
 	public static final ComparisonOperator LTE = new LessThanEquals();
-	
+
 	public static final ComparisonOperator BEFORE = new Before();
-	
+
 	public static final ComparisonOperator AFTER = new After();
-	
+
 	public static final ComparisonOperator IN = new In();
-	
+
 }

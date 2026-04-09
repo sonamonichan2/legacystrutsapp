@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,20 +19,21 @@ import org.openmrs.api.context.Context;
 import org.springframework.util.StringUtils;
 
 /**
- * Allows for serializing/deserializing an object to a string so that Spring knows how to pass
- * an object back and forth through an html form or other medium. <br>
+ * Allows for serializing/deserializing an object to a string so that Spring
+ * knows how to pass an object back and forth through an html form or other
+ * medium. <br>
  * <br>
  * In version 1.9, added ability for this to also retrieve objects by uuid
  * 
  * @see ConceptName
  */
 public class ConceptNameEditor extends PropertyEditorSupport {
-	
+
 	private Log log = LogFactory.getLog(this.getClass());
-	
+
 	public ConceptNameEditor() {
 	}
-	
+
 	/**
 	 * @should set using id
 	 * @should set using uuid
@@ -44,20 +45,20 @@ public class ConceptNameEditor extends PropertyEditorSupport {
 		if (StringUtils.hasText(text)) {
 			try {
 				setValue(cs.getConceptName(Integer.valueOf(text)));
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				ConceptName conceptName = cs.getConceptNameByUuid(text);
 				setValue(conceptName);
 				if (conceptName == null) {
 					log.error("Error setting text" + text, ex);
-					throw new IllegalArgumentException("ConceptName not found: " + ex.getMessage());
+					throw new IllegalArgumentException(
+							"ConceptName not found: " + ex.getMessage());
 				}
 			}
 		} else {
 			setValue(null);
 		}
 	}
-	
+
 	/**
 	 * @see java.beans.PropertyEditorSupport#getAsText()
 	 */
@@ -69,5 +70,5 @@ public class ConceptNameEditor extends PropertyEditorSupport {
 			return cn.getConceptNameId().toString();
 		}
 	}
-	
+
 }

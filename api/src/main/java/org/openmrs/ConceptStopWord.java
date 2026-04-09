@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -21,25 +21,27 @@ import java.util.Locale;
  * 
  * @since 1.8
  */
-public class ConceptStopWord extends BaseOpenmrsObject implements java.io.Serializable {
-	
+public class ConceptStopWord extends BaseOpenmrsObject
+		implements
+			java.io.Serializable {
+
 	private static final long serialVersionUID = 3671020002642184656L;
-	
+
 	// Fields
 	private Integer conceptStopWordId;
-	
+
 	private String value;
-	
+
 	private Locale locale;
-	
+
 	// Constructors
-	
+
 	/**
 	 * default constructor
 	 */
 	public ConceptStopWord() {
 	}
-	
+
 	/**
 	 * Convenience constructor to create a ConceptStopWord object with default
 	 * locale English
@@ -49,7 +51,7 @@ public class ConceptStopWord extends BaseOpenmrsObject implements java.io.Serial
 	public ConceptStopWord(String value) {
 		this(value, Context.getLocale());
 	}
-	
+
 	/**
 	 * Convenience constructor to create a ConceptStopWord object with value and
 	 * locale
@@ -61,41 +63,41 @@ public class ConceptStopWord extends BaseOpenmrsObject implements java.io.Serial
 		setValue(value);
 		setLocale(locale);
 	}
-	
+
 	public String getValue() {
 		return value;
 	}
-	
+
 	public void setValue(String value) {
 		if (StringUtils.hasText(value)) {
 			this.value = value.toUpperCase();
 		}
 	}
-	
+
 	public Locale getLocale() {
 		return locale;
 	}
-	
+
 	public void setLocale(Locale locale) {
 		this.locale = locale == null ? Context.getLocale() : locale;
 	}
-	
+
 	public Integer getConceptStopWordId() {
 		return conceptStopWordId;
 	}
-	
+
 	public void setConceptStopWordId(Integer conceptStopWordId) {
 		this.conceptStopWordId = conceptStopWordId;
 	}
-	
+
 	public Integer getId() {
 		return getConceptStopWordId();
 	}
-	
+
 	public void setId(Integer id) {
 		setConceptStopWordId(id);
 	}
-	
+
 	/**
 	 * @see Object#toString()
 	 */

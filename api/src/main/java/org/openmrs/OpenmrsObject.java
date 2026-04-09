@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -15,25 +15,27 @@ package org.openmrs;
  * @since 1.5
  */
 public interface OpenmrsObject {
-	
+
 	/**
 	 * @return id - The unique Identifier for the object
 	 */
 	public Integer getId();
-	
+
 	/**
-	 * @param id - The unique Identifier for the object
+	 * @param id
+	 *            - The unique Identifier for the object
 	 */
 	public void setId(Integer id);
-	
+
 	/**
 	 * @return the universally unique id for this object
 	 */
 	public String getUuid();
-	
+
 	/**
-	 * @param uuid a universally unique id for this object
+	 * @param uuid
+	 *            a universally unique id for this object
 	 */
 	public void setUuid(String uuid);
-	
+
 }

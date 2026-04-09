@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,28 +19,30 @@ import org.openmrs.api.context.UserContext;
 import org.openmrs.module.ModuleUtilTest;
 
 /**
- * Tests extending this class have a mocked authenticated UserContext. In addition you can mock
- * Context.get...Service() calls by annotating fields with {@link Mock}.
+ * Tests extending this class have a mocked authenticated UserContext. In
+ * addition you can mock Context.get...Service() calls by annotating fields with
+ * {@link Mock}.
  * 
  * @see ModuleUtilTest
  * @since 1.11, 1.10, 1.9.9
  */
 public abstract class BaseContextMockTest {
-	
+
 	@Mock
 	protected UserContext userContext;
-	
+
 	@InjectMocks
 	protected ContextMockHelper contextMockHelper;
-	
+
 	/**
-	 * Initializes fields annotated with {@link Mock}. Sets userContext and authenticatedUser.
+	 * Initializes fields annotated with {@link Mock}. Sets userContext and
+	 * authenticatedUser.
 	 */
 	@Before
 	public void initMocks() {
 		MockitoAnnotations.initMocks(this);
 	}
-	
+
 	@After
 	public void revertContextMocks() {
 		contextMockHelper.revertMocks();

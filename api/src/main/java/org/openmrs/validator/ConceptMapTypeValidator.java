@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -21,28 +21,29 @@ import org.springframework.validation.Validator;
 
 /**
  * Validates {@link ConceptMapType} objects.
- *
+ * 
  * @since 1.9
  */
-@Handler(supports = { ConceptMapType.class }, order = 50)
+@Handler(supports = {ConceptMapType.class}, order = 50)
 public class ConceptMapTypeValidator implements Validator {
-	
+
 	// Log for this class
-	private static final Log log = LogFactory.getLog(ConceptMapTypeValidator.class);
-	
+	private static final Log log = LogFactory
+			.getLog(ConceptMapTypeValidator.class);
+
 	/**
 	 * Determines if the command object being submitted is a valid type
-	 *
+	 * 
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
 	@SuppressWarnings("rawtypes")
 	public boolean supports(Class c) {
 		return ConceptMapType.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Checks that a given concept map type object is valid.
-	 *
+	 * 
 	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
 	 *      org.springframework.validation.Errors)
 	 * @should fail if the concept map type object is null
@@ -55,25 +56,31 @@ public class ConceptMapTypeValidator implements Validator {
 	 * @should fail validation if field lengths are not correct
 	 */
 	public void validate(Object obj, Errors errors) {
-		
+
 		if (obj == null || !(obj instanceof ConceptMapType)) {
-			throw new IllegalArgumentException("The parameter obj should not be null and must be of type"
-			        + ConceptMapType.class);
+			throw new IllegalArgumentException(
+					"The parameter obj should not be null and must be of type"
+							+ ConceptMapType.class);
 		}
-		
+
 		ConceptMapType conceptMapType = (ConceptMapType) obj;
 		String name = conceptMapType.getName();
 		if (!StringUtils.hasText(name)) {
 			errors.rejectValue("name", "ConceptMapType.error.nameRequired",
-			    "The name property is required for a concept map type");
+					"The name property is required for a concept map type");
 			return;
 		}
-		
+
 		name = name.trim();
-		ConceptMapType duplicate = Context.getConceptService().getConceptMapTypeByName(name);
-		if (duplicate != null && !OpenmrsUtil.nullSafeEquals(duplicate.getUuid(), conceptMapType.getUuid())) {
-			errors.rejectValue("name", "ConceptMapType.duplicate.name", "Duplicate concept map type name: " + name);
+		ConceptMapType duplicate = Context.getConceptService()
+				.getConceptMapTypeByName(name);
+		if (duplicate != null
+				&& !OpenmrsUtil.nullSafeEquals(duplicate.getUuid(),
+						conceptMapType.getUuid())) {
+			errors.rejectValue("name", "ConceptMapType.duplicate.name",
+					"Duplicate concept map type name: " + name);
 		}
-		ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "description", "retireReason");
+		ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name",
+				"description", "retireReason");
 	}
 }

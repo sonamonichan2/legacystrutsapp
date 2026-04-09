@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -12,24 +12,25 @@ package org.openmrs.api;
 import org.openmrs.PatientIdentifier;
 
 public class IdentifierNotUniqueException extends PatientIdentifierException {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	public IdentifierNotUniqueException() {
 	}
-	
+
 	public IdentifierNotUniqueException(String message) {
 		super(message);
 	}
-	
-	public IdentifierNotUniqueException(String message, PatientIdentifier identifier) {
+
+	public IdentifierNotUniqueException(String message,
+			PatientIdentifier identifier) {
 		super(message, identifier);
 	}
-	
+
 	public IdentifierNotUniqueException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	public IdentifierNotUniqueException(Throwable cause) {
 		super(cause);
 	}

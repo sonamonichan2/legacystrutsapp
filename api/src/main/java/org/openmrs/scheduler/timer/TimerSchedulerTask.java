@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,18 +22,18 @@ import org.openmrs.scheduler.Task;
 import org.openmrs.scheduler.TaskDefinition;
 
 public class TimerSchedulerTask extends TimerTask {
-	
+
 	/** The task that will be executed by the JDK timer. */
 	private Task task;
-	
+
 	/** Logger */
 	private static Log log = LogFactory.getLog(TimerSchedulerTask.class);
-	
+
 	/** * Public constructor */
 	public TimerSchedulerTask(Task task) {
 		this.task = task;
 	}
-	
+
 	/**
 	 * * Executes the action to be performed by this timer task.
 	 * 
@@ -43,16 +43,17 @@ public class TimerSchedulerTask extends TimerTask {
 	public void run() {
 		try {
 			Daemon.executeScheduledTask(task);
-		}
-		catch (Exception t) {
+		} catch (Exception t) {
 			// Fix #862: IllegalStateException: Timer already cancelled.
-			// Suppress error in order to keep the scheduler's Timer from completely failing.
-			log.error(
-			    "FATAL ERROR: Task [" + task.getClass() + "] failed due to exception [" + t.getClass().getName() + "]", t);
+			// Suppress error in order to keep the scheduler's Timer from
+			// completely failing.
+			log.error("FATAL ERROR: Task [" + task.getClass()
+					+ "] failed due to exception [" + t.getClass().getName()
+					+ "]", t);
 			SchedulerUtil.sendSchedulerError(t);
 		}
 	}
-	
+
 	/**
 	 * Save the last execution time in the TaskDefinition
 	 */
@@ -60,25 +61,25 @@ public class TimerSchedulerTask extends TimerTask {
 		TaskDefinition taskDefinition = null;
 		try {
 			// We re-get the task definition in case the copy set during the
-			// task initialization has become stale.  NOTE: If a task does not
+			// task initialization has become stale. NOTE: If a task does not
 			// extend the abstract class AbstractTask, then it's possible the
 			// developer did not actually set the TaskDefintion on the Task.
 			// Therefore we might get an NPE below.
 			if (task.getTaskDefinition() != null) {
-				SchedulerService schedulerService = Context.getSchedulerService();
+				SchedulerService schedulerService = Context
+						.getSchedulerService();
 				taskDefinition = task.getTaskDefinition();
 				taskDefinition.setLastExecutionTime(new Date());
 				schedulerService.saveTaskDefinition(taskDefinition);
 			} else {
 				log.warn("Unable to save the last execution time for task. Task.taskDefinition is null in "
-				        + task.getClass());
+						+ task.getClass());
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			log.warn("Unable to save the last execution time for task ", e);
 		}
 	}
-	
+
 	/**
 	 * Shutdown the timer task and invoke the task's shutdown() callback method.
 	 */
@@ -86,7 +87,7 @@ public class TimerSchedulerTask extends TimerTask {
 		super.cancel();
 		task.shutdown();
 	}
-	
+
 	/**
 	 * Executes the given task.
 	 */

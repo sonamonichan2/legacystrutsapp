@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -13,59 +13,68 @@ import org.openmrs.patient.IdentifierValidator;
 import org.openmrs.patient.UnallowedIdentifierException;
 
 /**
- * An abstract class for identifier validators for identifiers that have a hyphen before a single
- * check digit. Identifiers can not be null, must have at least one character before the check
- * digit, and can not contain white space. Integers 0-9 or characters A-J are allowed for the check
- * digit. A character is used by default.
+ * An abstract class for identifier validators for identifiers that have a
+ * hyphen before a single check digit. Identifiers can not be null, must have at
+ * least one character before the check digit, and can not contain white space.
+ * Integers 0-9 or characters A-J are allowed for the check digit. A character
+ * is used by default.
  */
-public abstract class BaseHyphenatedIdentifierValidator implements IdentifierValidator {
-	
+public abstract class BaseHyphenatedIdentifierValidator
+		implements
+			IdentifierValidator {
+
 	protected abstract int getCheckDigit(String undecoratedIdentifier);
-	
+
 	/**
 	 * @see org.openmrs.patient.IdentifierValidator#getAllowedCharacters()
 	 */
 	public abstract String getAllowedCharacters();
-	
+
 	/**
 	 * @see org.openmrs.patient.IdentifierValidator#getName()
 	 */
 	public abstract String getName();
-	
+
 	/**
 	 * @see org.openmrs.patient.IdentifierValidator#getValidIdentifier(java.lang.String)
 	 */
-	public String getValidIdentifier(String undecoratedIdentifier) throws UnallowedIdentifierException {
-		
+	public String getValidIdentifier(String undecoratedIdentifier)
+			throws UnallowedIdentifierException {
+
 		checkAllowedIdentifier(undecoratedIdentifier);
-		
+
 		char checkLetter = convertCheckDigitToChar(getCheckDigit(undecoratedIdentifier));
-		
+
 		String result = undecoratedIdentifier + "-" + checkLetter;
 		return result;
 	}
-	
+
 	/**
 	 * @see org.openmrs.patient.IdentifierValidator#isValid(java.lang.String)
 	 */
-	public boolean isValid(String identifier) throws UnallowedIdentifierException {
-		
+	public boolean isValid(String identifier)
+			throws UnallowedIdentifierException {
+
 		if (identifier.indexOf("-") < 1) {
-			throw new UnallowedIdentifierException("Identifier must contain something besides the check digit.");
+			throw new UnallowedIdentifierException(
+					"Identifier must contain something besides the check digit.");
 		}
-		
-		String idWithoutCheckDigit = identifier.substring(0, identifier.indexOf("-"));
-		
+
+		String idWithoutCheckDigit = identifier.substring(0,
+				identifier.indexOf("-"));
+
 		checkAllowedIdentifier(idWithoutCheckDigit);
-		
+
 		int computedCheckDigit = getCheckDigit(idWithoutCheckDigit);
-		
-		String checkDigit = identifier.substring(identifier.indexOf("-") + 1, identifier.length());
-		
+
+		String checkDigit = identifier.substring(identifier.indexOf("-") + 1,
+				identifier.length());
+
 		if (checkDigit.length() != 1) {
-			throw new UnallowedIdentifierException("Identifier must have a check digit of length 1.");
+			throw new UnallowedIdentifierException(
+					"Identifier must have a check digit of length 1.");
 		}
-		
+
 		if ("A".equalsIgnoreCase(checkDigit)) {
 			checkDigit = "0";
 		}
@@ -96,72 +105,77 @@ public abstract class BaseHyphenatedIdentifierValidator implements IdentifierVal
 		if ("J".equalsIgnoreCase(checkDigit)) {
 			checkDigit = "9";
 		}
-		
+
 		int givenCheckDigit = 10;
-		
+
 		try {
 			givenCheckDigit = Integer.valueOf(checkDigit);
-		}
-		catch (NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			throw new UnallowedIdentifierException(
-			        "Check digit must either be a character from A to J or a single digit integer.");
+					"Check digit must either be a character from A to J or a single digit integer.");
 		}
-		
+
 		return (computedCheckDigit == givenCheckDigit);
 	}
-	
+
 	/**
 	 * @param undecoratedIdentifier
-	 * @throws UnallowedIdentifierException if identifier contains unallowed characters or is
-	 *             otherwise invalid.
+	 * @throws UnallowedIdentifierException
+	 *             if identifier contains unallowed characters or is otherwise
+	 *             invalid.
 	 */
-	protected void checkAllowedIdentifier(String undecoratedIdentifier) throws UnallowedIdentifierException {
+	protected void checkAllowedIdentifier(String undecoratedIdentifier)
+			throws UnallowedIdentifierException {
 		if (undecoratedIdentifier == null) {
-			throw new UnallowedIdentifierException("Identifier can not be null.");
+			throw new UnallowedIdentifierException(
+					"Identifier can not be null.");
 		}
 		if (undecoratedIdentifier.length() == 0) {
-			throw new UnallowedIdentifierException("Identifier must contain at least one character.");
+			throw new UnallowedIdentifierException(
+					"Identifier must contain at least one character.");
 		}
 		if (undecoratedIdentifier.contains(" ")) {
-			throw new UnallowedIdentifierException("Identifier may not contain white space.");
+			throw new UnallowedIdentifierException(
+					"Identifier may not contain white space.");
 		}
 		for (int i = 0; i < undecoratedIdentifier.length(); i++) {
 			if (getAllowedCharacters().indexOf(undecoratedIdentifier.charAt(i)) == -1) {
-				throw new UnallowedIdentifierException("\"" + undecoratedIdentifier.charAt(i)
-				        + "\" is an invalid character.");
+				throw new UnallowedIdentifierException("\""
+						+ undecoratedIdentifier.charAt(i)
+						+ "\" is an invalid character.");
 			}
 		}
 	}
-	
+
 	/**
 	 * Not doing this with ASCII math to be extra careful.
-	 *
+	 * 
 	 * @param checkDigit
 	 * @return
 	 */
 	private char convertCheckDigitToChar(int checkDigit) {
 		switch (checkDigit) {
-			case 0:
+			case 0 :
 				return 'A';
-			case 1:
+			case 1 :
 				return 'B';
-			case 2:
+			case 2 :
 				return 'C';
-			case 3:
+			case 3 :
 				return 'D';
-			case 4:
+			case 4 :
 				return 'E';
-			case 5:
+			case 5 :
 				return 'F';
-			case 6:
+			case 6 :
 				return 'G';
-			case 7:
+			case 7 :
 				return 'H';
-			case 8:
+			case 8 :
 				return 'I';
-			case 9:
+			case 9 :
 				return 'J';
-			default:
+			default :
 				return 'X';
 		}
 	}

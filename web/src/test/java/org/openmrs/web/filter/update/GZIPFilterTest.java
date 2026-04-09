@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -37,24 +37,27 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 
 /**
- * Tests some of the methods on the {@link org.openmrs.web.filter.update.GZIPFilter}
+ * Tests some of the methods on the
+ * {@link org.openmrs.web.filter.update.GZIPFilter}
  */
 public class GZIPFilterTest extends BaseWebContextSensitiveTest {
-	
+
 	/**
-	 * @see org.openmrs.web.filter.GZIPFilter#doFilterInternal(HttpServletRequest,HttpServletResponse, javax.servlet.FilterChain)
+	 * @see org.openmrs.web.filter.GZIPFilter#doFilterInternal(HttpServletRequest,HttpServletResponse,
+	 *      javax.servlet.FilterChain)
 	 */
 	@Test
 	@Verifies(value = "zip request and response", method = "performGZIPRequest(HttpServletRequest,HttpServletResponse,FilterChain)")
 	public void zipRequestWrapperTest_shouldReturnTrueIfUnzippedContentReadFromWrapperIsTheSameAsContentBeforeZipping()
-	        throws Exception {
-		GlobalProperty property = new GlobalProperty("gzip.acceptCompressedRequestsForPaths", ".*");
-		
+			throws Exception {
+		GlobalProperty property = new GlobalProperty(
+				"gzip.acceptCompressedRequestsForPaths", ".*");
+
 		Context.getAdministrationService().saveGlobalProperty(property);
 		MockHttpServletRequest req = new MockHttpServletRequest();
 		req.setContextPath("http://gzipservletpath");
 		req.addHeader("Content-encoding", "gzip");
-		
+
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		GZIPOutputStream gzOutput = new GZIPOutputStream(stream);
 		PrintWriter pwriter = new PrintWriter(gzOutput);
@@ -62,27 +65,28 @@ public class GZIPFilterTest extends BaseWebContextSensitiveTest {
 		pwriter.flush();
 		gzOutput.finish();
 		req.setContent(stream.toByteArray());
-		
+
 		MockHttpServletResponse resp = new MockHttpServletResponse();
 		FilterChain fil = mock(FilterChain.class);
 		GZIPFilter gzipFilter = new GZIPFilter();
 		gzipFilter.doFilterInternal(req, resp, fil);
-		
-		final ArgumentCaptor<HttpServletRequest> argumentCaptor = ArgumentCaptor.forClass(HttpServletRequest.class);
-		Mockito.verify(fil).doFilter(argumentCaptor.capture(), Mockito.any(HttpServletResponse.class));
+
+		final ArgumentCaptor<HttpServletRequest> argumentCaptor = ArgumentCaptor
+				.forClass(HttpServletRequest.class);
+		Mockito.verify(fil).doFilter(argumentCaptor.capture(),
+				Mockito.any(HttpServletResponse.class));
 		HttpServletRequest requestArgument = argumentCaptor.getValue();
 		try {
 			InputStream iStream = requestArgument.getInputStream();
 			InputStreamReader iReader = new InputStreamReader(iStream);
 			BufferedReader bufReader = new BufferedReader(iReader);
 			String outputMessage = bufReader.readLine();
-			
+
 			Assert.assertThat(outputMessage, is("message string"));
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new RuntimeException();
 		}
-		
+
 	}
-	
+
 }

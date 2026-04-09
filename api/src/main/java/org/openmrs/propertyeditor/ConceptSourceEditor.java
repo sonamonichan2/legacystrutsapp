@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,20 +19,21 @@ import org.openmrs.api.context.Context;
 import org.springframework.util.StringUtils;
 
 /**
- * Allows for serializing/deserializing an object to a string so that Spring knows how to pass
- * an object back and forth through an html form or other medium. <br>
+ * Allows for serializing/deserializing an object to a string so that Spring
+ * knows how to pass an object back and forth through an html form or other
+ * medium. <br>
  * <br>
  * In version 1.9, added ability for this to also retrieve objects by uuid
  * 
  * @see ConceptSource
  */
 public class ConceptSourceEditor extends PropertyEditorSupport {
-	
+
 	private Log log = LogFactory.getLog(this.getClass());
-	
+
 	public ConceptSourceEditor() {
 	}
-	
+
 	/**
 	 * @should set using id
 	 * @should set using uuid
@@ -43,20 +44,20 @@ public class ConceptSourceEditor extends PropertyEditorSupport {
 		if (StringUtils.hasText(text)) {
 			try {
 				setValue(cs.getConceptSource(Integer.valueOf(text)));
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				ConceptSource conceptSource = cs.getConceptSourceByUuid(text);
 				setValue(conceptSource);
 				if (conceptSource == null) {
 					log.trace("ConceptSource not found by ID or UUID");
-					throw new IllegalArgumentException("ConceptSource not found: " + text, ex);
+					throw new IllegalArgumentException(
+							"ConceptSource not found: " + text, ex);
 				}
 			}
 		} else {
 			setValue(null);
 		}
 	}
-	
+
 	public String getAsText() {
 		ConceptSource t = (ConceptSource) getValue();
 		if (t == null) {
@@ -65,5 +66,5 @@ public class ConceptSourceEditor extends PropertyEditorSupport {
 			return t.getConceptSourceId().toString();
 		}
 	}
-	
+
 }

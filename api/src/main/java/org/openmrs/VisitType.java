@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -10,21 +10,24 @@
 package org.openmrs;
 
 /**
- * Represents the assortment of visit types available to an implementation. These could include
- * items like "Initial HIV Clinic Visit", "Return TB Clinic Visit", and "Hospitalization".
+ * Represents the assortment of visit types available to an implementation.
+ * These could include items like "Initial HIV Clinic Visit",
+ * "Return TB Clinic Visit", and "Hospitalization".
  * 
  * @since 1.9
  */
-public class VisitType extends BaseOpenmrsMetadata implements java.io.Serializable {
-	
+public class VisitType extends BaseOpenmrsMetadata
+		implements
+			java.io.Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer visitTypeId;
-	
+
 	/** default constructor */
 	public VisitType() {
 	}
-	
+
 	/**
 	 * Constructor with id
 	 * 
@@ -33,33 +36,36 @@ public class VisitType extends BaseOpenmrsMetadata implements java.io.Serializab
 	public VisitType(Integer visitTypeId) {
 		this.visitTypeId = visitTypeId;
 	}
-	
+
 	/**
-	 * Required values constructor. This is the minimum number of values that must be non-null in
-	 * order to have a successful save to the database
+	 * Required values constructor. This is the minimum number of values that
+	 * must be non-null in order to have a successful save to the database
 	 * 
-	 * @param name the name of this visit type
-	 * @param description a short description of why this visit type exists
+	 * @param name
+	 *            the name of this visit type
+	 * @param description
+	 *            a short description of why this visit type exists
 	 */
 	public VisitType(String name, String description) {
 		setName(name);
 		setDescription(description);
 	}
-	
+
 	/**
 	 * @return Returns the visitTypeId.
 	 */
 	public Integer getVisitTypeId() {
 		return visitTypeId;
 	}
-	
+
 	/**
-	 * @param visitTypeId the visitTypeId to set.
+	 * @param visitTypeId
+	 *            the visitTypeId to set.
 	 */
 	public void setVisitTypeId(Integer visitTypeId) {
 		this.visitTypeId = visitTypeId;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -67,7 +73,7 @@ public class VisitType extends BaseOpenmrsMetadata implements java.io.Serializab
 	public Integer getId() {
 		return getVisitTypeId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -75,5 +81,5 @@ public class VisitType extends BaseOpenmrsMetadata implements java.io.Serializab
 	public void setId(Integer id) {
 		setVisitTypeId(id);
 	}
-	
+
 }

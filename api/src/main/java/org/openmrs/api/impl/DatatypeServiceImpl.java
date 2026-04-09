@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -29,28 +29,32 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Standard implementation of {@link DatatypeService}
+ * 
  * @since 1.9
  */
 @Transactional
-public class DatatypeServiceImpl extends BaseOpenmrsService implements DatatypeService {
-	
+public class DatatypeServiceImpl extends BaseOpenmrsService
+		implements
+			DatatypeService {
+
 	private List<Class<? extends CustomDatatype>> datatypeClasses;
-	
+
 	private List<Class<? extends CustomDatatypeHandler>> handlerClasses;
-	
+
 	private transient Map<Class<? extends CustomDatatype>, Class<? extends CustomDatatypeHandler>> prioritizedHandlerClasses;
-	
+
 	private DatatypeDAO dao;
-	
+
 	/**
 	 * Sets the dao
-	 *
-	 * @param dao the dao to set
+	 * 
+	 * @param dao
+	 *            the dao to set
 	 */
 	public void setDao(DatatypeDAO dao) {
 		this.dao = dao;
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.DatatypeService#getAllDatatypeClasses()
 	 */
@@ -62,7 +66,7 @@ public class DatatypeServiceImpl extends BaseOpenmrsService implements DatatypeS
 		}
 		return new LinkedHashSet(datatypeClasses);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.DatatypeService#getAllHandlerClasses()
 	 */
@@ -74,47 +78,52 @@ public class DatatypeServiceImpl extends BaseOpenmrsService implements DatatypeS
 		}
 		return new LinkedHashSet(handlerClasses);
 	}
-	
+
 	private synchronized void populateBeanListsFromContext() {
 		if (datatypeClasses == null) {
-			List<CustomDatatype> datatypeBeans = Context.getRegisteredComponents(CustomDatatype.class);
+			List<CustomDatatype> datatypeBeans = Context
+					.getRegisteredComponents(CustomDatatype.class);
 			datatypeClasses = new ArrayList<Class<? extends CustomDatatype>>();
 			for (CustomDatatype<?> dt : datatypeBeans) {
 				datatypeClasses.add(dt.getClass());
 			}
-			
+
 		}
 		if (handlerClasses == null) {
-			List<CustomDatatypeHandler> handlerBeans = Context.getRegisteredComponents(CustomDatatypeHandler.class);
+			List<CustomDatatypeHandler> handlerBeans = Context
+					.getRegisteredComponents(CustomDatatypeHandler.class);
 			handlerClasses = new ArrayList<Class<? extends CustomDatatypeHandler>>();
 			for (CustomDatatypeHandler<?, ?> h : handlerBeans) {
 				handlerClasses.add(h.getClass());
 			}
 		}
 	}
-	
+
 	/**
-	 * @see org.openmrs.api.DatatypeService#getDatatype(java.lang.Class, java.lang.String)
+	 * @see org.openmrs.api.DatatypeService#getDatatype(java.lang.Class,
+	 *      java.lang.String)
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public <T extends CustomDatatype<?>> T getDatatype(Class<T> clazz, String config) {
+	public <T extends CustomDatatype<?>> T getDatatype(Class<T> clazz,
+			String config) {
 		try {
 			T dt = clazz.newInstance();
 			dt.setConfiguration(config);
 			return dt;
-		}
-		catch (Exception ex) {
-			throw new CustomDatatypeException("Failed to instantiate " + clazz + " with config " + config, ex);
+		} catch (Exception ex) {
+			throw new CustomDatatypeException("Failed to instantiate " + clazz
+					+ " with config " + config, ex);
 		}
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.DatatypeService#getHandlerClasses(Class)
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<Class<? extends CustomDatatypeHandler>> getHandlerClasses(Class<? extends CustomDatatype<?>> datatype) {
+	public List<Class<? extends CustomDatatypeHandler>> getHandlerClasses(
+			Class<? extends CustomDatatype<?>> datatype) {
 		List<Class<? extends CustomDatatypeHandler>> ret = new ArrayList<Class<? extends CustomDatatypeHandler>>();
 		for (Class<? extends CustomDatatypeHandler<?, ?>> candidate : getAllHandlerClasses()) {
 			if (datatypeClassHandled(candidate).equals(datatype)) {
@@ -123,21 +132,23 @@ public class DatatypeServiceImpl extends BaseOpenmrsService implements DatatypeS
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * @param t
-	 * @return the generic type of t or an interface it implements that is a CustomDatatype
+	 * @return the generic type of t or an interface it implements that is a
+	 *         CustomDatatype
 	 */
 	private Class datatypeClassHandled(Type t) {
 		if (t instanceof ParameterizedType) {
 			ParameterizedType pt = (ParameterizedType) t;
 			Type first = pt.getActualTypeArguments()[0];
-			if (first instanceof Class && CustomDatatype.class.isAssignableFrom((Class) first)) {
+			if (first instanceof Class
+					&& CustomDatatype.class.isAssignableFrom((Class) first)) {
 				return (Class) first;
 			} else {
 				return datatypeClassHandled(pt.getRawType());
 			}
-			
+
 		} else if (t instanceof Class) {
 			Type genericSuperclass = ((Class) t).getGenericSuperclass();
 			if (genericSuperclass != null) {
@@ -153,20 +164,23 @@ public class DatatypeServiceImpl extends BaseOpenmrsService implements DatatypeS
 				}
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	/**
-	 * @see org.openmrs.api.DatatypeService#getHandler(org.openmrs.customdatatype.CustomDatatype, java.lang.String)
+	 * @see org.openmrs.api.DatatypeService#getHandler(org.openmrs.customdatatype.CustomDatatype,
+	 *      java.lang.String)
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public synchronized CustomDatatypeHandler<?, ?> getHandler(CustomDatatype<?> datatype, String handlerConfig) {
+	public synchronized CustomDatatypeHandler<?, ?> getHandler(
+			CustomDatatype<?> datatype, String handlerConfig) {
 		if (prioritizedHandlerClasses == null) {
 			prioritizeHandlers();
 		}
-		Class<? extends CustomDatatypeHandler> clazz = prioritizedHandlerClasses.get(datatype.getClass());
+		Class<? extends CustomDatatypeHandler> clazz = prioritizedHandlerClasses
+				.get(datatype.getClass());
 		if (clazz == null) {
 			return null;
 		}
@@ -174,16 +188,16 @@ public class DatatypeServiceImpl extends BaseOpenmrsService implements DatatypeS
 			CustomDatatypeHandler<?, ?> ret = clazz.newInstance();
 			ret.setHandlerConfiguration(handlerConfig);
 			return ret;
-		}
-		catch (Exception ex) {
-			throw new CustomDatatypeException("Failed to instantiate handler for " + datatype + " with config "
-			        + handlerConfig, ex);
+		} catch (Exception ex) {
+			throw new CustomDatatypeException(
+					"Failed to instantiate handler for " + datatype
+							+ " with config " + handlerConfig, ex);
 		}
 	}
-	
+
 	/**
-	 * private method that prioritizes all registered handlers so we can quickly determine which to use for
-	 * each datatype
+	 * private method that prioritizes all registered handlers so we can quickly
+	 * determine which to use for each datatype
 	 */
 	private synchronized void prioritizeHandlers() {
 		if (prioritizedHandlerClasses == null) {
@@ -198,7 +212,7 @@ public class DatatypeServiceImpl extends BaseOpenmrsService implements DatatypeS
 			}
 		}
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.DatatypeService#getClobDatatypeStorage(java.lang.Integer)
 	 */
@@ -207,7 +221,7 @@ public class DatatypeServiceImpl extends BaseOpenmrsService implements DatatypeS
 	public ClobDatatypeStorage getClobDatatypeStorage(Integer id) {
 		return dao.getClobDatatypeStorage(id);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.DatatypeService#getClobDatatypeStorageByUuid(java.lang.String)
 	 */
@@ -216,15 +230,16 @@ public class DatatypeServiceImpl extends BaseOpenmrsService implements DatatypeS
 	public ClobDatatypeStorage getClobDatatypeStorageByUuid(String uuid) {
 		return dao.getClobDatatypeStorageByUuid(uuid);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.DatatypeService#saveClobDatatypeStorage(org.openmrs.api.db.ClobDatatypeStorage)
 	 */
 	@Override
-	public ClobDatatypeStorage saveClobDatatypeStorage(ClobDatatypeStorage storage) {
+	public ClobDatatypeStorage saveClobDatatypeStorage(
+			ClobDatatypeStorage storage) {
 		return dao.saveClobDatatypeStorage(storage);
 	}
-	
+
 	/**
 	 * @see org.openmrs.api.DatatypeService#deleteClobDatatypeStorage(org.openmrs.api.db.ClobDatatypeStorage)
 	 */
@@ -232,5 +247,5 @@ public class DatatypeServiceImpl extends BaseOpenmrsService implements DatatypeS
 	public void deleteClobDatatypeStorage(ClobDatatypeStorage storage) {
 		dao.deleteClobDatatypeStorage(storage);
 	}
-	
+
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -12,8 +12,10 @@ package org.openmrs.annotation;
 import org.springframework.stereotype.Component;
 
 /**
- * Test bean which should be only loaded when running on OpenMRS 1.8 and later with the htmlformentry module
+ * Test bean which should be only loaded when running on OpenMRS 1.8 and later
+ * with the htmlformentry module
  */
 @Component
-@OpenmrsProfile(openmrsPlatformVersion = "1.8", modules = { "htmlformentry:2.3" })
-public class OpenmrsProfile1_8WithHtmlformentry {}
+@OpenmrsProfile(openmrsPlatformVersion = "1.8", modules = {"htmlformentry:2.3"})
+public class OpenmrsProfile1_8WithHtmlformentry {
+}

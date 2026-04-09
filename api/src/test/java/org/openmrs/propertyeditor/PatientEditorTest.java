@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -15,10 +15,10 @@ import org.openmrs.test.BaseContextSensitiveTest;
 
 /**
  * Tests the {@link ProviderEditor}
- *
+ * 
  */
 public class PatientEditorTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see PatientEditor#setAsText(String)
 	 * @verifies set using id
@@ -29,7 +29,7 @@ public class PatientEditorTest extends BaseContextSensitiveTest {
 		editor.setAsText("2");
 		Assert.assertNotNull(editor.getValue());
 	}
-	
+
 	/**
 	 * @see PatientEditor#setAsText(String)
 	 * @verifies set using uuid

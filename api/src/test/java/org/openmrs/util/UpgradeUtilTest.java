@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -17,29 +17,35 @@ import org.openmrs.test.BaseContextSensitiveTest;
 import org.openmrs.util.databasechange.Database1_9_7UpgradeIT;
 
 public class UpgradeUtilTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @verifies return concept_id for drug_order_quantity_units
 	 * @see org.openmrs.util.UpgradeUtil#getConceptIdForUnits(String)
 	 */
 	@Test
-	public void getConceptIdForUnits_shouldReturnConcept_idForDrug_order_quantity_units() throws Exception {
-		Database1_9_7UpgradeIT.createOrderEntryUpgradeFileWithTestData("mg=5401" + "\n" + "drug_order_quantity_units=5403"
-		        + "\n" + "ounces=5402");
-		
-		Integer conceptId = UpgradeUtil.getConceptIdForUnits("drug_order_quantity_units");
-		
+	public void getConceptIdForUnits_shouldReturnConcept_idForDrug_order_quantity_units()
+			throws Exception {
+		Database1_9_7UpgradeIT
+				.createOrderEntryUpgradeFileWithTestData("mg=5401" + "\n"
+						+ "drug_order_quantity_units=5403" + "\n"
+						+ "ounces=5402");
+
+		Integer conceptId = UpgradeUtil
+				.getConceptIdForUnits("drug_order_quantity_units");
+
 		Assert.assertThat(conceptId, Is.is(5403));
 	}
-	
+
 	/**
 	 * @verifies fail if units is not specified
 	 * @see org.openmrs.util.UpgradeUtil#getConceptIdForUnits(String)
 	 */
 	@Test(expected = APIException.class)
-	public void getConceptIdForUnits_shouldFailIfUnitsIsNotSpecified() throws Exception {
-		Database1_9_7UpgradeIT.createOrderEntryUpgradeFileWithTestData("mg=540" + "\n" + "ounces=5402");
-		
+	public void getConceptIdForUnits_shouldFailIfUnitsIsNotSpecified()
+			throws Exception {
+		Database1_9_7UpgradeIT.createOrderEntryUpgradeFileWithTestData("mg=540"
+				+ "\n" + "ounces=5402");
+
 		UpgradeUtil.getConceptIdForUnits("drug_order_quantity_units");
 	}
 }

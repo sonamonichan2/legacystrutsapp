@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,19 +22,17 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
 
 public class Format {
-	
+
 	private static Log log = LogFactory.getLog(Format.class);
-	
+
 	public enum FORMAT_TYPE {
-		DATE,
-		TIME,
-		TIMESTAMP
+		DATE, TIME, TIMESTAMP
 	}
-	
+
 	public static String formatPercentage(double pct) {
 		return NumberFormat.getPercentInstance().format(pct);
 	}
-	
+
 	public static String formatPercentage(Number pct) {
 		if (pct == null) {
 			return "";
@@ -42,34 +40,35 @@ public class Format {
 			return NumberFormat.getPercentInstance().format(pct.doubleValue());
 		}
 	}
-	
+
 	public static String format(double d) {
 		return "" + ((d == (int) d) ? (int) d : d);
 	}
-	
+
 	public static String format(Double d) {
 		return d == null ? "" : format(d.doubleValue());
 	}
-	
+
 	public static String formatTextBoxDate(Date date) {
 		return format(date, Context.getLocale(), FORMAT_TYPE.DATE);
 	}
-	
+
 	public static String format(Date date) {
 		return format(date, Context.getLocale(), FORMAT_TYPE.DATE);
 	}
-	
+
 	public static String format(Date date, FORMAT_TYPE type) {
 		return format(date, Context.getLocale(), type);
 	}
-	
+
 	public static String format(Date date, Locale locale, FORMAT_TYPE type) {
 		log.debug("Formatting date: " + date + " with locale " + locale);
-		
+
 		DateFormat dateFormat = null;
-		
+
 		if (type == FORMAT_TYPE.TIMESTAMP) {
-			dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+			dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG,
+					DateFormat.LONG, locale);
 		} else if (type == FORMAT_TYPE.TIME) {
 			dateFormat = DateFormat.getTimeInstance(DateFormat.MEDIUM, locale);
 		} else {
@@ -77,9 +76,9 @@ public class Format {
 		}
 		return date == null ? "" : dateFormat.format(date);
 	}
-	
+
 	public static String format(Throwable t) {
 		return t + "\n" + ExceptionUtils.getStackTrace(t);
 	}
-	
+
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -18,17 +18,17 @@ import org.openmrs.layout.LayoutSupport;
  * @since 1.12
  */
 public class NameSupport extends LayoutSupport<NameTemplate> {
-	
+
 	private static NameSupport singleton;
-	
+
 	static Log log = LogFactory.getLog(NameSupport.class);
-	
+
 	public NameSupport() {
 		if (singleton == null) {
 			singleton = this;
 		}
 	}
-	
+
 	public static NameSupport getInstance() {
 		if (singleton == null) {
 			throw new RuntimeException("Not Yet Instantiated");
@@ -36,9 +36,10 @@ public class NameSupport extends LayoutSupport<NameTemplate> {
 			return singleton;
 		}
 	}
-	
+
 	public String getDefaultLayoutFormat() {
-		String ret = Context.getAdministrationService().getGlobalProperty("layout.name.format");
+		String ret = Context.getAdministrationService().getGlobalProperty(
+				"layout.name.format");
 		return (ret != null && ret.length() > 0) ? ret : defaultLayoutFormat;
 	}
 }

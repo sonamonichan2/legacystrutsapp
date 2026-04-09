@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,9 +22,9 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { PersonAttributeType.class }, order = 50)
+@Handler(supports = {PersonAttributeType.class}, order = 50)
 public class PersonAttributeTypeValidator implements Validator {
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
@@ -32,7 +32,7 @@ public class PersonAttributeTypeValidator implements Validator {
 	public boolean supports(Class c) {
 		return PersonAttributeType.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
 	 *      org.springframework.validation.Errors)
@@ -46,13 +46,18 @@ public class PersonAttributeTypeValidator implements Validator {
 	 */
 	public void validate(Object obj, Errors errors) {
 		PersonAttributeType patObj = (PersonAttributeType) obj;
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "PersonAttributeType.error.nameEmpty");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "format", "PersonAttributeType.error.formatEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name",
+				"PersonAttributeType.error.nameEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "format",
+				"PersonAttributeType.error.formatEmpty");
 		PersonService ps = Context.getPersonService();
-		PersonAttributeType pat = ps.getPersonAttributeTypeByName(patObj.getName());
+		PersonAttributeType pat = ps.getPersonAttributeTypeByName(patObj
+				.getName());
 		if (pat != null && !pat.getUuid().equals(patObj.getUuid())) {
-			errors.rejectValue("name", "PersonAttributeType.error.nameAlreadyInUse");
+			errors.rejectValue("name",
+					"PersonAttributeType.error.nameAlreadyInUse");
 		}
-		ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "format", "retireReason");
+		ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name",
+				"format", "retireReason");
 	}
 }

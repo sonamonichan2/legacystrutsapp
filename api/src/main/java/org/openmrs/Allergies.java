@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,30 +22,30 @@ import org.openmrs.util.OpenmrsUtil;
  * Represents patient allergies
  */
 public class Allergies implements List<Allergy> {
-	
+
 	public static final String UNKNOWN = "Unknown";
-	
+
 	public static final String NO_KNOWN_ALLERGIES = "No known allergies";
-	
+
 	public static final String SEE_LIST = "See list";
-	
+
 	private String allergyStatus = UNKNOWN;
-	
+
 	private List<Allergy> allergies = new ArrayList<Allergy>();
 
 	/**
-     * @return the allergyStatus
-     */
-    public String getAllergyStatus() {
-    	return allergyStatus;
-    }
+	 * @return the allergyStatus
+	 */
+	public String getAllergyStatus() {
+		return allergyStatus;
+	}
 
 	public boolean add(Allergy allergy) {
 		throwExceptionIfHasDuplicateAllergen(allergy);
 		allergyStatus = SEE_LIST;
 		return allergies.add(allergy);
 	}
-	
+
 	public boolean remove(Allergy allergy) {
 		boolean result = allergies.remove(allergy);
 		if (allergies.isEmpty()) {
@@ -53,19 +53,20 @@ public class Allergies implements List<Allergy> {
 		}
 		return result;
 	}
-	
+
 	public void clear() {
 		allergyStatus = UNKNOWN;
 		allergies.clear();
 	}
-	
+
 	public void confirmNoKnownAllergies() throws APIException {
 		if (!allergies.isEmpty()) {
-			throw new APIException("Cannot confirm no known allergies if allergy list is not empty");
+			throw new APIException(
+					"Cannot confirm no known allergies if allergy list is not empty");
 		}
 		allergyStatus = NO_KNOWN_ALLERGIES;
 	}
-	
+
 	/**
 	 * @see java.util.List#iterator()
 	 */
@@ -73,7 +74,7 @@ public class Allergies implements List<Allergy> {
 	public Iterator<Allergy> iterator() {
 		return allergies.iterator();
 	}
-	
+
 	/**
 	 * @see java.util.List#add(int, java.lang.Object)
 	 */
@@ -83,7 +84,7 @@ public class Allergies implements List<Allergy> {
 		allergies.add(index, element);
 		allergyStatus = SEE_LIST;
 	}
-	
+
 	/**
 	 * @see java.util.List#addAll(java.util.Collection)
 	 */
@@ -96,7 +97,7 @@ public class Allergies implements List<Allergy> {
 		allergyStatus = SEE_LIST;
 		return allergies.addAll(c);
 	}
-	
+
 	/**
 	 * @see java.util.List#addAll(int, java.util.Collection)
 	 */
@@ -109,7 +110,7 @@ public class Allergies implements List<Allergy> {
 		allergyStatus = SEE_LIST;
 		return allergies.addAll(index, c);
 	}
-	
+
 	/**
 	 * @see java.util.List#contains(java.lang.Object)
 	 */
@@ -117,7 +118,7 @@ public class Allergies implements List<Allergy> {
 	public boolean contains(Object o) {
 		return allergies.contains(o);
 	}
-	
+
 	/**
 	 * @see java.util.List#containsAll(java.util.Collection)
 	 */
@@ -125,7 +126,7 @@ public class Allergies implements List<Allergy> {
 	public boolean containsAll(Collection<?> c) {
 		return allergies.containsAll(c);
 	}
-	
+
 	/**
 	 * @see java.util.List#get(int)
 	 */
@@ -133,7 +134,7 @@ public class Allergies implements List<Allergy> {
 	public Allergy get(int index) {
 		return allergies.get(index);
 	}
-	
+
 	/**
 	 * @see java.util.List#indexOf(java.lang.Object)
 	 */
@@ -141,7 +142,7 @@ public class Allergies implements List<Allergy> {
 	public int indexOf(Object o) {
 		return allergies.indexOf(o);
 	}
-	
+
 	/**
 	 * @see java.util.List#isEmpty()
 	 */
@@ -149,7 +150,7 @@ public class Allergies implements List<Allergy> {
 	public boolean isEmpty() {
 		return allergies.isEmpty();
 	}
-	
+
 	/**
 	 * @see java.util.List#lastIndexOf(java.lang.Object)
 	 */
@@ -157,7 +158,7 @@ public class Allergies implements List<Allergy> {
 	public int lastIndexOf(Object o) {
 		return allergies.lastIndexOf(o);
 	}
-	
+
 	/**
 	 * @see java.util.List#listIterator()
 	 */
@@ -165,7 +166,7 @@ public class Allergies implements List<Allergy> {
 	public ListIterator<Allergy> listIterator() {
 		return allergies.listIterator();
 	}
-	
+
 	/**
 	 * @see java.util.List#listIterator(int)
 	 */
@@ -173,7 +174,7 @@ public class Allergies implements List<Allergy> {
 	public ListIterator<Allergy> listIterator(int index) {
 		return allergies.listIterator(index);
 	}
-	
+
 	/**
 	 * @see java.util.List#remove(int)
 	 */
@@ -185,7 +186,7 @@ public class Allergies implements List<Allergy> {
 		}
 		return allergy;
 	}
-	
+
 	/**
 	 * @see java.util.List#remove(java.lang.Object)
 	 */
@@ -197,7 +198,7 @@ public class Allergies implements List<Allergy> {
 		}
 		return removed;
 	}
-	
+
 	/**
 	 * @see java.util.List#removeAll(java.util.Collection)
 	 */
@@ -209,7 +210,7 @@ public class Allergies implements List<Allergy> {
 		}
 		return changed;
 	}
-	
+
 	/**
 	 * @see java.util.List#retainAll(java.util.Collection)
 	 */
@@ -221,7 +222,7 @@ public class Allergies implements List<Allergy> {
 		}
 		return changed;
 	}
-	
+
 	/**
 	 * @see java.util.List#set(int, java.lang.Object)
 	 */
@@ -230,7 +231,7 @@ public class Allergies implements List<Allergy> {
 		allergyStatus = SEE_LIST;
 		return allergies.set(index, element);
 	}
-	
+
 	/**
 	 * @see java.util.List#size()
 	 */
@@ -238,7 +239,7 @@ public class Allergies implements List<Allergy> {
 	public int size() {
 		return allergies.size();
 	}
-	
+
 	/**
 	 * @see java.util.List#subList(int, int)
 	 */
@@ -246,7 +247,7 @@ public class Allergies implements List<Allergy> {
 	public List<Allergy> subList(int fromIndex, int toIndex) {
 		return allergies.subList(fromIndex, toIndex);
 	}
-	
+
 	/**
 	 * @see java.util.List#toArray()
 	 */
@@ -254,7 +255,7 @@ public class Allergies implements List<Allergy> {
 	public Object[] toArray() {
 		return allergies.toArray();
 	}
-	
+
 	/**
 	 * @see java.util.List#toArray(T[])
 	 */
@@ -262,11 +263,12 @@ public class Allergies implements List<Allergy> {
 	public <T> T[] toArray(T[] a) {
 		return allergies.toArray(a);
 	}
-	
+
 	/**
 	 * Gets an allergy with a given id
 	 * 
-	 * @param allergyId the allergy id
+	 * @param allergyId
+	 *            the allergy id
 	 * @return the allergy with a matching id
 	 */
 	public Allergy getAllergy(Integer allergyId) {
@@ -275,57 +277,68 @@ public class Allergies implements List<Allergy> {
 				return allergy;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	/**
-	 * Throws an exception if the given allergy has the same allergen
-	 * as any of those in the allergies that we already have.
+	 * Throws an exception if the given allergy has the same allergen as any of
+	 * those in the allergies that we already have.
 	 * 
-	 * @param allergy the given allergy whose allergen to compare with
+	 * @param allergy
+	 *            the given allergy whose allergen to compare with
 	 */
 	private void throwExceptionIfHasDuplicateAllergen(Allergy allergy) {
 		throwExceptionIfHasAllergen(allergy, allergies);
 	}
-	
+
 	/**
-	 * Throws an exception if the given allergies collection has duplicate allergen
+	 * Throws an exception if the given allergies collection has duplicate
+	 * allergen
 	 * 
-	 * @param allergies the given allergies collection
+	 * @param allergies
+	 *            the given allergies collection
 	 */
-	private void throwExceptionIfHasDuplicateAllergen(Collection<? extends Allergy> allergies) {
+	private void throwExceptionIfHasDuplicateAllergen(
+			Collection<? extends Allergy> allergies) {
 		List<Allergy> allergiesCopy = new ArrayList<Allergy>();
 		allergiesCopy.addAll(allergies);
-		
+
 		for (Allergy allergy : allergies) {
 			allergiesCopy.remove(allergy);
 			throwExceptionIfHasAllergen(allergy, allergiesCopy);
 			allergiesCopy.add(allergy);
 		}
 	}
-	
+
 	/**
-	 * Throws an exception if the given allergies collection has
-	 * an allergen similar to that of the given allergy
+	 * Throws an exception if the given allergies collection has an allergen
+	 * similar to that of the given allergy
 	 * 
-	 * @param allergy the given allergy
-	 * @param allergies the given allergies collection
+	 * @param allergy
+	 *            the given allergy
+	 * @param allergies
+	 *            the given allergies collection
 	 */
-	private void throwExceptionIfHasAllergen(Allergy allergy, Collection<? extends Allergy> allergies) {
+	private void throwExceptionIfHasAllergen(Allergy allergy,
+			Collection<? extends Allergy> allergies) {
 		if (containsAllergen(allergy, allergies)) {
 			throw new APIException("Duplicate allergens not allowed");
 		}
 	}
-	
+
 	/**
-	 * Checks if a given allergy has the same allergen as any in the given allergies
+	 * Checks if a given allergy has the same allergen as any in the given
+	 * allergies
 	 * 
-	 * @param allergy the allergy whose allergen to compare with
-	 * @param allergies the allergies whose allergens to compare with
+	 * @param allergy
+	 *            the allergy whose allergen to compare with
+	 * @param allergies
+	 *            the allergies whose allergens to compare with
 	 * @return true if the same allergen exists, else false
 	 */
-	public boolean containsAllergen(Allergy allergy, Collection<? extends Allergy> allergies) {
+	public boolean containsAllergen(Allergy allergy,
+			Collection<? extends Allergy> allergies) {
 		for (Allergy alg : allergies) {
 			if (alg.hasSameAllergen(allergy)) {
 				return true;
@@ -333,11 +346,13 @@ public class Allergies implements List<Allergy> {
 		}
 		return false;
 	}
-	
+
 	/**
-	 * Checks if we already have an allergen similar to that in the given allergy
+	 * Checks if we already have an allergen similar to that in the given
+	 * allergy
 	 * 
-	 * @param allergy the allergy whose allergen to compare with
+	 * @param allergy
+	 *            the allergy whose allergen to compare with
 	 * @return true if the same allergen exists, else false
 	 */
 	public boolean containsAllergen(Allergy allergy) {

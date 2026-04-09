@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,20 +19,21 @@ import org.openmrs.api.context.Context;
 import org.springframework.util.StringUtils;
 
 /**
- * Allows for serializing/deserializing an object to a string so that Spring knows how to pass
- * an object back and forth through an html form or other medium. <br>
+ * Allows for serializing/deserializing an object to a string so that Spring
+ * knows how to pass an object back and forth through an html form or other
+ * medium. <br>
  * <br>
  * In version 1.9, added ability for this to also retrieve objects by uuid
  * 
  * @see ConceptDatatype
  */
 public class ConceptDatatypeEditor extends PropertyEditorSupport {
-	
+
 	private Log log = LogFactory.getLog(this.getClass());
-	
+
 	public ConceptDatatypeEditor() {
 	}
-	
+
 	/**
 	 * @should set using id
 	 * @should set using uuid
@@ -43,20 +44,21 @@ public class ConceptDatatypeEditor extends PropertyEditorSupport {
 		if (StringUtils.hasText(text)) {
 			try {
 				setValue(cs.getConceptDatatype(Integer.valueOf(text)));
-			}
-			catch (Exception ex) {
-				ConceptDatatype conceptDatatype = cs.getConceptDatatypeByUuid(text);
+			} catch (Exception ex) {
+				ConceptDatatype conceptDatatype = cs
+						.getConceptDatatypeByUuid(text);
 				setValue(conceptDatatype);
 				if (conceptDatatype == null) {
 					log.error("Error setting text: " + text, ex);
-					throw new IllegalArgumentException("ConceptDatatype not found: " + ex.getMessage());
+					throw new IllegalArgumentException(
+							"ConceptDatatype not found: " + ex.getMessage());
 				}
 			}
 		} else {
 			setValue(null);
 		}
 	}
-	
+
 	public String getAsText() {
 		ConceptDatatype t = (ConceptDatatype) getValue();
 		if (t == null) {
@@ -65,5 +67,5 @@ public class ConceptDatatypeEditor extends PropertyEditorSupport {
 			return t.getConceptDatatypeId().toString();
 		}
 	}
-	
+
 }

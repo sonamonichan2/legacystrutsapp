@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -14,12 +14,13 @@ import org.junit.Test;
 import org.openmrs.test.Verifies;
 
 /**
- * This class tests the all of the {@link EncounterType} non-trivial object methods.
+ * This class tests the all of the {@link EncounterType} non-trivial object
+ * methods.
  * 
  * @see EncounterType
  */
 public class EncounterTypeTest {
-	
+
 	/**
 	 * Make sure the EncounterType(Integer) constructor sets the encounterTypeId
 	 * 
@@ -27,7 +28,8 @@ public class EncounterTypeTest {
 	 */
 	@Test
 	@Verifies(value = "should set encounter type id with given parameter", method = "EncounterType(Integer)")
-	public void EncounterType_shouldSetEncounterTypeIdWithGivenParameter() throws Exception {
+	public void EncounterType_shouldSetEncounterTypeIdWithGivenParameter()
+			throws Exception {
 		EncounterType encounterType = new EncounterType(123);
 		Assert.assertEquals(123, encounterType.getEncounterTypeId().intValue());
 	}

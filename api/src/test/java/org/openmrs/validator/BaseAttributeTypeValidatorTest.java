@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -20,21 +20,21 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
 public class BaseAttributeTypeValidatorTest extends BaseContextSensitiveTest {
-	
+
 	VisitAttributeTypeValidator validator;
-	
+
 	@SuppressWarnings("rawtypes")
 	VisitAttributeType attributeType;
-	
+
 	BindException errors;
-	
+
 	@Before
 	public void before() {
 		validator = new VisitAttributeTypeValidator();
 		attributeType = new VisitAttributeType();
 		errors = new BindException(attributeType, "attributeType");
 	}
-	
+
 	/**
 	 * @see BaseAttributeTypeValidator#validate(Object,Errors)
 	 * @verifies not allow maxOccurs less than 1
@@ -45,19 +45,20 @@ public class BaseAttributeTypeValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(attributeType, errors);
 		Assert.assertTrue(errors.getFieldErrors("maxOccurs").size() > 0);
 	}
-	
+
 	/**
 	 * @see BaseAttributeTypeValidator#validate(Object,Errors)
 	 * @verifies not allow maxOccurs less than minOccurs
 	 */
 	@Test
-	public void validate_shouldNotAllowMaxOccursLessThanMinOccurs() throws Exception {
+	public void validate_shouldNotAllowMaxOccursLessThanMinOccurs()
+			throws Exception {
 		attributeType.setMinOccurs(3);
 		attributeType.setMaxOccurs(2);
 		validator.validate(attributeType, errors);
 		Assert.assertTrue(errors.getFieldErrors("maxOccurs").size() > 0);
 	}
-	
+
 	/**
 	 * @see BaseAttributeTypeValidator#validate(Object,Errors)
 	 * @verifies require datatypeClassname
@@ -67,7 +68,7 @@ public class BaseAttributeTypeValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(attributeType, errors);
 		Assert.assertTrue(errors.getFieldErrors("datatypeClassname").size() > 0);
 	}
-	
+
 	/**
 	 * @see BaseAttributeTypeValidator#validate(Object,Errors)
 	 * @verifies require minOccurs
@@ -78,7 +79,7 @@ public class BaseAttributeTypeValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(attributeType, errors);
 		Assert.assertTrue(errors.getFieldErrors("minOccurs").size() > 0);
 	}
-	
+
 	/**
 	 * @see BaseAttributeTypeValidator#validate(Object,Errors)
 	 * @verifies require name
@@ -88,56 +89,65 @@ public class BaseAttributeTypeValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(attributeType, errors);
 		Assert.assertTrue(errors.getFieldErrors("name").size() > 0);
 	}
-	
+
 	/**
 	 * @see BaseAttributeTypeValidator#validate(Object,Errors)
-	 * @verifies require DatatypeConfiguration if Datatype equals Regex-Validated Text
+	 * @verifies require DatatypeConfiguration if Datatype equals
+	 *           Regex-Validated Text
 	 */
 	@Test
-	public void validate_shouldRequireDatatypeConfigurationIfDatatypeEqualsRegexValidatedText() throws Exception {
-		attributeType.setDatatypeClassname(RegexValidatedTextDatatype.class.getName());
+	public void validate_shouldRequireDatatypeConfigurationIfDatatypeEqualsRegexValidatedText()
+			throws Exception {
+		attributeType.setDatatypeClassname(RegexValidatedTextDatatype.class
+				.getName());
 		validator.validate(attributeType, errors);
 		Assert.assertTrue(errors.getFieldErrors("datatypeConfig").size() > 0);
 	}
-	
+
 	/**
 	 * @see BaseAttributeTypeValidator#validate(Object,Errors)
 	 * @verifies pass validation if all required values are set
 	 */
 	@Test
-	public void validate_shouldPassValidationIfAllRequiredValuesAreSet() throws Exception {
+	public void validate_shouldPassValidationIfAllRequiredValuesAreSet()
+			throws Exception {
 		attributeType.setName("name");
 		attributeType.setMinOccurs(1);
-		attributeType.setDatatypeClassname(RegexValidatedTextDatatype.class.getName());
+		attributeType.setDatatypeClassname(RegexValidatedTextDatatype.class
+				.getName());
 		attributeType.setDatatypeConfig("[a-z]+");
 		validator.validate(attributeType, errors);
 		Assert.assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see BaseAttributeTypeValidator#validate(Object,Errors)
 	 * @verifies pass validation if field lengths are correct
 	 */
 	@Test
-	public void validate_shouldPassValidationIfFieldLengthsAreCorrect() throws Exception {
+	public void validate_shouldPassValidationIfFieldLengthsAreCorrect()
+			throws Exception {
 		attributeType.setName("name");
 		attributeType.setMinOccurs(1);
-		attributeType.setDatatypeClassname(RegexValidatedTextDatatype.class.getName());
+		attributeType.setDatatypeClassname(RegexValidatedTextDatatype.class
+				.getName());
 		attributeType.setDatatypeConfig("[a-z]+");
 		attributeType.setHandlerConfig("HandlerConfig");
 		validator.validate(attributeType, errors);
 		Assert.assertFalse(errors.hasErrors());
 	}
-	
+
 	/**
 	 * @see BaseAttributeTypeValidator#validate(Object,Errors)
 	 * @verifies fail validation if field lengths are not correct
 	 */
 	@Test
-	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect() throws Exception {
+	public void validate_shouldFailValidationIfFieldLengthsAreNotCorrect()
+			throws Exception {
 		attributeType.setName("name");
 		attributeType.setMinOccurs(1);
-		attributeType.setDatatypeClassname(RegexValidatedTextDatatype.class.getName());
+		attributeType.setDatatypeClassname(RegexValidatedTextDatatype.class
+				.getName());
 		attributeType.setDatatypeConfig(new String(new char[66000]));
 		attributeType.setHandlerConfig(new String(new char[66000]));
 		validator.validate(attributeType, errors);

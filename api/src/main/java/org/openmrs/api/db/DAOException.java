@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -15,22 +15,22 @@ import org.openmrs.api.APIException;
  * Represents often fatal errors that occur within the database layer.
  */
 public class DAOException extends APIException {
-	
+
 	private static final long serialVersionUID = -185144340435149253L;
-	
+
 	public DAOException() {
 	}
-	
+
 	public DAOException(String message) {
 		super(message);
 	}
-	
+
 	public DAOException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	public DAOException(Throwable cause) {
 		super(cause);
 	}
-	
+
 }

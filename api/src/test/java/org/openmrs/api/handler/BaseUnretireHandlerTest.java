@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,7 +22,7 @@ import org.openmrs.test.Verifies;
  * Tests the {@link BaseUnretireHandler} class.
  */
 public class BaseUnretireHandlerTest {
-	
+
 	/**
 	 * @see BaseUnretireHandler#handle(Retireable,User,Date,String)
 	 */
@@ -35,7 +35,7 @@ public class BaseUnretireHandlerTest {
 		handler.handle(retireable, null, null, null);
 		Assert.assertFalse(retireable.isRetired());
 	}
-	
+
 	/**
 	 * @see BaseUnretireHandler#handle(Retireable,User,Date,String)
 	 */
@@ -49,7 +49,7 @@ public class BaseUnretireHandlerTest {
 		handler.handle(retireable, null, null, null);
 		Assert.assertNull(retireable.getRetiredBy());
 	}
-	
+
 	/**
 	 * @see BaseUnretireHandler#handle(Retireable,User,Date,String)
 	 */
@@ -63,7 +63,7 @@ public class BaseUnretireHandlerTest {
 		handler.handle(retireable, null, null, null);
 		Assert.assertNull(retireable.getDateRetired());
 	}
-	
+
 	/**
 	 * @see BaseUnretireHandler#handle(Retireable,User,Date,String)
 	 */
@@ -77,7 +77,7 @@ public class BaseUnretireHandlerTest {
 		handler.handle(retireable, null, null, null);
 		Assert.assertNull(retireable.getRetireReason());
 	}
-	
+
 	/**
 	 * @see BaseUnretireHandler#handle(Retireable,User,Date,String)
 	 */
@@ -90,22 +90,24 @@ public class BaseUnretireHandlerTest {
 		handler.handle(retireable, null, null, "SOME REASON");
 		Assert.assertNull(retireable.getRetireReason());
 	}
-	
+
 	/**
 	 * @see BaseUnretireHandler#handle(Retireable,User,Date,String)
 	 */
 	@Test
 	@Verifies(value = "should not act on retired objects with a different dateRetired", method = "handle(Retireable,User,Date,String)")
-	public void handle_shouldNotActOnRetiredObjectsWithADifferentDateRetired() throws Exception {
-		Date d = new Date(new Date().getTime() - 1000); // a time that isn't right now
-		
+	public void handle_shouldNotActOnRetiredObjectsWithADifferentDateRetired()
+			throws Exception {
+		Date d = new Date(new Date().getTime() - 1000); // a time that isn't
+														// right now
+
 		UnretireHandler<Retireable> handler = new BaseUnretireHandler();
 		Retireable retireable = new Location();
 		retireable.setRetired(true);
 		retireable.setDateRetired(d);
-		
+
 		handler.handle(retireable, null, new Date(), "SOME REASON");
 		Assert.assertTrue(retireable.isRetired());
 	}
-	
+
 }

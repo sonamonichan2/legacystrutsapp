@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -21,7 +21,7 @@ import org.openmrs.web.test.BaseWebContextSensitiveTest;
  * Tests some of the methods on the {@link FilterUtil}
  */
 public class FilterUtilTest extends BaseWebContextSensitiveTest {
-	
+
 	/**
 	 * @see FilterUtil#storeLocale(String))
 	 */
@@ -31,7 +31,7 @@ public class FilterUtilTest extends BaseWebContextSensitiveTest {
 	public void storeLocale_shouldStoreLocale() throws Exception {
 		FilterUtil.storeLocale("it");
 	}
-	
+
 	/**
 	 * @see {@link FilterUtil#restoreLocale(String))
 	 */
@@ -40,7 +40,8 @@ public class FilterUtilTest extends BaseWebContextSensitiveTest {
 	@Verifies(value = "should restore locale", method = "restoreLocale(String)")
 	public void storeLocale_shouldRestoreLocale() throws Exception {
 		FilterUtil.storeLocale("it");
-		Assert.assertEquals("it", FilterUtil.restoreLocale(FilterUtil.ADMIN_USERNAME));
+		Assert.assertEquals("it",
+				FilterUtil.restoreLocale(FilterUtil.ADMIN_USERNAME));
 	}
-	
+
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -23,13 +23,13 @@ import java.util.Collection;
 import java.util.List;
 
 public class HibernateProviderDAOTest extends BaseContextSensitiveTest {
-	
+
 	private static final String PROVIDERS_INITIAL_XML = "org/openmrs/api/include/ProviderServiceTest-initial.xml";
-	
+
 	private HibernatePersonDAO personDao = null;
-	
+
 	private ProviderService service;
-	
+
 	/**
 	 * Run this before each unit test in this class.
 	 * 
@@ -38,42 +38,50 @@ public class HibernateProviderDAOTest extends BaseContextSensitiveTest {
 	@Before
 	public void runBeforeEachTest() throws Exception {
 		service = Context.getProviderService();
-		
+
 		if (personDao == null)
-			personDao = (HibernatePersonDAO) applicationContext.getBean("personDAO");
-		
+			personDao = (HibernatePersonDAO) applicationContext
+					.getBean("personDAO");
+
 		executeDataSet(PROVIDERS_INITIAL_XML);
 	}
-	
+
 	/**
 	 * @see HibernateProviderDAO#getProvidersByPerson(Person,boolean)
 	 * @verifies not return retired providers if includeRetired false
 	 */
 	@Test
-	public void getProvidersByPerson_shouldNotReturnRetiredProvidersIfIncludeRetiredFalse() throws Exception {
-		Collection<Provider> providers = service.getProvidersByPerson(personDao.getPerson(2), false);
+	public void getProvidersByPerson_shouldNotReturnRetiredProvidersIfIncludeRetiredFalse()
+			throws Exception {
+		Collection<Provider> providers = service.getProvidersByPerson(
+				personDao.getPerson(2), false);
 		Assert.assertEquals(1, providers.size());
 		Assert.assertFalse(providers.iterator().next().isRetired());
 	}
-	
+
 	/**
 	 * @see HibernateProviderDAO#getProvidersByPerson(Person,boolean)
 	 * @verifies list retired providers at the end
 	 */
 	@Test
-	public void getProvidersByPerson_shouldListRetiredProvidersAtTheEnd() throws Exception {
+	public void getProvidersByPerson_shouldListRetiredProvidersAtTheEnd()
+			throws Exception {
 		List<Provider> providers = new ArrayList<Provider>();
-		providers = (List<Provider>) service.getProvidersByPerson(personDao.getPerson(2), true);
-		
+		providers = (List<Provider>) service.getProvidersByPerson(
+				personDao.getPerson(2), true);
+
 		Assert.assertEquals(true, providers.get(1).getRetired());
 	}
-	
+
 	/**
 	 * @see HibernateProviderDAO#getProvidersByPerson(Person,boolean)
 	 * @verifies return all providers if includeRetired true
 	 */
 	@Test
-	public void getProvidersByPerson_shouldReturnAllProvidersIfIncludeRetiredTrue() throws Exception {
-		Assert.assertEquals(2, service.getProvidersByPerson(personDao.getPerson(2), true).size());
+	public void getProvidersByPerson_shouldReturnAllProvidersIfIncludeRetiredTrue()
+			throws Exception {
+		Assert.assertEquals(2,
+				service.getProvidersByPerson(personDao.getPerson(2), true)
+						.size());
 	}
 }

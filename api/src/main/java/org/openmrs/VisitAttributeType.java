@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -14,12 +14,15 @@ import org.openmrs.attribute.BaseAttributeType;
 
 /**
  * A user-defined extension to the {@link Visit} class.
- * @see AttributeType 
+ * 
+ * @see AttributeType
  */
-public class VisitAttributeType extends BaseAttributeType<Visit> implements AttributeType<Visit> {
-	
+public class VisitAttributeType extends BaseAttributeType<Visit>
+		implements
+			AttributeType<Visit> {
+
 	private Integer visitAttributeTypeId;
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -27,7 +30,7 @@ public class VisitAttributeType extends BaseAttributeType<Visit> implements Attr
 	public Integer getId() {
 		return getVisitAttributeTypeId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -35,19 +38,20 @@ public class VisitAttributeType extends BaseAttributeType<Visit> implements Attr
 	public void setId(Integer id) {
 		setVisitAttributeTypeId(id);
 	}
-	
+
 	/**
 	 * @return the visitAttributeTypeId
 	 */
 	public Integer getVisitAttributeTypeId() {
 		return visitAttributeTypeId;
 	}
-	
+
 	/**
-	 * @param visitAttributeTypeId the visitAttributeTypeId to set
+	 * @param visitAttributeTypeId
+	 *            the visitAttributeTypeId to set
 	 */
 	public void setVisitAttributeTypeId(Integer visitAttributeTypeId) {
 		this.visitAttributeTypeId = visitAttributeTypeId;
 	}
-	
+
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -16,12 +16,12 @@ import org.springframework.stereotype.Component;
 
 /**
  * This is a class for custom datatypes for programs
- *
+ * 
  * @since 2.0.0
  */
 @Component
 public class ProgramDatatype extends BaseMetadataDatatype<Program> {
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#deserialize(java.lang.String)
 	 * @should return the object by given uuid string

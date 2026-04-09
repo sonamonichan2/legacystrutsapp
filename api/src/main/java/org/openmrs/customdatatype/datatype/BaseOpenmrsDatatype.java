@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -17,8 +17,10 @@ import org.openmrs.customdatatype.SerializingCustomDatatype;
  * 
  * @since 2.0.0
  */
-public abstract class BaseOpenmrsDatatype<T extends OpenmrsObject> extends SerializingCustomDatatype<T> {
-	
+public abstract class BaseOpenmrsDatatype<T extends OpenmrsObject>
+		extends
+			SerializingCustomDatatype<T> {
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#serialize(java.lang.Object)
 	 * @should return the uuid of the object

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -24,12 +24,12 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { ConceptClass.class }, order = 50)
+@Handler(supports = {ConceptClass.class}, order = 50)
 public class ConceptClassValidator implements Validator {
-	
+
 	/** Log for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -39,34 +39,41 @@ public class ConceptClassValidator implements Validator {
 	public boolean supports(Class c) {
 		return c.equals(ConceptClass.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
 	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
 	 *      org.springframework.validation.Errors)
 	 * @should fail validation if user is null or empty or whitespace
-	 * @should fail validation if name is already exist in non retired concept class
+	 * @should fail validation if name is already exist in non retired concept
+	 *         class
 	 * @should pass validation if description is null or empty or whitespace
 	 * @should pass validation if all required fields have proper values
 	 * @should pass validation if field lengths are correct
 	 * @should fail validation if field lengths are not correct
 	 */
-	
+
 	public void validate(Object obj, Errors errors) {
 		ConceptClass cc = (ConceptClass) obj;
 		if (cc == null) {
 			errors.rejectValue("conceptClass", "error.general");
 		} else {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.name");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name",
+					"error.name");
 			if (!errors.hasErrors()) {
-				ConceptClass exist = Context.getConceptService().getConceptClassByName(cc.getName());
-				if (exist != null && !exist.isRetired() && !OpenmrsUtil.nullSafeEquals(cc.getUuid(), exist.getUuid())) {
+				ConceptClass exist = Context.getConceptService()
+						.getConceptClassByName(cc.getName());
+				if (exist != null
+						&& !exist.isRetired()
+						&& !OpenmrsUtil.nullSafeEquals(cc.getUuid(),
+								exist.getUuid())) {
 					errors.rejectValue("name", "conceptclass.duplicate.name");
 				}
 			}
-			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "description", "retireReason");
+			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name",
+					"description", "retireReason");
 		}
 	}
-	
+
 }

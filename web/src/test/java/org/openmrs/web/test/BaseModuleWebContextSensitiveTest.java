@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -13,15 +13,19 @@ import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
- * Modules that test controllers, etc, or which contain references to Beans in openmrs-servlet.xml
- * should use this class instead of the general {@link BaseWebContextSensitiveTest} one. 
- * Developers just need to make sure their modules are on the classpath. 
- * The TestingApplicationContext.xml file tells spring/hibernate to look for and load all
- * modules found on the classpath. The ContextConfiguration annotation adds in the module
- * application context files to the config locations and the test application context (so that the
- * module services are loaded from the system classloader)
+ * Modules that test controllers, etc, or which contain references to Beans in
+ * openmrs-servlet.xml should use this class instead of the general
+ * {@link BaseWebContextSensitiveTest} one. Developers just need to make sure
+ * their modules are on the classpath. The TestingApplicationContext.xml file
+ * tells spring/hibernate to look for and load all modules found on the
+ * classpath. The ContextConfiguration annotation adds in the module application
+ * context files to the config locations and the test application context (so
+ * that the module services are loaded from the system classloader)
  */
-@ContextConfiguration(locations = { "classpath:openmrs-servlet.xml", "classpath*:webModuleApplicationContext.xml" }, inheritLocations = true)
-public abstract class BaseModuleWebContextSensitiveTest extends BaseModuleContextSensitiveTest {
+@ContextConfiguration(locations = {"classpath:openmrs-servlet.xml",
+		"classpath*:webModuleApplicationContext.xml"}, inheritLocations = true)
+public abstract class BaseModuleWebContextSensitiveTest
+		extends
+			BaseModuleContextSensitiveTest {
 
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -18,7 +18,7 @@ import org.junit.Test;
 import org.openmrs.PatientIdentifierType;
 
 public class PatientIdentifierTypeDefaultComparatorTest {
-	
+
 	/**
 	 * Simplified test.
 	 * 
@@ -40,7 +40,7 @@ public class PatientIdentifierTypeDefaultComparatorTest {
 		requiredRetired2a.setRequired(true);
 		requiredRetired2a.setRetired(true);
 		requiredRetired2a.setName("a");
-		
+
 		PatientIdentifierType notRequiredRetired = new PatientIdentifierType();
 		notRequiredRetired.setRequired(false);
 		notRequiredRetired.setRetired(true);
@@ -52,12 +52,14 @@ public class PatientIdentifierTypeDefaultComparatorTest {
 		notRequiredNotRetiredA.setRequired(null);
 		notRequiredNotRetiredA.setRetired(false);
 		notRequiredNotRetiredA.setName("A");
-		
-		List<PatientIdentifierType> list = Arrays.asList(notRequiredRetired, requiredRetired2a, notRequiredNotRetiredA,
-		    requiredNotRetired, notRequiredNotRetiredB, requiredRetired1A);
+
+		List<PatientIdentifierType> list = Arrays.asList(notRequiredRetired,
+				requiredRetired2a, notRequiredNotRetiredA, requiredNotRetired,
+				notRequiredNotRetiredB, requiredRetired1A);
 		Collections.sort(list, new PatientIdentifierTypeDefaultComparator());
-		
-		Assert.assertEquals(Arrays.asList(requiredNotRetired, notRequiredNotRetiredA, notRequiredNotRetiredB,
-		    requiredRetired1A, requiredRetired2a, notRequiredRetired), list);
+
+		Assert.assertEquals(Arrays.asList(requiredNotRetired,
+				notRequiredNotRetiredA, notRequiredNotRetiredB,
+				requiredRetired1A, requiredRetired2a, notRequiredRetired), list);
 	}
 }

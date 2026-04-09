@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -23,7 +23,7 @@ import org.openmrs.test.Verifies;
  * Tests the {@link ConceptNameSaveHandler} class.
  */
 public class ConceptNameSaveHandlerTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see ConceptNameSaveHandler#handle(ConceptName,User,Date,String)
 	 */
@@ -35,13 +35,14 @@ public class ConceptNameSaveHandlerTest extends BaseContextSensitiveTest {
 		name.setTags(null);
 		handler.handle(name, null, null, null);
 	}
-	
+
 	/**
 	 * @see ConceptNameSaveHandler#handle(ConceptName,User,Date,String)
 	 */
 	@Test
 	@Verifies(value = "should replace tags without ids with database fetched tag", method = "handle(ConceptName,User,Date,String)")
-	public void handle_shouldReplaceTagsWithoutIdsWithDatabaseFetchedTag() throws Exception {
+	public void handle_shouldReplaceTagsWithoutIdsWithDatabaseFetchedTag()
+			throws Exception {
 		ConceptNameSaveHandler handler = new ConceptNameSaveHandler();
 		ConceptName name = new ConceptName();
 		name.addTag("preferred"); // this tag has a null id
@@ -55,21 +56,26 @@ public class ConceptNameSaveHandlerTest extends BaseContextSensitiveTest {
 			}
 		}
 	}
-	
+
 	/**
 	 * @see ConceptNameSaveHandler#handle(ConceptName,User,Date,String)
 	 */
 	@Test
 	@Verifies(value = "should not replace tags without ids that are not in the database", method = "handle(ConceptName,User,Date,String)")
-	public void handle_shouldNotReplaceTagsWithoutIdsThatAreNotInTheDatabase() throws Exception {
+	public void handle_shouldNotReplaceTagsWithoutIdsThatAreNotInTheDatabase()
+			throws Exception {
 		ConceptNameSaveHandler handler = new ConceptNameSaveHandler();
 		ConceptName name = new ConceptName();
-		name.addTag(new ConceptNameTag("Some randome tag name", "")); // this tag has a null id
+		name.addTag(new ConceptNameTag("Some randome tag name", "")); // this
+																		// tag
+																		// has a
+																		// null
+																		// id
 		handler.handle(name, null, null, null);
 		ConceptNameTag newTag = name.getTags().iterator().next();
 		Assert.assertNull(newTag.getConceptNameTagId());
 	}
-	
+
 	/**
 	 * @see ConceptNameSaveHandler#handle(ConceptName,User,Date,String)
 	 */
@@ -78,7 +84,8 @@ public class ConceptNameSaveHandlerTest extends BaseContextSensitiveTest {
 	public void handle_shouldNotReplaceTagsThatHaveIds() throws Exception {
 		ConceptNameSaveHandler handler = new ConceptNameSaveHandler();
 		ConceptName name = new ConceptName();
-		ConceptNameTag tag = new ConceptNameTag("some randome tag name with an id", "");
+		ConceptNameTag tag = new ConceptNameTag(
+				"some randome tag name with an id", "");
 		tag.setConceptNameTagId(34); // this tag has an id
 		name.addTag(tag);
 		handler.handle(name, null, null, null);

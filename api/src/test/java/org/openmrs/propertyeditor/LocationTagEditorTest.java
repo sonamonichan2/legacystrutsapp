@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -15,13 +15,13 @@ import org.junit.Test;
 import org.openmrs.test.BaseContextSensitiveTest;
 
 public class LocationTagEditorTest extends BaseContextSensitiveTest {
-	
+
 	protected static final String LOC_INITIAL_DATA_XML = "org/openmrs/api/include/LocationServiceTest-initialData.xml";
-	
+
 	/**
-	 * Run this before each unit test in this class. This adds a bit more data to the base data that
-	 * is done in the "@Before" method in {@link BaseContextSensitiveTest} (which is run right
-	 * before this method).
+	 * Run this before each unit test in this class. This adds a bit more data
+	 * to the base data that is done in the "@Before" method in
+	 * {@link BaseContextSensitiveTest} (which is run right before this method).
 	 * 
 	 * @throws Exception
 	 */
@@ -29,7 +29,7 @@ public class LocationTagEditorTest extends BaseContextSensitiveTest {
 	public void prepareData() throws Exception {
 		executeDataSet(LOC_INITIAL_DATA_XML);
 	}
-	
+
 	/**
 	 * @see LocationTagEditor#setAsText(String)
 	 * @verifies set using id
@@ -40,7 +40,7 @@ public class LocationTagEditorTest extends BaseContextSensitiveTest {
 		editor.setAsText("1");
 		Assert.assertNotNull(editor.getValue());
 	}
-	
+
 	/**
 	 * @see LocationTagEditor#setAsText(String)
 	 * @verifies set using uuid

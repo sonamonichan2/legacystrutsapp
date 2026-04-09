@@ -71,7 +71,7 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-antrun-plugin</artifactId>
-            <version>1.4</version>
+            <version>3.1.0</version>
             <executions>
                <execution>
                   <phase>process-resources</phase>
@@ -79,9 +79,9 @@
                      <goal>run</goal>
                   </goals>
                   <configuration>
-                     <tasks>
+                     <target>
                         <unzip src="src/main/resources/liquibase-demo-data.zip" dest="${project.build.outputDirectory}" />
-                     </tasks>
+                     </target>
                   </configuration>
                </execution>
             </executions>
@@ -106,7 +106,7 @@
          <plugin>
              <groupId>org.eclipse.jetty</groupId>
              <artifactId>jetty-maven-plugin</artifactId>
-             <version>9.3.3.v20150827</version>
+             <version>11.0.20</version>
              <configuration>
                <webApp>
                	  <descriptor>${project.build.directory}/jetty/WEB-INF/web.xml</descriptor>
@@ -139,7 +139,7 @@
          <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.9.1</version>
+                <version>3.3.1</version>
                 <configuration>
                     <includes>**/*.jsp</includes>
                     <sourceDirectory>../webapp</sourceDirectory>
@@ -166,7 +166,7 @@
                <plugin>
                    <groupId>org.eclipse.jetty</groupId>
                    <artifactId>jetty-maven-plugin</artifactId>
-                   <version>9.3.3.v20150827</version>
+                   <version>11.0.20</version>
                    <configuration>
                      <webApp>
                	  		<descriptor>${project.build.directory}/jetty/WEB-INF/web.xml</descriptor>

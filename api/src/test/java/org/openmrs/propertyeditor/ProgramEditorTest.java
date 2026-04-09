@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.openmrs.test.BaseContextSensitiveTest;
 
 public class ProgramEditorTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see ProgramEditor#setAsText(String)
 	 * @verifies set using concept id
@@ -25,7 +25,7 @@ public class ProgramEditorTest extends BaseContextSensitiveTest {
 		editor.setAsText("concept.9");
 		Assert.assertNotNull(editor.getValue());
 	}
-	
+
 	/**
 	 * @see ProgramEditor#setAsText(String)
 	 * @verifies set using concept uuid
@@ -36,7 +36,7 @@ public class ProgramEditorTest extends BaseContextSensitiveTest {
 		editor.setAsText("concept.0a9afe04-088b-44ca-9291-0a8c3b5c96fa");
 		Assert.assertNotNull(editor.getValue());
 	}
-	
+
 	/**
 	 * @see ProgramEditor#setAsText(String)
 	 * @verifies set using program id
@@ -47,7 +47,7 @@ public class ProgramEditorTest extends BaseContextSensitiveTest {
 		editor.setAsText("1");
 		Assert.assertNotNull(editor.getValue());
 	}
-	
+
 	/**
 	 * @see ProgramEditor#setAsText(String)
 	 * @verifies set using program uuid

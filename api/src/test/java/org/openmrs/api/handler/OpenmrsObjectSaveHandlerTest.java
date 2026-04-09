@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -27,7 +27,7 @@ import org.openmrs.test.Verifies;
  * Tests for {@link OpenmrsObjectSaveHandler}
  */
 public class OpenmrsObjectSaveHandlerTest {
-	
+
 	/**
 	 * @see OpenmrsObjectSaveHandler#handle(OpenmrsObject,User,Date,String)
 	 */
@@ -38,14 +38,14 @@ public class OpenmrsObjectSaveHandlerTest {
 		role.setName("");
 		role.setDescription("");
 		role.setRole("");
-		
+
 		new OpenmrsObjectSaveHandler().handle(role, null, null, null);
-		
+
 		Assert.assertNull(role.getName());
 		Assert.assertNull(role.getDescription());
 		Assert.assertNull(role.getRole());
 	}
-	
+
 	/**
 	 * @see OpenmrsObjectSaveHandler#handle(OpenmrsObject,User,Date,String)
 	 */
@@ -56,7 +56,7 @@ public class OpenmrsObjectSaveHandlerTest {
 		new OpenmrsObjectSaveHandler().handle(obj, null, null, null);
 		Assert.assertNotNull(obj.getName());
 	}
-	
+
 	/**
 	 * @see OpenmrsObjectSaveHandler#handle(OpenmrsObject,User,Date,String)
 	 */
@@ -67,7 +67,7 @@ public class OpenmrsObjectSaveHandlerTest {
 		new OpenmrsObjectSaveHandler().handle(obj, null, null, null);
 		Assert.assertNotNull(obj.getDescription());
 	}
-	
+
 	/**
 	 * @see OpenmrsObjectSaveHandler#handle(OpenmrsObject,User,Date,String)
 	 */
@@ -80,7 +80,7 @@ public class OpenmrsObjectSaveHandlerTest {
 		new OpenmrsObjectSaveHandler().handle(term, null, null, null);
 		Assert.assertEquals("code", term.getCode());
 	}
-	
+
 	/**
 	 * @see OpenmrsObjectSaveHandler#handle(OpenmrsObject,User,Date,String)
 	 */
@@ -91,46 +91,46 @@ public class OpenmrsObjectSaveHandlerTest {
 		new OpenmrsObjectSaveHandler().handle(obj, null, null, null);
 		Assert.assertEquals("name", obj.getName());
 	}
-	
+
 	public class SomeClass extends BaseOpenmrsObject {
-		
+
 		private Integer id;
-		
+
 		private String name;
-		
+
 		private String description;
-		
+
 		public SomeClass(String name) {
 			setName(name);
 		}
-		
+
 		public SomeClass(String name, String description) {
 			setName(name);
 			setDescription(description);
 		}
-		
+
 		public String getName() {
 			return name;
 		}
-		
+
 		@AllowEmptyStrings
 		public void setName(String name) {
 			this.name = name;
 		}
-		
+
 		public String getDescription() {
 			return description;
 		}
-		
+
 		@AllowLeadingOrTrailingWhitespace
 		public void setDescription(String description) {
 			this.description = description;
 		}
-		
+
 		public void setId(Integer id) {
 			this.id = id;
 		}
-		
+
 		public Integer getId() {
 			return id;
 		}

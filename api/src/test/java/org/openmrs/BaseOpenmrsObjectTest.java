@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -18,149 +18,152 @@ import org.junit.Test;
 import org.openmrs.test.BaseContextSensitiveTest;
 
 public class BaseOpenmrsObjectTest extends BaseContextSensitiveTest {
-	
+
 	private static class BaseOpenmrsObjectMock extends BaseOpenmrsObject {
-		
+
 		@Override
 		public Integer getId() {
 			return null;
 		}
-		
+
 		@Override
 		public void setId(Integer id) {
 		}
-		
+
 	}
-	
+
 	/**
 	 * @see BaseOpenmrsObject#equals(Object)
 	 * @verifies return false if given obj has null uuid
 	 */
 	@Test
-	public void equals_shouldReturnFalseIfGivenObjHasNullUuid() throws Exception {
-		//given
+	public void equals_shouldReturnFalseIfGivenObjHasNullUuid()
+			throws Exception {
+		// given
 		BaseOpenmrsObject o = new BaseOpenmrsObjectMock();
 		BaseOpenmrsObject obj = new BaseOpenmrsObjectMock();
-		
-		//when
+
+		// when
 		obj.setUuid(null);
-		
-		//then
+
+		// then
 		Assert.assertFalse(o.equals(obj));
 	}
-	
+
 	/**
 	 * @see BaseOpenmrsObject#equals(Object)
 	 * @verifies return false if given obj is not instance of BaseOpenmrsObject
 	 */
 	@Test
-	public void equals_shouldReturnFalseIfGivenObjIsNotInstanceOfBaseOpenmrsObject() throws Exception {
-		//given
+	public void equals_shouldReturnFalseIfGivenObjIsNotInstanceOfBaseOpenmrsObject()
+			throws Exception {
+		// given
 		BaseOpenmrsObject o = new BaseOpenmrsObjectMock();
-		
-		//when
+
+		// when
 		Object obj = new Object();
-		
-		//then
+
+		// then
 		Assert.assertFalse(o.equals(obj));
 	}
-	
+
 	/**
 	 * @see BaseOpenmrsObject#equals(Object)
 	 * @verifies return false if given obj is null
 	 */
 	@Test
 	public void equals_shouldReturnFalseIfGivenObjIsNull() throws Exception {
-		//given
+		// given
 		BaseOpenmrsObject o = new BaseOpenmrsObjectMock();
-		
-		//when
+
+		// when
 		BaseOpenmrsObject obj = null;
-		
-		//then
+
+		// then
 		Assert.assertFalse(o.equals(obj));
 	}
-	
+
 	/**
 	 * @see BaseOpenmrsObject#equals(Object)
 	 * @verifies return false if uuid is null
 	 */
 	@Test
 	public void equals_shouldReturnFalseIfUuidIsNull() throws Exception {
-		//given
+		// given
 		BaseOpenmrsObject o = new BaseOpenmrsObjectMock();
 		BaseOpenmrsObject obj = new BaseOpenmrsObjectMock();
-		
-		//when
+
+		// when
 		o.setUuid(null);
-		
-		//then
+
+		// then
 		Assert.assertFalse(o.equals(obj));
 	}
-	
+
 	/**
 	 * @see BaseOpenmrsObject#equals(Object)
 	 * @verifies return true if objects are the same
 	 */
 	@Test
 	public void equals_shouldReturnTrueIfObjectsAreTheSame() throws Exception {
-		//given
+		// given
 		BaseOpenmrsObject o = new BaseOpenmrsObjectMock();
-		
-		//when
+
+		// when
 		BaseOpenmrsObject obj = o;
-		
-		//then
+
+		// then
 		Assert.assertTrue(o.equals(obj));
 	}
-	
+
 	/**
 	 * @see BaseOpenmrsObject#equals(Object)
 	 * @verifies return true if uuids are equal
 	 */
 	@Test
 	public void equals_shouldReturnTrueIfUuidsAreEqual() throws Exception {
-		//given
+		// given
 		BaseOpenmrsObject o = new BaseOpenmrsObjectMock();
 		BaseOpenmrsObject obj = new BaseOpenmrsObjectMock();
-		
-		//when
+
+		// when
 		obj.setUuid(o.getUuid());
-		
-		//then
+
+		// then
 		Assert.assertTrue(o.equals(obj));
 	}
-	
+
 	/**
 	 * @see BaseOpenmrsObject#hashCode()
 	 * @verifies not fail if uuid is null
 	 */
 	@Test
 	public void hashCode_shouldNotFailIfUuidIsNull() throws Exception {
-		//given
+		// given
 		BaseOpenmrsObject o = new BaseOpenmrsObjectMock();
-		
-		//when
+
+		// when
 		o.setUuid(null);
-		
-		//then
+
+		// then
 		o.hashCode();
 	}
-	
+
 	@Test
-	public void shouldNotBeEqualWhenDifferentClassesAndSameId() throws Exception {
+	public void shouldNotBeEqualWhenDifferentClassesAndSameId()
+			throws Exception {
 		Encounter encounter = new Encounter(2);
 		Order order = new Order(2);
-		
+
 		Assert.assertFalse(encounter.equals(order));
 	}
-	
+
 	@Test
 	public void shouldNotBeEqualWhenFirstIsNull() throws Exception {
 		Encounter encounter = new Encounter(2);
 		Assert.assertFalse(encounter.equals(null));
 	}
-	
+
 	/**
 	 * @see BaseOpenmrsObject#toString()
 	 * @verifies include uuid if not null
@@ -168,33 +171,37 @@ public class BaseOpenmrsObjectTest extends BaseContextSensitiveTest {
 	@Test
 	public void toString_shouldIncludeUuidIfNotNull() throws Exception {
 		BaseOpenmrsObject o = new BaseOpenmrsObjectMock();
-		
-		assertEquals("BaseOpenmrsObjectTest.BaseOpenmrsObjectMock[hashCode=" + Integer.toHexString(o.hashCode()) + ",uuid="
-		        + o.getUuid() + "]", o.toString());
+
+		assertEquals("BaseOpenmrsObjectTest.BaseOpenmrsObjectMock[hashCode="
+				+ Integer.toHexString(o.hashCode()) + ",uuid=" + o.getUuid()
+				+ "]", o.toString());
 	}
-	
+
 	/**
 	 * @see BaseOpenmrsObject#toString()
 	 * @verifies include hashcode if uuid is null
 	 */
 	@Test
 	public void toString_shouldIncludeHashCodeIfUuidIsNull() throws Exception {
-		//given
+		// given
 		BaseOpenmrsObject o = new BaseOpenmrsObjectMock();
 		o.setUuid(null);
-		
-		//when
-		//then
-		assertEquals("BaseOpenmrsObjectTest.BaseOpenmrsObjectMock[hashCode=" + Integer.toHexString(o.hashCode())
-		        + ",uuid=<null>]", o.toString());
+
+		// when
+		// then
+		assertEquals("BaseOpenmrsObjectTest.BaseOpenmrsObjectMock[hashCode="
+				+ Integer.toHexString(o.hashCode()) + ",uuid=<null>]",
+				o.toString());
 	}
 
 	/**
 	 * @see BaseOpenmrsObject#equals(Object)
-	 * @verifies return true if given object is instance of super or extending class
+	 * @verifies return true if given object is instance of super or extending
+	 *           class
 	 */
 	@Test
-	public void equals_shouldReturnTrueIfGivenObjectIsInstanceOfSuperOrExtendingClass() throws Exception {
+	public void equals_shouldReturnTrueIfGivenObjectIsInstanceOfSuperOrExtendingClass()
+			throws Exception {
 		Concept concept = new Concept(5);
 		Concept numeric = new ConceptNumeric();
 		numeric.setUuid(concept.getUuid());
@@ -204,10 +211,12 @@ public class BaseOpenmrsObjectTest extends BaseContextSensitiveTest {
 
 	/**
 	 * @see BaseOpenmrsObject#equals(Object)
-	 * @verifies return false if given object is not instance of super or extending class
+	 * @verifies return false if given object is not instance of super or
+	 *           extending class
 	 */
 	@Test
-	public void equals_shouldReturnFalseIfGivenObjIsNotInstanceOfSuperOrExtendingClass() throws Exception {
+	public void equals_shouldReturnFalseIfGivenObjIsNotInstanceOfSuperOrExtendingClass()
+			throws Exception {
 		Encounter encounter = new Encounter();
 		Concept concept = new Concept(5);
 		concept.setUuid(encounter.getUuid());
@@ -217,10 +226,12 @@ public class BaseOpenmrsObjectTest extends BaseContextSensitiveTest {
 
 	/**
 	 * @see BaseOpenmrsObject#equals(Object)
-	 * @verifies return true if given object is subclass of super or extending class
+	 * @verifies return true if given object is subclass of super or extending
+	 *           class
 	 */
 	@Test
-	public void equals_shouldReturnTrueIfGivenObjectIsSubclassOfSuperOrExtendingClass() throws Exception {
+	public void equals_shouldReturnTrueIfGivenObjectIsSubclassOfSuperOrExtendingClass()
+			throws Exception {
 		Order order = new Order(21);
 		DrugOrder type = new DrugOrder(21);
 		type.setUuid(order.getUuid());
@@ -230,10 +241,12 @@ public class BaseOpenmrsObjectTest extends BaseContextSensitiveTest {
 
 	/**
 	 * @see BaseOpenmrsObject#equals(Object)
-	 * @verifies return false if given object is not subclass of super or extending class
+	 * @verifies return false if given object is not subclass of super or
+	 *           extending class
 	 */
 	@Test
-	public void equals_shouldReturnFalseIfGivenObjectIsNotSubclassOfSuperOrExtendingClass() throws Exception {
+	public void equals_shouldReturnFalseIfGivenObjectIsNotSubclassOfSuperOrExtendingClass()
+			throws Exception {
 		Order order = new Order(21);
 		OrderFrequency type = new OrderFrequency();
 		type.setUuid(order.getUuid());
@@ -243,25 +256,32 @@ public class BaseOpenmrsObjectTest extends BaseContextSensitiveTest {
 
 	/**
 	 * @see BaseOpenmrsObject#equals(Object)
-	 * @verifies return false if HibernateProxy of one thing is compared to HibernateProxy of something
+	 * @verifies return false if HibernateProxy of one thing is compared to
+	 *           HibernateProxy of something
 	 */
 	@Test
-	public void equals_shouldReturnfalseIfHibernateProxyOfOneThingIsComparedtoHibernateProxyofSomething() throws Exception {
-		SessionFactory sessionFactory = (SessionFactory) applicationContext.getBean("sessionFactory");
+	public void equals_shouldReturnfalseIfHibernateProxyOfOneThingIsComparedtoHibernateProxyofSomething()
+			throws Exception {
+		SessionFactory sessionFactory = (SessionFactory) applicationContext
+				.getBean("sessionFactory");
 		Session session = sessionFactory.getCurrentSession();
-		Assert.assertFalse((session.load(Patient.class, 2)).equals((session.load(Concept.class, 11))));
+		Assert.assertFalse((session.load(Patient.class, 2)).equals((session
+				.load(Concept.class, 11))));
 	}
 
 	/**
 	 * @see BaseOpenmrsObject#equals(Object)
-	 * @verifies return false if HibernateProxy of onething is compared to Non-HibernateProxy of something
+	 * @verifies return false if HibernateProxy of onething is compared to
+	 *           Non-HibernateProxy of something
 	 */
 	@Test
-	public void equals_shouldReturnFalseIfHibernateProxyOfOneThingIsComparedtoNonHibernateProxyofSomething() throws Exception {
-		SessionFactory sessionFactory = (SessionFactory) applicationContext.getBean("sessionFactory");
+	public void equals_shouldReturnFalseIfHibernateProxyOfOneThingIsComparedtoNonHibernateProxyofSomething()
+			throws Exception {
+		SessionFactory sessionFactory = (SessionFactory) applicationContext
+				.getBean("sessionFactory");
 		Session session = sessionFactory.getCurrentSession();
 
-		//NonHibernate managed class declaration
+		// NonHibernate managed class declaration
 		class TestClass extends BaseOpenmrsObject {
 			private Integer id;
 			TestClass() {
@@ -292,15 +312,18 @@ public class BaseOpenmrsObjectTest extends BaseContextSensitiveTest {
 				return getUuid().equals(other.getUuid());
 			}
 			public String toString() {
-				return new org.apache.commons.lang3.builder.ToStringBuilder(this, org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE).append("hashCode",
-						Integer.toHexString(hashCode())).append("uuid", getUuid()).build();
+				return new org.apache.commons.lang3.builder.ToStringBuilder(
+						this,
+						org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE)
+						.append("hashCode", Integer.toHexString(hashCode()))
+						.append("uuid", getUuid()).build();
 			}
 		}
 
 		Patient patient = (Patient) session.get(Patient.class, 2);
 		String uid = patient.getUuid();
 
-		//NonHibernate managed class Instantiation
+		// NonHibernate managed class Instantiation
 		TestClass obj = new TestClass();
 		obj.setUuid(uid);
 
@@ -313,8 +336,9 @@ public class BaseOpenmrsObjectTest extends BaseContextSensitiveTest {
 	 * @verifies should work on NonHibernate managed classes
 	 */
 	@Test
-	public void equals_shouldWorkOnNonHibernateManagedClasses() throws Exception {
-		//NonHibernate managed class
+	public void equals_shouldWorkOnNonHibernateManagedClasses()
+			throws Exception {
+		// NonHibernate managed class
 		class TestClass extends BaseOpenmrsObject {
 			private Integer id;
 			TestClass() {
@@ -341,18 +365,20 @@ public class BaseOpenmrsObjectTest extends BaseContextSensitiveTest {
 				TestClass other = (TestClass) obj;
 				if (getUuid() == null) {
 					return false;
-				}
-				else {
+				} else {
 					return getUuid().equals(other.getUuid());
 				}
 			}
 			public String toString() {
-				return new org.apache.commons.lang3.builder.ToStringBuilder(this, org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE).append("hashCode",
-						Integer.toHexString(hashCode())).append("uuid", getUuid()).build();
+				return new org.apache.commons.lang3.builder.ToStringBuilder(
+						this,
+						org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE)
+						.append("hashCode", Integer.toHexString(hashCode()))
+						.append("uuid", getUuid()).build();
 			}
 		}
 
-		//Another NonHibernate managed class
+		// Another NonHibernate managed class
 		class AnotherTestClass extends BaseOpenmrsObject {
 			private int id;
 			public boolean equals(Object obj) {
@@ -378,13 +404,13 @@ public class BaseOpenmrsObjectTest extends BaseContextSensitiveTest {
 			}
 		}
 
-		//Object of a NonHibernate managed class
+		// Object of a NonHibernate managed class
 		TestClass testObj = new TestClass();
 		String uuid = testObj.getUuid();
 
 		TestClass testObjsameuuid = new TestClass();
 		testObjsameuuid.setUuid(uuid);
-		//Object of Another NonHibernate managed class
+		// Object of Another NonHibernate managed class
 		AnotherTestClass anotherTestObj = new AnotherTestClass();
 		anotherTestObj.setUuid(uuid);
 
@@ -402,11 +428,13 @@ public class BaseOpenmrsObjectTest extends BaseContextSensitiveTest {
 
 	/**
 	 * @see BaseOpenmrsObject#equals(Object)
-	 * @verifies should return true if the HibernateProxy of one object is compared to NonHibernateProxy of the same object
+	 * @verifies should return true if the HibernateProxy of one object is
+	 *           compared to NonHibernateProxy of the same object
 	 */
 	@Test
-	public void equals_shouldReturnTrueIfHibernateProxyOfOneObjectComparedToNonHibernateProxyOfTheSameObject(){
-		SessionFactory sessionFactory = (SessionFactory) applicationContext.getBean("sessionFactory");
+	public void equals_shouldReturnTrueIfHibernateProxyOfOneObjectComparedToNonHibernateProxyOfTheSameObject() {
+		SessionFactory sessionFactory = (SessionFactory) applicationContext
+				.getBean("sessionFactory");
 		Session session = sessionFactory.getCurrentSession();
 
 		Patient patient = (Patient) session.get(Patient.class, 2);
@@ -417,13 +445,16 @@ public class BaseOpenmrsObjectTest extends BaseContextSensitiveTest {
 
 	/**
 	 * @see BaseOpenmrsObject#equals(Object)
-	 * @verifies should return true if HibernateProxy of some object compared to AnotherHibernateProxy of The same object
+	 * @verifies should return true if HibernateProxy of some object compared to
+	 *           AnotherHibernateProxy of The same object
 	 */
 	@Test
-	public void equals_shouldReturnTrueIfHibernateProxyOfSomeObjectComparedToAnotherHibernateProxyOfTheSameObject(){
-		SessionFactory sessionFactory = (SessionFactory) applicationContext.getBean("sessionFactory");
+	public void equals_shouldReturnTrueIfHibernateProxyOfSomeObjectComparedToAnotherHibernateProxyOfTheSameObject() {
+		SessionFactory sessionFactory = (SessionFactory) applicationContext
+				.getBean("sessionFactory");
 		Session session = sessionFactory.getCurrentSession();
 
-		Assert.assertTrue(session.load(Patient.class, 2).equals((session.load(Patient.class, 2)))) ;
+		Assert.assertTrue(session.load(Patient.class, 2).equals(
+				(session.load(Patient.class, 2))));
 	}
 }

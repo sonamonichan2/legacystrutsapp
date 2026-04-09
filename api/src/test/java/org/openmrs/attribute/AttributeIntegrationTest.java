@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -24,47 +24,50 @@ import org.openmrs.api.context.Context;
 import org.openmrs.test.BaseContextSensitiveTest;
 
 /**
- * Integration tests for using {@link BaseAttribute}, {@link BaseAttributeType}, and {@link AttributeHandler}
- * in concert.
+ * Integration tests for using {@link BaseAttribute}, {@link BaseAttributeType},
+ * and {@link AttributeHandler} in concert.
  */
 public class AttributeIntegrationTest extends BaseContextSensitiveTest {
-	
+
 	VisitService service;
-	
+
 	@Before
 	public void before() {
 		service = Context.getVisitService();
 	}
-	
+
 	@Test
-	public void shouldTestAddingAnAttributeToSomethingAndSavingIt() throws Exception {
+	public void shouldTestAddingAnAttributeToSomethingAndSavingIt()
+			throws Exception {
 		Visit visit = service.getVisit(1);
 		VisitAttributeType auditDate = service.getVisitAttributeType(1);
-		
+
 		VisitAttribute legalDate = new VisitAttribute();
 		legalDate.setAttributeType(auditDate);
-		// try using a subclass of java.util.Date, to make sure the handler can take subclasses.
-		legalDate.setValue(new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse("2011-04-15").getTime()));
+		// try using a subclass of java.util.Date, to make sure the handler can
+		// take subclasses.
+		legalDate.setValue(new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd")
+				.parse("2011-04-15").getTime()));
 		visit.addAttribute(legalDate);
-		
+
 		service.saveVisit(visit);
-		
-		// saving the visit should have caused the date to be validated and saved
+
+		// saving the visit should have caused the date to be validated and
+		// saved
 		Assert.assertNotNull(legalDate.getValueReference());
 		Assert.assertEquals("2011-04-15", legalDate.getValueReference());
-		
+
 		VisitAttribute badDate = new VisitAttribute();
 		badDate.setAttributeType(auditDate);
 		// no value
 		visit.addAttribute(badDate);
-		
+
 		try {
 			service.saveVisit(visit);
 			Assert.fail("Should have failed because of bad date attribute");
-		}
-		catch (APIException ex) {
+		} catch (APIException ex) {
 			// expected this
 		}
 	}
-	
+
 }

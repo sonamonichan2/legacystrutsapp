@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -19,17 +19,17 @@ import org.openmrs.api.context.Context;
 import org.springframework.util.StringUtils;
 
 /**
- * Allows for serializing/deserializing a Patient object to a string so that Spring knows how to
- * pass a Person back and forth through an html form or other medium
- * <br>
+ * Allows for serializing/deserializing a Patient object to a string so that
+ * Spring knows how to pass a Person back and forth through an html form or
+ * other medium <br>
  * In version 1.9, added ability for this to also retrieve objects by uuid
- *
+ * 
  * @see Patient
  */
 public class PatientEditor extends PropertyEditorSupport {
-	
+
 	private Log log = LogFactory.getLog(this.getClass());
-	
+
 	/**
 	 * @should set using id
 	 * @should set using uuid
@@ -41,20 +41,20 @@ public class PatientEditor extends PropertyEditorSupport {
 		if (StringUtils.hasText(text)) {
 			try {
 				setValue(ps.getPatient(Integer.valueOf(text)));
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				Patient patient = ps.getPatientByUuid(text);
 				setValue(patient);
 				if (patient == null) {
 					log.error("Error setting text: " + text, ex);
-					throw new IllegalArgumentException("Patient not found: " + ex.getMessage());
+					throw new IllegalArgumentException("Patient not found: "
+							+ ex.getMessage());
 				}
 			}
 		} else {
 			setValue(null);
 		}
 	}
-	
+
 	/**
 	 * @see java.beans.PropertyEditorSupport#getAsText()
 	 */
@@ -66,5 +66,5 @@ public class PatientEditor extends PropertyEditorSupport {
 			return t.getPatientId().toString();
 		}
 	}
-	
+
 }

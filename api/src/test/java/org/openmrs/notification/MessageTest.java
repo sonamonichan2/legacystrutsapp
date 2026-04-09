@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -20,9 +20,10 @@ import org.openmrs.test.Verifies;
  * Unit testing for the Message class
  */
 public class MessageTest {
-	
+
 	/**
-	 * Convenience method to create a reusable/retestable message object with an attachment.
+	 * Convenience method to create a reusable/retestable message object with an
+	 * attachment.
 	 * 
 	 * @return a testable {@link Message} object
 	 */
@@ -35,13 +36,14 @@ public class MessageTest {
 		String attachment = "attachment";
 		String attachmentContentType = "text/plain";
 		String attachmentFileName = "moo.txt";
-		
-		return new Message(id, recipients, sender, subject, content, attachment, attachmentContentType, attachmentFileName);
+
+		return new Message(id, recipients, sender, subject, content,
+				attachment, attachmentContentType, attachmentFileName);
 	}
-	
+
 	/**
-	 * Convenience method to create a reusable/retestable message object with only the basic
-	 * to/form/subject/content filled in.
+	 * Convenience method to create a reusable/retestable message object with
+	 * only the basic to/form/subject/content filled in.
 	 * 
 	 * @return a testable {@link Message} object
 	 */
@@ -51,10 +53,10 @@ public class MessageTest {
 		String sender = "foo@bar.com";
 		String subject = "moo";
 		String content = "message";
-		
+
 		return new Message(id, recipients, sender, subject, content);
 	}
-	
+
 	/**
 	 * @see Message#Message(Integer,String,String,String,String,String,String,String)
 	 */
@@ -69,16 +71,16 @@ public class MessageTest {
 		String attachment = "attachment";
 		String attachmentContentType = "text/plain";
 		String attachmentFileName = "moo.txt";
-		
-		Message toTest = new Message(id, recipients, sender, subject, content, attachment, attachmentContentType,
-		        attachmentFileName);
+
+		Message toTest = new Message(id, recipients, sender, subject, content,
+				attachment, attachmentContentType, attachmentFileName);
 		assertEquals((int) toTest.getId(), 1);
 		assertEquals(recipients, toTest.getRecipients());
 		assertEquals(sender, toTest.getSender());
 		assertEquals(subject, toTest.getSubject());
 		assertEquals(content, toTest.getContent());
 	}
-	
+
 	/**
 	 * @see Message#setRecipients(String)
 	 */
@@ -86,14 +88,14 @@ public class MessageTest {
 	@Verifies(value = "should set multiple recipients", method = "setRecipients(String)")
 	public void setRecipients_shouldSetMultipleRecipients() throws Exception {
 		Message testMessage = createTestMessage1();
-		
+
 		String recipients = "recipient1@example.com,recipient2@example.com";
-		
+
 		testMessage.setRecipients(recipients);
-		
+
 		assertEquals(testMessage.getRecipients(), recipients);
 	}
-	
+
 	/**
 	 * @see Message#addRecipient(String)
 	 */
@@ -101,26 +103,28 @@ public class MessageTest {
 	@Verifies(value = "should add new recipient", method = "addRecipient(String)")
 	public void addRecipient_shouldAddNewRecipient() throws Exception {
 		Message testMessage = createTestMessage1();
-		
+
 		String oldRecipients = testMessage.getRecipients();
 		String newRecipient = "bob@example.com";
-		
+
 		testMessage.addRecipient(newRecipient);
-		
-		assertEquals(testMessage.getRecipients(), oldRecipients + "," + newRecipient);
+
+		assertEquals(testMessage.getRecipients(), oldRecipients + ","
+				+ newRecipient);
 	}
-	
+
 	/**
 	 * @see Message#hasAttachment()
 	 */
 	@Test
 	@Verifies(value = "should r return true if this message has an attachment", method = "hasAttachment()")
-	public void hasAttachment_shouldRReturnTrueIfThisMessageHasAnAttachment() throws Exception {
+	public void hasAttachment_shouldRReturnTrueIfThisMessageHasAnAttachment()
+			throws Exception {
 		Message testMessage1 = createTestMessage1();
 		Message testMessage2 = createTestMessage2();
-		
+
 		assertTrue(testMessage1.hasAttachment());
 		assertFalse(testMessage2.hasAttachment());
 	}
-	
+
 }

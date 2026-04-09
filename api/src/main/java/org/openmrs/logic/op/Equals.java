@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -13,13 +13,15 @@ package org.openmrs.logic.op;
  * The Equals operator will test whether a result equals to an operand or not.<br>
  * <br>
  * Example: <br>
- * - <code>logicService.parse("EncounterDataSource.ENCOUNTER_KEY").equals("ADULTRETURN");</code><br>
+ * -
+ * <code>logicService.parse("EncounterDataSource.ENCOUNTER_KEY").equals("ADULTRETURN");</code>
+ * <br>
  * The above will give us a criteria to get only ADULTRETURN encounters
  */
 public class Equals implements ComparisonOperator {
-	
+
 	public String toString() {
 		return "EQUALS";
 	}
-	
+
 }

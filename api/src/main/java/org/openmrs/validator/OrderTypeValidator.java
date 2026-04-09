@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -25,12 +25,12 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.10
  */
-@Handler(supports = { OrderType.class })
+@Handler(supports = {OrderType.class})
 public class OrderTypeValidator implements Validator {
-	
+
 	// Log for this class
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -41,7 +41,7 @@ public class OrderTypeValidator implements Validator {
 	public boolean supports(Class c) {
 		return OrderType.class.isAssignableFrom(c);
 	}
-	
+
 	/**
 	 * Validates an Order object
 	 * 
@@ -64,7 +64,9 @@ public class OrderTypeValidator implements Validator {
 	@Override
 	public void validate(Object obj, Errors errors) {
 		if (obj == null || !(obj instanceof OrderType)) {
-			throw new IllegalArgumentException("The parameter obj should not be null and must be of type" + OrderType.class);
+			throw new IllegalArgumentException(
+					"The parameter obj should not be null and must be of type"
+							+ OrderType.class);
 		} else {
 			OrderType orderType = (OrderType) obj;
 			String name = orderType.getName();
@@ -72,36 +74,49 @@ public class OrderTypeValidator implements Validator {
 				errors.rejectValue("name", "error.name");
 				return;
 			}
-			
-			if (orderType.getParent() != null && OrderUtil.isType(orderType, orderType.getParent())) {
-				errors.rejectValue("parent", "OrderType.parent.amongDescendants", new Object[] { orderType.getName() },
-				    "Parent of " + orderType.getName() + " is among its descendants");
+
+			if (orderType.getParent() != null
+					&& OrderUtil.isType(orderType, orderType.getParent())) {
+				errors.rejectValue("parent",
+						"OrderType.parent.amongDescendants",
+						new Object[]{orderType.getName()}, "Parent of "
+								+ orderType.getName()
+								+ " is among its descendants");
 			}
-			
-			OrderType duplicate = Context.getOrderService().getOrderTypeByName(name);
+
+			OrderType duplicate = Context.getOrderService().getOrderTypeByName(
+					name);
 			if (duplicate != null && !orderType.equals(duplicate)) {
-				errors.rejectValue("name", "OrderType.duplicate.name", "Duplicate order type name: " + name);
+				errors.rejectValue("name", "OrderType.duplicate.name",
+						"Duplicate order type name: " + name);
 			}
-			
+
 			for (OrderType ot : Context.getOrderService().getOrderTypes(true)) {
 				if (ot != null) {
-					//If this was an edit, skip past the order we are actually validating 
+					// If this was an edit, skip past the order we are actually
+					// validating
 					if (orderType.equals(ot)) {
 						continue;
 					}
 					int index = 0;
 					for (ConceptClass cc : ot.getConceptClasses()) {
-						if (cc != null && orderType.getConceptClasses().contains(cc)) {
-							errors.rejectValue("conceptClasses[" + index + "]", "OrderType.duplicate", new Object[] {
-							        cc.getName(), orderType.getName() }, cc.getName()
-							        + " is already associated to another order type:" + orderType.getName());
+						if (cc != null
+								&& orderType.getConceptClasses().contains(cc)) {
+							errors.rejectValue(
+									"conceptClasses[" + index + "]",
+									"OrderType.duplicate",
+									new Object[]{cc.getName(),
+											orderType.getName()},
+									cc.getName()
+											+ " is already associated to another order type:"
+											+ orderType.getName());
 						}
 						index++;
 					}
 				}
 			}
-			ValidateUtil
-			        .validateFieldLengths(errors, obj.getClass(), "name", "description", "retireReason", "javaClassName");
+			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name",
+					"description", "retireReason", "javaClassName");
 		}
 	}
 }

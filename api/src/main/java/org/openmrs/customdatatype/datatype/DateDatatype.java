@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -20,22 +20,24 @@ import org.openmrs.customdatatype.SerializingCustomDatatype;
 import org.springframework.stereotype.Component;
 
 /**
- * Datatype for a Date (without time), represented by a java.util.Date. 
+ * Datatype for a Date (without time), represented by a java.util.Date.
+ * 
  * @since 1.9
  */
 @Component
 public class DateDatatype extends SerializingCustomDatatype<Date> {
-	
+
 	final static String dateFormat = "yyyy-MM-dd";
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#doGetTextSummary(java.lang.Object)
 	 */
 	@Override
 	public CustomDatatype.Summary doGetTextSummary(Date typedValue) {
-		return new CustomDatatype.Summary(Context.getDateFormat().format(typedValue), true);
+		return new CustomDatatype.Summary(Context.getDateFormat().format(
+				typedValue), true);
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#deserialize(java.lang.String)
 	 * @should reconstruct a date serialized by this handler
@@ -47,12 +49,12 @@ public class DateDatatype extends SerializingCustomDatatype<Date> {
 		}
 		try {
 			return new SimpleDateFormat(dateFormat).parse(serializedValue);
-		}
-		catch (Exception ex) {
-			throw new InvalidCustomValueException("Invalid date: " + serializedValue);
+		} catch (Exception ex) {
+			throw new InvalidCustomValueException("Invalid date: "
+					+ serializedValue);
 		}
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#serialize(java.lang.Object)
 	 * @should convert a date into a ymd string representation
@@ -61,5 +63,5 @@ public class DateDatatype extends SerializingCustomDatatype<Date> {
 	public String serialize(Date typedValue) {
 		return new SimpleDateFormat(dateFormat).format(typedValue);
 	}
-	
+
 }

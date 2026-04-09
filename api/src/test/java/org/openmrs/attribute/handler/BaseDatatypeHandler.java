@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -12,10 +12,12 @@ package org.openmrs.attribute.handler;
 import org.openmrs.customdatatype.CustomDatatype;
 import org.openmrs.customdatatype.CustomDatatypeHandler;
 
-public abstract class BaseDatatypeHandler<DT extends CustomDatatype<T>, T> implements CustomDatatypeHandler<DT, T> {
-	
+public abstract class BaseDatatypeHandler<DT extends CustomDatatype<T>, T>
+		implements
+			CustomDatatypeHandler<DT, T> {
+
 	@Override
 	public void setHandlerConfiguration(String handlerConfig) {
-		
+
 	}
 }

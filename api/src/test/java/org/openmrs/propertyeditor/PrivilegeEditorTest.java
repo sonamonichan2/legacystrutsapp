@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -15,14 +15,14 @@ import org.junit.Test;
 import org.openmrs.test.BaseContextSensitiveTest;
 
 public class PrivilegeEditorTest extends BaseContextSensitiveTest {
-	
+
 	protected static final String XML_FILENAME = "org/openmrs/api/include/UserServiceTest.xml";
-	
+
 	@Before
 	public void prepareData() throws Exception {
 		executeDataSet(XML_FILENAME);
 	}
-	
+
 	/**
 	 * @see PrivilegeEditor#setAsText(String)
 	 * @verifies set using name
@@ -33,7 +33,7 @@ public class PrivilegeEditorTest extends BaseContextSensitiveTest {
 		editor.setAsText("Some Privilege");
 		Assert.assertNotNull(editor.getValue());
 	}
-	
+
 	/**
 	 * @see PrivilegeEditor#setAsText(String)
 	 * @verifies set using uuid

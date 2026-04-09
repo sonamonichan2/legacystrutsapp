@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -17,66 +17,76 @@ import org.springframework.validation.Errors;
  * @since 1.10
  */
 public class ValidationException extends APIException {
-	
+
 	public static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Spring Errors object associated with the validation failure
+	 * 
 	 * @since 1.11
 	 */
-	
+
 	private Errors errors;
-	
+
 	/**
-	 * Default empty constructor. If at all possible, don't use this one, but use the
+	 * Default empty constructor. If at all possible, don't use this one, but
+	 * use the
 	 */
 	public ValidationException() {
 	}
-	
+
 	/**
-	 * General constructor to give the end user a helpful message that relates to why this error
-	 * occurred.
+	 * General constructor to give the end user a helpful message that relates
+	 * to why this error occurred.
 	 * 
-	 * @param message helpful message string for the end user
+	 * @param message
+	 *            helpful message string for the end user
 	 */
 	public ValidationException(String message) {
 		super(message);
 	}
-	
+
 	/**
-	 * General constructor to give the end user a helpful message and to also propagate the parent
-	 * error exception message.
+	 * General constructor to give the end user a helpful message and to also
+	 * propagate the parent error exception message.
 	 * 
-	 * @param message helpful message string for the end user
-	 * @param cause the parent exception cause that this ValidationException is wrapping around
+	 * @param message
+	 *            helpful message string for the end user
+	 * @param cause
+	 *            the parent exception cause that this ValidationException is
+	 *            wrapping around
 	 */
 	public ValidationException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	/**
-	 * Constructor used to simply chain a parent exception cause to an ValidationException.
+	 * Constructor used to simply chain a parent exception cause to an
+	 * ValidationException.
 	 * 
-	 * @param cause the parent exception cause that this ValidationException is wrapping around
+	 * @param cause
+	 *            the parent exception cause that this ValidationException is
+	 *            wrapping around
 	 */
 	public ValidationException(Throwable cause) {
 		super(cause);
 	}
-	
+
 	/**
-	 * Constructor used to associate an Spring Errors object with a ValidationException
-	 *
+	 * Constructor used to associate an Spring Errors object with a
+	 * ValidationException
+	 * 
 	 * @param errors
 	 * @since 1.11
 	 */
 	public ValidationException(Errors errors) {
 		this.errors = errors;
 	}
-	
+
 	/**
-	 * Constructor to give the end user a helpful message and to associate an Spring Errors object
-	 * with a ValidationException
-	 *
+	 * Constructor to give the end user a helpful message and to associate an
+	 * Spring Errors object with a ValidationException
+	 * 
 	 * @param errors
 	 * @since 1.11
 	 */
@@ -84,14 +94,14 @@ public class ValidationException extends APIException {
 		super(message);
 		this.errors = errors;
 	}
-	
+
 	/**
 	 * @since 1.11
 	 */
 	public Errors getErrors() {
 		return errors;
 	}
-	
+
 	/**
 	 * @since 1.11
 	 */

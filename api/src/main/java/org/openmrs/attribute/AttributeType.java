@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -14,14 +14,18 @@ import org.openmrs.customdatatype.Customizable;
 import org.openmrs.customdatatype.RepeatingCustomValueDescriptor;
 
 /**
- * Common interface for user-defined extensions to core domain objects, which would be handled by adding
- * custom database columns in a less generic system. 
- * For example Visit has VisitAttributes that are defined by VisitAttributeTypes (that implement
- * AttributeType&lt;Visit&gt;).
+ * Common interface for user-defined extensions to core domain objects, which
+ * would be handled by adding custom database columns in a less generic system.
+ * For example Visit has VisitAttributes that are defined by VisitAttributeTypes
+ * (that implement AttributeType&lt;Visit&gt;).
+ * 
  * @see Attribute
  * @see Customizable
  * @since 1.9
  */
-public interface AttributeType<OwningType extends Customizable<?>> extends RepeatingCustomValueDescriptor, OpenmrsMetadata {
+public interface AttributeType<OwningType extends Customizable<?>>
+		extends
+			RepeatingCustomValueDescriptor,
+			OpenmrsMetadata {
 
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -16,12 +16,13 @@ package org.openmrs.logic.op;
  * -
  * <code>logicService.parse("EncounterDataSource.ENCOUNTER_KEY").equals("ADULTRETURN").notExists();</code>
  * <br>
- * The above will give us a criteria to test whether ADULTRETURN encounter exists or not
+ * The above will give us a criteria to test whether ADULTRETURN encounter
+ * exists or not
  */
 public class NotExists implements TransformOperator {
-	
+
 	public String toString() {
 		return "NOT EXISTS";
 	}
-	
+
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -33,89 +33,102 @@ import org.xml.sax.SAXException;
 
 /**
  * This class will parse an xml sql diff file
- *
+ * 
  * @version 1.0
  */
 public class SqlDiffFileParser {
-	
+
 	private static Log log = LogFactory.getLog(SqlDiffFileParser.class);
-	
+
 	private static final String SQLDIFF_CHANGELOG_FILENAME = "sqldiff.xml";
-	
+
 	/**
 	 * Get the diff map. Return a sorted map&lt;version, sql statements&gt;
-	 *
+	 * 
 	 * @return SortedMap&lt;String, String&gt;
 	 * @throws ModuleException
 	 */
-	public static SortedMap<String, String> getSqlDiffs(Module module) throws ModuleException {
+	public static SortedMap<String, String> getSqlDiffs(Module module)
+			throws ModuleException {
 		if (module == null) {
 			throw new ModuleException("Module cannot be null");
 		}
-		
-		SortedMap<String, String> map = new TreeMap<String, String>(new VersionComparator());
-		
+
+		SortedMap<String, String> map = new TreeMap<String, String>(
+				new VersionComparator());
+
 		InputStream diffStream = null;
-		
+
 		// get the diff stream
 		JarFile jarfile = null;
 		try {
 			try {
 				jarfile = new JarFile(module.getFile());
+			} catch (IOException e) {
+				throw new ModuleException("Unable to get jar file",
+						module.getName(), e);
 			}
-			catch (IOException e) {
-				throw new ModuleException("Unable to get jar file", module.getName(), e);
-			}
-			
-			diffStream = ModuleUtil.getResourceFromApi(jarfile, module.getModuleId(), module.getVersion(),
-			    SQLDIFF_CHANGELOG_FILENAME);
+
+			diffStream = ModuleUtil.getResourceFromApi(jarfile,
+					module.getModuleId(), module.getVersion(),
+					SQLDIFF_CHANGELOG_FILENAME);
 			if (diffStream == null) {
 				// Try the old way. Loading from the root of the omod
-				ZipEntry diffEntry = jarfile.getEntry(SQLDIFF_CHANGELOG_FILENAME);
+				ZipEntry diffEntry = jarfile
+						.getEntry(SQLDIFF_CHANGELOG_FILENAME);
 				if (diffEntry == null) {
-					log.debug("No sqldiff.xml found for module: " + module.getName());
+					log.debug("No sqldiff.xml found for module: "
+							+ module.getName());
 					return map;
 				} else {
 					try {
 						diffStream = jarfile.getInputStream(diffEntry);
-					}
-					catch (IOException e) {
-						throw new ModuleException("Unable to get sql diff file stream", module.getName(), e);
+					} catch (IOException e) {
+						throw new ModuleException(
+								"Unable to get sql diff file stream",
+								module.getName(), e);
 					}
 				}
 			}
-			
+
 			try {
 				// turn the diff stream into an xml document
 				Document diffDoc = null;
 				try {
-					DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+					DocumentBuilderFactory dbf = DocumentBuilderFactory
+							.newInstance();
 					DocumentBuilder db = dbf.newDocumentBuilder();
 					db.setEntityResolver(new EntityResolver() {
-						
+
 						@Override
-						public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
-							// When asked to resolve external entities (such as a DTD) we return an InputSource
-							// with no data at the end, causing the parser to ignore the DTD.
+						public InputSource resolveEntity(String publicId,
+								String systemId) throws SAXException,
+								IOException {
+							// When asked to resolve external entities (such as
+							// a DTD) we return an InputSource
+							// with no data at the end, causing the parser to
+							// ignore the DTD.
 							return new InputSource(new StringReader(""));
 						}
 					});
 					diffDoc = db.parse(diffStream);
+				} catch (Exception e) {
+					throw new ModuleException(
+							"Error parsing diff sqldiff.xml file",
+							module.getName(), e);
 				}
-				catch (Exception e) {
-					throw new ModuleException("Error parsing diff sqldiff.xml file", module.getName(), e);
-				}
-				
+
 				Element rootNode = diffDoc.getDocumentElement();
-				
+
 				String diffVersion = rootNode.getAttribute("version");
-				
+
 				if (!validConfigVersions().contains(diffVersion)) {
-					throw new ModuleException("Invalid config version: " + diffVersion, module.getModuleId());
+					throw new ModuleException("Invalid config version: "
+							+ diffVersion, module.getModuleId());
 				}
-				
+
 				NodeList diffNodes = getDiffNodes(rootNode, diffVersion);
-				
+
 				if (diffNodes != null && diffNodes.getLength() > 0) {
 					int i = 0;
 					while (i < diffNodes.getLength()) {
@@ -125,38 +138,36 @@ public class SqlDiffFileParser {
 						map.put(version, sql);
 					}
 				}
-			}
-			catch (ModuleException e) {
+			} catch (ModuleException e) {
 				if (diffStream != null) {
 					try {
 						diffStream.close();
-					}
-					catch (IOException io) {
-						log.error("Error while closing config stream for module: " + module.getModuleId(), io);
+					} catch (IOException io) {
+						log.error(
+								"Error while closing config stream for module: "
+										+ module.getModuleId(), io);
 					}
 				}
-				
+
 				// rethrow the moduleException
 				throw e;
 			}
-			
-		}
-		finally {
+
+		} finally {
 			try {
 				if (jarfile != null) {
 					jarfile.close();
 				}
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				log.warn("Unable to close jarfile: " + jarfile.getName());
 			}
 		}
 		return map;
 	}
-	
+
 	/**
 	 * Generic method to get a module tag
-	 *
+	 * 
 	 * @param element
 	 * @param version
 	 * @param tag
@@ -168,10 +179,10 @@ public class SqlDiffFileParser {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * List of the valid sqldiff versions
-	 *
+	 * 
 	 * @return
 	 */
 	private static List<String> validConfigVersions() {
@@ -179,22 +190,22 @@ public class SqlDiffFileParser {
 		versions.add("1.0");
 		return versions;
 	}
-	
+
 	/**
 	 * Finds the nodes that contain diff information
-	 *
+	 * 
 	 * @param element
 	 * @param version
 	 * @return
 	 */
 	private static NodeList getDiffNodes(Element element, String version) {
 		NodeList diffNodes = null;
-		
+
 		if ("1.0".equals(version)) {
 			diffNodes = element.getElementsByTagName("diff");
 		}
-		
+
 		return diffNodes;
 	}
-	
+
 }

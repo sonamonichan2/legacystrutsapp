@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -35,13 +35,13 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Component
 public class WebTestHelper {
-	
+
 	@Autowired(required = false)
 	List<HandlerAdapter> handlerAdapters;
-	
+
 	@Autowired(required = false)
 	List<HandlerMapping> handlerMappings;
-	
+
 	/**
 	 * Creates a GET request.
 	 * 
@@ -49,10 +49,11 @@ public class WebTestHelper {
 	 * @return
 	 */
 	public MockHttpServletRequest newGET(final String requestURI) {
-		MockHttpServletRequest request = new MockHttpServletRequest("GET", requestURI);
+		MockHttpServletRequest request = new MockHttpServletRequest("GET",
+				requestURI);
 		return request;
 	}
-	
+
 	/**
 	 * Creates a chained GET request (within a single HttpSession).
 	 * 
@@ -60,12 +61,14 @@ public class WebTestHelper {
 	 * @param session
 	 * @return
 	 */
-	public MockHttpServletRequest newGET(final String requestURI, final Response previousResponse) {
-		MockHttpServletRequest request = new MockHttpServletRequest("GET", requestURI);
+	public MockHttpServletRequest newGET(final String requestURI,
+			final Response previousResponse) {
+		MockHttpServletRequest request = new MockHttpServletRequest("GET",
+				requestURI);
 		request.setSession(previousResponse.session);
 		return request;
 	}
-	
+
 	/**
 	 * Creates a POST request.
 	 * 
@@ -73,10 +76,11 @@ public class WebTestHelper {
 	 * @return
 	 */
 	public MockHttpServletRequest newPOST(final String requestURI) {
-		MockHttpServletRequest request = new MockHttpServletRequest("POST", requestURI);
+		MockHttpServletRequest request = new MockHttpServletRequest("POST",
+				requestURI);
 		return request;
 	}
-	
+
 	/**
 	 * Creates a chained POST request (within a single HttpSession).
 	 * 
@@ -84,12 +88,14 @@ public class WebTestHelper {
 	 * @param previousResponse
 	 * @return
 	 */
-	public MockHttpServletRequest newPOST(final String requestURI, final Response previousResponse) {
-		MockHttpServletRequest request = new MockHttpServletRequest("POST", requestURI);
+	public MockHttpServletRequest newPOST(final String requestURI,
+			final Response previousResponse) {
+		MockHttpServletRequest request = new MockHttpServletRequest("POST",
+				requestURI);
 		request.setSession(previousResponse.session);
 		return request;
 	}
-	
+
 	/**
 	 * Handles the request with a proper controller.
 	 * 
@@ -99,16 +105,17 @@ public class WebTestHelper {
 	 */
 	public Response handle(final HttpServletRequest request) throws Exception {
 		if (handlerMappings == null || handlerAdapters == null) {
-			throw new UnsupportedOperationException("The web context is not configured!");
+			throw new UnsupportedOperationException(
+					"The web context is not configured!");
 		}
-		
-		//Simulate a request with a fresh Hibernate session
+
+		// Simulate a request with a fresh Hibernate session
 		Context.flushSession();
 		Context.clearSession();
-		
+
 		final MockHttpServletResponse response = new MockHttpServletResponse();
 		ModelAndView modelAndView = null;
-		
+
 		HandlerExecutionChain handlerChain = null;
 		for (HandlerMapping handlerMapping : handlerMappings) {
 			handlerChain = handlerMapping.getHandler(request);
@@ -116,42 +123,51 @@ public class WebTestHelper {
 				break;
 			}
 		}
-		Assert.assertNotNull("The requested URI has no mapping: " + request.getRequestURI(), handlerChain);
-		
+		Assert.assertNotNull(
+				"The requested URI has no mapping: " + request.getRequestURI(),
+				handlerChain);
+
 		boolean supported = false;
 		for (HandlerAdapter handlerAdapter : handlerAdapters) {
 			final Object handler = handlerChain.getHandler();
 			if (handlerAdapter.supports(handler)) {
-				Assert.assertFalse("The requested URI has more than one handler: " + request.getRequestURI(), supported);
-				
-				modelAndView = handlerAdapter.handle(request, response, handler);
+				Assert.assertFalse(
+						"The requested URI has more than one handler: "
+								+ request.getRequestURI(), supported);
+
+				modelAndView = handlerAdapter
+						.handle(request, response, handler);
 				supported = true;
 			}
 		}
-		
-		Assert.assertTrue("The requested URI has no handlers: " + request.getRequestURI(), supported);
-		
+
+		Assert.assertTrue(
+				"The requested URI has no handlers: " + request.getRequestURI(),
+				supported);
+
 		return new Response(response, request.getSession(), modelAndView);
 	}
-	
+
 	public static class Response {
-		
+
 		public final MockHttpServletResponse http;
-		
+
 		public final HttpSession session;
-		
+
 		public final ModelAndView modelAndView;
-		
-		public Response(MockHttpServletResponse http, HttpSession session, ModelAndView modelAndView) {
+
+		public Response(MockHttpServletResponse http, HttpSession session,
+				ModelAndView modelAndView) {
 			this.http = http;
 			this.session = session;
 			this.modelAndView = modelAndView;
 		}
-		
+
 		public Errors getErrors(String model) {
-			return (Errors) modelAndView.getModel().get(BindException.MODEL_KEY_PREFIX + model);
+			return (Errors) modelAndView.getModel().get(
+					BindException.MODEL_KEY_PREFIX + model);
 		}
-		
+
 		public Errors getErrors() {
 			return getErrors("command");
 		}

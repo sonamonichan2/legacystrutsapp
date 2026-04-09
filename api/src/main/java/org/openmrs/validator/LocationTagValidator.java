@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -20,9 +20,9 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.7
  */
-@Handler(supports = { LocationTag.class }, order = 50)
+@Handler(supports = {LocationTag.class}, order = 50)
 public class LocationTagValidator implements Validator {
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
 	 */
@@ -30,7 +30,7 @@ public class LocationTagValidator implements Validator {
 	public boolean supports(Class clazz) {
 		return LocationTag.class.isAssignableFrom(clazz);
 	}
-	
+
 	/**
 	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
 	 *      org.springframework.validation.Errors)
@@ -40,9 +40,11 @@ public class LocationTagValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		if (target != null) {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "LocationTag.error.name.required");
-			ValidateUtil.validateFieldLengths(errors, target.getClass(), "name", "description", "retireReason");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name",
+					"LocationTag.error.name.required");
+			ValidateUtil.validateFieldLengths(errors, target.getClass(),
+					"name", "description", "retireReason");
 		}
 	}
-	
+
 }

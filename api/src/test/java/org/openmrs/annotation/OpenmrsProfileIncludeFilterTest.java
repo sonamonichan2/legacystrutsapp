@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -20,18 +20,19 @@ import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 
 public class OpenmrsProfileIncludeFilterTest extends BaseContextSensitiveTest {
-	
+
 	/**
 	 * @see OpenmrsProfileIncludeFilter#match(MetadataReader,MetadataReaderFactory)
 	 * @verifies create bean for openmrs 1_8 and later
 	 */
 	@Test
 	public void match_shouldCreateBeanForOpenmrs1_8AndLater() throws Exception {
-		OpenmrsComponent1_8 bean = applicationContext.getBean(OpenmrsComponent1_8.class);
-		
+		OpenmrsComponent1_8 bean = applicationContext
+				.getBean(OpenmrsComponent1_8.class);
+
 		assertThat(bean, is(notNullValue()));
 	}
-	
+
 	/**
 	 * @see OpenmrsProfileIncludeFilter#match(MetadataReader,MetadataReaderFactory)
 	 * @verifies not create bean for openmrs 1_6 to 1_7
@@ -40,5 +41,5 @@ public class OpenmrsProfileIncludeFilterTest extends BaseContextSensitiveTest {
 	public void match_shouldNotCreateBeanForOpenmrs1_6To1_7() throws Exception {
 		applicationContext.getBean(OpenmrsComponent1_6To1_7.class);
 	}
-	
+
 }

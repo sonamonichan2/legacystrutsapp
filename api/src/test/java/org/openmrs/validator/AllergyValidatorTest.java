@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -44,39 +44,41 @@ import org.openmrs.api.AdministrationService;
 import org.openmrs.test.BaseContextSensitiveTest;
 
 public class AllergyValidatorTest extends BaseContextSensitiveTest {
-	
+
 	private static final String ALLERGY_OTHER_NONCODED_TEST_DATASET = "org/openmrs/api/include/otherNonCodedConcept.xml";
-	
+
 	@Rule
 	public ExpectedException expectedException = ExpectedException.none();
-	
+
 	@InjectMocks
 	private AllergyValidator validator;
-	
+
 	@Mock
 	private PatientService ps;
-	
+
 	@Before
 	public void setup() throws Exception {
 		executeDataSet(ALLERGY_OTHER_NONCODED_TEST_DATASET);
-		Allergen.setOtherNonCodedConceptUuid(Context.getAdministrationService().getGlobalProperty(
-			    OpenmrsConstants.GP_ALLERGEN_OTHER_NON_CODED_UUID));
+		Allergen.setOtherNonCodedConceptUuid(Context.getAdministrationService()
+				.getGlobalProperty(
+						OpenmrsConstants.GP_ALLERGEN_OTHER_NON_CODED_UUID));
 	}
-	
+
 	private Concept createMockConcept(String uuid) {
 		Concept concept = mock(Concept.class);
 		when(concept.getUuid()).thenReturn(uuid != null ? uuid : "some uuid");
 		when(concept.getName()).thenReturn(new ConceptName());
 		return concept;
 	}
-	
+
 	private String getOtherNonCodedConceptUuid() {
 		return "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 	}
-	
+
 	/**
 	 * @verifies fail for a null value
-	 * @see AllergyValidator#validate(Object, org.springframework.validation.Errors)
+	 * @see AllergyValidator#validate(Object,
+	 *      org.springframework.validation.Errors)
 	 */
 	@Test
 	public void validate_shouldFailForANullValue() throws Exception {
@@ -87,10 +89,11 @@ public class AllergyValidatorTest extends BaseContextSensitiveTest {
 		allergy = null;
 		validator.validate(allergy, errors);
 	}
-	
+
 	/**
 	 * @verifies fail if patient is null
-	 * @see AllergyValidator#validate(Object, org.springframework.validation.Errors)
+	 * @see AllergyValidator#validate(Object,
+	 *      org.springframework.validation.Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfPatientIsNull() throws Exception {
@@ -99,10 +102,11 @@ public class AllergyValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(allergy, errors);
 		assertTrue(errors.hasFieldErrors("patient"));
 	}
-	
+
 	/**
 	 * @verifies fail id allergenType is null
-	 * @see AllergyValidator#validate(Object, org.springframework.validation.Errors)
+	 * @see AllergyValidator#validate(Object,
+	 *      org.springframework.validation.Errors)
 	 */
 	@Test
 	public void validate_shouldFailIdAllergenTypeIsNull() throws Exception {
@@ -111,10 +115,11 @@ public class AllergyValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(allergy, errors);
 		assertTrue(errors.hasFieldErrors("allergen"));
 	}
-	
+
 	/**
 	 * @verifies fail if allergen is null
-	 * @see AllergyValidator#validate(Object, org.springframework.validation.Errors)
+	 * @see AllergyValidator#validate(Object,
+	 *      org.springframework.validation.Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfAllergenIsNull() throws Exception {
@@ -123,10 +128,11 @@ public class AllergyValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(allergy, errors);
 		assertTrue(errors.hasFieldErrors("allergen"));
 	}
-	
+
 	/**
 	 * @verifies fail if codedAllergen is null
-	 * @see AllergyValidator#validate(Object, org.springframework.validation.Errors)
+	 * @see AllergyValidator#validate(Object,
+	 *      org.springframework.validation.Errors)
 	 */
 	@Test
 	public void validate_shouldFailIfCodedAllergenIsNull() throws Exception {
@@ -136,68 +142,83 @@ public class AllergyValidatorTest extends BaseContextSensitiveTest {
 		validator.validate(allergy, errors);
 		assertTrue(errors.hasFieldErrors("allergen"));
 	}
-	
+
 	/**
-	 * @verifies fail if nonCodedAllergen is null and allergen is set to other non coded
-	 * @see AllergyValidator#validate(Object, org.springframework.validation.Errors)
+	 * @verifies fail if nonCodedAllergen is null and allergen is set to other
+	 *           non coded
+	 * @see AllergyValidator#validate(Object,
+	 *      org.springframework.validation.Errors)
 	 */
 	@Test
-	public void validate_shouldFailIfNonCodedAllergenIsNullAndAllergenIsSetToOtherNonCoded() throws Exception {
+	public void validate_shouldFailIfNonCodedAllergenIsNullAndAllergenIsSetToOtherNonCoded()
+			throws Exception {
 		Allergy allergy = new Allergy();
-		allergy.setAllergen(new Allergen(null, createMockConcept(getOtherNonCodedConceptUuid()), null));
+		allergy.setAllergen(new Allergen(null,
+				createMockConcept(getOtherNonCodedConceptUuid()), null));
 		Errors errors = new BindException(allergy, "allergy");
 		validator.validate(allergy, errors);
 		assertTrue(errors.hasFieldErrors("allergen"));
 	}
-	
+
 	/**
 	 * @verifies reject a duplicate allergen
-	 * @see AllergyValidator#validate(Object, org.springframework.validation.Errors)
+	 * @see AllergyValidator#validate(Object,
+	 *      org.springframework.validation.Errors)
 	 */
 	@Test
 	public void validate_shouldRejectADuplicateAllergen() throws Exception {
 		MessageSourceService ms = Context.getMessageSourceService();
-		
+
 		Allergies allergies = new Allergies();
 		Concept aspirin = createMockConcept(null);
 		Allergen allergen1 = new Allergen(AllergenType.DRUG, aspirin, null);
 		allergies.add(new Allergy(null, allergen1, null, null, null));
 		when(ps.getAllergies(any(Patient.class))).thenReturn(allergies);
-		
-		Allergen duplicateAllergen = new Allergen(AllergenType.FOOD, aspirin, null);
-		Allergy allergy = new Allergy(mock(Patient.class), duplicateAllergen, null, null, null);
+
+		Allergen duplicateAllergen = new Allergen(AllergenType.FOOD, aspirin,
+				null);
+		Allergy allergy = new Allergy(mock(Patient.class), duplicateAllergen,
+				null, null, null);
 		Errors errors = new BindException(allergy, "allergy");
 		validator.validate(allergy, errors);
 		assertTrue(errors.hasFieldErrors("allergen"));
-		assertEquals("allergyapi.message.duplicateAllergen", errors.getFieldError("allergen").getCode());
+		assertEquals("allergyapi.message.duplicateAllergen", errors
+				.getFieldError("allergen").getCode());
 	}
-	
+
 	/**
 	 * @verifies reject a duplicate non coded allergen
-	 * @see AllergyValidator#validate(Object, org.springframework.validation.Errors)
+	 * @see AllergyValidator#validate(Object,
+	 *      org.springframework.validation.Errors)
 	 */
 	@Test
-	public void validate_shouldRejectADuplicateNonCodedAllergen() throws Exception {
+	public void validate_shouldRejectADuplicateNonCodedAllergen()
+			throws Exception {
 		MessageSourceService ms = Context.getMessageSourceService();
-		
+
 		Allergies allergies = new Allergies();
 		Concept nonCodedConcept = createMockConcept(getOtherNonCodedConceptUuid());
 		final String freeText = "some text";
-		Allergen allergen1 = new Allergen(AllergenType.DRUG, nonCodedConcept, freeText);
+		Allergen allergen1 = new Allergen(AllergenType.DRUG, nonCodedConcept,
+				freeText);
 		allergies.add(new Allergy(null, allergen1, null, null, null));
 		when(ps.getAllergies(any(Patient.class))).thenReturn(allergies);
-		
-		Allergen duplicateAllergen = new Allergen(AllergenType.FOOD, nonCodedConcept, freeText);
-		Allergy allergy = new Allergy(mock(Patient.class), duplicateAllergen, null, null, null);
+
+		Allergen duplicateAllergen = new Allergen(AllergenType.FOOD,
+				nonCodedConcept, freeText);
+		Allergy allergy = new Allergy(mock(Patient.class), duplicateAllergen,
+				null, null, null);
 		Errors errors = new BindException(allergy, "allergy");
 		validator.validate(allergy, errors);
 		assertTrue(errors.hasFieldErrors("allergen"));
-		assertEquals("allergyapi.message.duplicateAllergen", errors.getFieldError("allergen").getCode());
+		assertEquals("allergyapi.message.duplicateAllergen", errors
+				.getFieldError("allergen").getCode());
 	}
-	
+
 	/**
 	 * @verifies pass for a valid allergy
-	 * @see AllergyValidator#validate(Object, org.springframework.validation.Errors)
+	 * @see AllergyValidator#validate(Object,
+	 *      org.springframework.validation.Errors)
 	 */
 	@Test
 	public void validate_shouldPassForAValidAllergy() throws Exception {
@@ -206,12 +227,14 @@ public class AllergyValidatorTest extends BaseContextSensitiveTest {
 		Allergen allergen1 = new Allergen(AllergenType.DRUG, aspirin, null);
 		allergies.add(new Allergy(null, allergen1, null, null, null));
 		when(ps.getAllergies(any(Patient.class))).thenReturn(allergies);
-		
-		Allergen anotherAllergen = new Allergen(AllergenType.DRUG, new Concept(), null);
-		Allergy allergy = new Allergy(mock(Patient.class), anotherAllergen, null, null, null);
+
+		Allergen anotherAllergen = new Allergen(AllergenType.DRUG,
+				new Concept(), null);
+		Allergy allergy = new Allergy(mock(Patient.class), anotherAllergen,
+				null, null, null);
 		Errors errors = new BindException(allergy, "allergy");
 		validator.validate(allergy, errors);
-		
+
 		validator.validate(allergy, errors);
 		assertFalse(errors.hasErrors());
 	}

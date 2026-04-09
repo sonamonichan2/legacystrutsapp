@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -15,7 +15,7 @@ package org.openmrs.api.db;
  * @since 1.9
  */
 public interface DatatypeDAO {
-	
+
 	/**
 	 * Gets a clob storage object by its id
 	 * 
@@ -23,7 +23,7 @@ public interface DatatypeDAO {
 	 * @return clob storage object or null
 	 */
 	ClobDatatypeStorage getClobDatatypeStorage(Integer id);
-	
+
 	/**
 	 * Gets a clob storage object by its uuid
 	 * 
@@ -31,7 +31,7 @@ public interface DatatypeDAO {
 	 * @return clob storage object or null
 	 */
 	ClobDatatypeStorage getClobDatatypeStorageByUuid(String uuid);
-	
+
 	/**
 	 * Creates or updates a clob storage object
 	 * 
@@ -39,12 +39,13 @@ public interface DatatypeDAO {
 	 * @return the saved object
 	 */
 	ClobDatatypeStorage saveClobDatatypeStorage(ClobDatatypeStorage storage);
-	
+
 	/**
 	 * Deletes a clob storage object from the database
 	 * 
-	 * @param storage the object to delete
+	 * @param storage
+	 *            the object to delete
 	 */
 	void deleteClobDatatypeStorage(ClobDatatypeStorage storage);
-	
+
 }

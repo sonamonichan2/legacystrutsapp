@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,12 +22,12 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { ConceptDatatype.class }, order = 50)
+@Handler(supports = {ConceptDatatype.class}, order = 50)
 public class ConceptDatatypeValidator implements Validator {
-	
+
 	/** Log for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -37,13 +37,13 @@ public class ConceptDatatypeValidator implements Validator {
 	public boolean supports(Class c) {
 		return c.equals(ConceptDatatype.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
 	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
 	 *      org.springframework.validation.Errors)
-	 * @should pass validation if description is null or empty or whitespace	 *      
+	 * @should pass validation if description is null or empty or whitespace *
 	 * @should fail validation if name is null or empty or whitespace
 	 * @should pass validation if all required fields have proper values
 	 * @should pass validation if field lengths are correct
@@ -54,10 +54,11 @@ public class ConceptDatatypeValidator implements Validator {
 		if (cd == null) {
 			errors.rejectValue("conceptDatatype", "error.general");
 		} else {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.name");
-			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "hl7Abbreviation", "description",
-			    "retireReason");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name",
+					"error.name");
+			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name",
+					"hl7Abbreviation", "description", "retireReason");
 		}
 	}
-	
+
 }

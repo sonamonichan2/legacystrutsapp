@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -22,12 +22,12 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { Role.class }, order = 50)
+@Handler(supports = {Role.class}, order = 50)
 public class RoleValidator implements Validator {
-	
+
 	/** Log for this class and subclasses */
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -37,7 +37,7 @@ public class RoleValidator implements Validator {
 	public boolean supports(Class c) {
 		return c.equals(Role.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -56,18 +56,21 @@ public class RoleValidator implements Validator {
 		if (role == null) {
 			errors.rejectValue("role", "error.general");
 		} else {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "role", "error.role");
-			
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "role",
+					"error.role");
+
 			// reject any role that has a leading or trailing space
 			if (!role.getRole().equals(role.getRole().trim())) {
 				errors.rejectValue("role", "error.trailingSpaces");
 			}
 		}
 		if (obj == null) {
-			throw new IllegalArgumentException("validated role object should not be null");
+			throw new IllegalArgumentException(
+					"validated role object should not be null");
 		} else {
-			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "role", "description");
+			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "role",
+					"description");
 		}
 	}
-	
+
 }

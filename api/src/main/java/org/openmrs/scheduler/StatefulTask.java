@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -16,22 +16,22 @@ import org.openmrs.scheduler.tasks.AbstractTask;
  * Stateful task
  */
 public abstract class StatefulTask extends AbstractTask {
-	
+
 	// Private context that provides some state
 	private Context context;
-	
+
 	/**
 	 * Set the context for this task.
 	 */
 	public void setContext(Context context) {
 		this.context = context;
 	}
-	
+
 	/**
 	 * Returns the context.
 	 */
 	public Context getContext() {
 		return this.context;
 	}
-	
+
 }

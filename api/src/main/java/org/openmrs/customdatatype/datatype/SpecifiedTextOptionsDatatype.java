@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -13,8 +13,10 @@ import org.openmrs.customdatatype.SerializingCustomDatatype;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SpecifiedTextOptionsDatatype extends SerializingCustomDatatype<String> {
-	
+public class SpecifiedTextOptionsDatatype
+		extends
+			SerializingCustomDatatype<String> {
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#serialize(java.lang.Object)
 	 */
@@ -22,7 +24,7 @@ public class SpecifiedTextOptionsDatatype extends SerializingCustomDatatype<Stri
 	public String serialize(String typedValue) {
 		return typedValue;
 	}
-	
+
 	/**
 	 * @see org.openmrs.customdatatype.SerializingCustomDatatype#deserialize(java.lang.String)
 	 */
@@ -30,5 +32,5 @@ public class SpecifiedTextOptionsDatatype extends SerializingCustomDatatype<Stri
 	public String deserialize(String serializedValue) {
 		return serializedValue;
 	}
-	
+
 }

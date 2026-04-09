@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -23,11 +23,11 @@ import org.springframework.validation.Validator;
  * 
  * @since 1.5
  */
-@Handler(supports = { Program.class }, order = 50)
+@Handler(supports = {Program.class}, order = 50)
 public class ProgramValidator implements Validator {
-	
+
 	protected final Log log = LogFactory.getLog(getClass());
-	
+
 	/**
 	 * Determines if the command object being submitted is a valid type
 	 * 
@@ -36,7 +36,7 @@ public class ProgramValidator implements Validator {
 	public boolean supports(Class<?> c) {
 		return c.equals(Program.class);
 	}
-	
+
 	/**
 	 * Checks the form object for any inconsistencies/errors
 	 * 
@@ -56,14 +56,19 @@ public class ProgramValidator implements Validator {
 		if (p == null) {
 			errors.rejectValue("program", "error.general");
 		} else {
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.name");
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "concept", "error.concept");
-			
-			Program existingProgram = Context.getProgramWorkflowService().getProgramByName(p.getName());
-			if (existingProgram != null && !existingProgram.getUuid().equals(p.getUuid())) {
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name",
+					"error.name");
+			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "concept",
+					"error.concept");
+
+			Program existingProgram = Context.getProgramWorkflowService()
+					.getProgramByName(p.getName());
+			if (existingProgram != null
+					&& !existingProgram.getUuid().equals(p.getUuid())) {
 				errors.rejectValue("name", "general.error.nameAlreadyInUse");
 			}
-			if (existingProgram != null && existingProgram.getUuid().equals(p.getUuid())) {
+			if (existingProgram != null
+					&& existingProgram.getUuid().equals(p.getUuid())) {
 				Context.evictFromSession(existingProgram);
 			}
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name");

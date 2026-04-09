@@ -1,4 +1,4 @@
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -24,28 +24,29 @@ import java.util.Map;
  * @since 1.12
  */
 public class NameTemplate extends LayoutTemplate {
-	
+
 	public String getLayoutToken() {
 		return "IS_NAME_TOKEN";
 	}
-	
+
 	public String getNonLayoutToken() {
 		return "IS_NOT_NAME_TOKEN";
 	}
-	
+
 	public String format(PersonName personName) {
-		
+
 		List<String> personNameLines = new ArrayList<String>();
 		List<List<Map<String, String>>> lines = getLines();
 		String layoutToken = getLayoutToken();
-		
+
 		try {
 			for (List<Map<String, String>> line : lines) {
 				StringBuilder nameLine = new StringBuilder();
 				Boolean hasToken = false;
 				for (Map<String, String> lineToken : line) {
 					if (lineToken.get("isToken").equals(layoutToken)) {
-						String tokenValue = BeanUtils.getProperty(personName, lineToken.get("codeName"));
+						String tokenValue = BeanUtils.getProperty(personName,
+								lineToken.get("codeName"));
 						if (StringUtils.isNotBlank(tokenValue)) {
 							hasToken = true;
 							nameLine.append(tokenValue);
@@ -54,23 +55,25 @@ public class NameTemplate extends LayoutTemplate {
 						nameLine.append(lineToken.get("displayText"));
 					}
 				}
-				// only display a line if there's at least one token within it we've been able to resolve
+				// only display a line if there's at least one token within it
+				// we've been able to resolve
 				String nameLineString = nameLine.toString();
 				if (StringUtils.isNotBlank(nameLineString) && hasToken) {
 					personNameLines.add(nameLineString);
 				}
 			}
-			// bit of hack, but we ignore the "line-by-line" format and just delimit a "line" with blank space
+			// bit of hack, but we ignore the "line-by-line" format and just
+			// delimit a "line" with blank space
 			return StringUtils.join(personNameLines, " ");
-		}
-		catch (Exception e) {
-			throw new APIException("Unable to format personName " + personName.getId() + " using name template", e);
+		} catch (Exception e) {
+			throw new APIException("Unable to format personName "
+					+ personName.getId() + " using name template", e);
 		}
 	}
-	
+
 	@Override
 	public LayoutSupport<?> getLayoutSupportInstance() {
 		return NameSupport.getInstance();
 	}
-	
+
 }
