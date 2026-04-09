@@ -9,14 +9,15 @@
  */
 package org.openmrs.tools.doclet;
 
-import com.sun.tools.doclets.Taglet;
-import com.sun.javadoc.Tag;
-import java.util.Map;
-
 /**
- * Taglet for @should annotations.
+ * Utility class for @should annotations.
+ * 
+ * Previously implemented com.sun.tools.doclets.Taglet which was removed in Java 9+.
+ * This class is retained for backward compatibility but no longer functions as a
+ * Javadoc taglet. The @should tag processing was used to generate "Expected Behavior"
+ * documentation in Javadoc output.
  */
-public class ShouldTaglet implements Taglet {
+public class ShouldTaglet {
 	
 	private static final String NAME = "should";
 	
@@ -30,113 +31,35 @@ public class ShouldTaglet implements Taglet {
 	}
 	
 	/**
-	 * Will return false since <code> @should</code> cannot be used in field documentation.
-	 * 
-	 * @return false since <code> @should</code> can be used in field documentation and true
-	 *         otherwise.
+	 * Return the header text for this taglet.
 	 */
-	public boolean inField() {
-		return false;
+	public String getHeader() {
+		return HEADER;
 	}
 	
 	/**
-	 * Will return true since <code> @should</code> can be used in constructor documentation.
-	 * 
-	 * @return true since <code> @should</code> can be used in constructor documentation and false
-	 *         otherwise.
+	 * Format a single should tag text into HTML.
+	 *
+	 * @param text the text of the should tag.
+	 * @return HTML formatted string.
 	 */
-	public boolean inConstructor() {
-		return true;
+	public String formatTag(String text) {
+		return "\n<DT><B>" + HEADER + "</B></DT>\n  <DD>Should " + text + "</DD>";
 	}
 	
 	/**
-	 * Will return true since <code> @should</code> can be used in method documentation.
-	 * 
-	 * @return true since <code> @should</code> can be used in method documentation and false
-	 *         otherwise.
+	 * Format an array of should tag texts into HTML.
+	 *
+	 * @param texts the array of should tag texts.
+	 * @return HTML formatted string or null if empty.
 	 */
-	public boolean inMethod() {
-		return true;
-	}
-	
-	/**
-	 * Will return true since <code> @should</code> can be used in method documentation.
-	 * 
-	 * @return true since <code> @should</code> can be used in overview documentation and false
-	 *         otherwise.
-	 */
-	public boolean inOverview() {
-		return true;
-	}
-	
-	/**
-	 * Will return false since <code> @should</code> cannot be used in package documentation.
-	 * 
-	 * @return false since <code> @should</code> cannot be used in package documentation and true
-	 *         otherwise.
-	 */
-	public boolean inPackage() {
-		return false;
-	}
-	
-	/**
-	 * Will return true since <code> @should</code> can be used in type documentation (classes or
-	 * interfaces).
-	 * 
-	 * @return true since <code> @should</code> can be used in type documentation and false
-	 *         otherwise.
-	 */
-	public boolean inType() {
-		return true;
-	}
-	
-	/**
-	 * Will return false since <code> @should</code> is not an inline tag.
-	 * 
-	 * @return false since <code> @should</code> is not an inline tag.
-	 */
-	
-	public boolean isInlineTag() {
-		return false;
-	}
-	
-	/**
-	 * Register this Taglet.
-	 * 
-	 * @param tagletMap the map to register this tag to.
-	 */
-	public static void register(Map tagletMap) {
-		ShouldTaglet tag = new ShouldTaglet();
-		Taglet t = (Taglet) tagletMap.get(tag.getName());
-		if (t != null) {
-			tagletMap.remove(tag.getName());
-		}
-		tagletMap.put(tag.getName(), tag);
-	}
-	
-	/**
-	 * Given the <code>Tag</code> representation of this custom tag, return its string
-	 * representation.
-	 * 
-	 * @param tag the <code>Tag</code> representation of this custom tag.
-	 */
-	public String toString(Tag tag) {
-		return "\n<DT><B>" + HEADER + "</B></DT>\n  <DD>Should " + tag.text() + "</DD>";
-	}
-	
-	/**
-	 * Given an array of <code>Tag</code>s representing this custom tag, return its string
-	 * representation.
-	 * 
-	 * @param tags the array of <code>Tag</code>s representing of this custom tag.
-	 */
-	public String toString(Tag[] tags) {
-		if (tags.length == 0) {
+	public String formatTags(String[] texts) {
+		if (texts == null || texts.length == 0) {
 			return null;
 		}
 		StringBuilder result = new StringBuilder("\n<DT><B>").append(HEADER).append("</B></DT>");
-		for (int i = 0; i < tags.length; i++) {
-			result.append("\n  <DD>Should ").append(tags[i].text()).append("</DD>");
+		for (String text : texts) {
+			result.append("\n  <DD>Should ").append(text).append("</DD>");
 		}
 		return result.toString();
 	}
