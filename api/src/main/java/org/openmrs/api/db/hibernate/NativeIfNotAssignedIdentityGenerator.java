@@ -14,8 +14,8 @@ import java.util.Properties;
 
 import org.hibernate.HibernateException;
 import org.hibernate.MappingException;
-import org.hibernate.dialect.Dialect;
-import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.Configurable;
 import org.hibernate.id.IdentityGenerator;
 import org.hibernate.persister.entity.EntityPersister;
@@ -40,7 +40,7 @@ public class NativeIfNotAssignedIdentityGenerator extends IdentityGenerator
 	private String entityName;
 
 	@Override
-	public Serializable generate(SessionImplementor session, Object entity)
+	public Serializable generate(SharedSessionContractImplementor session, Object entity)
 			throws HibernateException {
 		Serializable id;
 		EntityPersister persister = session.getEntityPersister(entityName,
@@ -55,9 +55,10 @@ public class NativeIfNotAssignedIdentityGenerator extends IdentityGenerator
 
 	/**
 	 * @see org.hibernate.id.Configurable#configure(org.hibernate.type.Type,
-	 *      java.util.Properties, org.hibernate.dialect.Dialect)
+	 *      java.util.Properties, org.hibernate.service.ServiceRegistry)
 	 */
-	public void configure(Type type, Properties params, Dialect dialect)
+	@Override
+	public void configure(Type type, Properties params, ServiceRegistry serviceRegistry)
 			throws MappingException {
 		this.entityName = params.getProperty(ENTITY_NAME);
 		if (entityName == null) {

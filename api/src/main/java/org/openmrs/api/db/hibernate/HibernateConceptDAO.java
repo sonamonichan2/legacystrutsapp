@@ -1986,8 +1986,8 @@ public class HibernateConceptDAO implements ConceptDAO {
 	@Override
 	public ConceptMapType getDefaultConceptMapType() throws DAOException {
 		FlushMode previousFlushMode = sessionFactory.getCurrentSession()
-				.getFlushMode();
-		sessionFactory.getCurrentSession().setFlushMode(FlushMode.MANUAL);
+				.getHibernateFlushMode();
+		sessionFactory.getCurrentSession().setHibernateFlushMode(FlushMode.MANUAL);
 		try {
 			// Defaults to same-as if the gp is not set.
 			String defaultConceptMapType = Context.getAdministrationService()
@@ -2010,7 +2010,7 @@ public class HibernateConceptDAO implements ConceptDAO {
 			}
 			return conceptMapType;
 		} finally {
-			sessionFactory.getCurrentSession().setFlushMode(previousFlushMode);
+			sessionFactory.getCurrentSession().setHibernateFlushMode(previousFlushMode);
 		}
 	}
 

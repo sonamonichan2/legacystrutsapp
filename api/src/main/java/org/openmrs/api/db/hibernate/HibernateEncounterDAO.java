@@ -255,15 +255,15 @@ public class HibernateEncounterDAO implements EncounterDAO {
 		// Obs
 		// that are associated to the encounter before we void and replace them
 		Session session = sessionFactory.getCurrentSession();
-		FlushMode flushMode = session.getFlushMode();
-		session.setFlushMode(FlushMode.MANUAL);
+		FlushMode flushMode = session.getHibernateFlushMode();
+		session.setHibernateFlushMode(FlushMode.MANUAL);
 		try {
 			SQLQuery sql = session
 					.createSQLQuery("select encounter_datetime from encounter where encounter_id = :encounterId");
 			sql.setInteger("encounterId", encounter.getEncounterId());
 			return (Date) sql.uniqueResult();
 		} finally {
-			session.setFlushMode(flushMode);
+			session.setHibernateFlushMode(flushMode);
 		}
 	}
 
@@ -310,8 +310,8 @@ public class HibernateEncounterDAO implements EncounterDAO {
 	 */
 	public Location getSavedEncounterLocation(Encounter encounter) {
 		Session session = sessionFactory.getCurrentSession();
-		FlushMode flushMode = session.getFlushMode();
-		session.setFlushMode(FlushMode.MANUAL);
+		FlushMode flushMode = session.getHibernateFlushMode();
+		session.setHibernateFlushMode(FlushMode.MANUAL);
 		try {
 			SQLQuery sql = session
 					.createSQLQuery("select location_id from encounter where encounter_id = :encounterId");
@@ -319,7 +319,7 @@ public class HibernateEncounterDAO implements EncounterDAO {
 			return Context.getLocationService().getLocation(
 					(Integer) sql.uniqueResult());
 		} finally {
-			session.setFlushMode(flushMode);
+			session.setHibernateFlushMode(flushMode);
 		}
 	}
 

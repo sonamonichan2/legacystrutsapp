@@ -17,7 +17,9 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.boot.Metadata;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
+import org.hibernate.boot.spi.MetadataImplementor;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -57,7 +59,7 @@ public class HibernateAdministrationDAO
 	 */
 	private SessionFactory sessionFactory;
 
-	private Configuration configuration;
+	private Metadata metadata;
 
 	private ApplicationContext applicationContext;
 
@@ -190,13 +192,13 @@ public class HibernateAdministrationDAO
 	@Override
 	public int getMaximumPropertyLength(Class<? extends OpenmrsObject> aClass,
 			String fieldName) {
-		if (configuration == null) {
+		if (metadata == null) {
 			HibernateSessionFactoryBean sessionFactoryBean = (HibernateSessionFactoryBean) applicationContext
 					.getBean("&sessionFactory");
-			configuration = sessionFactoryBean.getConfiguration();
+			metadata = sessionFactoryBean.getMetadata();
 		}
 
-		PersistentClass persistentClass = configuration.getClassMapping(aClass
+		PersistentClass persistentClass = metadata.getEntityBinding(aClass
 				.getName().split("_")[0]);
 		if (persistentClass == null) {
 			throw new APIException(
@@ -228,14 +230,14 @@ public class HibernateAdministrationDAO
 	@Override
 	public void validate(Object object, Errors errors) throws DAOException {
 		FlushMode previousFlushMode = sessionFactory.getCurrentSession()
-				.getFlushMode();
-		sessionFactory.getCurrentSession().setFlushMode(FlushMode.MANUAL);
+				.getHibernateFlushMode();
+		sessionFactory.getCurrentSession().setHibernateFlushMode(FlushMode.MANUAL);
 		try {
 			for (Validator validator : getValidators(object)) {
 				validator.validate(object, errors);
 			}
 		} finally {
-			sessionFactory.getCurrentSession().setFlushMode(previousFlushMode);
+			sessionFactory.getCurrentSession().setHibernateFlushMode(previousFlushMode);
 		}
 	}
 

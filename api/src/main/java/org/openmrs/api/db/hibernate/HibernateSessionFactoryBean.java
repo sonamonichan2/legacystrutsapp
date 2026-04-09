@@ -24,6 +24,7 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.boot.Metadata;
 import org.hibernate.HibernateException;
 import org.hibernate.Interceptor;
 import org.openmrs.api.context.Context;
@@ -47,6 +48,8 @@ public class HibernateSessionFactoryBean extends LocalSessionFactoryBean {
 
 	// @since 1.6.3, 1.7.2, 1.8.0, 1.9
 	protected ChainingInterceptor chainingInterceptor = new ChainingInterceptor();
+
+	private Metadata metadata;
 
 	// @since 1.6.3, 1.7.2, 1.8.0, 1.9
 	// This will be sorted on keys before being used
@@ -192,6 +195,15 @@ public class HibernateSessionFactoryBean extends LocalSessionFactoryBean {
 				new String[0]));
 
 		super.afterPropertiesSet();
+		this.metadata = getMetadataSources().getMetadataBuilder().build();
+	}
+
+	/**
+	 * Returns the Hibernate Metadata for accessing class mappings.
+	 * @return the Metadata instance
+	 */
+	public Metadata getMetadata() {
+		return this.metadata;
 	}
 
 	/**
