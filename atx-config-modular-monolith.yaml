@@ -1,15 +1,7 @@
 codeRepositoryPath: .
 transformationName: AWS/comprehensive-codebase-analysis
-
-buildCommand: |
-  export JAVA_HOME=/usr/lib/jvm/java-21-amazon-corretto.x86_64
-  export PATH=$JAVA_HOME/bin:$PATH
-  mvn -DskipTests clean install
-
-validationCommands: |
-  export JAVA_HOME=/usr/lib/jvm/java-21-amazon-corretto.x86_64
-  export PATH=$JAVA_HOME/bin:$PATH
-  mvn -DskipTests clean install
+buildCommand: mvn -DskipTests clean install
+validationCommands: mvn -DskipTests clean install
 
 additionalPlanContext: |
   Refactor this Java 21-upgraded OpenMRS codebase into a modular monolith.
@@ -26,6 +18,13 @@ additionalPlanContext: |
   - Reduce cyclic dependencies
   - Separate web adapters from domain logic
   - Preserve business behavior
+
+  Architecture rules:
+  - Each business module should separate domain, application, and infrastructure
+  - Web/controllers/REST endpoints must not contain business logic
+  - Integration concerns such as HL7 and external adapters must be isolated
+  - Shared code should be kept minimal and intentional
+  - Preserve deployability on AWS EC2 Linux during intermediate stages
 
   Required output:
   - phased refactor plan

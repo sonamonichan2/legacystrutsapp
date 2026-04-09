@@ -1,15 +1,7 @@
 codeRepositoryPath: .
 transformationName: AWS/java-version-upgrade
-
-buildCommand: |
-  export JAVA_HOME=/usr/lib/jvm/java-1.8.0-amazon-corretto.x86_64
-  export PATH=$JAVA_HOME/bin:$PATH
-  mvn -DskipTests clean install
-
-validationCommands: |
-  export JAVA_HOME=/usr/lib/jvm/java-21-amazon-corretto.x86_64
-  export PATH=$JAVA_HOME/bin:$PATH
-  mvn -DskipTests clean install
+buildCommand: mvn -DskipTests clean install
+validationCommands: mvn -DskipTests clean install
 
 additionalPlanContext: |
   Upgrade this OpenMRS Core 2.0.3 codebase from Java 8 to Java 21.
@@ -25,3 +17,5 @@ additionalPlanContext: |
   Important:
   - The codebase currently contains legacy build-time pieces that are sensitive to newer JDKs
   - Prefer minimal but correct changes in this wave
+  - Keep Maven structure intact in this phase
+  - Preserve existing database semantics and Liquibase usage
