@@ -238,25 +238,13 @@
             </activation>
             <dependencies>
                 <dependency>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
-                    <version>5.1.28</version>
+                    <groupId>com.mysql</groupId>
+                    <artifactId>mysql-connector-j</artifactId>
+                    <version>8.0.33</version>
                     <scope>runtime</scope>
                 </dependency>
 
-                <dependency>
-                    <groupId>com.mysql</groupId>
-                    <artifactId>mysql-connector-mxj</artifactId>
-                    <version>5.0.11</version>
-                    <scope>compile</scope>
-                </dependency>
-
-                <dependency>
-                    <groupId>com.mysql</groupId>
-                    <artifactId>mysql-connector-mxj-dbfiles</artifactId>
-                    <version>5.0.11</version>
-                    <scope>compile</scope>
-                </dependency>
+                <!-- mysql-connector-mxj and dbfiles removed - obsolete -->
             </dependencies>
         </profile>
         
