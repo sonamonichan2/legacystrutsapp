@@ -28,7 +28,7 @@
 [INFO] ShortRevision tag detected. The value is '6'.
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'rev-parse' '--verify' '--short=6' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
-[INFO] Storing buildNumber: ba4c7a at timestamp: 1775717962262
+[INFO] Storing buildNumber: 8e3866 at timestamp: 1775718243820
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'symbolic-ref' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
 [INFO] Storing scmBranch: atx-result-staging-20260409_055113_444115a9
@@ -328,15 +328,15 @@
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary for OpenMRS 2.0.3:
 [INFO] 
-[INFO] OpenMRS ............................................ SUCCESS [  1.691 s]
-[INFO] openmrs-tools ...................................... SUCCESS [  1.334 s]
-[INFO] openmrs-test ....................................... SUCCESS [  0.140 s]
-[INFO] openmrs-api ........................................ SUCCESS [ 14.316 s]
-[INFO] openmrs-web ........................................ SUCCESS [  2.654 s]
-[INFO] openmrs-webapp ..................................... SUCCESS [  3.050 s]
+[INFO] OpenMRS ............................................ SUCCESS [  1.741 s]
+[INFO] openmrs-tools ...................................... SUCCESS [  1.393 s]
+[INFO] openmrs-test ....................................... SUCCESS [  0.142 s]
+[INFO] openmrs-api ........................................ SUCCESS [ 13.561 s]
+[INFO] openmrs-web ........................................ SUCCESS [  2.774 s]
+[INFO] openmrs-webapp ..................................... SUCCESS [  3.546 s]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  23.374 s
-[INFO] Finished at: 2026-04-09T06:59:44Z
+[INFO] Total time:  23.361 s
+[INFO] Finished at: 2026-04-09T07:04:26Z
 [INFO] ------------------------------------------------------------------------

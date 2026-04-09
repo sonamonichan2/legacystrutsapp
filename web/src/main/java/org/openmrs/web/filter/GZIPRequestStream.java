@@ -43,4 +43,22 @@ public class GZIPRequestStream extends ServletInputStream {
 		return zipInput.read(b);
 	}
 
+	@Override
+	public boolean isFinished() {
+		try {
+			return zipInput.available() == 0;
+		} catch (java.io.IOException e) {
+			return true;
+		}
+	}
+
+	@Override
+	public boolean isReady() {
+		return true;
+	}
+
+	@Override
+	public void setReadListener(javax.servlet.ReadListener readListener) {
+		throw new UnsupportedOperationException("setReadListener not supported");
+	}
 }
