@@ -20,10 +20,10 @@
 [INFO] ShortRevision tag detected. The value is '6'.
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'rev-parse' '--verify' '--short=6' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
-[INFO] Storing buildNumber: b9f688 at timestamp: 1776329302770
+[INFO] Storing buildNumber: eedbb1 at timestamp: 1776332412251
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'symbolic-ref' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
-[INFO] Storing scmBranch: atx-result-staging-20260416_083242_649f8b8b
+[INFO] Storing scmBranch: atx-result-staging-20260416_093139_4747abd4
 [INFO] 
 [INFO] --- build-helper-maven-plugin:3.5.0:parse-version (parse-version) @ openmrs ---
 [INFO] 
@@ -323,15 +323,15 @@ project.artifactId
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary for OpenMRS 2.0.3:
 [INFO] 
-[INFO] OpenMRS ............................................ SUCCESS [  1.758 s]
-[INFO] openmrs-tools ...................................... SUCCESS [  0.676 s]
-[INFO] openmrs-test ....................................... SUCCESS [  0.143 s]
-[INFO] openmrs-api ........................................ SUCCESS [ 15.775 s]
-[INFO] openmrs-web ........................................ SUCCESS [  1.400 s]
-[INFO] openmrs-webapp ..................................... SUCCESS [  3.302 s]
+[INFO] OpenMRS ............................................ SUCCESS [  1.801 s]
+[INFO] openmrs-tools ...................................... SUCCESS [  0.630 s]
+[INFO] openmrs-test ....................................... SUCCESS [  0.155 s]
+[INFO] openmrs-api ........................................ SUCCESS [ 15.735 s]
+[INFO] openmrs-web ........................................ SUCCESS [  1.489 s]
+[INFO] openmrs-webapp ..................................... SUCCESS [  3.284 s]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  23.261 s
-[INFO] Finished at: 2026-04-16T08:48:45Z
+[INFO] Total time:  23.314 s
+[INFO] Finished at: 2026-04-16T09:40:34Z
 [INFO] ------------------------------------------------------------------------

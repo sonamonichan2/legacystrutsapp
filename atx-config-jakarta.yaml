@@ -1,0 +1,35 @@
+codeRepositoryPath: .
+transformationName: AWS/java-version-upgrade
+buildCommand: mvn -DskipTests clean install
+validationCommands: mvn -DskipTests clean install
+
+
+
+additionalPlanContext: |
+  Migrate this OpenMRS Core 2.0.3 codebase from javax.* to jakarta.* for Tomcat 10.1 compatibility.
+
+
+
+  Constraints:
+  - Keep WAR packaging
+  - Preserve business behavior
+  - Do not convert to Spring Boot in this step
+  - Do not convert to microservices
+  - Minimize dependency upgrades beyond what is required for Jakarta compatibility
+  - Keep Maven multi-module structure intact if possible
+  - Preserve Liquibase and database semantics
+
+
+
+  Required scope:
+  - Migrate javax.servlet, javax.servlet.jsp, JSTL, filters, listeners, and related imports/usages to jakarta.*
+  - Update Maven dependencies to Jakarta-compatible artifacts where required
+  - Update web.xml, JSP/taglib references, filters, listeners, and related descriptors for Tomcat 10.1 compatibility
+  - Keep the application as one deployable unit
+
+
+
+  Validation expectations:
+  - Produce a buildable WAR
+  - Summarize javax-to-jakarta changes
+  - Clearly identify any remaining manual steps
