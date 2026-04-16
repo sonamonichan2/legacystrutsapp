@@ -9,12 +9,12 @@
  */
 package org.openmrs.notification.mail;
 
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import jakarta.mail.Session;
+import jakarta.mail.Transport;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMultipart;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -102,7 +102,7 @@ public class MailMessageSender implements MessageSender {
 		}
 		
 		mimeMessage
-		        .setRecipients(javax.mail.Message.RecipientType.TO, InternetAddress.parse(message.getRecipients(), false));
+		        .setRecipients(jakarta.mail.Message.RecipientType.TO, InternetAddress.parse(message.getRecipients(), false));
 		mimeMessage.setSubject(message.getSubject());
 		
 		if (!message.hasAttachment()) {

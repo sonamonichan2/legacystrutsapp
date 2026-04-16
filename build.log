@@ -20,7 +20,7 @@
 [INFO] ShortRevision tag detected. The value is '6'.
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'rev-parse' '--verify' '--short=6' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
-[INFO] Storing buildNumber: bcda4c at timestamp: 1776332670648
+[INFO] Storing buildNumber: 0e1a1a at timestamp: 1776332904390
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'symbolic-ref' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
 [INFO] Storing scmBranch: atx-result-staging-20260416_093139_4747abd4
@@ -265,8 +265,6 @@
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/controller/PseudoStaticContentController.java:[36,8] org.openmrs.web.controller.PseudoStaticContentController is not abstract and does not override abstract method handleRequest(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) in org.springframework.web.servlet.mvc.Controller
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/controller/PseudoStaticContentController.java:[76,9] method does not override or implement a method from a supertype
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/GZIPFilter.java:[32,8] org.openmrs.web.filter.GZIPFilter is not abstract and does not override abstract method doFilterInternal(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,javax.servlet.FilterChain) in org.springframework.web.filter.OncePerRequestFilter
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/GZIPRequestStream.java:[21,8] org.openmrs.web.filter.GZIPRequestStream is not abstract and does not override abstract method setReadListener(jakarta.servlet.ReadListener) in jakarta.servlet.ServletInputStream
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/GZIPResponseStream.java:[26,8] org.openmrs.web.filter.GZIPResponseStream is not abstract and does not override abstract method setWriteListener(jakarta.servlet.WriteListener) in jakarta.servlet.ServletOutputStream
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/OpenmrsFilter.java:[37,8] org.openmrs.web.filter.OpenmrsFilter is not abstract and does not override abstract method doFilterInternal(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,javax.servlet.FilterChain) in org.springframework.web.filter.OncePerRequestFilter
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/OpenmrsFilter.java:[56,9] method does not override or implement a method from a supertype
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/initialization/InitializationFilter.java:[1662,119] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
@@ -282,22 +280,22 @@
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[232,9] method does not override or implement a method from a supertype
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[240,25] cannot access javax.servlet.http.HttpServletResponse
   class file for javax.servlet.http.HttpServletResponse not found
-[INFO] 29 errors 
+[INFO] 27 errors 
 [INFO] -------------------------------------------------------------
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary for OpenMRS 2.0.3:
 [INFO] 
-[INFO] OpenMRS ............................................ SUCCESS [  1.709 s]
-[INFO] openmrs-tools ...................................... SUCCESS [  0.662 s]
-[INFO] openmrs-test ....................................... SUCCESS [  0.165 s]
-[INFO] openmrs-api ........................................ SUCCESS [ 15.408 s]
-[INFO] openmrs-web ........................................ FAILURE [  0.903 s]
+[INFO] OpenMRS ............................................ SUCCESS [  1.842 s]
+[INFO] openmrs-tools ...................................... SUCCESS [  0.663 s]
+[INFO] openmrs-test ....................................... SUCCESS [  0.138 s]
+[INFO] openmrs-api ........................................ SUCCESS [ 15.502 s]
+[INFO] openmrs-web ........................................ FAILURE [  0.770 s]
 [INFO] openmrs-webapp ..................................... SKIPPED
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  19.061 s
-[INFO] Finished at: 2026-04-16T09:44:48Z
+[INFO] Total time:  19.120 s
+[INFO] Finished at: 2026-04-16T09:48:42Z
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project openmrs-web: Compilation failure: Compilation failure: 
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[35,71] cannot access javax.servlet.http.HttpServlet
@@ -324,8 +322,6 @@
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/controller/PseudoStaticContentController.java:[36,8] org.openmrs.web.controller.PseudoStaticContentController is not abstract and does not override abstract method handleRequest(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) in org.springframework.web.servlet.mvc.Controller
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/controller/PseudoStaticContentController.java:[76,9] method does not override or implement a method from a supertype
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/GZIPFilter.java:[32,8] org.openmrs.web.filter.GZIPFilter is not abstract and does not override abstract method doFilterInternal(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,javax.servlet.FilterChain) in org.springframework.web.filter.OncePerRequestFilter
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/GZIPRequestStream.java:[21,8] org.openmrs.web.filter.GZIPRequestStream is not abstract and does not override abstract method setReadListener(jakarta.servlet.ReadListener) in jakarta.servlet.ServletInputStream
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/GZIPResponseStream.java:[26,8] org.openmrs.web.filter.GZIPResponseStream is not abstract and does not override abstract method setWriteListener(jakarta.servlet.WriteListener) in jakarta.servlet.ServletOutputStream
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/OpenmrsFilter.java:[37,8] org.openmrs.web.filter.OpenmrsFilter is not abstract and does not override abstract method doFilterInternal(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,javax.servlet.FilterChain) in org.springframework.web.filter.OncePerRequestFilter
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/OpenmrsFilter.java:[56,9] method does not override or implement a method from a supertype
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/initialization/InitializationFilter.java:[1662,119] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext

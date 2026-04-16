@@ -20,9 +20,9 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Future;
 
-import javax.mail.Authenticator;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
+import jakarta.mail.Authenticator;
+import jakarta.mail.PasswordAuthentication;
+import jakarta.mail.Session;
 
 import org.aopalliance.aop.Advice;
 import org.apache.commons.lang.StringUtils;
@@ -538,7 +538,7 @@ public class Context {
 	 * 
 	 * @return a java mail session
 	 */
-	private static javax.mail.Session getMailSession() {
+	private static jakarta.mail.Session getMailSession() {
 		if (mailSession == null) {
 			AdministrationService adminService = getAdministrationService();
 			
