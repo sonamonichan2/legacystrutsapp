@@ -25,10 +25,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.ServletException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -546,7 +546,7 @@ public final class Listener extends ContextLoader implements ServletContextListe
 	 * Called when the webapp is shut down properly Must call Context.shutdown() and then shutdown
 	 * all the web layers of the modules
 	 *
-	 * @see org.springframework.web.context.ContextLoaderListener#contextDestroyed(javax.servlet.ServletContextEvent)
+	 * @see org.springframework.web.context.ContextLoaderListener#contextDestroyed(jakarta.servlet.ServletContextEvent)
 	 */
 	@SuppressWarnings("squid:S1215")
 	@Override

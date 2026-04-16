@@ -22,14 +22,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import liquibase.changelog.ChangeSet;
 import liquibase.exception.LockException;
@@ -136,8 +136,8 @@ public class UpdateFilter extends StartupFilter {
 	/**
 	 * Called by {@link #doFilter(ServletRequest, ServletResponse, FilterChain)} on POST requests
 	 *
-	 * @see org.openmrs.web.filter.StartupFilter#doPost(javax.servlet.http.HttpServletRequest,
-	 *      javax.servlet.http.HttpServletResponse)
+	 * @see org.openmrs.web.filter.StartupFilter#doPost(jakarta.servlet.http.HttpServletRequest,
+	 *      jakarta.servlet.http.HttpServletResponse)
 	 */
 	@Override
 	protected synchronized void doPost(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws IOException,
@@ -500,7 +500,7 @@ public class UpdateFilter extends StartupFilter {
 	}
 	
 	/**
-	 * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
+	 * @see jakarta.servlet.Filter#init(jakarta.servlet.FilterConfig)
 	 */
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {

@@ -9,7 +9,7 @@
  */
 package org.openmrs.web;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 import org.openmrs.api.context.Context;
 import org.openmrs.api.context.Daemon;

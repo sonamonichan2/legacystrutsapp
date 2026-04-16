@@ -12,8 +12,8 @@ package org.openmrs.module.web.filter;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletContext;
 
 /**
  * This class is an implementation of FilterConfig for use in instantiating Filters from Modules
@@ -48,21 +48,21 @@ public class ModuleFilterConfig implements FilterConfig {
 	}
 	
 	/**
-	 * @see javax.servlet.FilterConfig#getFilterName()
+	 * @see jakarta.servlet.FilterConfig#getFilterName()
 	 */
 	public String getFilterName() {
 		return filterDefinition.getFilterName();
 	}
 	
 	/**
-	 * @see javax.servlet.FilterConfig#getInitParameter(java.lang.String)
+	 * @see jakarta.servlet.FilterConfig#getInitParameter(java.lang.String)
 	 */
 	public String getInitParameter(String paramName) {
 		return filterDefinition.getInitParameters().get(paramName);
 	}
 	
 	/**
-	 * @see javax.servlet.FilterConfig#getInitParameterNames()
+	 * @see jakarta.servlet.FilterConfig#getInitParameterNames()
 	 */
 	public Enumeration<String> getInitParameterNames() {
 		Vector<String> v = new Vector<String>(filterDefinition.getInitParameters().keySet());

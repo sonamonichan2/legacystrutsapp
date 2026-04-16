@@ -14,8 +14,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.zip.GZIPOutputStream;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.WriteListener;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Wraps Response Stream for GZipFilter
@@ -157,5 +158,15 @@ public class GZIPResponseStream extends ServletOutputStream {
 	
 	public void reset() {
 		//noop
+	}
+	
+	@Override
+	public boolean isReady() {
+		return true;
+	}
+	
+	@Override
+	public void setWriteListener(WriteListener writeListener) {
+		throw new UnsupportedOperationException("setWriteListener is not supported");
 	}
 }

@@ -13,9 +13,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -104,7 +104,7 @@ public class GZIPResponseWrapper extends HttpServletResponseWrapper {
 	}
 	
 	/**
-	 * @see javax.servlet.http.HttpServletResponse#sendError(int, java.lang.String)
+	 * @see jakarta.servlet.http.HttpServletResponse#sendError(int, java.lang.String)
 	 */
 	public void sendError(int error, String message) throws IOException {
 		super.sendError(error, message);

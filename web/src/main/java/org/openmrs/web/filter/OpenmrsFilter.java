@@ -11,11 +11,11 @@ package org.openmrs.web.filter;
 
 import java.io.IOException;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -39,7 +39,7 @@ public class OpenmrsFilter extends OncePerRequestFilter {
 	protected final Log log = LogFactory.getLog(getClass());
 	
 	/**
-	 * @see javax.servlet.Filter#destroy()
+	 * @see jakarta.servlet.Filter#destroy()
 	 */
 	public void destroy() {
 		log.debug("Destroying filter");
@@ -50,8 +50,8 @@ public class OpenmrsFilter extends OncePerRequestFilter {
 	 * of this is to make sure the user's current userContext is on the session and on the current
 	 * thread
 	 *
-	 * @see org.springframework.web.filter.OncePerRequestFilter#doFilterInternal(javax.servlet.http.HttpServletRequest,
-	 *      javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain)
+	 * @see org.springframework.web.filter.OncePerRequestFilter#doFilterInternal(jakarta.servlet.http.HttpServletRequest,
+	 *      jakarta.servlet.http.HttpServletResponse, jakarta.servlet.FilterChain)
 	 */
 	@Override
 	protected void doFilterInternal(HttpServletRequest httpRequest, HttpServletResponse httpResponse, FilterChain chain)

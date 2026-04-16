@@ -21,9 +21,9 @@ import org.openmrs.web.test.BaseWebContextSensitiveTest;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import javax.servlet.FilterChain;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -42,7 +42,7 @@ import static org.mockito.Mockito.mock;
 public class GZIPFilterTest extends BaseWebContextSensitiveTest {
 	
 	/**
-	 * @see org.openmrs.web.filter.GZIPFilter#doFilterInternal(HttpServletRequest,HttpServletResponse, javax.servlet.FilterChain)
+	 * @see org.openmrs.web.filter.GZIPFilter#doFilterInternal(HttpServletRequest,HttpServletResponse, jakarta.servlet.FilterChain)
 	 */
 	@Test
 	@Verifies(value = "zip request and response", method = "performGZIPRequest(HttpServletRequest,HttpServletResponse,FilterChain)")
