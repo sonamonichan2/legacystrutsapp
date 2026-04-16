@@ -162,7 +162,7 @@ public class MappingJacksonJsonView extends AbstractView {
 	
 	private void configurePrettyPrint() {
 		if (this.prettyPrint != null) {
-			this.objectMapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, this.prettyPrint);
+			this.objectMapper.configure(SerializationFeature.INDENT_OUTPUT, this.prettyPrint);
 		}
 	}
 	
@@ -269,11 +269,11 @@ public class MappingJacksonJsonView extends AbstractView {
 	 * @throws IOException if writing failed
 	 */
 	protected void writeContent(OutputStream stream, Object value, String jsonPrefix) throws IOException {
-		JsonGenerator generator = this.objectMapper.getJsonFactory().createJsonGenerator(stream, this.encoding);
+		JsonGenerator generator = this.objectMapper.getFactory().createGenerator(stream, this.encoding);
 		
 		// A workaround for JsonGenerators not applying serialization features
 		// https://github.com/FasterXML/jackson-databind/issues/12
-		if (this.objectMapper.getSerializationConfig().isEnabled(SerializationConfig.Feature.INDENT_OUTPUT)) {
+		if (this.objectMapper.isEnabled(SerializationFeature.INDENT_OUTPUT)) {
 			generator.useDefaultPrettyPrinter();
 		}
 		
