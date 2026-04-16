@@ -1,0 +1,18 @@
+codeRepositoryPath: .
+transformationName: AWS/java-version-upgrade
+buildCommand: mvn -DskipTests clean install
+validationCommands: mvn -DskipTests clean install
+
+additionalPlanContext: |
+  Upgrade this OpenMRS Core 2.0.3 codebase from Java 8 to Java 21.
+
+  Constraints:
+  - Preserve WAR deployability
+  - Do not migrate to Jakarta in this step
+  - Do not change logging stack unnecessarily
+  - Do not upgrade Spring/Hibernate unless required
+  - Keep behavior unchanged
+  - Keep Maven structure intact
+
+  Goal:
+  - Produce a clean Java 21 compatible build

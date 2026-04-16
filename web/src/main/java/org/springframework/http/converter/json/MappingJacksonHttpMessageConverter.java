@@ -1,6 +1,7 @@
 /** 
  * NOTE: this class, which has been removed in Spring 4, has been copied over from Spring 3.2.7 to support old style Jackson 1 serialization,
  * which is still the default as of the Spring 4 upgrade. Spring suggests an upgrade to Jackson 2.
+ * Updated to use Jackson 2 (FasterXML) API for Java 21 compatibility.
  **/
 
 /*
@@ -25,13 +26,13 @@ import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 import java.util.List;
 
-import org.codehaus.jackson.JsonEncoding;
-import org.codehaus.jackson.JsonGenerator;
-import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.type.TypeFactory;
-import org.codehaus.jackson.type.JavaType;
+import com.fasterxml.jackson.core.JsonEncoding;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fasterxml.jackson.databind.JavaType;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
@@ -75,7 +76,7 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	 * Set the {@code ObjectMapper} for this view. If not set, a default
 	 * {@link ObjectMapper#ObjectMapper() ObjectMapper} is used.
 	 * <p>Setting a custom-configured {@code ObjectMapper} is one way to take further control of the JSON
-	 * serialization process. For example, an extended {@link org.codehaus.jackson.map.SerializerFactory}
+	 * serialization process. For example, an extended {@link com.fasterxml.jackson.databind.ser.SerializerFactory}
 	 * can be configured that provides custom serializers for specific types. The other option for refining
 	 * the serialization process is to use Jackson's provided annotations on the types to be serialized,
 	 * in which case a custom-configured ObjectMapper is unnecessary.
@@ -88,7 +89,7 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	
 	private void configurePrettyPrint() {
 		if (this.prettyPrint != null) {
-			this.objectMapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, this.prettyPrint);
+			this.objectMapper.configure(SerializationFeature.INDENT_OUTPUT, this.prettyPrint);
 		}
 	}
 	
@@ -121,11 +122,11 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	}
 	
 	/**
-	 * Whether to use the {@link org.codehaus.jackson.impl.DefaultPrettyPrinter} when writing JSON.
+	 * Whether to use the {@link com.fasterxml.jackson.core.util.DefaultPrettyPrinter} when writing JSON.
 	 * This is a shortcut for setting up an {@code ObjectMapper} as follows:
 	 * <pre>
 	 * ObjectMapper mapper = new ObjectMapper();
-	 * mapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true);
+	 * mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
 	 * converter.setObjectMapper(mapper);
 	 * </pre>
 	 * <p>The default value is {@code false}.
@@ -176,7 +177,7 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 			return this.objectMapper.readValue(inputMessage.getBody(), javaType);
 		}
 		catch (IOException ex) {
-			throw new HttpMessageNotReadableException("Could not read JSON: " + ex.getMessage(), ex);
+			throw new HttpMessageNotReadableException("Could not read JSON: " + ex.getMessage(), ex, inputMessage);
 		}
 	}
 	
@@ -185,12 +186,12 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	        HttpMessageNotWritableException {
 		
 		JsonEncoding encoding = getJsonEncoding(outputMessage.getHeaders().getContentType());
-		JsonGenerator jsonGenerator = this.objectMapper.getJsonFactory().createJsonGenerator(outputMessage.getBody(),
+		JsonGenerator jsonGenerator = this.objectMapper.getFactory().createGenerator(outputMessage.getBody(),
 		    encoding);
 		
 		// A workaround for JsonGenerators not applying serialization features
 		// https://github.com/FasterXML/jackson-databind/issues/12
-		if (this.objectMapper.getSerializationConfig().isEnabled(SerializationConfig.Feature.INDENT_OUTPUT)) {
+		if (this.objectMapper.isEnabled(SerializationFeature.INDENT_OUTPUT)) {
 			jsonGenerator.useDefaultPrettyPrinter();
 		}
 		
@@ -207,14 +208,14 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	
 	/**
 	 * Return the Jackson {@link JavaType} for the specified type and context class.
-	 * <p>The default implementation returns {@link TypeFactory#type(java.lang.reflect.Type)}
-	 * or {@code TypeFactory.type(type, TypeFactory.type(contextClass))},
+	 * <p>The default implementation returns {@code TypeFactory.defaultInstance().constructType(type)}
+	 * or uses the context class for resolution,
 	 * but this can be overridden in subclasses, to allow for custom generic collection handling.
 	 * For instance:
 	 * <pre class="code">
 	 * protected JavaType getJavaType(Type type) {
 	 *   if (type instanceof Class && List.class.isAssignableFrom((Class)type)) {
-	 *     return TypeFactory.collectionType(ArrayList.class, MyBean.class);
+	 *     return TypeFactory.defaultInstance().constructCollectionType(ArrayList.class, MyBean.class);
 	 *   } else {
 	 *     return super.getJavaType(type);
 	 *   }
@@ -226,7 +227,8 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	 * @return the java type
 	 */
 	protected JavaType getJavaType(Type type, Class<?> contextClass) {
-		return (contextClass != null) ? TypeFactory.type(type, TypeFactory.type(contextClass)) : TypeFactory.type(type);
+		TypeFactory typeFactory = this.objectMapper.getTypeFactory();
+		return typeFactory.constructType(type);
 	}
 	
 	/**
@@ -235,8 +237,8 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	 * @return the JSON encoding to use (never {@code null})
 	 */
 	protected JsonEncoding getJsonEncoding(MediaType contentType) {
-		if (contentType != null && contentType.getCharSet() != null) {
-			Charset charset = contentType.getCharSet();
+		if (contentType != null && contentType.getCharset() != null) {
+			Charset charset = contentType.getCharset();
 			for (JsonEncoding encoding : JsonEncoding.values()) {
 				if (charset.name().equals(encoding.getJavaName())) {
 					return encoding;

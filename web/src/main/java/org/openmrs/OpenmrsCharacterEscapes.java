@@ -9,9 +9,9 @@
  */
 package org.openmrs;
 
-import org.codehaus.jackson.SerializableString;
-import org.codehaus.jackson.io.CharacterEscapes;
-import org.codehaus.jackson.io.SerializedString;
+import com.fasterxml.jackson.core.SerializableString;
+import com.fasterxml.jackson.core.io.CharacterEscapes;
+import com.fasterxml.jackson.core.io.SerializedString;
 
 /**
  * An instance of this class can be passed to an ObjectMapper instance when serializing objects to

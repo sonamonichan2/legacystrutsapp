@@ -9,7 +9,7 @@
  */
 package org.openmrs;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * ConceptMapType are used to define relationships between concepts and concept reference terms e.g
