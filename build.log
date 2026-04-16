@@ -20,7 +20,7 @@
 [INFO] ShortRevision tag detected. The value is '6'.
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'rev-parse' '--verify' '--short=6' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
-[INFO] Storing buildNumber: be9803 at timestamp: 1776333100973
+[INFO] Storing buildNumber: c608e5 at timestamp: 1776333253433
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'symbolic-ref' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
 [INFO] Storing scmBranch: atx-result-staging-20260416_093139_4747abd4
@@ -219,6 +219,16 @@
 [INFO] --------------------< org.openmrs.web:openmrs-web >---------------------
 [INFO] Building openmrs-web 2.0.3                                         [5/6]
 [INFO] --------------------------------[ jar ]---------------------------------
+Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2-jakarta-servlet6/2.0.0-M2/commons-fileupload2-jakarta-servlet6-2.0.0-M2.pom
+Progress (1): 3.2/4.1 kBProgress (1): 4.1 kB                        Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2-jakarta-servlet6/2.0.0-M2/commons-fileupload2-jakarta-servlet6-2.0.0-M2.pom (4.1 kB at 4.5 kB/s)
+Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2/2.0.0-M2/commons-fileupload2-2.0.0-M2.pom
+Progress (1): 3.2/17 kBProgress (1): 6.0/17 kBProgress (1): 8.8/17 kBProgress (1): 12/17 kB Progress (1): 14/17 kBProgress (1): 17/17 kBProgress (1): 17 kB                      Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2/2.0.0-M2/commons-fileupload2-2.0.0-M2.pom (17 kB at 55 kB/s)
+Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2-core/2.0.0-M2/commons-fileupload2-core-2.0.0-M2.pom
+Progress (1): 3.1 kB                    Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2-core/2.0.0-M2/commons-fileupload2-core-2.0.0-M2.pom (3.1 kB at 13 kB/s)
+Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2-jakarta-servlet6/2.0.0-M2/commons-fileupload2-jakarta-servlet6-2.0.0-M2.jar
+Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2-core/2.0.0-M2/commons-fileupload2-core-2.0.0-M2.jar
+Progress (1): 3.2/14 kBProgress (1): 6.0/14 kBProgress (1): 8.8/14 kBProgress (1): 12/14 kB Progress (1): 14 kB                      Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2-jakarta-servlet6/2.0.0-M2/commons-fileupload2-jakarta-servlet6-2.0.0-M2.jar (14 kB at 55 kB/s)
+Progress (1): 3.2/63 kBProgress (1): 6.0/63 kBProgress (1): 8.8/63 kBProgress (1): 12/63 kB Progress (1): 14/63 kBProgress (1): 17/63 kBProgress (1): 20/63 kBProgress (1): 23/63 kBProgress (1): 26/63 kBProgress (1): 29/63 kBProgress (1): 31/63 kBProgress (1): 34/63 kBProgress (1): 37/63 kBProgress (1): 40/63 kBProgress (1): 42/63 kBProgress (1): 45/63 kBProgress (1): 48/63 kBProgress (1): 51/63 kBProgress (1): 54/63 kBProgress (1): 56/63 kBProgress (1): 59/63 kBProgress (1): 62/63 kBProgress (1): 63 kB                      Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2-core/2.0.0-M2/commons-fileupload2-core-2.0.0-M2.jar (63 kB at 91 kB/s)
 [INFO] 
 [INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ openmrs-web ---
 [INFO] Deleting /home/ec2-user/projects/legacystrutsapp/web/target
@@ -235,7 +245,7 @@
 [INFO] Compiling 39 source files with javac [debug release 21] to target/classes
 [INFO] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java: Some input files use or override a deprecated API.
 [INFO] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java: Recompile with -Xlint:deprecation for details.
-[INFO] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java: /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java uses unchecked or unsafe operations.
+[INFO] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java: Some input files use unchecked or unsafe operations.
 [INFO] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java: Recompile with -Xlint:unchecked for details.
 [INFO] Some messages have been simplified; recompile with -Xdiags:verbose to get full output
 [INFO] -------------------------------------------------------------
@@ -270,32 +280,31 @@
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/initialization/InitializationFilter.java:[1662,119] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/initialization/InitializationFilter.java:[1755,136] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/initialization/InitializationFilter.java:[1782,128] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/startuperror/StartupErrorFilter.java:[79,57] cannot access javax.servlet.http.HttpServletRequest
-  class file for javax.servlet.http.HttpServletRequest not found
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/update/UpdateFilter.java:[491,57] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/update/UpdateFilter.java:[497,66] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[59,8] org.springframework.web.servlet.view.json.MappingJacksonJsonView is not abstract and does not override abstract method renderMergedOutputModel(java.util.Map<java.lang.String,java.lang.Object>,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) in org.springframework.web.servlet.view.AbstractView
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[221,9] method does not override or implement a method from a supertype
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[223,40] incompatible types: jakarta.servlet.http.HttpServletRequest cannot be converted to javax.servlet.http.HttpServletRequest
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[223,17] cannot access javax.servlet.http.HttpServletRequest
+  class file for javax.servlet.http.HttpServletRequest not found
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[232,9] method does not override or implement a method from a supertype
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[240,25] cannot access javax.servlet.http.HttpServletResponse
   class file for javax.servlet.http.HttpServletResponse not found
-[INFO] 27 errors 
+[INFO] 26 errors 
 [INFO] -------------------------------------------------------------
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary for OpenMRS 2.0.3:
 [INFO] 
-[INFO] OpenMRS ............................................ SUCCESS [  1.797 s]
-[INFO] openmrs-tools ...................................... SUCCESS [  0.567 s]
-[INFO] openmrs-test ....................................... SUCCESS [  0.114 s]
-[INFO] openmrs-api ........................................ SUCCESS [ 15.375 s]
-[INFO] openmrs-web ........................................ FAILURE [  0.785 s]
+[INFO] OpenMRS ............................................ SUCCESS [  1.780 s]
+[INFO] openmrs-tools ...................................... SUCCESS [  0.652 s]
+[INFO] openmrs-test ....................................... SUCCESS [  0.123 s]
+[INFO] openmrs-api ........................................ SUCCESS [ 15.642 s]
+[INFO] openmrs-web ........................................ FAILURE [  3.290 s]
 [INFO] openmrs-webapp ..................................... SKIPPED
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  18.860 s
-[INFO] Finished at: 2026-04-16T09:51:58Z
+[INFO] Total time:  21.698 s
+[INFO] Finished at: 2026-04-16T09:54:34Z
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project openmrs-web: Compilation failure: Compilation failure: 
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[35,71] cannot access javax.servlet.http.HttpServlet
@@ -327,13 +336,12 @@
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/initialization/InitializationFilter.java:[1662,119] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/initialization/InitializationFilter.java:[1755,136] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/initialization/InitializationFilter.java:[1782,128] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/startuperror/StartupErrorFilter.java:[79,57] cannot access javax.servlet.http.HttpServletRequest
-[ERROR]   class file for javax.servlet.http.HttpServletRequest not found
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/update/UpdateFilter.java:[491,57] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/update/UpdateFilter.java:[497,66] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[59,8] org.springframework.web.servlet.view.json.MappingJacksonJsonView is not abstract and does not override abstract method renderMergedOutputModel(java.util.Map<java.lang.String,java.lang.Object>,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) in org.springframework.web.servlet.view.AbstractView
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[221,9] method does not override or implement a method from a supertype
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[223,40] incompatible types: jakarta.servlet.http.HttpServletRequest cannot be converted to javax.servlet.http.HttpServletRequest
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[223,17] cannot access javax.servlet.http.HttpServletRequest
+[ERROR]   class file for javax.servlet.http.HttpServletRequest not found
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[232,9] method does not override or implement a method from a supertype
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[240,25] cannot access javax.servlet.http.HttpServletResponse
 [ERROR]   class file for javax.servlet.http.HttpServletResponse not found

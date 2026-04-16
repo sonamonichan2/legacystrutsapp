@@ -22,13 +22,10 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.RequestContext;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.servlet.ServletRequestContext;
+import org.apache.commons.fileupload2.core.DiskFileItemFactory;
+import org.apache.commons.fileupload2.core.FileItem;
+import org.apache.commons.fileupload2.core.FileUploadException;
+import org.apache.commons.fileupload2.jakarta.servlet6.JakartaServletFileUpload;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.context.Context;
@@ -76,16 +73,15 @@ public class StartupErrorFilter extends StartupFilter {
 	        ServletException {
 		// if they are uploading modules
 		if (getModel().errorAtStartup instanceof OpenmrsCoreModuleException) {
-			RequestContext requestContext = new ServletRequestContext(httpRequest);
-			if (!ServletFileUpload.isMultipartContent(requestContext)) {
+			if (!JakartaServletFileUpload.isMultipartContent(httpRequest)) {
 				throw new ServletException("The request is not a valid multipart/form-data upload request");
 			}
 			
-			FileItemFactory factory = new DiskFileItemFactory();
-			ServletFileUpload upload = new ServletFileUpload(factory);
+			DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
+			JakartaServletFileUpload upload = new JakartaServletFileUpload(factory);
 			try {
 				Context.openSession();
-				List<FileItem> items = upload.parseRequest(requestContext);
+				List<FileItem> items = upload.parseRequest(httpRequest);
 				for (FileItem item : items) {
 					InputStream uploadedStream = item.getInputStream();
 					ModuleUtil.insertModuleFile(uploadedStream, item.getName());
