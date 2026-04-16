@@ -11,7 +11,7 @@ package org.openmrs;
 
 import java.lang.reflect.Field;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

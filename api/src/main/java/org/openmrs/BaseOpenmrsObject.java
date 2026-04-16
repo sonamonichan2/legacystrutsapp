@@ -16,8 +16,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.Hibernate;
 
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Column;
 
 /**
  * This is the base implementation of the {@link OpenmrsObject} interface.<br>

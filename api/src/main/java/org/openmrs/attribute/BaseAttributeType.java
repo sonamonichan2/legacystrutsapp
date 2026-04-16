@@ -12,8 +12,8 @@ package org.openmrs.attribute;
 import org.openmrs.BaseOpenmrsMetadata;
 import org.openmrs.customdatatype.Customizable;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
 
 /**
  * Abstract base implementation of {@link AttributeType}. Actual implementations (e.g. VisitAttributeType,

@@ -20,7 +20,7 @@ import static org.junit.Assert.assertThat;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.junit.Test;
 import org.openmrs.Concept;

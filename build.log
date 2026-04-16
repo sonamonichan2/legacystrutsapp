@@ -20,7 +20,7 @@
 [INFO] ShortRevision tag detected. The value is '6'.
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'rev-parse' '--verify' '--short=6' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
-[INFO] Storing buildNumber: 0e1a1a at timestamp: 1776332904390
+[INFO] Storing buildNumber: be9803 at timestamp: 1776333100973
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'symbolic-ref' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
 [INFO] Storing scmBranch: atx-result-staging-20260416_093139_4747abd4
@@ -285,17 +285,17 @@
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary for OpenMRS 2.0.3:
 [INFO] 
-[INFO] OpenMRS ............................................ SUCCESS [  1.842 s]
-[INFO] openmrs-tools ...................................... SUCCESS [  0.663 s]
-[INFO] openmrs-test ....................................... SUCCESS [  0.138 s]
-[INFO] openmrs-api ........................................ SUCCESS [ 15.502 s]
-[INFO] openmrs-web ........................................ FAILURE [  0.770 s]
+[INFO] OpenMRS ............................................ SUCCESS [  1.797 s]
+[INFO] openmrs-tools ...................................... SUCCESS [  0.567 s]
+[INFO] openmrs-test ....................................... SUCCESS [  0.114 s]
+[INFO] openmrs-api ........................................ SUCCESS [ 15.375 s]
+[INFO] openmrs-web ........................................ FAILURE [  0.785 s]
 [INFO] openmrs-webapp ..................................... SKIPPED
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  19.120 s
-[INFO] Finished at: 2026-04-16T09:48:42Z
+[INFO] Total time:  18.860 s
+[INFO] Finished at: 2026-04-16T09:51:58Z
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project openmrs-web: Compilation failure: Compilation failure: 
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[35,71] cannot access javax.servlet.http.HttpServlet
