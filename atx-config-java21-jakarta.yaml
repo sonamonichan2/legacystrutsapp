@@ -1,0 +1,46 @@
+codeRepositoryPath: .
+transformationName: AWS/java-version-upgrade
+buildCommand: mvn -DskipTests clean install
+validationCommands: mvn -DskipTests clean install
+
+additionalPlanContext: |
+  Upgrade this OpenMRS Core 2.0.3 codebase from Java 8 to Java 21 and migrate it from Java EE javax.* APIs to Jakarta EE jakarta.* APIs.
+
+  Primary target:
+  - Target runtime: Java 21
+  - Target servlet container: Apache Tomcat 10.1
+  - Target API namespace: jakarta.*
+  - Keep WAR deployability in this wave
+  - Do not convert to microservices
+  - Do not convert to Spring Boot in this wave unless absolutely required for compatibility
+  - Preserve business behavior and existing database semantics as much as possible
+
+  Required modernization scope:
+  - Migrate javax.servlet, javax.servlet.jsp, JSTL, taglibs, filters, listeners, and related Java EE imports/usages to Jakarta equivalents
+  - Update Maven dependencies from javax.* artifacts to Jakarta-compatible artifacts where required
+  - Update web.xml, context.xml, taglibs, JSPs, filters, listeners, and servlet configuration for Jakarta/Tomcat 10.1 compatibility
+  - Update Spring and Hibernate only as needed to support Java 21 and Jakarta compatibility
+  - Update database drivers and related dependencies only where required
+  - Replace outdated JDK-dependent build-time tooling and deprecated Maven plugins
+  - Remove or replace incompatible legacy libraries only when required for Java 21 or Jakarta compatibility
+
+  Tomcat 10.1 compatibility requirements:
+  - The output WAR must be intended to run on Tomcat 10.1
+  - Eliminate javax.* servlet/JSP dependencies from the deployable artifact
+  - Prefer source-level migration over relying only on runtime conversion
+  - Ensure descriptors and packaged dependencies are Jakarta-compatible
+
+  Constraints:
+  - Preserve Maven multi-module structure in this phase if possible
+  - Keep Liquibase-based schema migration
+  - Minimize schema changes
+  - Keep the application as one deployable unit
+  - Keep OpenMRS module/runtime behavior intact as much as possible
+  - Prefer minimal but correct changes rather than broad rewrites
+
+  Validation expectations:
+  - Produce a buildable WAR
+  - Call out any blocking compatibility gaps clearly
+  - Summarize all javax-to-jakarta package and dependency changes
+  - Identify files changed for Tomcat 10.1 compatibility
+  - Note any remaining manual steps if full Jakarta migration cannot be completed automatically

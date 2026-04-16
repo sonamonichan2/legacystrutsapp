@@ -1,1 +1,283 @@
-Analysis task - no build required
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] OpenMRS                                                            [pom]
+[INFO] openmrs-tools                                                      [jar]
+[INFO] openmrs-test                                                       [pom]
+[INFO] openmrs-api                                                        [jar]
+[INFO] openmrs-web                                                        [jar]
+[INFO] openmrs-webapp                                                     [war]
+[INFO] 
+[INFO] ------------------------< org.openmrs:openmrs >-------------------------
+[INFO] Building OpenMRS 2.0.3                                             [1/6]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ openmrs ---
+[INFO] Deleting /home/ec2-user/projects/legacystrutsapp/target
+[INFO] 
+[INFO] --- buildnumber-maven-plugin:1.1:create (default) @ openmrs ---
+[INFO] Checking for local modifications: skipped.
+[INFO] Updating project files from SCM: skipped.
+[INFO] ShortRevision tag detected. The value is '6'.
+[INFO] Executing: /bin/sh -c cd /home/ec2-user/projects/legacystrutsapp && git rev-parse --verify --short=6 HEAD
+[INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
+[INFO] Storing buildNumber: 4c2418 at timestamp: 1776325952177
+[INFO] ShortRevision tag detected. The value is '6'.
+[INFO] Executing: /bin/sh -c cd /home/ec2-user/projects/legacystrutsapp && git rev-parse --verify --short=6 HEAD
+[INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
+[INFO] Storing buildScmBranch: UNKNOWN
+[INFO] 
+[INFO] --- build-helper-maven-plugin:1.5:parse-version (parse-version) @ openmrs ---
+[INFO] 
+[INFO] --- maven-jar-plugin:2.3.2:test-jar (default) @ openmrs ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/ec2-user/projects/legacystrutsapp/target/openmrs-2.0.3-tests.jar
+[INFO] 
+[INFO] --- license-maven-plugin:2.6:check (default) @ openmrs ---
+[INFO] Checking licenses...
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ openmrs ---
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/pom.xml to /home/ec2-user/.m2/repository/org/openmrs/openmrs/2.0.3/openmrs-2.0.3.pom
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/target/openmrs-2.0.3-tests.jar to /home/ec2-user/.m2/repository/org/openmrs/openmrs/2.0.3/openmrs-2.0.3-tests.jar
+[INFO] 
+[INFO] ------------------< org.openmrs.tools:openmrs-tools >-------------------
+[INFO] Building openmrs-tools 2.0.3                                       [2/6]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ openmrs-tools ---
+[INFO] Deleting /home/ec2-user/projects/legacystrutsapp/tools/target
+[INFO] 
+[INFO] --- buildnumber-maven-plugin:1.1:create (default) @ openmrs-tools ---
+[INFO] 
+[INFO] --- build-helper-maven-plugin:1.5:parse-version (parse-version) @ openmrs-tools ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4:resources (default-resources) @ openmrs-tools ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 7 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.1:compile (default-compile) @ openmrs-tools ---
+[INFO] Compiling 1 source file to /home/ec2-user/projects/legacystrutsapp/tools/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4:testResources (default-testResources) @ openmrs-tools ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/ec2-user/projects/legacystrutsapp/tools/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.1:testCompile (default-testCompile) @ openmrs-tools ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.18.1:test (default-test) @ openmrs-tools ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.3.2:jar (default-jar) @ openmrs-tools ---
+[INFO] Building jar: /home/ec2-user/projects/legacystrutsapp/tools/target/openmrs-tools-2.0.3.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.3.2:test-jar (default) @ openmrs-tools ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/ec2-user/projects/legacystrutsapp/tools/target/openmrs-tools-2.0.3-tests.jar
+[INFO] 
+[INFO] --- license-maven-plugin:2.6:check (default) @ openmrs-tools ---
+[INFO] Checking licenses...
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ openmrs-tools ---
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/tools/target/openmrs-tools-2.0.3.jar to /home/ec2-user/.m2/repository/org/openmrs/tools/openmrs-tools/2.0.3/openmrs-tools-2.0.3.jar
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/tools/pom.xml to /home/ec2-user/.m2/repository/org/openmrs/tools/openmrs-tools/2.0.3/openmrs-tools-2.0.3.pom
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/tools/target/openmrs-tools-2.0.3-tests.jar to /home/ec2-user/.m2/repository/org/openmrs/tools/openmrs-tools/2.0.3/openmrs-tools-2.0.3-tests.jar
+[INFO] 
+[INFO] -------------------< org.openmrs.test:openmrs-test >--------------------
+[INFO] Building openmrs-test 2.0.3                                        [3/6]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ openmrs-test ---
+[INFO] Deleting /home/ec2-user/projects/legacystrutsapp/test/target
+[INFO] 
+[INFO] --- buildnumber-maven-plugin:1.1:create (default) @ openmrs-test ---
+[INFO] 
+[INFO] --- build-helper-maven-plugin:1.5:parse-version (parse-version) @ openmrs-test ---
+[INFO] 
+[INFO] --- maven-jar-plugin:2.3.2:test-jar (default) @ openmrs-test ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/ec2-user/projects/legacystrutsapp/test/target/openmrs-test-2.0.3-tests.jar
+[INFO] 
+[INFO] --- license-maven-plugin:2.6:check (default) @ openmrs-test ---
+[INFO] Checking licenses...
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ openmrs-test ---
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/test/pom.xml to /home/ec2-user/.m2/repository/org/openmrs/test/openmrs-test/2.0.3/openmrs-test-2.0.3.pom
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/test/target/openmrs-test-2.0.3-tests.jar to /home/ec2-user/.m2/repository/org/openmrs/test/openmrs-test/2.0.3/openmrs-test-2.0.3-tests.jar
+[INFO] 
+[INFO] --------------------< org.openmrs.api:openmrs-api >---------------------
+[INFO] Building openmrs-api 2.0.3                                         [4/6]
+[INFO] --------------------------------[ jar ]---------------------------------
+[WARNING] The artifact xml-apis:xml-apis:jar:2.0.2 has been relocated to xml-apis:xml-apis:jar:1.0.b2
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ openmrs-api ---
+[INFO] Deleting /home/ec2-user/projects/legacystrutsapp/api/target
+[INFO] 
+[INFO] --- buildnumber-maven-plugin:1.1:create (default) @ openmrs-api ---
+[INFO] 
+[INFO] --- build-helper-maven-plugin:1.5:parse-version (parse-version) @ openmrs-api ---
+[INFO] 
+[INFO] --- maven-java-formatter-plugin:0.3:format (default) @ openmrs-api ---
+[INFO] Using 'UTF-8' encoding to format source files.
+[INFO] Number of files to be formatted: 937
+[INFO] Successfully formatted: 0 file(s)
+[INFO] Fail to format        : 0 file(s)
+[INFO] Skipped               : 937 file(s)
+[INFO] Approximate time taken: 2s
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4:resources (default-resources) @ openmrs-api ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 121 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.1:compile (default-compile) @ openmrs-api ---
+[INFO] Compiling 649 source files to /home/ec2-user/projects/legacystrutsapp/api/target/classes
+[WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/util/MemoryLeakUtil.java:[18,23] KeepAliveCache is internal proprietary API and may be removed in a future release
+
+[WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/util/MemoryLeakUtil.java:[67,32] KeepAliveCache is internal proprietary API and may be removed in a future release
+
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4:testResources (default-testResources) @ openmrs-api ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 127 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.1:testCompile (default-testCompile) @ openmrs-api ---
+[INFO] Compiling 288 source files to /home/ec2-user/projects/legacystrutsapp/api/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.18.1:test (default-test) @ openmrs-api ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.3.2:jar (default-jar) @ openmrs-api ---
+[INFO] Building jar: /home/ec2-user/projects/legacystrutsapp/api/target/openmrs-api-2.0.3.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.3.2:test-jar (default) @ openmrs-api ---
+[INFO] Building jar: /home/ec2-user/projects/legacystrutsapp/api/target/openmrs-api-2.0.3-tests.jar
+[INFO] 
+[INFO] --- license-maven-plugin:2.6:check (default) @ openmrs-api ---
+[INFO] Checking licenses...
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ openmrs-api ---
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/api/target/openmrs-api-2.0.3.jar to /home/ec2-user/.m2/repository/org/openmrs/api/openmrs-api/2.0.3/openmrs-api-2.0.3.jar
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/api/pom.xml to /home/ec2-user/.m2/repository/org/openmrs/api/openmrs-api/2.0.3/openmrs-api-2.0.3.pom
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/api/target/openmrs-api-2.0.3-tests.jar to /home/ec2-user/.m2/repository/org/openmrs/api/openmrs-api/2.0.3/openmrs-api-2.0.3-tests.jar
+[INFO] 
+[INFO] --------------------< org.openmrs.web:openmrs-web >---------------------
+[INFO] Building openmrs-web 2.0.3                                         [5/6]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ openmrs-web ---
+[INFO] Deleting /home/ec2-user/projects/legacystrutsapp/web/target
+[INFO] 
+[INFO] --- buildnumber-maven-plugin:1.1:create (default) @ openmrs-web ---
+[INFO] 
+[INFO] --- build-helper-maven-plugin:1.5:parse-version (parse-version) @ openmrs-web ---
+[INFO] 
+[INFO] --- maven-java-formatter-plugin:0.3:format (default) @ openmrs-web ---
+[INFO] Using 'UTF-8' encoding to format source files.
+[INFO] Number of files to be formatted: 50
+[INFO] Successfully formatted: 0 file(s)
+[INFO] Fail to format        : 0 file(s)
+[INFO] Skipped               : 50 file(s)
+[INFO] Approximate time taken: 0s
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4:resources (default-resources) @ openmrs-web ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 22 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.1:compile (default-compile) @ openmrs-web ---
+[INFO] Compiling 39 source files to /home/ec2-user/projects/legacystrutsapp/web/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4:testResources (default-testResources) @ openmrs-web ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/ec2-user/projects/legacystrutsapp/web/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.1:testCompile (default-testCompile) @ openmrs-web ---
+[INFO] Compiling 11 source files to /home/ec2-user/projects/legacystrutsapp/web/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.18.1:test (default-test) @ openmrs-web ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.3.2:jar (default-jar) @ openmrs-web ---
+[INFO] Building jar: /home/ec2-user/projects/legacystrutsapp/web/target/openmrs-web-2.0.3.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.3.2:test-jar (default) @ openmrs-web ---
+[INFO] Building jar: /home/ec2-user/projects/legacystrutsapp/web/target/openmrs-web-2.0.3-tests.jar
+[INFO] 
+[INFO] --- license-maven-plugin:2.6:check (default) @ openmrs-web ---
+[INFO] Checking licenses...
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ openmrs-web ---
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/web/target/openmrs-web-2.0.3.jar to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-web/2.0.3/openmrs-web-2.0.3.jar
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/web/pom.xml to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-web/2.0.3/openmrs-web-2.0.3.pom
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/web/target/openmrs-web-2.0.3-tests.jar to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-web/2.0.3/openmrs-web-2.0.3-tests.jar
+[INFO] 
+[INFO] -------------------< org.openmrs.web:openmrs-webapp >-------------------
+[INFO] Building openmrs-webapp 2.0.3                                      [6/6]
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ openmrs-webapp ---
+[INFO] Deleting /home/ec2-user/projects/legacystrutsapp/webapp/target
+[INFO] 
+[INFO] --- buildnumber-maven-plugin:1.1:create (default) @ openmrs-webapp ---
+[INFO] 
+[INFO] --- build-helper-maven-plugin:1.5:parse-version (parse-version) @ openmrs-webapp ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4:resources (default-resources) @ openmrs-webapp ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 2 resources
+[INFO] Copying 1 resource to ../jetty
+[INFO] 
+[INFO] --- maven-antrun-plugin:1.4:run (default) @ openmrs-webapp ---
+project.artifactId
+[INFO] Executing tasks
+    [unzip] Expanding: /home/ec2-user/projects/legacystrutsapp/webapp/src/main/resources/liquibase-demo-data.zip into /home/ec2-user/projects/legacystrutsapp/webapp/target/classes
+[INFO] Executed tasks
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.1:compile (default-compile) @ openmrs-webapp ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4:testResources (default-testResources) @ openmrs-webapp ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.1:testCompile (default-testCompile) @ openmrs-webapp ---
+[INFO] Compiling 3 source files to /home/ec2-user/projects/legacystrutsapp/webapp/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.18.1:test (default-test) @ openmrs-webapp ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-war-plugin:2.4:war (default-war) @ openmrs-webapp ---
+[INFO] Packaging webapp
+[INFO] Assembling webapp [openmrs-webapp] in [/home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs]
+[INFO] Processing war project
+[INFO] Copying webapp webResources [/home/ec2-user/projects/legacystrutsapp/webapp/src/main/webapp] to [/home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs]
+[INFO] Copying webapp resources [/home/ec2-user/projects/legacystrutsapp/webapp/src/main/webapp]
+[INFO] Webapp assembled in [234 msecs]
+[INFO] Building war: /home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs.war
+[INFO] 
+[INFO] --- maven-jar-plugin:2.3.2:test-jar (default) @ openmrs-webapp ---
+[INFO] Building jar: /home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs-tests.jar
+[INFO] 
+[INFO] --- license-maven-plugin:2.6:check (default) @ openmrs-webapp ---
+[INFO] Checking licenses...
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ openmrs-webapp ---
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs.war to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-webapp/2.0.3/openmrs-webapp-2.0.3.war
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/webapp/pom.xml to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-webapp/2.0.3/openmrs-webapp-2.0.3.pom
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs-tests.jar to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-webapp/2.0.3/openmrs-webapp-2.0.3-tests.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for OpenMRS 2.0.3:
+[INFO] 
+[INFO] OpenMRS ............................................ SUCCESS [  1.420 s]
+[INFO] openmrs-tools ...................................... SUCCESS [  0.998 s]
+[INFO] openmrs-test ....................................... SUCCESS [  0.077 s]
+[INFO] openmrs-api ........................................ SUCCESS [ 14.744 s]
+[INFO] openmrs-web ........................................ SUCCESS [  3.160 s]
+[INFO] openmrs-webapp ..................................... SUCCESS [  3.863 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  24.456 s
+[INFO] Finished at: 2026-04-16T07:52:55Z
+[INFO] ------------------------------------------------------------------------
