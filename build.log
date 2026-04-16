@@ -20,7 +20,7 @@
 [INFO] ShortRevision tag detected. The value is '6'.
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'rev-parse' '--verify' '--short=6' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
-[INFO] Storing buildNumber: 13dc1e at timestamp: 1776333378226
+[INFO] Storing buildNumber: 98abac at timestamp: 1776334097403
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'symbolic-ref' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
 [INFO] Storing scmBranch: atx-result-staging-20260416_093139_4747abd4
@@ -237,111 +237,101 @@
 [INFO] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java: Recompile with -Xlint:deprecation for details.
 [INFO] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java: Some input files use unchecked or unsafe operations.
 [INFO] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java: Recompile with -Xlint:unchecked for details.
-[INFO] Some messages have been simplified; recompile with -Xdiags:verbose to get full output
-[INFO] -------------------------------------------------------------
-[ERROR] COMPILATION ERROR : 
-[INFO] -------------------------------------------------------------
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[35,71] cannot access javax.servlet.http.HttpServlet
-  class file for javax.servlet.http.HttpServlet not found
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/GZIPFilter.java:[32,33] cannot access javax.servlet.Filter
-  class file for javax.servlet.Filter not found
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[853,25] cannot access javax.servlet.ServletContext
-  class file for javax.servlet.ServletContext not found
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[39,49] cannot find symbol
-  symbol: method getClass()
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[45,24] cannot access javax.servlet.ServletException
-  class file for javax.servlet.ServletException not found
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[82,9] method does not override or implement a method from a supertype
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[84,22] method init in class org.springframework.web.servlet.HttpServletBean cannot be applied to given types;
-  required: no arguments
-  found:    jakarta.servlet.ServletConfig
-  reason: actual and formal argument lists differ in length
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/StaticDispatcherServlet.java:[31,49] cannot find symbol
-  symbol: method getClass()
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/StaticDispatcherServlet.java:[37,24] initFrameworkServlet() in org.openmrs.web.StaticDispatcherServlet cannot override initFrameworkServlet() in org.springframework.web.servlet.FrameworkServlet
-  overridden method does not throw jakarta.servlet.ServletException
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[192,123] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[193,83] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/controller/PseudoStaticContentController.java:[36,8] org.openmrs.web.controller.PseudoStaticContentController is not abstract and does not override abstract method handleRequest(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) in org.springframework.web.servlet.mvc.Controller
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/controller/PseudoStaticContentController.java:[76,9] method does not override or implement a method from a supertype
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/GZIPFilter.java:[32,8] org.openmrs.web.filter.GZIPFilter is not abstract and does not override abstract method doFilterInternal(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,javax.servlet.FilterChain) in org.springframework.web.filter.OncePerRequestFilter
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/OpenmrsFilter.java:[37,8] org.openmrs.web.filter.OpenmrsFilter is not abstract and does not override abstract method doFilterInternal(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,javax.servlet.FilterChain) in org.springframework.web.filter.OncePerRequestFilter
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/OpenmrsFilter.java:[56,9] method does not override or implement a method from a supertype
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/initialization/InitializationFilter.java:[1662,119] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/initialization/InitializationFilter.java:[1755,136] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/initialization/InitializationFilter.java:[1782,128] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/update/UpdateFilter.java:[491,57] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/update/UpdateFilter.java:[497,66] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[59,8] org.springframework.web.servlet.view.json.MappingJacksonJsonView is not abstract and does not override abstract method renderMergedOutputModel(java.util.Map<java.lang.String,java.lang.Object>,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) in org.springframework.web.servlet.view.AbstractView
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[221,9] method does not override or implement a method from a supertype
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[223,17] cannot access javax.servlet.http.HttpServletRequest
-  class file for javax.servlet.http.HttpServletRequest not found
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[232,9] method does not override or implement a method from a supertype
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[240,25] cannot access javax.servlet.http.HttpServletResponse
-  class file for javax.servlet.http.HttpServletResponse not found
-[INFO] 26 errors 
-[INFO] -------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:testResources (default-testResources) @ openmrs-web ---
+[INFO] skip non existing resourceDirectory /home/ec2-user/projects/legacystrutsapp/web/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ openmrs-web ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 11 source files with javac [debug release 21] to target/test-classes
+[INFO] /home/ec2-user/projects/legacystrutsapp/web/src/test/java/org/openmrs/module/web/WebModuleUtilTest.java: Some input files use or override a deprecated API.
+[INFO] /home/ec2-user/projects/legacystrutsapp/web/src/test/java/org/openmrs/module/web/WebModuleUtilTest.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ openmrs-web ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.3.0:jar (default-jar) @ openmrs-web ---
+[INFO] Building jar: /home/ec2-user/projects/legacystrutsapp/web/target/openmrs-web-2.0.3.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:3.3.0:test-jar (default) @ openmrs-web ---
+[INFO] Building jar: /home/ec2-user/projects/legacystrutsapp/web/target/openmrs-web-2.0.3-tests.jar
+[INFO] 
+[INFO] --- license-maven-plugin:4.3:check (default) @ openmrs-web ---
+[INFO] Checking licenses...
+[WARNING] Property 'strictCheck' is not enabled. Please consider adding <strictCheck>true</strictCheck> in your pom.xml file.
+[WARNING] See https://mycila.carbou.me/license-maven-plugin for more information.
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ openmrs-web ---
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/web/target/openmrs-web-2.0.3.jar to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-web/2.0.3/openmrs-web-2.0.3.jar
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/web/pom.xml to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-web/2.0.3/openmrs-web-2.0.3.pom
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/web/target/openmrs-web-2.0.3-tests.jar to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-web/2.0.3/openmrs-web-2.0.3-tests.jar
+[INFO] 
+[INFO] -------------------< org.openmrs.web:openmrs-webapp >-------------------
+[INFO] Building openmrs-webapp 2.0.3                                      [6/6]
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ openmrs-webapp ---
+[INFO] Deleting /home/ec2-user/projects/legacystrutsapp/webapp/target
+[INFO] 
+[INFO] --- buildnumber-maven-plugin:3.2.0:create (default) @ openmrs-webapp ---
+[INFO] 
+[INFO] --- build-helper-maven-plugin:3.5.0:parse-version (parse-version) @ openmrs-webapp ---
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:resources (default-resources) @ openmrs-webapp ---
+[INFO] Copying 2 resources from src/main/resources to target/classes
+[INFO] Copying 1 resource from src/main/webapp to target/jetty
+[INFO] 
+[INFO] --- maven-antrun-plugin:1.4:run (default) @ openmrs-webapp ---
+project.artifactId
+[INFO] Executing tasks
+    [unzip] Expanding: /home/ec2-user/projects/legacystrutsapp/webapp/src/main/resources/liquibase-demo-data.zip into /home/ec2-user/projects/legacystrutsapp/webapp/target/classes
+[INFO] Executed tasks
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ openmrs-webapp ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:testResources (default-testResources) @ openmrs-webapp ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ openmrs-webapp ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 3 source files with javac [debug release 21] to target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ openmrs-webapp ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-war-plugin:3.4.0:war (default-war) @ openmrs-webapp ---
+[INFO] Packaging webapp
+[INFO] Assembling webapp [openmrs-webapp] in [/home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs]
+[INFO] Processing war project
+[INFO] Copying webapp webResources [/home/ec2-user/projects/legacystrutsapp/webapp/src/main/webapp] to [/home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs]
+[INFO] Copying webapp resources [/home/ec2-user/projects/legacystrutsapp/webapp/src/main/webapp]
+[INFO] Building war: /home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs.war
+[INFO] 
+[INFO] --- maven-jar-plugin:3.3.0:test-jar (default) @ openmrs-webapp ---
+[INFO] Building jar: /home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs-tests.jar
+[INFO] 
+[INFO] --- license-maven-plugin:4.3:check (default) @ openmrs-webapp ---
+[INFO] Checking licenses...
+[WARNING] Property 'strictCheck' is not enabled. Please consider adding <strictCheck>true</strictCheck> in your pom.xml file.
+[WARNING] See https://mycila.carbou.me/license-maven-plugin for more information.
+[INFO] 
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ openmrs-webapp ---
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs.war to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-webapp/2.0.3/openmrs-webapp-2.0.3.war
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/webapp/pom.xml to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-webapp/2.0.3/openmrs-webapp-2.0.3.pom
+[INFO] Installing /home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs-tests.jar to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-webapp/2.0.3/openmrs-webapp-2.0.3-tests.jar
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary for OpenMRS 2.0.3:
 [INFO] 
-[INFO] OpenMRS ............................................ SUCCESS [  1.702 s]
-[INFO] openmrs-tools ...................................... SUCCESS [  0.623 s]
-[INFO] openmrs-test ....................................... SUCCESS [  0.149 s]
-[INFO] openmrs-api ........................................ SUCCESS [ 15.454 s]
-[INFO] openmrs-web ........................................ FAILURE [  0.722 s]
-[INFO] openmrs-webapp ..................................... SKIPPED
+[INFO] OpenMRS ............................................ SUCCESS [  1.774 s]
+[INFO] openmrs-tools ...................................... SUCCESS [  0.510 s]
+[INFO] openmrs-test ....................................... SUCCESS [  0.173 s]
+[INFO] openmrs-api ........................................ SUCCESS [ 15.657 s]
+[INFO] openmrs-web ........................................ SUCCESS [  1.418 s]
+[INFO] openmrs-webapp ..................................... SUCCESS [  3.712 s]
 [INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
+[INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  18.885 s
-[INFO] Finished at: 2026-04-16T09:56:36Z
+[INFO] Total time:  23.482 s
+[INFO] Finished at: 2026-04-16T10:08:39Z
 [INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project openmrs-web: Compilation failure: Compilation failure: 
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[35,71] cannot access javax.servlet.http.HttpServlet
-[ERROR]   class file for javax.servlet.http.HttpServlet not found
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/GZIPFilter.java:[32,33] cannot access javax.servlet.Filter
-[ERROR]   class file for javax.servlet.Filter not found
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[853,25] cannot access javax.servlet.ServletContext
-[ERROR]   class file for javax.servlet.ServletContext not found
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[39,49] cannot find symbol
-[ERROR]   symbol: method getClass()
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[45,24] cannot access javax.servlet.ServletException
-[ERROR]   class file for javax.servlet.ServletException not found
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[82,9] method does not override or implement a method from a supertype
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[84,22] method init in class org.springframework.web.servlet.HttpServletBean cannot be applied to given types;
-[ERROR]   required: no arguments
-[ERROR]   found:    jakarta.servlet.ServletConfig
-[ERROR]   reason: actual and formal argument lists differ in length
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/StaticDispatcherServlet.java:[31,49] cannot find symbol
-[ERROR]   symbol: method getClass()
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/StaticDispatcherServlet.java:[37,24] initFrameworkServlet() in org.openmrs.web.StaticDispatcherServlet cannot override initFrameworkServlet() in org.springframework.web.servlet.FrameworkServlet
-[ERROR]   overridden method does not throw jakarta.servlet.ServletException
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[192,123] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[193,83] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/controller/PseudoStaticContentController.java:[36,8] org.openmrs.web.controller.PseudoStaticContentController is not abstract and does not override abstract method handleRequest(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) in org.springframework.web.servlet.mvc.Controller
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/controller/PseudoStaticContentController.java:[76,9] method does not override or implement a method from a supertype
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/GZIPFilter.java:[32,8] org.openmrs.web.filter.GZIPFilter is not abstract and does not override abstract method doFilterInternal(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,javax.servlet.FilterChain) in org.springframework.web.filter.OncePerRequestFilter
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/OpenmrsFilter.java:[37,8] org.openmrs.web.filter.OpenmrsFilter is not abstract and does not override abstract method doFilterInternal(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,javax.servlet.FilterChain) in org.springframework.web.filter.OncePerRequestFilter
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/OpenmrsFilter.java:[56,9] method does not override or implement a method from a supertype
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/initialization/InitializationFilter.java:[1662,119] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/initialization/InitializationFilter.java:[1755,136] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/initialization/InitializationFilter.java:[1782,128] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/update/UpdateFilter.java:[491,57] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/filter/update/UpdateFilter.java:[497,66] incompatible types: jakarta.servlet.ServletContext cannot be converted to javax.servlet.ServletContext
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[59,8] org.springframework.web.servlet.view.json.MappingJacksonJsonView is not abstract and does not override abstract method renderMergedOutputModel(java.util.Map<java.lang.String,java.lang.Object>,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) in org.springframework.web.servlet.view.AbstractView
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[221,9] method does not override or implement a method from a supertype
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[223,17] cannot access javax.servlet.http.HttpServletRequest
-[ERROR]   class file for javax.servlet.http.HttpServletRequest not found
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[232,9] method does not override or implement a method from a supertype
-[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/springframework/web/servlet/view/json/MappingJacksonJsonView.java:[240,25] cannot access javax.servlet.http.HttpServletResponse
-[ERROR]   class file for javax.servlet.http.HttpServletResponse not found
-[ERROR] -> [Help 1]
-[ERROR] 
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR] 
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
-[ERROR] 
-[ERROR] After correcting the problems, you can resume the build with the command
-[ERROR]   mvn <args> -rf :openmrs-web

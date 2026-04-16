@@ -15,7 +15,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.web.WebModuleUtil;
 import org.openmrs.util.OpenmrsClassLoader;
-import org.springframework.beans.BeansException;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
 /**
@@ -34,7 +33,7 @@ public class StaticDispatcherServlet extends org.springframework.web.servlet.Dis
 	 * @see org.springframework.web.servlet.FrameworkServlet#initFrameworkServlet()
 	 */
 	@Override
-	protected void initFrameworkServlet() throws ServletException, BeansException {
+	protected void initFrameworkServlet() throws ServletException {
 		
 		Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
 		

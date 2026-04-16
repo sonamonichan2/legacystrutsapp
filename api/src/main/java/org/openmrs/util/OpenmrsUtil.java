@@ -110,7 +110,7 @@ import org.openmrs.propertyeditor.ProgramWorkflowStateEditor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.context.NoSuchMessageException;
-import org.springframework.core.JdkVersion;
+// JdkVersion removed in Spring 6 - using System.getProperty instead
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 
@@ -1150,8 +1150,8 @@ public class OpenmrsUtil {
 	 */
 	public static void validateJavaVersion() {
 		// check whether the current JVM version is at least Java 6
-		if (JdkVersion.getJavaVersion().matches("1.(0|1|2|3|4|5).(.*)")) {
-			throw new APIException("OpenMRS requires Java 6, but is running under " + JdkVersion.getJavaVersion());
+		if (System.getProperty("java.version").matches("1.(0|1|2|3|4|5).(.*)")) {
+			throw new APIException("OpenMRS requires Java 6, but is running under " + System.getProperty("java.version"));
 		}
 	}
 	

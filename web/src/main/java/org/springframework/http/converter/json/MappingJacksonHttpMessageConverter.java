@@ -150,6 +150,14 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	public boolean canWrite(Class<?> clazz, MediaType mediaType) {
 		return (this.objectMapper.canSerialize(clazz) && canWrite(mediaType));
 	}
+
+	@Override
+	public boolean canWrite(Type type, Class<?> contextClass, MediaType mediaType) {
+		if (type instanceof Class) {
+			return canWrite((Class<?>) type, mediaType);
+		}
+		return canWrite(mediaType);
+	}
 	
 	@Override
 	protected boolean supports(Class<?> clazz) {
@@ -183,6 +191,20 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	
 	@Override
 	protected void writeInternal(Object object, HttpOutputMessage outputMessage) throws IOException,
+	        HttpMessageNotWritableException {
+		writeInternal(object, null, outputMessage);
+	}
+
+	@Override
+	public void write(Object t, Type type, MediaType contentType, HttpOutputMessage outputMessage) throws IOException,
+	        HttpMessageNotWritableException {
+		if (contentType != null) {
+			outputMessage.getHeaders().setContentType(contentType);
+		}
+		writeInternal(t, type, outputMessage);
+	}
+
+	protected void writeInternal(Object object, Type type, HttpOutputMessage outputMessage) throws IOException,
 	        HttpMessageNotWritableException {
 		
 		JsonEncoding encoding = getJsonEncoding(outputMessage.getHeaders().getContentType());

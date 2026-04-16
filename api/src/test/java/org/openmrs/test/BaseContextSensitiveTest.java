@@ -86,7 +86,7 @@ import org.openmrs.util.OpenmrsUtil;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
-import org.springframework.test.context.transaction.TransactionConfiguration;
+// TransactionConfiguration removed in Spring 5; using @Transactional instead
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 import org.xml.sax.InputSource;
@@ -103,7 +103,7 @@ import org.xml.sax.InputSource;
 @TestExecutionListeners( { TransactionalTestExecutionListener.class, SkipBaseSetupAnnotationExecutionListener.class,
         StartModuleExecutionListener.class })
 @Transactional
-@TransactionConfiguration(defaultRollback = true)
+// @TransactionConfiguration removed in Spring 6 - defaultRollback=true is the default for @Transactional
 public abstract class BaseContextSensitiveTest extends AbstractJUnit4SpringContextTests {
 	
 	private static Log log = LogFactory.getLog(BaseContextSensitiveTest.class);

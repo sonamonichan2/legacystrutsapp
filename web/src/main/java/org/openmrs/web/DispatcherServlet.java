@@ -21,7 +21,6 @@ import org.openmrs.util.DatabaseUpdater;
 import org.openmrs.util.OpenmrsClassLoader;
 import org.openmrs.web.filter.initialization.InitializationFilter;
 import org.openmrs.web.filter.update.UpdateFilter;
-import org.springframework.beans.BeansException;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
 /**
@@ -42,7 +41,7 @@ public class DispatcherServlet extends org.springframework.web.servlet.Dispatche
 	 * @see org.springframework.web.servlet.FrameworkServlet#initFrameworkServlet()
 	 */
 	@Override
-	protected void initFrameworkServlet() throws ServletException, BeansException {
+	protected void initFrameworkServlet() throws ServletException {
 		// refresh the application context to look for module xml config files as well
 		
 		//XmlWebApplicationContext wac = ((XmlWebApplicationContext)getWebApplicationContext());
