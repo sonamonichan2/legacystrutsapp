@@ -177,7 +177,7 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 			return this.objectMapper.readValue(inputMessage.getBody(), javaType);
 		}
 		catch (IOException ex) {
-			throw new HttpMessageNotReadableException("Could not read JSON: " + ex.getMessage(), ex, inputMessage);
+			throw new HttpMessageNotReadableException("Could not read JSON: " + ex.getMessage(), ex);
 		}
 	}
 	
@@ -237,8 +237,8 @@ public class MappingJacksonHttpMessageConverter extends AbstractHttpMessageConve
 	 * @return the JSON encoding to use (never {@code null})
 	 */
 	protected JsonEncoding getJsonEncoding(MediaType contentType) {
-		if (contentType != null && contentType.getCharset() != null) {
-			Charset charset = contentType.getCharset();
+		if (contentType != null && contentType.getParameter("charset") != null) {
+			Charset charset = Charset.forName(contentType.getParameter("charset"));
 			for (JsonEncoding encoding : JsonEncoding.values()) {
 				if (charset.name().equals(encoding.getJavaName())) {
 					return encoding;
