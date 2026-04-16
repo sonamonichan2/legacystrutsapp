@@ -212,14 +212,14 @@ public class HibernateContextDAO implements ContextDAO {
 	public User getUserByUuid(String uuid) {
 		
 		// don't flush here in case we're in the AuditableInterceptor.  Will cause a StackOverflowEx otherwise
-		FlushMode flushMode = sessionFactory.getCurrentSession().getFlushMode();
-		sessionFactory.getCurrentSession().setFlushMode(FlushMode.MANUAL);
+		FlushMode flushMode = sessionFactory.getCurrentSession().getHibernateFlushMode();
+		sessionFactory.getCurrentSession().setHibernateFlushMode(FlushMode.MANUAL);
 		
 		User u = (User) sessionFactory.getCurrentSession().createQuery("from User u where u.uuid = :uuid").setString("uuid",
 		    uuid).uniqueResult();
 		
 		// reset the flush mode to whatever it was before
-		sessionFactory.getCurrentSession().setFlushMode(flushMode);
+		sessionFactory.getCurrentSession().setHibernateFlushMode(flushMode);
 		
 		return u;
 	}
@@ -268,7 +268,7 @@ public class HibernateContextDAO implements ContextDAO {
 				log.debug("Registering session with synchronization manager (" + sessionFactory.hashCode() + ")");
 			}
 			Session session = sessionFactory.openSession();
-			session.setFlushMode(FlushMode.MANUAL);
+			session.setHibernateFlushMode(FlushMode.MANUAL);
 			TransactionSynchronizationManager.bindResource(sessionFactory, new SessionHolder(session));
 		}
 	}
@@ -430,10 +430,10 @@ public class HibernateContextDAO implements ContextDAO {
 		session.flush();
 		session.clear();
 		
-		FlushMode flushMode = session.getFlushMode();
+		FlushMode flushMode = session.getHibernateFlushMode();
 		CacheMode cacheMode = session.getCacheMode();
 		try {
-			session.setFlushMode(FlushMode.MANUAL);
+			session.setHibernateFlushMode(FlushMode.MANUAL);
 			session.setCacheMode(CacheMode.IGNORE);
 			
 			//Scrollable results will avoid loading too many objects in memory
@@ -451,7 +451,7 @@ public class HibernateContextDAO implements ContextDAO {
 			session.clear();
 		}
 		finally {
-			session.setFlushMode(flushMode);
+			session.setHibernateFlushMode(flushMode);
 			session.setCacheMode(cacheMode);
 		}
 	}

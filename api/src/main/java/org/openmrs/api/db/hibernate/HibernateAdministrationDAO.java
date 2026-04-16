@@ -171,16 +171,23 @@ public class HibernateAdministrationDAO implements AdministrationDAO, Applicatio
 	
 	@Override
 	public int getMaximumPropertyLength(Class<? extends OpenmrsObject> aClass, String fieldName) {
-		if (configuration == null) {
+		// In Hibernate 5.6+, Configuration.getClassMapping() was removed
+		// Use reflection to maintain compatibility
+		try {
 			HibernateSessionFactoryBean sessionFactoryBean = (HibernateSessionFactoryBean) applicationContext
 			        .getBean("&sessionFactory");
-			configuration = sessionFactoryBean.getConfiguration();
-		}
-		
-		PersistentClass persistentClass = configuration.getClassMapping(aClass.getName().split("_")[0]);
-		if (persistentClass == null) {
-			throw new APIException("Couldn't find a class in the hibernate configuration named: " + aClass.getName());
-		} else {
+			Configuration cfg = sessionFactoryBean.getConfiguration();
+			java.lang.reflect.Method method;
+			try {
+				method = cfg.getClass().getMethod("getClassMapping", String.class);
+			} catch (NoSuchMethodException e) {
+				log.debug("getClassMapping not available in this Hibernate version", e);
+				return -1;
+			}
+			PersistentClass persistentClass = (PersistentClass) method.invoke(cfg, aClass.getName().split("_")[0]);
+			if (persistentClass == null) {
+				throw new APIException("Couldn't find a class in the hibernate configuration named: " + aClass.getName());
+			}
 			int fieldLength;
 			try {
 				fieldLength = ((Column) persistentClass.getProperty(fieldName).getColumnIterator().next()).getLength();
@@ -190,6 +197,9 @@ public class HibernateAdministrationDAO implements AdministrationDAO, Applicatio
 				return -1;
 			}
 			return fieldLength;
+		} catch (Exception e) {
+			log.debug("Could not determine maximum length", e);
+			return -1;
 		}
 	}
 	
@@ -203,15 +213,15 @@ public class HibernateAdministrationDAO implements AdministrationDAO, Applicatio
 	 */
 	@Override
 	public void validate(Object object, Errors errors) throws DAOException {
-		FlushMode previousFlushMode = sessionFactory.getCurrentSession().getFlushMode();
-		sessionFactory.getCurrentSession().setFlushMode(FlushMode.MANUAL);
+		FlushMode previousFlushMode = sessionFactory.getCurrentSession().getHibernateFlushMode();
+		sessionFactory.getCurrentSession().setHibernateFlushMode(FlushMode.MANUAL);
 		try {
 			for (Validator validator : getValidators(object)) {
 				validator.validate(object, errors);
 			}
 		}
 		finally {
-			sessionFactory.getCurrentSession().setFlushMode(previousFlushMode);
+			sessionFactory.getCurrentSession().setHibernateFlushMode(previousFlushMode);
 		}
 	}
 	

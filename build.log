@@ -20,7 +20,7 @@
 [INFO] ShortRevision tag detected. The value is '6'.
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'rev-parse' '--verify' '--short=6' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
-[INFO] Storing buildNumber: 98abac at timestamp: 1776334097403
+[INFO] Storing buildNumber: b61df6 at timestamp: 1776334563330
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'symbolic-ref' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
 [INFO] Storing scmBranch: atx-result-staging-20260416_093139_4747abd4
@@ -111,6 +111,7 @@
 [INFO] Building openmrs-api 2.0.3                                         [4/6]
 [INFO] --------------------------------[ jar ]---------------------------------
 [WARNING] The artifact xml-apis:xml-apis:jar:2.0.2 has been relocated to xml-apis:xml-apis:jar:1.0.b2
+[WARNING] The artifact org.hibernate:hibernate-validator:jar:6.2.5.Final has been relocated to org.hibernate.validator:hibernate-validator:jar:6.2.5.Final
 [INFO] 
 [INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ openmrs-api ---
 [INFO] Deleting /home/ec2-user/projects/legacystrutsapp/api/target
@@ -323,15 +324,15 @@ project.artifactId
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary for OpenMRS 2.0.3:
 [INFO] 
-[INFO] OpenMRS ............................................ SUCCESS [  1.774 s]
-[INFO] openmrs-tools ...................................... SUCCESS [  0.510 s]
-[INFO] openmrs-test ....................................... SUCCESS [  0.173 s]
-[INFO] openmrs-api ........................................ SUCCESS [ 15.657 s]
-[INFO] openmrs-web ........................................ SUCCESS [  1.418 s]
-[INFO] openmrs-webapp ..................................... SUCCESS [  3.712 s]
+[INFO] OpenMRS ............................................ SUCCESS [  1.833 s]
+[INFO] openmrs-tools ...................................... SUCCESS [  0.756 s]
+[INFO] openmrs-test ....................................... SUCCESS [  0.170 s]
+[INFO] openmrs-api ........................................ SUCCESS [ 16.078 s]
+[INFO] openmrs-web ........................................ SUCCESS [  1.903 s]
+[INFO] openmrs-webapp ..................................... SUCCESS [  3.753 s]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  23.482 s
-[INFO] Finished at: 2026-04-16T10:08:39Z
+[INFO] Total time:  24.734 s
+[INFO] Finished at: 2026-04-16T10:16:27Z
 [INFO] ------------------------------------------------------------------------

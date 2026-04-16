@@ -265,22 +265,22 @@
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
-				<version>4.2.0.Final</version>
+				<version>6.2.5.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-search-orm</artifactId>
-				<version>5.1.2.Final</version>
+				<version>5.11.12.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.lucene</groupId>
 				<artifactId>lucene-queryparser</artifactId>
-				<version>4.10.4</version>
+				<version>5.5.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.lucene</groupId>
 				<artifactId>lucene-queries</artifactId>
-				<version>4.10.4</version>
+				<version>5.5.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.liquibase</groupId>
@@ -1104,7 +1104,7 @@
         <openmrs.version>${project.version}</openmrs.version>
 
 		<springVersion>6.1.14</springVersion>
-		<hibernateVersion>4.3.9.Final</hibernateVersion>
+		<hibernateVersion>5.6.15.Final</hibernateVersion>
 		<customArgLineForTesting />
 		
 		<sonar.host.url>https://ci.openmrs.org/sonar</sonar.host.url>

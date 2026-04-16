@@ -196,7 +196,7 @@ public class HibernateOrderDAO implements OrderDAO {
 		query.setParameter("orderId", order.getOrderId());
 		
 		//prevent hibernate from flushing before fetching the list
-		query.setFlushMode(FlushMode.MANUAL);
+		query.setHibernateFlushMode(FlushMode.MANUAL);
 		
 		return query.list();
 	}
