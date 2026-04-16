@@ -38,12 +38,12 @@
          <artifactId>openmrs-web</artifactId>
          <exclusions>
             <exclusion>
-               <groupId>javax.servlet</groupId>
-               <artifactId>servlet-api</artifactId>
+               <groupId>jakarta.servlet</groupId>
+               <artifactId>jakarta.servlet-api</artifactId>
             </exclusion>
             <exclusion>
-               <groupId>javax.servlet</groupId>
-               <artifactId>jsp-api</artifactId>
+               <groupId>jakarta.servlet.jsp</groupId>
+               <artifactId>jakarta.servlet.jsp-api</artifactId>
             </exclusion>
          </exclusions>
       </dependency>

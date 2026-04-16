@@ -20,7 +20,7 @@
 [INFO] ShortRevision tag detected. The value is '6'.
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'rev-parse' '--verify' '--short=6' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
-[INFO] Storing buildNumber: eedbb1 at timestamp: 1776332412251
+[INFO] Storing buildNumber: 1f95e1 at timestamp: 1776332551418
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'symbolic-ref' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
 [INFO] Storing scmBranch: atx-result-staging-20260416_093139_4747abd4
@@ -219,6 +219,28 @@
 [INFO] --------------------< org.openmrs.web:openmrs-web >---------------------
 [INFO] Building openmrs-web 2.0.3                                         [5/6]
 [INFO] --------------------------------[ jar ]---------------------------------
+Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/jakarta/servlet/jakarta.servlet-api/6.0.0/jakarta.servlet-api-6.0.0.pom
+Progress (1): 3.3/19 kBProgress (1): 6.1/19 kBProgress (1): 8.9/19 kBProgress (1): 12/19 kB Progress (1): 14/19 kBProgress (1): 17/19 kBProgress (1): 19 kB                      Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/jakarta/servlet/jakarta.servlet-api/6.0.0/jakarta.servlet-api-6.0.0.pom (19 kB at 18 kB/s)
+Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/eclipse/ee4j/project/1.0.7/project-1.0.7.pom
+Progress (1): 3.3/14 kBProgress (1): 6.1/14 kBProgress (1): 8.9/14 kBProgress (1): 12/14 kB Progress (1): 14 kB                      Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/eclipse/ee4j/project/1.0.7/project-1.0.7.pom (14 kB at 69 kB/s)
+Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/jakarta/servlet/jsp/jakarta.servlet.jsp-api/3.1.1/jakarta.servlet.jsp-api-3.1.1.pom
+Progress (1): 3.2/12 kBProgress (1): 6.0/12 kBProgress (1): 8.8/12 kBProgress (1): 12/12 kB Progress (1): 12 kB                      Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/jakarta/servlet/jsp/jakarta.servlet.jsp-api/3.1.1/jakarta.servlet.jsp-api-3.1.1.pom (12 kB at 41 kB/s)
+Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/jakarta/servlet/jsp/jstl/jakarta.servlet.jsp.jstl-api/3.0.0/jakarta.servlet.jsp.jstl-api-3.0.0.pom
+Progress (1): 3.2/13 kBProgress (1): 6.0/13 kBProgress (1): 8.8/13 kBProgress (1): 12/13 kB Progress (1): 13 kB                      Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/jakarta/servlet/jsp/jstl/jakarta.servlet.jsp.jstl-api/3.0.0/jakarta.servlet.jsp.jstl-api-3.0.0.pom (13 kB at 48 kB/s)
+Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/jakarta/el/jakarta.el-api/5.0.0/jakarta.el-api-5.0.0.pom
+Progress (1): 3.3/11 kBProgress (1): 6.1/11 kBProgress (1): 8.9/11 kBProgress (1): 11 kB                       Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/jakarta/el/jakarta.el-api/5.0.0/jakarta.el-api-5.0.0.pom (11 kB at 52 kB/s)
+Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/glassfish/web/jakarta.servlet.jsp.jstl/3.0.1/jakarta.servlet.jsp.jstl-3.0.1.pom
+Progress (1): 3.2/16 kBProgress (1): 6.0/16 kBProgress (1): 8.8/16 kBProgress (1): 12/16 kB Progress (1): 14/16 kBProgress (1): 16 kB                      Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/glassfish/web/jakarta.servlet.jsp.jstl/3.0.1/jakarta.servlet.jsp.jstl-3.0.1.pom (16 kB at 74 kB/s)
+Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/jakarta/servlet/jakarta.servlet-api/6.0.0/jakarta.servlet-api-6.0.0.jar
+Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/jakarta/servlet/jsp/jakarta.servlet.jsp-api/3.1.1/jakarta.servlet.jsp-api-3.1.1.jar
+Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/jakarta/servlet/jsp/jstl/jakarta.servlet.jsp.jstl-api/3.0.0/jakarta.servlet.jsp.jstl-api-3.0.0.jar
+Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/jakarta/el/jakarta.el-api/5.0.0/jakarta.el-api-5.0.0.jar
+Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/glassfish/web/jakarta.servlet.jsp.jstl/3.0.1/jakarta.servlet.jsp.jstl-3.0.1.jar
+Progress (1): 3.2/71 kBProgress (1): 6.0/71 kBProgress (1): 8.8/71 kBProgress (1): 12/71 kB Progress (2): 12/71 kB | 3.3/88 kBProgress (2): 12/71 kB | 6.1/88 kBProgress (2): 12/71 kB | 8.9/88 kBProgress (2): 12/71 kB | 12/88 kB Progress (2): 14/71 kB | 12/88 kBProgress (2): 17/71 kB | 12/88 kBProgress (2): 20/71 kB | 12/88 kBProgress (2): 23/71 kB | 12/88 kBProgress (2): 26/71 kB | 12/88 kBProgress (2): 29/71 kB | 12/88 kBProgress (2): 31/71 kB | 12/88 kBProgress (2): 34/71 kB | 12/88 kBProgress (2): 37/71 kB | 12/88 kBProgress (3): 37/71 kB | 12/88 kB | 3.2/46 kBProgress (3): 37/71 kB | 12/88 kB | 6.0/46 kBProgress (3): 37/71 kB | 12/88 kB | 8.8/46 kBProgress (3): 37/71 kB | 12/88 kB | 12/46 kB Progress (3): 40/71 kB | 12/88 kB | 12/46 kBProgress (4): 40/71 kB | 12/88 kB | 12/46 kB | 4.1/348 kBProgress (4): 40/71 kB | 12/88 kB | 12/46 kB | 8.2/348 kBProgress (4): 40/71 kB | 12/88 kB | 12/46 kB | 12/348 kB Progress (4): 40/71 kB | 12/88 kB | 12/46 kB | 16/348 kBProgress (4): 40/71 kB | 14/88 kB | 12/46 kB | 16/348 kBProgress (4): 40/71 kB | 17/88 kB | 12/46 kB | 16/348 kBProgress (4): 40/71 kB | 20/88 kB | 12/46 kB | 16/348 kBProgress (4): 40/71 kB | 23/88 kB | 12/46 kB | 16/348 kBProgress (4): 40/71 kB | 26/88 kB | 12/46 kB | 16/348 kBProgress (4): 40/71 kB | 29/88 kB | 12/46 kB | 16/348 kBProgress (4): 40/71 kB | 31/88 kB | 12/46 kB | 16/348 kBProgress (4): 40/71 kB | 34/88 kB | 12/46 kB | 16/348 kBProgress (4): 40/71 kB | 37/88 kB | 12/46 kB | 16/348 kBProgress (4): 40/71 kB | 40/88 kB | 12/46 kB | 16/348 kBProgress (4): 42/71 kB | 40/88 kB | 12/46 kB | 16/348 kBProgress (4): 45/71 kB | 40/88 kB | 12/46 kB | 16/348 kBProgress (4): 48/71 kB | 40/88 kB | 12/46 kB | 16/348 kBProgress (4): 51/71 kB | 40/88 kB | 12/46 kB | 16/348 kBProgress (4): 54/71 kB | 40/88 kB | 12/46 kB | 16/348 kBProgress (4): 56/71 kB | 40/88 kB | 12/46 kB | 16/348 kBProgress (4): 59/71 kB | 40/88 kB | 12/46 kB | 16/348 kBProgress (4): 62/71 kB | 40/88 kB | 12/46 kB | 16/348 kBProgress (4): 65/71 kB | 40/88 kB | 12/46 kB | 16/348 kBProgress (4): 68/71 kB | 40/88 kB | 12/46 kB | 16/348 kBProgress (4): 70/71 kB | 40/88 kB | 12/46 kB | 16/348 kBProgress (4): 71 kB | 40/88 kB | 12/46 kB | 16/348 kB   Progress (4): 71 kB | 40/88 kB | 14/46 kB | 16/348 kBProgress (4): 71 kB | 40/88 kB | 17/46 kB | 16/348 kBProgress (4): 71 kB | 40/88 kB | 20/46 kB | 16/348 kBProgress (4): 71 kB | 40/88 kB | 23/46 kB | 16/348 kBProgress (4): 71 kB | 40/88 kB | 26/46 kB | 16/348 kBProgress (4): 71 kB | 40/88 kB | 29/46 kB | 16/348 kBProgress (4): 71 kB | 40/88 kB | 31/46 kB | 16/348 kBProgress (4): 71 kB | 40/88 kB | 34/46 kB | 16/348 kBProgress (4): 71 kB | 40/88 kB | 37/46 kB | 16/348 kBProgress (4): 71 kB | 40/88 kB | 40/46 kB | 16/348 kBProgress (4): 71 kB | 40/88 kB | 40/46 kB | 20/348 kBProgress (4): 71 kB | 40/88 kB | 40/46 kB | 25/348 kBProgress (4): 71 kB | 40/88 kB | 40/46 kB | 29/348 kBProgress (4): 71 kB | 40/88 kB | 40/46 kB | 33/348 kBProgress (4): 71 kB | 40/88 kB | 40/46 kB | 37/348 kBProgress (4): 71 kB | 40/88 kB | 40/46 kB | 41/348 kBProgress (4): 71 kB | 40/88 kB | 40/46 kB | 45/348 kBProgress (4): 71 kB | 40/88 kB | 40/46 kB | 49/348 kBProgress (4): 71 kB | 40/88 kB | 40/46 kB | 52/348 kBProgress (4): 71 kB | 43/88 kB | 40/46 kB | 52/348 kBProgress (4): 71 kB | 45/88 kB | 40/46 kB | 52/348 kBProgress (4): 71 kB | 48/88 kB | 40/46 kB | 52/348 kBProgress (4): 71 kB | 51/88 kB | 40/46 kB | 52/348 kBProgress (4): 71 kB | 54/88 kB | 40/46 kB | 52/348 kBProgress (4): 71 kB | 57/88 kB | 40/46 kB | 52/348 kBProgress (4): 71 kB | 59/88 kB | 40/46 kB | 52/348 kBProgress (4): 71 kB | 62/88 kB | 40/46 kB | 52/348 kBProgress (4): 71 kB | 65/88 kB | 40/46 kB | 52/348 kBProgress (4): 71 kB | 68/88 kB | 40/46 kB | 52/348 kBProgress (4): 71 kB | 71/88 kB | 40/46 kB | 52/348 kBProgress (4): 71 kB | 71/88 kB | 42/46 kB | 52/348 kBProgress (4): 71 kB | 71/88 kB | 45/46 kB | 52/348 kBProgress (4): 71 kB | 71/88 kB | 46 kB | 52/348 kB   Progress (4): 71 kB | 71/88 kB | 46 kB | 56/348 kBProgress (4): 71 kB | 71/88 kB | 46 kB | 60/348 kBProgress (4): 71 kB | 71/88 kB | 46 kB | 64/348 kBProgress (4): 71 kB | 71/88 kB | 46 kB | 68/348 kBProgress (4): 71 kB | 71/88 kB | 46 kB | 71/348 kBProgress (4): 71 kB | 71/88 kB | 46 kB | 75/348 kBProgress (4): 71 kB | 71/88 kB | 46 kB | 79/348 kBProgress (4): 71 kB | 71/88 kB | 46 kB | 83/348 kBProgress (4): 71 kB | 71/88 kB | 46 kB | 87/348 kB                                                  Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/jakarta/servlet/jsp/jakarta.servlet.jsp-api/3.1.1/jakarta.servlet.jsp-api-3.1.1.jar (71 kB at 123 kB/s)
+Progress (3): 73/88 kB | 46 kB | 87/348 kBProgress (3): 76/88 kB | 46 kB | 87/348 kBProgress (3): 79/88 kB | 46 kB | 87/348 kBProgress (3): 82/88 kB | 46 kB | 87/348 kBProgress (3): 85/88 kB | 46 kB | 87/348 kBProgress (3): 87/88 kB | 46 kB | 87/348 kBProgress (3): 88 kB | 46 kB | 87/348 kB   Progress (3): 88 kB | 46 kB | 91/348 kBProgress (3): 88 kB | 46 kB | 95/348 kBProgress (3): 88 kB | 46 kB | 99/348 kBProgress (3): 88 kB | 46 kB | 104/348 kBProgress (3): 88 kB | 46 kB | 106/348 kBProgress (3): 88 kB | 46 kB | 110/348 kBProgress (3): 88 kB | 46 kB | 114/348 kBProgress (3): 88 kB | 46 kB | 118/348 kBProgress (3): 88 kB | 46 kB | 122/348 kBProgress (3): 88 kB | 46 kB | 126/348 kBProgress (3): 88 kB | 46 kB | 130/348 kBProgress (3): 88 kB | 46 kB | 134/348 kBProgress (3): 88 kB | 46 kB | 138/348 kBProgress (3): 88 kB | 46 kB | 140/348 kB                                        Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/jakarta/servlet/jsp/jstl/jakarta.servlet.jsp.jstl-api/3.0.0/jakarta.servlet.jsp.jstl-api-3.0.0.jar (46 kB at 71 kB/s)
+Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/jakarta/el/jakarta.el-api/5.0.0/jakarta.el-api-5.0.0.jar (88 kB at 130 kB/s)
+Progress (2): 140/348 kB | 0/3.7 MBProgress (2): 140/348 kB | 0.1/3.7 MBProgress (2): 144/348 kB | 0.1/3.7 MBProgress (2): 149/348 kB | 0.1/3.7 MBProgress (2): 153/348 kB | 0.1/3.7 MBProgress (2): 157/348 kB | 0.1/3.7 MBProgress (2): 161/348 kB | 0.1/3.7 MBProgress (2): 165/348 kB | 0.1/3.7 MBProgress (2): 169/348 kB | 0.1/3.7 MBProgress (2): 173/348 kB | 0.1/3.7 MBProgress (2): 175/348 kB | 0.1/3.7 MBProgress (2): 175/348 kB | 0.1/3.7 MBProgress (2): 179/348 kB | 0.1/3.7 MBProgress (2): 183/348 kB | 0.1/3.7 MBProgress (2): 188/348 kB | 0.1/3.7 MBProgress (2): 192/348 kB | 0.1/3.7 MBProgress (2): 196/348 kB | 0.1/3.7 MBProgress (2): 200/348 kB | 0.1/3.7 MBProgress (2): 204/348 kB | 0.1/3.7 MBProgress (2): 208/348 kB | 0.1/3.7 MBProgress (2): 210/348 kB | 0.1/3.7 MBProgress (2): 214/348 kB | 0.1/3.7 MBProgress (2): 218/348 kB | 0.1/3.7 MBProgress (2): 222/348 kB | 0.1/3.7 MBProgress (2): 226/348 kB | 0.1/3.7 MBProgress (2): 226/348 kB | 0.1/3.7 MBProgress (2): 226/348 kB | 0.1/3.7 MBProgress (2): 231/348 kB | 0.1/3.7 MBProgress (2): 235/348 kB | 0.1/3.7 MBProgress (2): 239/348 kB | 0.1/3.7 MBProgress (2): 243/348 kB | 0.1/3.7 MBProgress (2): 245/348 kB | 0.1/3.7 MBProgress (2): 249/348 kB | 0.1/3.7 MBProgress (2): 253/348 kB | 0.1/3.7 MBProgress (2): 257/348 kB | 0.1/3.7 MBProgress (2): 261/348 kB | 0.1/3.7 MBProgress (2): 265/348 kB | 0.1/3.7 MBProgress (2): 269/348 kB | 0.1/3.7 MBProgress (2): 274/348 kB | 0.1/3.7 MBProgress (2): 278/348 kB | 0.1/3.7 MBProgress (2): 280/348 kB | 0.1/3.7 MBProgress (2): 280/348 kB | 0.1/3.7 MBProgress (2): 284/348 kB | 0.1/3.7 MBProgress (2): 288/348 kB | 0.1/3.7 MBProgress (2): 292/348 kB | 0.1/3.7 MBProgress (2): 296/348 kB | 0.1/3.7 MBProgress (2): 300/348 kB | 0.1/3.7 MBProgress (2): 304/348 kB | 0.1/3.7 MBProgress (2): 308/348 kB | 0.1/3.7 MBProgress (2): 312/348 kB | 0.1/3.7 MBProgress (2): 314/348 kB | 0.1/3.7 MBProgress (2): 314/348 kB | 0.2/3.7 MBProgress (2): 314/348 kB | 0.2/3.7 MBProgress (2): 314/348 kB | 0.2/3.7 MBProgress (2): 319/348 kB | 0.2/3.7 MBProgress (2): 323/348 kB | 0.2/3.7 MBProgress (2): 327/348 kB | 0.2/3.7 MBProgress (2): 331/348 kB | 0.2/3.7 MBProgress (2): 335/348 kB | 0.2/3.7 MBProgress (2): 339/348 kB | 0.2/3.7 MBProgress (2): 343/348 kB | 0.2/3.7 MBProgress (2): 347/348 kB | 0.2/3.7 MBProgress (2): 348 kB | 0.2/3.7 MB    Progress (2): 348 kB | 0.2/3.7 MB                                 Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/jakarta/servlet/jakarta.servlet-api/6.0.0/jakarta.servlet-api-6.0.0.jar (348 kB at 321 kB/s)
+Progress (1): 0.3/3.7 MBProgress (1): 0.3/3.7 MBProgress (1): 0.3/3.7 MBProgress (1): 0.3/3.7 MBProgress (1): 0.3/3.7 MBProgress (1): 0.4/3.7 MBProgress (1): 0.4/3.7 MBProgress (1): 0.4/3.7 MBProgress (1): 0.4/3.7 MBProgress (1): 0.5/3.7 MBProgress (1): 0.5/3.7 MBProgress (1): 0.5/3.7 MBProgress (1): 0.5/3.7 MBProgress (1): 0.6/3.7 MBProgress (1): 0.6/3.7 MBProgress (1): 0.6/3.7 MBProgress (1): 0.6/3.7 MBProgress (1): 0.7/3.7 MBProgress (1): 0.7/3.7 MBProgress (1): 0.7/3.7 MBProgress (1): 0.7/3.7 MBProgress (1): 0.7/3.7 MBProgress (1): 0.8/3.7 MBProgress (1): 0.8/3.7 MBProgress (1): 0.8/3.7 MBProgress (1): 0.8/3.7 MBProgress (1): 0.9/3.7 MBProgress (1): 0.9/3.7 MBProgress (1): 0.9/3.7 MBProgress (1): 0.9/3.7 MBProgress (1): 1.0/3.7 MBProgress (1): 1.0/3.7 MBProgress (1): 1.0/3.7 MBProgress (1): 1.0/3.7 MBProgress (1): 1.0/3.7 MBProgress (1): 1.1/3.7 MBProgress (1): 1.1/3.7 MBProgress (1): 1.1/3.7 MBProgress (1): 1.1/3.7 MBProgress (1): 1.2/3.7 MBProgress (1): 1.2/3.7 MBProgress (1): 1.2/3.7 MBProgress (1): 1.2/3.7 MBProgress (1): 1.3/3.7 MBProgress (1): 1.3/3.7 MBProgress (1): 1.3/3.7 MBProgress (1): 1.3/3.7 MBProgress (1): 1.3/3.7 MBProgress (1): 1.4/3.7 MBProgress (1): 1.4/3.7 MBProgress (1): 1.4/3.7 MBProgress (1): 1.4/3.7 MBProgress (1): 1.5/3.7 MBProgress (1): 1.5/3.7 MBProgress (1): 1.5/3.7 MBProgress (1): 1.5/3.7 MBProgress (1): 1.6/3.7 MBProgress (1): 1.6/3.7 MBProgress (1): 1.6/3.7 MBProgress (1): 1.6/3.7 MBProgress (1): 1.7/3.7 MBProgress (1): 1.7/3.7 MBProgress (1): 1.7/3.7 MBProgress (1): 1.7/3.7 MBProgress (1): 1.7/3.7 MBProgress (1): 1.8/3.7 MBProgress (1): 1.8/3.7 MBProgress (1): 1.8/3.7 MBProgress (1): 1.8/3.7 MBProgress (1): 1.9/3.7 MBProgress (1): 1.9/3.7 MBProgress (1): 1.9/3.7 MBProgress (1): 1.9/3.7 MBProgress (1): 1.9/3.7 MBProgress (1): 2.0/3.7 MBProgress (1): 2.0/3.7 MBProgress (1): 2.0/3.7 MBProgress (1): 2.0/3.7 MBProgress (1): 2.1/3.7 MBProgress (1): 2.1/3.7 MBProgress (1): 2.1/3.7 MBProgress (1): 2.1/3.7 MBProgress (1): 2.2/3.7 MBProgress (1): 2.2/3.7 MBProgress (1): 2.2/3.7 MBProgress (1): 2.2/3.7 MBProgress (1): 2.3/3.7 MBProgress (1): 2.3/3.7 MBProgress (1): 2.3/3.7 MBProgress (1): 2.3/3.7 MBProgress (1): 2.4/3.7 MBProgress (1): 2.4/3.7 MBProgress (1): 2.4/3.7 MBProgress (1): 2.4/3.7 MBProgress (1): 2.4/3.7 MBProgress (1): 2.5/3.7 MBProgress (1): 2.5/3.7 MBProgress (1): 2.5/3.7 MBProgress (1): 2.5/3.7 MBProgress (1): 2.6/3.7 MBProgress (1): 2.6/3.7 MBProgress (1): 2.6/3.7 MBProgress (1): 2.6/3.7 MBProgress (1): 2.7/3.7 MBProgress (1): 2.7/3.7 MBProgress (1): 2.7/3.7 MBProgress (1): 2.7/3.7 MBProgress (1): 2.8/3.7 MBProgress (1): 2.8/3.7 MBProgress (1): 2.8/3.7 MBProgress (1): 2.8/3.7 MBProgress (1): 2.9/3.7 MBProgress (1): 2.9/3.7 MBProgress (1): 2.9/3.7 MBProgress (1): 2.9/3.7 MBProgress (1): 3.0/3.7 MBProgress (1): 3.0/3.7 MBProgress (1): 3.0/3.7 MBProgress (1): 3.0/3.7 MBProgress (1): 3.1/3.7 MBProgress (1): 3.1/3.7 MBProgress (1): 3.1/3.7 MBProgress (1): 3.1/3.7 MBProgress (1): 3.2/3.7 MBProgress (1): 3.2/3.7 MBProgress (1): 3.2/3.7 MBProgress (1): 3.2/3.7 MBProgress (1): 3.3/3.7 MBProgress (1): 3.3/3.7 MBProgress (1): 3.3/3.7 MBProgress (1): 3.3/3.7 MBProgress (1): 3.4/3.7 MBProgress (1): 3.4/3.7 MBProgress (1): 3.4/3.7 MBProgress (1): 3.4/3.7 MBProgress (1): 3.5/3.7 MBProgress (1): 3.5/3.7 MBProgress (1): 3.5/3.7 MBProgress (1): 3.5/3.7 MBProgress (1): 3.6/3.7 MBProgress (1): 3.6/3.7 MBProgress (1): 3.6/3.7 MBProgress (1): 3.6/3.7 MBProgress (1): 3.7/3.7 MBProgress (1): 3.7/3.7 MBProgress (1): 3.7/3.7 MBProgress (1): 3.7 MB                        Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/glassfish/web/jakarta.servlet.jsp.jstl/3.0.1/jakarta.servlet.jsp.jstl-3.0.1.jar (3.7 MB at 2.2 MB/s)
 [INFO] 
 [INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ openmrs-web ---
 [INFO] Deleting /home/ec2-user/projects/legacystrutsapp/web/target
@@ -235,103 +257,472 @@
 [INFO] Compiling 39 source files with javac [debug release 21] to target/classes
 [INFO] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java: Some input files use or override a deprecated API.
 [INFO] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java: Recompile with -Xlint:deprecation for details.
-[INFO] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java: /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java uses unchecked or unsafe operations.
-[INFO] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java: Recompile with -Xlint:unchecked for details.
-[INFO] 
-[INFO] --- maven-resources-plugin:3.3.1:testResources (default-testResources) @ openmrs-web ---
-[INFO] skip non existing resourceDirectory /home/ec2-user/projects/legacystrutsapp/web/src/test/resources
-[INFO] 
-[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ openmrs-web ---
-[INFO] Recompiling the module because of changed dependency.
-[INFO] Compiling 11 source files with javac [debug release 21] to target/test-classes
-[INFO] /home/ec2-user/projects/legacystrutsapp/web/src/test/java/org/openmrs/module/web/WebModuleUtilTest.java: Some input files use or override a deprecated API.
-[INFO] /home/ec2-user/projects/legacystrutsapp/web/src/test/java/org/openmrs/module/web/WebModuleUtilTest.java: Recompile with -Xlint:deprecation for details.
-[INFO] 
-[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ openmrs-web ---
-[INFO] Tests are skipped.
-[INFO] 
-[INFO] --- maven-jar-plugin:3.3.0:jar (default-jar) @ openmrs-web ---
-[INFO] Building jar: /home/ec2-user/projects/legacystrutsapp/web/target/openmrs-web-2.0.3.jar
-[INFO] 
-[INFO] --- maven-jar-plugin:3.3.0:test-jar (default) @ openmrs-web ---
-[INFO] Building jar: /home/ec2-user/projects/legacystrutsapp/web/target/openmrs-web-2.0.3-tests.jar
-[INFO] 
-[INFO] --- license-maven-plugin:4.3:check (default) @ openmrs-web ---
-[INFO] Checking licenses...
-[WARNING] Property 'strictCheck' is not enabled. Please consider adding <strictCheck>true</strictCheck> in your pom.xml file.
-[WARNING] See https://mycila.carbou.me/license-maven-plugin for more information.
-[INFO] 
-[INFO] --- maven-install-plugin:2.4:install (default-install) @ openmrs-web ---
-[INFO] Installing /home/ec2-user/projects/legacystrutsapp/web/target/openmrs-web-2.0.3.jar to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-web/2.0.3/openmrs-web-2.0.3.jar
-[INFO] Installing /home/ec2-user/projects/legacystrutsapp/web/pom.xml to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-web/2.0.3/openmrs-web-2.0.3.pom
-[INFO] Installing /home/ec2-user/projects/legacystrutsapp/web/target/openmrs-web-2.0.3-tests.jar to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-web/2.0.3/openmrs-web-2.0.3-tests.jar
-[INFO] 
-[INFO] -------------------< org.openmrs.web:openmrs-webapp >-------------------
-[INFO] Building openmrs-webapp 2.0.3                                      [6/6]
-[INFO] --------------------------------[ war ]---------------------------------
-[INFO] 
-[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ openmrs-webapp ---
-[INFO] Deleting /home/ec2-user/projects/legacystrutsapp/webapp/target
-[INFO] 
-[INFO] --- buildnumber-maven-plugin:3.2.0:create (default) @ openmrs-webapp ---
-[INFO] 
-[INFO] --- build-helper-maven-plugin:3.5.0:parse-version (parse-version) @ openmrs-webapp ---
-[INFO] 
-[INFO] --- maven-resources-plugin:3.3.1:resources (default-resources) @ openmrs-webapp ---
-[INFO] Copying 2 resources from src/main/resources to target/classes
-[INFO] Copying 1 resource from src/main/webapp to target/jetty
-[INFO] 
-[INFO] --- maven-antrun-plugin:1.4:run (default) @ openmrs-webapp ---
-project.artifactId
-[INFO] Executing tasks
-    [unzip] Expanding: /home/ec2-user/projects/legacystrutsapp/webapp/src/main/resources/liquibase-demo-data.zip into /home/ec2-user/projects/legacystrutsapp/webapp/target/classes
-[INFO] Executed tasks
-[INFO] 
-[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ openmrs-webapp ---
-[INFO] No sources to compile
-[INFO] 
-[INFO] --- maven-resources-plugin:3.3.1:testResources (default-testResources) @ openmrs-webapp ---
-[INFO] Copying 1 resource from src/test/resources to target/test-classes
-[INFO] 
-[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ openmrs-webapp ---
-[INFO] Recompiling the module because of changed dependency.
-[INFO] Compiling 3 source files with javac [debug release 21] to target/test-classes
-[INFO] 
-[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ openmrs-webapp ---
-[INFO] Tests are skipped.
-[INFO] 
-[INFO] --- maven-war-plugin:3.4.0:war (default-war) @ openmrs-webapp ---
-[INFO] Packaging webapp
-[INFO] Assembling webapp [openmrs-webapp] in [/home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs]
-[INFO] Processing war project
-[INFO] Copying webapp webResources [/home/ec2-user/projects/legacystrutsapp/webapp/src/main/webapp] to [/home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs]
-[INFO] Copying webapp resources [/home/ec2-user/projects/legacystrutsapp/webapp/src/main/webapp]
-[INFO] Building war: /home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs.war
-[INFO] 
-[INFO] --- maven-jar-plugin:3.3.0:test-jar (default) @ openmrs-webapp ---
-[INFO] Building jar: /home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs-tests.jar
-[INFO] 
-[INFO] --- license-maven-plugin:4.3:check (default) @ openmrs-webapp ---
-[INFO] Checking licenses...
-[WARNING] Property 'strictCheck' is not enabled. Please consider adding <strictCheck>true</strictCheck> in your pom.xml file.
-[WARNING] See https://mycila.carbou.me/license-maven-plugin for more information.
-[INFO] 
-[INFO] --- maven-install-plugin:2.4:install (default-install) @ openmrs-webapp ---
-[INFO] Installing /home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs.war to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-webapp/2.0.3/openmrs-webapp-2.0.3.war
-[INFO] Installing /home/ec2-user/projects/legacystrutsapp/webapp/pom.xml to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-webapp/2.0.3/openmrs-webapp-2.0.3.pom
-[INFO] Installing /home/ec2-user/projects/legacystrutsapp/webapp/target/openmrs-tests.jar to /home/ec2-user/.m2/repository/org/openmrs/web/openmrs-webapp/2.0.3/openmrs-webapp-2.0.3-tests.jar
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[16,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[17,26] package javax.servlet.http does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[18,26] package javax.servlet.http does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[19,26] package javax.servlet.http does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[27,45] cannot find symbol
+  symbol: class HttpServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[41,40] cannot find symbol
+  symbol:   class HttpServletRequest
+  location: class org.openmrs.module.web.ModuleResourcesServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[52,30] cannot find symbol
+  symbol:   class HttpServletRequest
+  location: class org.openmrs.module.web.ModuleResourcesServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[52,58] cannot find symbol
+  symbol:   class HttpServletResponse
+  location: class org.openmrs.module.web.ModuleResourcesServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[52,95] cannot find symbol
+  symbol:   class ServletException
+  location: class org.openmrs.module.web.ModuleResourcesServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[82,32] cannot find symbol
+  symbol:   class HttpServletRequest
+  location: class org.openmrs.module.web.ModuleResourcesServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[15,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[16,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[17,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[18,26] package javax.servlet.http does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[19,26] package javax.servlet.http does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[20,26] package javax.servlet.http does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[27,36] cannot find symbol
+  symbol: class HttpServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[34,32] cannot find symbol
+  symbol:   class HttpServletRequest
+  location: class org.openmrs.module.web.ModuleServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[34,60] cannot find symbol
+  symbol:   class HttpServletResponse
+  location: class org.openmrs.module.web.ModuleServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[34,97] cannot find symbol
+  symbol:   class ServletException
+  location: class org.openmrs.module.web.ModuleServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[77,60] cannot find symbol
+  symbol:   class ServletConfig
+  location: class org.openmrs.module.web.ModuleServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[81,25] cannot find symbol
+  symbol:   class ServletContext
+  location: class org.openmrs.module.web.ModuleServlet.SimpleServletConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[83,57] cannot find symbol
+  symbol:   class ServletContext
+  location: class org.openmrs.module.web.ModuleServlet.SimpleServletConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[92,24] cannot find symbol
+  symbol:   class ServletContext
+  location: class org.openmrs.module.web.ModuleServlet.SimpleServletConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[33,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[34,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[35,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[36,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[37,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[38,26] package javax.servlet.http does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[39,26] package javax.servlet.http does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[12,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[13,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[35,71] cannot access javax.servlet.http.HttpServlet
+  class file for javax.servlet.http.HttpServlet not found
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/StaticDispatcherServlet.java:[12,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[86,36] cannot find symbol
+  symbol:   class HttpServlet
+  location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[89,47] cannot find symbol
+  symbol:   class Filter
+  location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[92,36] cannot find symbol
+  symbol:   class Filter
+  location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[113,55] cannot find symbol
+  symbol:   class ServletContext
+  location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[430,53] cannot find symbol
+  symbol:   class ServletContext
+  location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[532,55] cannot find symbol
+  symbol:   class ServletContext
+  location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[610,34] cannot find symbol
+  symbol:   class Filter
+  location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[631,57] cannot find symbol
+  symbol:   class ServletRequest
+  location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[631,28] cannot find symbol
+  symbol:   class Filter
+  location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[691,44] cannot find symbol
+  symbol:   class ServletContext
+  location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[721,51] cannot find symbol
+  symbol:   class ServletContext
+  location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[732,51] cannot find symbol
+  symbol:   class ServletContext
+  location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[850,59] cannot find symbol
+  symbol:   class ServletContext
+  location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[913,23] cannot find symbol
+  symbol:   class HttpServlet
+  location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[981,42] cannot find symbol
+  symbol:   class ServletContext
+  location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/StaticDispatcherServlet.java:[37,54] cannot find symbol
+  symbol:   class ServletException
+  location: class org.openmrs.web.StaticDispatcherServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/StaticDispatcherServlet.java:[54,56] cannot find symbol
+  symbol:   class ServletException
+  location: class org.openmrs.web.StaticDispatcherServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[45,54] cannot find symbol
+  symbol:   class ServletException
+  location: class org.openmrs.web.DispatcherServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[65,53] cannot find symbol
+  symbol:   class ServletException
+  location: class org.openmrs.web.DispatcherServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[83,26] cannot find symbol
+  symbol:   class ServletConfig
+  location: class org.openmrs.web.DispatcherServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[83,55] cannot find symbol
+  symbol:   class ServletException
+  location: class org.openmrs.web.DispatcherServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[14,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[15,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[16,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[17,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[18,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[19,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[29,38] cannot find symbol
+  symbol: class Filter
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[36,26] cannot find symbol
+  symbol:   class FilterConfig
+  location: class org.openmrs.module.web.filter.ModuleFilter
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[36,60] cannot find symbol
+  symbol:   class ServletException
+  location: class org.openmrs.module.web.filter.ModuleFilter
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[51,30] cannot find symbol
+  symbol:   class ServletRequest
+  location: class org.openmrs.module.web.filter.ModuleFilter
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[51,54] cannot find symbol
+  symbol:   class ServletResponse
+  location: class org.openmrs.module.web.filter.ModuleFilter
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[51,80] cannot find symbol
+  symbol:   class FilterChain
+  location: class org.openmrs.module.web.filter.ModuleFilter
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[52,17] cannot find symbol
+  symbol:   class ServletException
+  location: class org.openmrs.module.web.filter.ModuleFilter
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[16,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[17,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[18,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[19,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[20,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[27,43] cannot find symbol
+  symbol: class FilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[30,26] cannot find symbol
+  symbol:   class Filter
+  location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[32,17] cannot find symbol
+  symbol:   class FilterChain
+  location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[42,46] cannot find symbol
+  symbol:   class Filter
+  location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[42,63] cannot find symbol
+  symbol:   class FilterChain
+  location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[56,64] cannot find symbol
+  symbol:   class Filter
+  location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[56,81] cannot find symbol
+  symbol:   class FilterChain
+  location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[67,30] cannot find symbol
+  symbol:   class ServletRequest
+  location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[67,54] cannot find symbol
+  symbol:   class ServletResponse
+  location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[67,87] cannot find symbol
+  symbol:   class ServletException
+  location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterConfig.java:[15,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterConfig.java:[16,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterConfig.java:[21,44] cannot find symbol
+  symbol: class FilterConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterConfig.java:[26,17] cannot find symbol
+  symbol:   class ServletContext
+  location: class org.openmrs.module.web.filter.ModuleFilterConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterConfig.java:[34,77] cannot find symbol
+  symbol:   class ServletContext
+  location: class org.openmrs.module.web.filter.ModuleFilterConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterConfig.java:[46,95] cannot find symbol
+  symbol:   class ServletContext
+  location: class org.openmrs.module.web.filter.ModuleFilterConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterConfig.java:[84,16] cannot find symbol
+  symbol:   class ServletContext
+  location: class org.openmrs.module.web.filter.ModuleFilterConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterConfig.java:[88,39] cannot find symbol
+  symbol:   class ServletContext
+  location: class org.openmrs.module.web.filter.ModuleFilterConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[28,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[29,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[30,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[31,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[74,62] cannot find symbol
+  symbol: class ServletContextListener
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[138,40] cannot find symbol
+  symbol:   class ServletContextEvent
+  location: class org.openmrs.web.Listener
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[231,41] cannot find symbol
+  symbol:   class ServletContext
+  location: class org.openmrs.web.Listener
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[231,79] cannot find symbol
+  symbol:   class ServletException
+  location: class org.openmrs.web.Listener
+[INFO] 100 errors 
+[INFO] -------------------------------------------------------------
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary for OpenMRS 2.0.3:
 [INFO] 
-[INFO] OpenMRS ............................................ SUCCESS [  1.801 s]
-[INFO] openmrs-tools ...................................... SUCCESS [  0.630 s]
-[INFO] openmrs-test ....................................... SUCCESS [  0.155 s]
-[INFO] openmrs-api ........................................ SUCCESS [ 15.735 s]
-[INFO] openmrs-web ........................................ SUCCESS [  1.489 s]
-[INFO] openmrs-webapp ..................................... SUCCESS [  3.284 s]
+[INFO] OpenMRS ............................................ SUCCESS [  1.660 s]
+[INFO] openmrs-tools ...................................... SUCCESS [  0.671 s]
+[INFO] openmrs-test ....................................... SUCCESS [  0.126 s]
+[INFO] openmrs-api ........................................ SUCCESS [ 15.284 s]
+[INFO] openmrs-web ........................................ FAILURE [  5.226 s]
+[INFO] openmrs-webapp ..................................... SKIPPED
 [INFO] ------------------------------------------------------------------------
-[INFO] BUILD SUCCESS
+[INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  23.314 s
-[INFO] Finished at: 2026-04-16T09:40:34Z
+[INFO] Total time:  23.176 s
+[INFO] Finished at: 2026-04-16T09:42:53Z
 [INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project openmrs-web: Compilation failure: Compilation failure: 
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[16,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[17,26] package javax.servlet.http does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[18,26] package javax.servlet.http does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[19,26] package javax.servlet.http does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[27,45] cannot find symbol
+[ERROR]   symbol: class HttpServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[41,40] cannot find symbol
+[ERROR]   symbol:   class HttpServletRequest
+[ERROR]   location: class org.openmrs.module.web.ModuleResourcesServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[52,30] cannot find symbol
+[ERROR]   symbol:   class HttpServletRequest
+[ERROR]   location: class org.openmrs.module.web.ModuleResourcesServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[52,58] cannot find symbol
+[ERROR]   symbol:   class HttpServletResponse
+[ERROR]   location: class org.openmrs.module.web.ModuleResourcesServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[52,95] cannot find symbol
+[ERROR]   symbol:   class ServletException
+[ERROR]   location: class org.openmrs.module.web.ModuleResourcesServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleResourcesServlet.java:[82,32] cannot find symbol
+[ERROR]   symbol:   class HttpServletRequest
+[ERROR]   location: class org.openmrs.module.web.ModuleResourcesServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[15,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[16,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[17,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[18,26] package javax.servlet.http does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[19,26] package javax.servlet.http does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[20,26] package javax.servlet.http does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[27,36] cannot find symbol
+[ERROR]   symbol: class HttpServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[34,32] cannot find symbol
+[ERROR]   symbol:   class HttpServletRequest
+[ERROR]   location: class org.openmrs.module.web.ModuleServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[34,60] cannot find symbol
+[ERROR]   symbol:   class HttpServletResponse
+[ERROR]   location: class org.openmrs.module.web.ModuleServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[34,97] cannot find symbol
+[ERROR]   symbol:   class ServletException
+[ERROR]   location: class org.openmrs.module.web.ModuleServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[77,60] cannot find symbol
+[ERROR]   symbol:   class ServletConfig
+[ERROR]   location: class org.openmrs.module.web.ModuleServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[81,25] cannot find symbol
+[ERROR]   symbol:   class ServletContext
+[ERROR]   location: class org.openmrs.module.web.ModuleServlet.SimpleServletConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[83,57] cannot find symbol
+[ERROR]   symbol:   class ServletContext
+[ERROR]   location: class org.openmrs.module.web.ModuleServlet.SimpleServletConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java:[92,24] cannot find symbol
+[ERROR]   symbol:   class ServletContext
+[ERROR]   location: class org.openmrs.module.web.ModuleServlet.SimpleServletConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[33,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[34,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[35,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[36,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[37,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[38,26] package javax.servlet.http does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[39,26] package javax.servlet.http does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[12,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[13,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[35,71] cannot access javax.servlet.http.HttpServlet
+[ERROR]   class file for javax.servlet.http.HttpServlet not found
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/StaticDispatcherServlet.java:[12,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[86,36] cannot find symbol
+[ERROR]   symbol:   class HttpServlet
+[ERROR]   location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[89,47] cannot find symbol
+[ERROR]   symbol:   class Filter
+[ERROR]   location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[92,36] cannot find symbol
+[ERROR]   symbol:   class Filter
+[ERROR]   location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[113,55] cannot find symbol
+[ERROR]   symbol:   class ServletContext
+[ERROR]   location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[430,53] cannot find symbol
+[ERROR]   symbol:   class ServletContext
+[ERROR]   location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[532,55] cannot find symbol
+[ERROR]   symbol:   class ServletContext
+[ERROR]   location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[610,34] cannot find symbol
+[ERROR]   symbol:   class Filter
+[ERROR]   location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[631,57] cannot find symbol
+[ERROR]   symbol:   class ServletRequest
+[ERROR]   location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[631,28] cannot find symbol
+[ERROR]   symbol:   class Filter
+[ERROR]   location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[691,44] cannot find symbol
+[ERROR]   symbol:   class ServletContext
+[ERROR]   location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[721,51] cannot find symbol
+[ERROR]   symbol:   class ServletContext
+[ERROR]   location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[732,51] cannot find symbol
+[ERROR]   symbol:   class ServletContext
+[ERROR]   location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[850,59] cannot find symbol
+[ERROR]   symbol:   class ServletContext
+[ERROR]   location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[913,23] cannot find symbol
+[ERROR]   symbol:   class HttpServlet
+[ERROR]   location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java:[981,42] cannot find symbol
+[ERROR]   symbol:   class ServletContext
+[ERROR]   location: class org.openmrs.module.web.WebModuleUtil
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/StaticDispatcherServlet.java:[37,54] cannot find symbol
+[ERROR]   symbol:   class ServletException
+[ERROR]   location: class org.openmrs.web.StaticDispatcherServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/StaticDispatcherServlet.java:[54,56] cannot find symbol
+[ERROR]   symbol:   class ServletException
+[ERROR]   location: class org.openmrs.web.StaticDispatcherServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[45,54] cannot find symbol
+[ERROR]   symbol:   class ServletException
+[ERROR]   location: class org.openmrs.web.DispatcherServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[65,53] cannot find symbol
+[ERROR]   symbol:   class ServletException
+[ERROR]   location: class org.openmrs.web.DispatcherServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[83,26] cannot find symbol
+[ERROR]   symbol:   class ServletConfig
+[ERROR]   location: class org.openmrs.web.DispatcherServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[83,55] cannot find symbol
+[ERROR]   symbol:   class ServletException
+[ERROR]   location: class org.openmrs.web.DispatcherServlet
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[14,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[15,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[16,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[17,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[18,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[19,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[29,38] cannot find symbol
+[ERROR]   symbol: class Filter
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[36,26] cannot find symbol
+[ERROR]   symbol:   class FilterConfig
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilter
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[36,60] cannot find symbol
+[ERROR]   symbol:   class ServletException
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilter
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[51,30] cannot find symbol
+[ERROR]   symbol:   class ServletRequest
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilter
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[51,54] cannot find symbol
+[ERROR]   symbol:   class ServletResponse
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilter
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[51,80] cannot find symbol
+[ERROR]   symbol:   class FilterChain
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilter
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilter.java:[52,17] cannot find symbol
+[ERROR]   symbol:   class ServletException
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilter
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[16,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[17,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[18,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[19,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[20,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[27,43] cannot find symbol
+[ERROR]   symbol: class FilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[30,26] cannot find symbol
+[ERROR]   symbol:   class Filter
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[32,17] cannot find symbol
+[ERROR]   symbol:   class FilterChain
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[42,46] cannot find symbol
+[ERROR]   symbol:   class Filter
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[42,63] cannot find symbol
+[ERROR]   symbol:   class FilterChain
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[56,64] cannot find symbol
+[ERROR]   symbol:   class Filter
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[56,81] cannot find symbol
+[ERROR]   symbol:   class FilterChain
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[67,30] cannot find symbol
+[ERROR]   symbol:   class ServletRequest
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[67,54] cannot find symbol
+[ERROR]   symbol:   class ServletResponse
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterChain.java:[67,87] cannot find symbol
+[ERROR]   symbol:   class ServletException
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilterChain
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterConfig.java:[15,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterConfig.java:[16,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterConfig.java:[21,44] cannot find symbol
+[ERROR]   symbol: class FilterConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterConfig.java:[26,17] cannot find symbol
+[ERROR]   symbol:   class ServletContext
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilterConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterConfig.java:[34,77] cannot find symbol
+[ERROR]   symbol:   class ServletContext
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilterConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterConfig.java:[46,95] cannot find symbol
+[ERROR]   symbol:   class ServletContext
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilterConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterConfig.java:[84,16] cannot find symbol
+[ERROR]   symbol:   class ServletContext
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilterConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/filter/ModuleFilterConfig.java:[88,39] cannot find symbol
+[ERROR]   symbol:   class ServletContext
+[ERROR]   location: class org.openmrs.module.web.filter.ModuleFilterConfig
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[28,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[29,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[30,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[31,21] package javax.servlet does not exist
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[74,62] cannot find symbol
+[ERROR]   symbol: class ServletContextListener
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[138,40] cannot find symbol
+[ERROR]   symbol:   class ServletContextEvent
+[ERROR]   location: class org.openmrs.web.Listener
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[231,41] cannot find symbol
+[ERROR]   symbol:   class ServletContext
+[ERROR]   location: class org.openmrs.web.Listener
+[ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/Listener.java:[231,79] cannot find symbol
+[ERROR]   symbol:   class ServletException
+[ERROR]   location: class org.openmrs.web.Listener
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :openmrs-web
