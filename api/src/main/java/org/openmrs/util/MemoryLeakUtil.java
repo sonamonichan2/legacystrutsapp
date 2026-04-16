@@ -15,8 +15,6 @@ import java.util.Timer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import sun.net.www.http.KeepAliveCache;
-
 /**
  * Utility functions to clean up causes of memory leakages.
  */
@@ -61,11 +59,14 @@ public class MemoryLeakUtil {
 	
 	public static void shutdownKeepAliveTimer() {
 		try {
-			final Field kac = HttpClient.class.getDeclaredField("kac");
+			// In Java 9+, sun.net.www.http.HttpClient and KeepAliveCache are not accessible.
+			// Use reflection to access these internal classes if available.
+			Class<?> httpClientClass = Class.forName("sun.net.www.http.HttpClient");
+			Class<?> keepAliveCacheClass = Class.forName("sun.net.www.http.KeepAliveCache");
 			
+			final Field kac = httpClientClass.getDeclaredField("kac");
 			kac.setAccessible(true);
-			final Field keepAliveTimer = KeepAliveCache.class.getDeclaredField("keepAliveTimer");
-			
+			final Field keepAliveTimer = keepAliveCacheClass.getDeclaredField("keepAliveTimer");
 			keepAliveTimer.setAccessible(true);
 			
 			final Thread thread = (Thread) keepAliveTimer.get(kac.get(null));

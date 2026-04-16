@@ -134,17 +134,7 @@
                </systemPropertyVariables>
             </configuration>
          </plugin>
-         <plugin>
-            <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
-            <artifactId>maven-java-formatter-plugin</artifactId>
-            <executions>
-               <execution>
-                  <goals>
-                     <goal>format</goal>
-                  </goals>
-               </execution>
-            </executions>
-         </plugin>
+         <!-- maven-java-formatter-plugin removed - incompatible with Java 21 -->
       </plugins>
    </build>
    
