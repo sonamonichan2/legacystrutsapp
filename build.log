@@ -20,7 +20,7 @@
 [INFO] ShortRevision tag detected. The value is '6'.
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'rev-parse' '--verify' '--short=6' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
-[INFO] Storing buildNumber: c608e5 at timestamp: 1776333253433
+[INFO] Storing buildNumber: 13dc1e at timestamp: 1776333378226
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'symbolic-ref' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
 [INFO] Storing scmBranch: atx-result-staging-20260416_093139_4747abd4
@@ -219,16 +219,6 @@
 [INFO] --------------------< org.openmrs.web:openmrs-web >---------------------
 [INFO] Building openmrs-web 2.0.3                                         [5/6]
 [INFO] --------------------------------[ jar ]---------------------------------
-Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2-jakarta-servlet6/2.0.0-M2/commons-fileupload2-jakarta-servlet6-2.0.0-M2.pom
-Progress (1): 3.2/4.1 kBProgress (1): 4.1 kB                        Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2-jakarta-servlet6/2.0.0-M2/commons-fileupload2-jakarta-servlet6-2.0.0-M2.pom (4.1 kB at 4.5 kB/s)
-Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2/2.0.0-M2/commons-fileupload2-2.0.0-M2.pom
-Progress (1): 3.2/17 kBProgress (1): 6.0/17 kBProgress (1): 8.8/17 kBProgress (1): 12/17 kB Progress (1): 14/17 kBProgress (1): 17/17 kBProgress (1): 17 kB                      Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2/2.0.0-M2/commons-fileupload2-2.0.0-M2.pom (17 kB at 55 kB/s)
-Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2-core/2.0.0-M2/commons-fileupload2-core-2.0.0-M2.pom
-Progress (1): 3.1 kB                    Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2-core/2.0.0-M2/commons-fileupload2-core-2.0.0-M2.pom (3.1 kB at 13 kB/s)
-Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2-jakarta-servlet6/2.0.0-M2/commons-fileupload2-jakarta-servlet6-2.0.0-M2.jar
-Downloading from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2-core/2.0.0-M2/commons-fileupload2-core-2.0.0-M2.jar
-Progress (1): 3.2/14 kBProgress (1): 6.0/14 kBProgress (1): 8.8/14 kBProgress (1): 12/14 kB Progress (1): 14 kB                      Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2-jakarta-servlet6/2.0.0-M2/commons-fileupload2-jakarta-servlet6-2.0.0-M2.jar (14 kB at 55 kB/s)
-Progress (1): 3.2/63 kBProgress (1): 6.0/63 kBProgress (1): 8.8/63 kBProgress (1): 12/63 kB Progress (1): 14/63 kBProgress (1): 17/63 kBProgress (1): 20/63 kBProgress (1): 23/63 kBProgress (1): 26/63 kBProgress (1): 29/63 kBProgress (1): 31/63 kBProgress (1): 34/63 kBProgress (1): 37/63 kBProgress (1): 40/63 kBProgress (1): 42/63 kBProgress (1): 45/63 kBProgress (1): 48/63 kBProgress (1): 51/63 kBProgress (1): 54/63 kBProgress (1): 56/63 kBProgress (1): 59/63 kBProgress (1): 62/63 kBProgress (1): 63 kB                      Downloaded from openmrs-repo: https://mavenrepo.openmrs.org/nexus/content/repositories/public/org/apache/commons/commons-fileupload2-core/2.0.0-M2/commons-fileupload2-core-2.0.0-M2.jar (63 kB at 91 kB/s)
 [INFO] 
 [INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ openmrs-web ---
 [INFO] Deleting /home/ec2-user/projects/legacystrutsapp/web/target
@@ -294,17 +284,17 @@ Progress (1): 3.2/63 kBProgress (1): 6.0/63 kBProgress (1): 8.8/63 kBProgress
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary for OpenMRS 2.0.3:
 [INFO] 
-[INFO] OpenMRS ............................................ SUCCESS [  1.780 s]
-[INFO] openmrs-tools ...................................... SUCCESS [  0.652 s]
-[INFO] openmrs-test ....................................... SUCCESS [  0.123 s]
-[INFO] openmrs-api ........................................ SUCCESS [ 15.642 s]
-[INFO] openmrs-web ........................................ FAILURE [  3.290 s]
+[INFO] OpenMRS ............................................ SUCCESS [  1.702 s]
+[INFO] openmrs-tools ...................................... SUCCESS [  0.623 s]
+[INFO] openmrs-test ....................................... SUCCESS [  0.149 s]
+[INFO] openmrs-api ........................................ SUCCESS [ 15.454 s]
+[INFO] openmrs-web ........................................ FAILURE [  0.722 s]
 [INFO] openmrs-webapp ..................................... SKIPPED
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  21.698 s
-[INFO] Finished at: 2026-04-16T09:54:34Z
+[INFO] Total time:  18.885 s
+[INFO] Finished at: 2026-04-16T09:56:36Z
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project openmrs-web: Compilation failure: Compilation failure: 
 [ERROR] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/web/DispatcherServlet.java:[35,71] cannot access javax.servlet.http.HttpServlet
