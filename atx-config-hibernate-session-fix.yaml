@@ -1,0 +1,34 @@
+codeRepositoryPath: .
+transformationName: AWS/java-version-upgrade
+buildCommand: mvn -DskipTests clean install
+validationCommands: mvn -DskipTests clean install
+
+additionalPlanContext: |
+  Apply a focused runtime compatibility fix for this OpenMRS-based Java web application.
+
+  Current runtime issue:
+  - Application deploys on Tomcat 10 and Java 21, but OpenMRS startup still fails with:
+    "No CurrentSessionContext configured!"
+  - The failure occurs when Hibernate getCurrentSession() is invoked during startup.
+
+  Required scope:
+  - Fix Hibernate current session context configuration so the application can complete startup
+  - Update the exact configuration path actually consumed at runtime
+  - Review hibernate.cfg.xml, hibernate.default.properties, applicationContext-service.xml, and any custom OpenMRS Hibernate bootstrap classes involved
+  - Preserve WAR packaging
+  - Preserve existing business behavior
+  - Do not convert to Spring Boot
+  - Do not convert to microservices
+  - Do not do unrelated refactoring
+
+  Constraints:
+  - Keep Maven multi-module structure intact
+  - Keep Liquibase/database behavior unchanged
+  - Minimize code changes outside Hibernate/session bootstrap
+  - Prefer the smallest correct fix that results in successful application startup
+
+  Validation expectations:
+  - mvn -DskipTests clean install must pass
+  - Produce a deployable WAR
+  - Summarize exactly which config files and properties were changed
+  - The transformed app should start without "No CurrentSessionContext configured!"

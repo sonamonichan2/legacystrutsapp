@@ -590,7 +590,12 @@
             <list>
                 <value>org.openmrs</value>
             </list>
-            </property>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate5.SpringSessionContext</prop>
+            </props>
+        </property>
 		<!--  default properties must be set in the hibernate.default.properties -->
 	</bean>
 	

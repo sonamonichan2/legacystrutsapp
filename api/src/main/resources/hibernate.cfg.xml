@@ -17,6 +17,7 @@
 <hibernate-configuration>
 
 	<session-factory>
+        <property name="hibernate.current_session_context_class">org.springframework.orm.hibernate5.SpringSessionContext</property>
         <property name="jakarta.persistence.validation.mode">none</property>
 		<!-- API -->
 		<mapping resource="org/openmrs/api/db/hibernate/Allergy.hbm.xml" />

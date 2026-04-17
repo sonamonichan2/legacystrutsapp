@@ -20,10 +20,10 @@
 [INFO] ShortRevision tag detected. The value is '6'.
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'rev-parse' '--verify' '--short=6' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
-[INFO] Storing buildNumber: 05e233 at timestamp: 1776404485971
+[INFO] Storing buildNumber: f6ad7d at timestamp: 1776416918162
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'symbolic-ref' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
-[INFO] Storing scmBranch: atx-result-staging-20260417_052108_9c80bc66
+[INFO] Storing scmBranch: atx-result-staging-20260417_085517_d75b5abf
 [INFO] 
 [INFO] --- build-helper-maven-plugin:3.5.0:parse-version (parse-version) @ openmrs ---
 [INFO] 
@@ -122,7 +122,7 @@
 [INFO] 
 [INFO] --- maven-resources-plugin:3.3.1:resources (default-resources) @ openmrs-api ---
 [INFO] Copying 1 resource from src/main/resources to target/classes
-[INFO] Copying 121 resources from src/main/resources to target/classes
+[INFO] Copying 122 resources from src/main/resources to target/classes
 [INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ openmrs-api ---
@@ -324,15 +324,15 @@ project.artifactId
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary for OpenMRS 2.0.3:
 [INFO] 
-[INFO] OpenMRS ............................................ SUCCESS [  1.848 s]
-[INFO] openmrs-tools ...................................... SUCCESS [  0.649 s]
-[INFO] openmrs-test ....................................... SUCCESS [  0.150 s]
-[INFO] openmrs-api ........................................ SUCCESS [ 17.435 s]
-[INFO] openmrs-web ........................................ SUCCESS [  1.437 s]
-[INFO] openmrs-webapp ..................................... SUCCESS [  3.837 s]
+[INFO] OpenMRS ............................................ SUCCESS [  1.747 s]
+[INFO] openmrs-tools ...................................... SUCCESS [  0.681 s]
+[INFO] openmrs-test ....................................... SUCCESS [  0.153 s]
+[INFO] openmrs-api ........................................ SUCCESS [ 16.445 s]
+[INFO] openmrs-web ........................................ SUCCESS [  1.611 s]
+[INFO] openmrs-webapp ..................................... SUCCESS [  3.920 s]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  25.559 s
-[INFO] Finished at: 2026-04-17T05:41:50Z
+[INFO] Total time:  24.780 s
+[INFO] Finished at: 2026-04-17T09:09:01Z
 [INFO] ------------------------------------------------------------------------
