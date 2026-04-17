@@ -184,6 +184,15 @@ public class HibernateSessionFactoryBean extends LocalSessionFactoryBean {
 		
 		setPackagesToScan(getModulePackagesWithMappedClasses().toArray(new String[0]));
 		
+		// Guarantee that hibernate.current_session_context_class is always set after all property
+		// merging is complete. During runtime bootstrap (e.g. on Tomcat 10 with Java 21), the
+		// property loading chain (module properties, runtime properties, default properties) may
+		// inadvertently lose this critical setting, causing "No CurrentSessionContext configured!"
+		// errors in Hibernate 5.6.x. This explicit set ensures the property is always present
+		// regardless of what happened during property merging above.
+		config.setProperty("hibernate.current_session_context_class",
+				"org.springframework.orm.hibernate5.SpringSessionContext");
+		
 		super.afterPropertiesSet();
 	}
 	
