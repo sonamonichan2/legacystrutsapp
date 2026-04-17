@@ -24,18 +24,21 @@
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       		http://www.springframework.org/schema/beans/spring-beans.xsd
 			http://www.springframework.org/schema/context
-			http://www.springframework.org/schema/context/spring-context-3.0.xsd
+			http://www.springframework.org/schema/context/spring-context.xsd
 			http://www.springframework.org/schema/jee
-			http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+			http://www.springframework.org/schema/jee/spring-jee.xsd
 			http://www.springframework.org/schema/tx
-			http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+			http://www.springframework.org/schema/tx/spring-tx.xsd
 			http://www.springframework.org/schema/aop
-           	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           	http://www.springframework.org/schema/aop/spring-aop.xsd
             http://www.springframework.org/schema/util
-            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+            http://www.springframework.org/schema/util/spring-util.xsd
+            http://www.springframework.org/schema/mvc
+            http://www.springframework.org/schema/mvc/spring-mvc.xsd">
             	
 	<!--  **************************  VIEW RESOLVER / CONTROLLERS  *************************  -->
 	
@@ -50,16 +53,20 @@
 		class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
 	</bean>
 	
-	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
 		<property name="mediaTypes">
 			<map>
 				<entry key="json" value="application/json" />
 				<entry key="xml" value="application/xml" />
 			</map>
 		</property>
+	</bean>
+
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="contentNegotiationManager" ref="contentNegotiationManager" />
 		<property name="defaultViews">
 			<list>
-				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
 					<property name="extractValueFromSingleKeyModel" value="true" />
 				</bean>
 				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
@@ -76,10 +83,6 @@
 		<property name="unmarshaller" ref="xStreamMarshaller" />
 	</bean>
 	
-	<bean id="defaultMethodParamResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
-		<property name="paramName"><value>method</value></property>
-		<property name="defaultMethodName"><value>handleRequest</value></property>
-	</bean>
 	
 	<!--  Exception handler mappings --> 
  		 
@@ -94,26 +97,26 @@
 	
 	<!-- So that controllers can use annotations like @Controller and @RequestMapping
 -->
-	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
-		<!-- makes annotations more important than default mappings -->
-		<property name="order"><value>98</value></property>
-	</bean>
+	<mvc:annotation-driven conversion-service="conversion-service" content-negotiation-manager="contentNegotiationManager">
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter" />
+			<bean class="org.springframework.http.converter.FormHttpMessageConverter" />
+			<bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+			<ref bean="xmlMarshallingHttpMessageConverter" />
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 
 	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
 
-	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+		<property name="order"><value>98</value></property>
+	</bean>
+
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="webBindingInitializer">
 			<bean class="org.openmrs.web.OpenmrsBindingInitializer"/>
-		</property>
-		<property name="messageConverters">
-			<list>
-				<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
-				<bean class="org.springframework.http.converter.StringHttpMessageConverter" />
-				<bean class="org.springframework.http.converter.FormHttpMessageConverter" />
-				<bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
-				<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
-				<ref bean="xmlMarshallingHttpMessageConverter" />
-			</list>
 		</property>
 	</bean>
 		
