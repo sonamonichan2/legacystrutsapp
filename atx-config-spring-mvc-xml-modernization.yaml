@@ -1,0 +1,40 @@
+codeRepositoryPath: .
+transformationName: AWS/java-version-upgrade
+buildCommand: mvn -DskipTests clean install
+validationCommands: mvn -DskipTests clean install
+
+additionalPlanContext: |
+  Apply a focused compatibility transformation to this OpenMRS-based Java web application.
+
+  Scope of this transformation:
+  - Modernize legacy Spring MVC XML configuration in openmrs-servlet.xml
+  - Replace removed Spring MVC classes and obsolete XML bean definitions with compatible modern equivalents
+  - Keep WAR packaging
+  - Preserve existing business behavior
+  - Do not convert to Spring Boot
+  - Do not convert to microservices
+  - Do not perform broad refactoring outside the Spring MVC XML compatibility issue
+
+  Known blockers to resolve:
+  - org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver
+  - org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping
+  - org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter
+
+  Required outcome:
+  - openmrs-servlet.xml should be updated to use modern Spring MVC configuration compatible with the Spring version currently in the project
+  - Prefer mvc namespace configuration such as mvc:annotation-driven where appropriate
+  - Remove or replace obsolete XML bean definitions that reference removed Spring MVC classes
+  - Minimize changes outside servlet/web MVC configuration
+
+  Constraints:
+  - Preserve application startup behavior as much as possible
+  - Keep existing URL behavior where feasible
+  - Keep Maven multi-module structure intact
+  - Keep Liquibase and database behavior unchanged
+  - Do not introduce unrelated dependency upgrades unless required for this compatibility fix
+
+  Validation expectations:
+  - mvn -DskipTests clean install must pass
+  - Produce a deployable WAR
+  - Summarize exactly which XML beans were replaced or removed
+  - Clearly note any remaining manual follow-up needed
