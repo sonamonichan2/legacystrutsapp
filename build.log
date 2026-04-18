@@ -20,7 +20,7 @@
 [INFO] ShortRevision tag detected. The value is '6'.
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'rev-parse' '--verify' '--short=6' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
-[INFO] Storing buildNumber: 97646f at timestamp: 1776507288287
+[INFO] Storing buildNumber: 390e7b at timestamp: 1776507499769
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'symbolic-ref' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
 [INFO] Storing scmBranch: atx-result-staging-20260418_100430_92d8e16d
@@ -130,21 +130,7 @@
 [INFO] Compiling 649 source files with javac [debug release 21] to target/classes
 [WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/PersonAttributeType.java:[180,20] deprecated item is not annotated with @Deprecated
 [WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/PatientIdentifier.java:[208,20] deprecated item is not annotated with @Deprecated
-[WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/logic/Duration.java:[127,32] Double(double) in java.lang.Double has been deprecated and marked for removal
-[WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/logic/Duration.java:[147,32] Double(double) in java.lang.Double has been deprecated and marked for removal
-[WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/logic/Duration.java:[167,30] Double(double) in java.lang.Double has been deprecated and marked for removal
-[WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/logic/Duration.java:[187,29] Double(double) in java.lang.Double has been deprecated and marked for removal
-[WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/logic/Duration.java:[207,30] Double(double) in java.lang.Double has been deprecated and marked for removal
-[WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/logic/Duration.java:[227,31] Double(double) in java.lang.Double has been deprecated and marked for removal
-[WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/logic/Duration.java:[247,30] Double(double) in java.lang.Double has been deprecated and marked for removal
-[WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/api/db/hibernate/HibernateLocationDAO.java:[335,74] Long(long) in java.lang.Long has been deprecated and marked for removal
 [WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/hl7/HL7InQueueProcessor.java:[102,17] attempt to synchronize on an instance of a value-based class
-[WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/propertyeditor/ConceptSetsEditor.java:[89,113] Double(double) in java.lang.Double has been deprecated and marked for removal
-[WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/propertyeditor/ConceptSetsEditor.java:[94,82] Double(double) in java.lang.Double has been deprecated and marked for removal
-[WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/util/DoubleRange.java:[40,42] Double(double) in java.lang.Double has been deprecated and marked for removal
-[WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/util/DoubleRange.java:[41,44] Double(double) in java.lang.Double has been deprecated and marked for removal
-[WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/util/DoubleRange.java:[59,44] Double(double) in java.lang.Double has been deprecated and marked for removal
-[WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/util/DoubleRange.java:[77,42] Double(double) in java.lang.Double has been deprecated and marked for removal
 [WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/util/OpenmrsClassLoader.java:[494,47] stop() in java.lang.Thread has been deprecated and marked for removal
 [WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/util/OpenmrsSecurityManager.java:[19,45] java.lang.SecurityManager in java.lang has been deprecated and marked for removal
 [WARNING] /home/ec2-user/projects/legacystrutsapp/api/src/main/java/org/openmrs/util/OpenmrsSecurityManager.java:[41,29] java.lang.SecurityManager in java.lang has been deprecated and marked for removal
@@ -324,15 +310,15 @@ project.artifactId
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary for OpenMRS 2.0.3:
 [INFO] 
-[INFO] OpenMRS ............................................ SUCCESS [  1.699 s]
-[INFO] openmrs-tools ...................................... SUCCESS [  0.615 s]
-[INFO] openmrs-test ....................................... SUCCESS [  0.097 s]
-[INFO] openmrs-api ........................................ SUCCESS [ 16.143 s]
-[INFO] openmrs-web ........................................ SUCCESS [  1.616 s]
-[INFO] openmrs-webapp ..................................... SUCCESS [  3.743 s]
+[INFO] OpenMRS ............................................ SUCCESS [  1.746 s]
+[INFO] openmrs-tools ...................................... SUCCESS [  0.611 s]
+[INFO] openmrs-test ....................................... SUCCESS [  0.127 s]
+[INFO] openmrs-api ........................................ SUCCESS [ 16.301 s]
+[INFO] openmrs-web ........................................ SUCCESS [  1.709 s]
+[INFO] openmrs-webapp ..................................... SUCCESS [  3.985 s]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  24.131 s
-[INFO] Finished at: 2026-04-18T10:15:11Z
+[INFO] Total time:  24.708 s
+[INFO] Finished at: 2026-04-18T10:18:43Z
 [INFO] ------------------------------------------------------------------------
