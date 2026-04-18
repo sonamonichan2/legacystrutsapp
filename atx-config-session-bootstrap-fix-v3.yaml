@@ -1,0 +1,31 @@
+codeRepositoryPath: .
+transformationName: AWS/java-version-upgrade
+buildCommand: mvn -DskipTests clean install
+validationCommands: mvn -DskipTests clean install
+
+additionalPlanContext: |
+  Apply a very focused runtime fix for OpenMRS startup on Java 21 and Tomcat 10.
+
+  Current blocking issues:
+  - Missing jakarta.transaction.SystemException at runtime
+  - Application startup still fails with "No CurrentSessionContext configured!"
+  - The current failure now occurs in:
+    org.openmrs.api.db.hibernate.HibernateContextDAO.clearSession()
+  - Previous failures also involved HibernateAdministrationDAO startup methods
+
+  Required changes:
+  - Ensure jakarta.transaction-api is present in the packaged WAR runtime
+  - Review HibernateContextDAO.clearSession() and any startup-sensitive DAO methods that still call getCurrentSession() too early
+  - Replace bootstrap-time uses of getCurrentSession() with explicitly opened/closed session handling where needed
+  - Keep normal runtime behavior unchanged as much as possible
+  - Do not perform unrelated refactors
+  - Keep WAR packaging
+  - Keep Java 21 and Jakarta/Tomcat 10 compatibility work intact
+  - Keep Maven multi-module structure intact
+
+  Validation expectations:
+  - mvn -DskipTests clean install must pass
+  - Produce a deployable WAR
+  - WAR must include jakarta.transaction-api at runtime
+  - App should no longer fail with NoClassDefFoundError for jakarta.transaction.SystemException
+  - App should no longer fail with "No CurrentSessionContext configured!" during startup
