@@ -14,6 +14,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.api.db.DAOException;
@@ -52,14 +54,46 @@ public class HibernateSchedulerDAO implements SchedulerDAO {
 	}
 	
 	/**
+	 * Acquires a Hibernate Session, falling back to opening a new session if no
+	 * CurrentSessionContext is configured (e.g., during application bootstrap
+	 * before Spring's transaction management is fully initialized).
+	 *
+	 * @param manuallyOpened a single-element boolean array; on return,
+	 *        manuallyOpened[0] is true when a new session was opened and the
+	 *        caller must close it in a finally block
+	 * @return a usable Hibernate Session
+	 */
+	private Session getSession(boolean[] manuallyOpened) {
+		Session session;
+		manuallyOpened[0] = false;
+		try {
+			session = sessionFactory.getCurrentSession();
+		}
+		catch (HibernateException e) {
+			session = sessionFactory.openSession();
+			manuallyOpened[0] = true;
+		}
+		return session;
+	}
+	
+	/**
 	 * Creates a new task.
 	 * 
 	 * @param task to be created
 	 * @throws DAOException
 	 */
 	public void createTask(TaskDefinition task) throws DAOException {
-		// add all data minus the password as a new user
-		sessionFactory.getCurrentSession().save(task);
+		boolean[] manuallyOpened = new boolean[1];
+		Session session = getSession(manuallyOpened);
+		try {
+			// add all data minus the password as a new user
+			session.save(task);
+		}
+		finally {
+			if (manuallyOpened[0]) {
+				session.close();
+			}
+		}
 	}
 	
 	/**
@@ -70,13 +104,22 @@ public class HibernateSchedulerDAO implements SchedulerDAO {
 	 * @throws DAOException
 	 */
 	public TaskDefinition getTask(Integer taskId) throws DAOException {
-		TaskDefinition task = (TaskDefinition) sessionFactory.getCurrentSession().get(TaskDefinition.class, taskId);
-		
-		if (task == null) {
-			log.warn("Task '" + taskId + "' not found");
-			throw new ObjectRetrievalFailureException(TaskDefinition.class, taskId);
+		boolean[] manuallyOpened = new boolean[1];
+		Session session = getSession(manuallyOpened);
+		try {
+			TaskDefinition task = (TaskDefinition) session.get(TaskDefinition.class, taskId);
+			
+			if (task == null) {
+				log.warn("Task '" + taskId + "' not found");
+				throw new ObjectRetrievalFailureException(TaskDefinition.class, taskId);
+			}
+			return task;
 		}
-		return task;
+		finally {
+			if (manuallyOpened[0]) {
+				session.close();
+			}
+		}
 	}
 	
 	/**
@@ -87,16 +130,25 @@ public class HibernateSchedulerDAO implements SchedulerDAO {
 	 * @throws DAOException
 	 */
 	public TaskDefinition getTaskByName(String name) throws DAOException {
-		Criteria crit = sessionFactory.getCurrentSession().createCriteria(TaskDefinition.class).add(
-		    Restrictions.eq("name", name));
-		
-		TaskDefinition task = (TaskDefinition) crit.uniqueResult();
-		
-		if (task == null) {
-			log.warn("Task '" + name + "' not found");
-			throw new ObjectRetrievalFailureException(TaskDefinition.class, name);
+		boolean[] manuallyOpened = new boolean[1];
+		Session session = getSession(manuallyOpened);
+		try {
+			Criteria crit = session.createCriteria(TaskDefinition.class).add(
+			    Restrictions.eq("name", name));
+			
+			TaskDefinition task = (TaskDefinition) crit.uniqueResult();
+			
+			if (task == null) {
+				log.warn("Task '" + name + "' not found");
+				throw new ObjectRetrievalFailureException(TaskDefinition.class, name);
+			}
+			return task;
 		}
-		return task;
+		finally {
+			if (manuallyOpened[0]) {
+				session.close();
+			}
+		}
 	}
 	
 	/**
@@ -106,7 +158,16 @@ public class HibernateSchedulerDAO implements SchedulerDAO {
 	 * @throws DAOException
 	 */
 	public void updateTask(TaskDefinition task) throws DAOException {
-		sessionFactory.getCurrentSession().merge(task);
+		boolean[] manuallyOpened = new boolean[1];
+		Session session = getSession(manuallyOpened);
+		try {
+			session.merge(task);
+		}
+		finally {
+			if (manuallyOpened[0]) {
+				session.close();
+			}
+		}
 	}
 	
 	/**
@@ -117,7 +178,16 @@ public class HibernateSchedulerDAO implements SchedulerDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<TaskDefinition> getTasks() throws DAOException {
-		return sessionFactory.getCurrentSession().createCriteria(TaskDefinition.class).list();
+		boolean[] manuallyOpened = new boolean[1];
+		Session session = getSession(manuallyOpened);
+		try {
+			return session.createCriteria(TaskDefinition.class).list();
+		}
+		finally {
+			if (manuallyOpened[0]) {
+				session.close();
+			}
+		}
 	}
 	
 	/**
@@ -138,7 +208,16 @@ public class HibernateSchedulerDAO implements SchedulerDAO {
 	 * @throws DAOException
 	 */
 	public void deleteTask(TaskDefinition taskConfig) throws DAOException {
-		sessionFactory.getCurrentSession().delete(taskConfig);
+		boolean[] manuallyOpened = new boolean[1];
+		Session session = getSession(manuallyOpened);
+		try {
+			session.delete(taskConfig);
+		}
+		finally {
+			if (manuallyOpened[0]) {
+				session.close();
+			}
+		}
 	}
 	
 	/**
@@ -156,13 +235,22 @@ public class HibernateSchedulerDAO implements SchedulerDAO {
 	 * @throws DAOException
 	 */
 	public Schedule getSchedule(Integer scheduleId) throws DAOException {
-		Schedule schedule = (Schedule) sessionFactory.getCurrentSession().get(Schedule.class, scheduleId);
-		
-		if (schedule == null) {
-			log.error("Schedule '" + scheduleId + "' not found");
-			throw new ObjectRetrievalFailureException(Schedule.class, scheduleId);
+		boolean[] manuallyOpened = new boolean[1];
+		Session session = getSession(manuallyOpened);
+		try {
+			Schedule schedule = (Schedule) session.get(Schedule.class, scheduleId);
+			
+			if (schedule == null) {
+				log.error("Schedule '" + scheduleId + "' not found");
+				throw new ObjectRetrievalFailureException(Schedule.class, scheduleId);
+			}
+			return schedule;
 		}
-		return schedule;
+		finally {
+			if (manuallyOpened[0]) {
+				session.close();
+			}
+		}
 	}
 	
 	/**

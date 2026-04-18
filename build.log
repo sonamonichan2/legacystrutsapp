@@ -20,7 +20,7 @@
 [INFO] ShortRevision tag detected. The value is '6'.
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'rev-parse' '--verify' '--short=6' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
-[INFO] Storing buildNumber: 2afd96 at timestamp: 1776512793691
+[INFO] Storing buildNumber: f3d8e2 at timestamp: 1776512993193
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'symbolic-ref' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
 [INFO] Storing scmBranch: atx-result-staging-20260418_114054_990793b0
@@ -310,15 +310,15 @@ project.artifactId
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary for OpenMRS 2.0.3:
 [INFO] 
-[INFO] OpenMRS ............................................ SUCCESS [  1.801 s]
-[INFO] openmrs-tools ...................................... SUCCESS [  0.696 s]
-[INFO] openmrs-test ....................................... SUCCESS [  0.140 s]
-[INFO] openmrs-api ........................................ SUCCESS [ 15.411 s]
-[INFO] openmrs-web ........................................ SUCCESS [  1.389 s]
-[INFO] openmrs-webapp ..................................... SUCCESS [  3.811 s]
+[INFO] OpenMRS ............................................ SUCCESS [  1.877 s]
+[INFO] openmrs-tools ...................................... SUCCESS [  0.579 s]
+[INFO] openmrs-test ....................................... SUCCESS [  0.129 s]
+[INFO] openmrs-api ........................................ SUCCESS [ 16.576 s]
+[INFO] openmrs-web ........................................ SUCCESS [  1.505 s]
+[INFO] openmrs-webapp ..................................... SUCCESS [  3.733 s]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  23.455 s
-[INFO] Finished at: 2026-04-18T11:46:56Z
+[INFO] Total time:  24.613 s
+[INFO] Finished at: 2026-04-18T11:50:16Z
 [INFO] ------------------------------------------------------------------------
