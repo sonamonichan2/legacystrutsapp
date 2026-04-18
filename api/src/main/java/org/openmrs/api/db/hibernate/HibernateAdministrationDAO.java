@@ -16,6 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.MatchMode;
@@ -247,11 +248,13 @@ public class HibernateAdministrationDAO implements AdministrationDAO, Applicatio
 	
 	@Override
 	public boolean isDatabaseStringComparisonCaseSensitive() {
-		GlobalProperty gp = (GlobalProperty) sessionFactory.getCurrentSession().get(GlobalProperty.class, OpenmrsConstants.GP_CASE_SENSITIVE_DATABASE_STRING_COMPARISON);
-		if (gp != null) {
-			return Boolean.valueOf(gp.getPropertyValue());
-		} else {
-			return true;
+		try (Session session = sessionFactory.openSession()) {
+			GlobalProperty gp = (GlobalProperty) session.get(GlobalProperty.class, OpenmrsConstants.GP_CASE_SENSITIVE_DATABASE_STRING_COMPARISON);
+			if (gp != null) {
+				return Boolean.valueOf(gp.getPropertyValue());
+			} else {
+				return true;
+			}
 		}
 	}
 }
