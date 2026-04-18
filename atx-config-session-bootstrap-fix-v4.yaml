@@ -1,0 +1,32 @@
+codeRepositoryPath: .
+transformationName: AWS/java-version-upgrade
+buildCommand: mvn -DskipTests clean install
+validationCommands: mvn -DskipTests clean install
+
+additionalPlanContext: |
+  Apply a very focused runtime fix for OpenMRS startup on Java 21 and Tomcat 10.
+
+  Current blocking issue:
+  - Application startup still fails with "No CurrentSessionContext configured!"
+  - The current failure occurs in:
+    org.openmrs.scheduler.db.hibernate.HibernateSchedulerDAO.getTasks()
+  - This is called from:
+    org.openmrs.scheduler.timer.TimerSchedulerServiceImpl.onStartup()
+    org.openmrs.scheduler.SchedulerUtil.startup()
+  - Previous startup-sensitive DAO/session issues in HibernateAdministrationDAO and HibernateContextDAO were already addressed
+
+  Required change:
+  - Review HibernateSchedulerDAO and any directly related scheduler startup DAO methods
+  - Replace bootstrap-time uses of getCurrentSession() with explicitly opened and closed session handling where needed
+  - Limit changes to scheduler startup/session bootstrap compatibility only
+  - Keep normal runtime behavior unchanged as much as possible
+  - Do not perform unrelated refactors
+  - Keep WAR packaging
+  - Keep Java 21 and Jakarta/Tomcat 10 compatibility work intact
+  - Keep Maven multi-module structure intact
+
+  Validation expectations:
+  - mvn -DskipTests clean install must pass
+  - Produce a deployable WAR
+  - Summarize exactly what changed in HibernateSchedulerDAO and any related scheduler startup classes
+  - App should no longer fail with "No CurrentSessionContext configured!" during scheduler startup
