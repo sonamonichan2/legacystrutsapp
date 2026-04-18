@@ -23,7 +23,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -186,7 +188,27 @@ public class HibernateUserDAO implements UserDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Privilege> getAllPrivileges() throws DAOException {
-		return sessionFactory.getCurrentSession().createQuery("from Privilege p order by p.privilege").list();
+		Session session;
+		boolean manuallyOpened = false;
+		try {
+			session = sessionFactory.getCurrentSession();
+		}
+		catch (HibernateException e) {
+			// No current session context available (e.g., during application bootstrap
+			// before Spring's transaction management is fully initialized).
+			// Fall back to explicitly opening a session, mirroring the pattern in
+			// HibernateAdministrationDAO.getGlobalPropertyObject().
+			session = sessionFactory.openSession();
+			manuallyOpened = true;
+		}
+		try {
+			return session.createQuery("from Privilege p order by p.privilege").list();
+		}
+		finally {
+			if (manuallyOpened) {
+				session.close();
+			}
+		}
 	}
 	
 	/**
@@ -231,7 +253,27 @@ public class HibernateUserDAO implements UserDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Role> getAllRoles() throws DAOException {
-		return sessionFactory.getCurrentSession().createQuery("from Role r order by r.role").list();
+		Session session;
+		boolean manuallyOpened = false;
+		try {
+			session = sessionFactory.getCurrentSession();
+		}
+		catch (HibernateException e) {
+			// No current session context available (e.g., during application bootstrap
+			// before Spring's transaction management is fully initialized).
+			// Fall back to explicitly opening a session, mirroring the pattern in
+			// HibernateAdministrationDAO.getGlobalPropertyObject().
+			session = sessionFactory.openSession();
+			manuallyOpened = true;
+		}
+		try {
+			return session.createQuery("from Role r order by r.role").list();
+		}
+		finally {
+			if (manuallyOpened) {
+				session.close();
+			}
+		}
 	}
 	
 	/**
