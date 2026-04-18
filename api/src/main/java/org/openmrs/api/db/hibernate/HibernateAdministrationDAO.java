@@ -16,6 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -89,13 +90,33 @@ public class HibernateAdministrationDAO implements AdministrationDAO, Applicatio
 	 * @see org.openmrs.api.db.AdministrationDAO#getGlobalPropertyObject(java.lang.String)
 	 */
 	public GlobalProperty getGlobalPropertyObject(String propertyName) {
-		if (isDatabaseStringComparisonCaseSensitive()) {
-			Criteria criteria = sessionFactory.getCurrentSession().createCriteria(GlobalProperty.class);
-			GlobalProperty gp = (GlobalProperty) criteria.add(Restrictions.eq("property", propertyName).ignoreCase())
-			        .uniqueResult();
-			return gp;
-		} else {
-			return (GlobalProperty) sessionFactory.getCurrentSession().get(GlobalProperty.class, propertyName);
+		Session session;
+		boolean manuallyOpened = false;
+		try {
+			session = sessionFactory.getCurrentSession();
+		}
+		catch (HibernateException e) {
+			// No current session context available (e.g., during application bootstrap
+			// before Spring's transaction management is fully initialized).
+			// Fall back to explicitly opening a session, mirroring the pattern in
+			// isDatabaseStringComparisonCaseSensitive().
+			session = sessionFactory.openSession();
+			manuallyOpened = true;
+		}
+		try {
+			if (isDatabaseStringComparisonCaseSensitive()) {
+				Criteria criteria = session.createCriteria(GlobalProperty.class);
+				GlobalProperty gp = (GlobalProperty) criteria.add(Restrictions.eq("property", propertyName).ignoreCase())
+				        .uniqueResult();
+				return gp;
+			} else {
+				return (GlobalProperty) session.get(GlobalProperty.class, propertyName);
+			}
+		}
+		finally {
+			if (manuallyOpened) {
+				session.close();
+			}
 		}
 	}
 	
