@@ -303,21 +303,50 @@ public class HibernateContextDAO implements ContextDAO {
 	 */
 	@Transactional
 	public void clearSession() {
-		sessionFactory.getCurrentSession().clear();
+		try {
+			sessionFactory.getCurrentSession().clear();
+		}
+		catch (HibernateException e) {
+			log.debug("No CurrentSessionContext configured, opening a temporary session to clear: " + e.getMessage());
+			Session session = sessionFactory.openSession();
+			try {
+				session.clear();
+			}
+			finally {
+				session.close();
+			}
+		}
 	}
 	
 	/**
 	 * @see org.openmrs.api.db.ContextDAO#evictFromSession(java.lang.Object)
 	 */
 	public void evictFromSession(Object obj) {
-		sessionFactory.getCurrentSession().evict(obj);
+		try {
+			sessionFactory.getCurrentSession().evict(obj);
+		}
+		catch (HibernateException e) {
+			log.debug("No CurrentSessionContext configured during evictFromSession, no-op since there is no session to evict from: " + e.getMessage());
+		}
 	}
 	
 	/**
 	 * @see org.openmrs.api.db.ContextDAO#refreshEntity(Object)
 	 */
 	public void refreshEntity(Object obj) {
-		sessionFactory.getCurrentSession().refresh(obj);
+		try {
+			sessionFactory.getCurrentSession().refresh(obj);
+		}
+		catch (HibernateException e) {
+			log.debug("No CurrentSessionContext configured during refreshEntity, opening a temporary session to refresh: " + e.getMessage());
+			Session session = sessionFactory.openSession();
+			try {
+				session.refresh(obj);
+			}
+			finally {
+				session.close();
+			}
+		}
 	}
 
 	/**
@@ -325,7 +354,19 @@ public class HibernateContextDAO implements ContextDAO {
 	 */
 	@Transactional
 	public void flushSession() {
-		sessionFactory.getCurrentSession().flush();
+		try {
+			sessionFactory.getCurrentSession().flush();
+		}
+		catch (HibernateException e) {
+			log.debug("No CurrentSessionContext configured during flushSession, opening a temporary session to flush: " + e.getMessage());
+			Session session = sessionFactory.openSession();
+			try {
+				session.flush();
+			}
+			finally {
+				session.close();
+			}
+		}
 	}
 	
 	/**
