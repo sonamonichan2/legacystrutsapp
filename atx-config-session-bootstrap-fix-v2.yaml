@@ -1,0 +1,29 @@
+codeRepositoryPath: .
+transformationName: AWS/java-version-upgrade
+buildCommand: mvn -DskipTests clean install
+validationCommands: mvn -DskipTests clean install
+
+additionalPlanContext: |
+  Apply a very focused runtime fix for OpenMRS startup on Java 21 and Tomcat 10.
+
+  Current blocking issue:
+  - Application startup still fails with "No CurrentSessionContext configured!"
+  - The failure now occurs in:
+    org.openmrs.api.db.hibernate.HibernateAdministrationDAO.getGlobalPropertyObject()
+  - The stack trace shows Hibernate SessionFactoryImpl.getCurrentSession() is still being called during bootstrap
+
+  Required change:
+  - Review HibernateAdministrationDAO and any directly related startup DAO methods
+  - Replace bootstrap-time uses of getCurrentSession() with an explicitly opened and closed session where needed
+  - Fix getGlobalPropertyObject() and any other startup-sensitive methods in the same DAO that still rely on getCurrentSession()
+  - Keep normal runtime behavior unchanged as much as possible
+  - Do not perform unrelated refactors
+  - Keep WAR packaging
+  - Keep Java 21 and Jakarta/Tomcat 10 compatibility work intact
+  - Keep Maven multi-module structure intact
+
+  Validation expectations:
+  - mvn -DskipTests clean install must pass
+  - Produce a deployable WAR
+  - Summarize exactly what changed in HibernateAdministrationDAO
+  - App should no longer fail with "No CurrentSessionContext configured!" during startup
