@@ -1,0 +1,43 @@
+codeRepositoryPath: .
+transformationName: AWS/java-version-upgrade
+buildCommand: mvn -DskipTests clean install
+validationCommands: mvn -DskipTests clean install
+
+additionalPlanContext: |
+  Upgrade this Maven multi-module OpenMRS-based Java web application from its current legacy baseline to Java 21.
+
+  This wave must also include Jakarta migration needed for Tomcat 10 compatibility.
+
+  Target outcome:
+  - Complete upgrade to Java 21
+  - Migrate required javax.* servlet, JSP, taglib, and related APIs to jakarta.*
+  - Preserve WAR packaging in this wave
+  - Preserve current application behavior as much as possible
+  - Keep Maven multi-module structure intact
+  - Keep Liquibase and database behavior unchanged
+  - Keep existing OpenMRS application structure intact
+  - Do not convert to Spring Boot in this wave
+  - Do not convert to microservices in this wave
+  - Target Apache Tomcat 10.1 compatibility as part of the Jakarta migration
+  - Prefer minimal but correct code and dependency changes required for a successful Java 21 build and Tomcat 10 deployment
+
+  Focus areas:
+  - Update source and build configuration for Java 21
+  - Replace or remove Java 21-incompatible build plugins and tooling
+  - Upgrade dependencies only where required for Java 21 and Jakarta compatibility
+  - Update web.xml, listeners, servlet/JSP/taglib dependencies, and related descriptors for Tomcat 10
+  - Replace or remove legacy listeners or web-layer components that depend on javax.servlet only
+  - Keep servlet/web stack behavior unchanged unless required for compilation or Tomcat 10 runtime compatibility
+
+  Known kinds of issues to handle:
+  - javax.servlet to jakarta.servlet migration
+  - legacy Spring MVC / servlet XML compatibility where directly required by Jakarta migration
+  - listeners compiled against javax.servlet APIs
+  - dependency alignment needed for Java 21 plus Tomcat 10 runtime
+
+  Validation expectations:
+  - mvn -DskipTests clean install must pass
+  - Produce a buildable WAR
+  - Summarize all Java 21-related dependency, plugin, and source changes
+  - Summarize all javax to jakarta changes and descriptor updates
+  - Clearly call out any remaining runtime compatibility risks after this wave
