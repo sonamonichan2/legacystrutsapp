@@ -132,8 +132,28 @@ public class HibernateAdministrationDAO implements AdministrationDAO, Applicatio
 	 */
 	@SuppressWarnings("unchecked")
 	public List<GlobalProperty> getAllGlobalProperties() throws DAOException {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(GlobalProperty.class);
-		return criteria.addOrder(Order.asc("property")).list();
+		Session session;
+		boolean manuallyOpened = false;
+		try {
+			session = sessionFactory.getCurrentSession();
+		}
+		catch (HibernateException e) {
+			// No current session context available (e.g., during application bootstrap
+			// before Spring's transaction management is fully initialized).
+			// Fall back to explicitly opening a session, mirroring the pattern in
+			// getGlobalPropertyObject().
+			session = sessionFactory.openSession();
+			manuallyOpened = true;
+		}
+		try {
+			Criteria criteria = session.createCriteria(GlobalProperty.class);
+			return criteria.addOrder(Order.asc("property")).list();
+		}
+		finally {
+			if (manuallyOpened) {
+				session.close();
+			}
+		}
 	}
 	
 	/**
@@ -141,8 +161,28 @@ public class HibernateAdministrationDAO implements AdministrationDAO, Applicatio
 	 */
 	@SuppressWarnings("unchecked")
 	public List<GlobalProperty> getGlobalPropertiesByPrefix(String prefix) {
-		return sessionFactory.getCurrentSession().createCriteria(GlobalProperty.class).add(
-		    Restrictions.ilike("property", prefix, MatchMode.START)).list();
+		Session session;
+		boolean manuallyOpened = false;
+		try {
+			session = sessionFactory.getCurrentSession();
+		}
+		catch (HibernateException e) {
+			// No current session context available (e.g., during application bootstrap
+			// before Spring's transaction management is fully initialized).
+			// Fall back to explicitly opening a session, mirroring the pattern in
+			// getGlobalPropertyObject().
+			session = sessionFactory.openSession();
+			manuallyOpened = true;
+		}
+		try {
+			return session.createCriteria(GlobalProperty.class).add(
+			    Restrictions.ilike("property", prefix, MatchMode.START)).list();
+		}
+		finally {
+			if (manuallyOpened) {
+				session.close();
+			}
+		}
 	}
 	
 	/**
@@ -150,8 +190,28 @@ public class HibernateAdministrationDAO implements AdministrationDAO, Applicatio
 	 */
 	@SuppressWarnings("unchecked")
 	public List<GlobalProperty> getGlobalPropertiesBySuffix(String suffix) {
-		return sessionFactory.getCurrentSession().createCriteria(GlobalProperty.class).add(
-		    Restrictions.ilike("property", suffix, MatchMode.END)).list();
+		Session session;
+		boolean manuallyOpened = false;
+		try {
+			session = sessionFactory.getCurrentSession();
+		}
+		catch (HibernateException e) {
+			// No current session context available (e.g., during application bootstrap
+			// before Spring's transaction management is fully initialized).
+			// Fall back to explicitly opening a session, mirroring the pattern in
+			// getGlobalPropertyObject().
+			session = sessionFactory.openSession();
+			manuallyOpened = true;
+		}
+		try {
+			return session.createCriteria(GlobalProperty.class).add(
+			    Restrictions.ilike("property", suffix, MatchMode.END)).list();
+		}
+		finally {
+			if (manuallyOpened) {
+				session.close();
+			}
+		}
 	}
 	
 	/**
