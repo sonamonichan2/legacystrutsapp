@@ -226,14 +226,40 @@ public class HibernateAdministrationDAO implements AdministrationDAO, Applicatio
 	 */
 	public GlobalProperty saveGlobalProperty(GlobalProperty gp) throws DAOException {
 		GlobalProperty gpObject = getGlobalPropertyObject(gp.getProperty());
-		if (gpObject != null) {
-			gpObject.setPropertyValue(gp.getPropertyValue());
-			gpObject.setDescription(gp.getDescription());
-			sessionFactory.getCurrentSession().update(gpObject);
-			return gpObject;
-		} else {
-			sessionFactory.getCurrentSession().save(gp);
-			return gp;
+		Session session;
+		boolean manuallyOpened = false;
+		try {
+			session = sessionFactory.getCurrentSession();
+		}
+		catch (HibernateException e) {
+			// No current session context available (e.g., during application bootstrap
+			// before Spring's transaction management is fully initialized).
+			// Fall back to explicitly opening a session, mirroring the pattern in
+			// getGlobalPropertyObject().
+			session = sessionFactory.openSession();
+			manuallyOpened = true;
+		}
+		try {
+			if (gpObject != null) {
+				gpObject.setPropertyValue(gp.getPropertyValue());
+				gpObject.setDescription(gp.getDescription());
+				session.update(gpObject);
+				if (manuallyOpened) {
+					session.flush();
+				}
+				return gpObject;
+			} else {
+				session.save(gp);
+				if (manuallyOpened) {
+					session.flush();
+				}
+				return gp;
+			}
+		}
+		finally {
+			if (manuallyOpened) {
+				session.close();
+			}
 		}
 	}
 	
