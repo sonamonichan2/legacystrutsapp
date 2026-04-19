@@ -189,6 +189,7 @@ public class HibernateSessionFactoryBean extends LocalSessionFactoryBean {
 		// inadvertently lose this critical setting, causing "No CurrentSessionContext configured!"
 		// errors in Hibernate 5.6.x. This explicit set ensures the property is always present
 		// regardless of what happened during property merging above.
+		config.setProperty("hibernate.current_session_context_class", "org.springframework.orm.hibernate5.SpringSessionContext");
 		
 		super.afterPropertiesSet();
 	}

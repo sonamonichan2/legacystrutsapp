@@ -78,7 +78,17 @@ public class HibernateContextDAO implements ContextDAO {
 		
 		String errorMsg = "Invalid username and/or password: " + login;
 		
-		Session session = sessionFactory.getCurrentSession();
+		Session session = null;
+		boolean manualSession = false;
+		try {
+			try {
+				session = sessionFactory.getCurrentSession();
+			}
+			catch (HibernateException e) {
+				log.debug("No CurrentSessionContext configured during authenticate, opening a temporary session: " + e.getMessage());
+				session = sessionFactory.openSession();
+				manualSession = true;
+			}
 		
 		User candidateUser = null;
 		
@@ -203,6 +213,12 @@ public class HibernateContextDAO implements ContextDAO {
 		log.info("Failed login attempt (login=" + login + ") - " + errorMsg);
 		throw new ContextAuthenticationException(errorMsg);
 		
+		}
+		finally {
+			if (manualSession && session != null) {
+				session.close();
+			}
+		}
 	}
 	
 	/**
@@ -211,17 +227,36 @@ public class HibernateContextDAO implements ContextDAO {
 	@Transactional(readOnly = true)
 	public User getUserByUuid(String uuid) {
 		
-		// don't flush here in case we're in the AuditableInterceptor.  Will cause a StackOverflowEx otherwise
-		FlushMode flushMode = sessionFactory.getCurrentSession().getHibernateFlushMode();
-		sessionFactory.getCurrentSession().setHibernateFlushMode(FlushMode.MANUAL);
+		Session session = null;
+		boolean manualSession = false;
+		try {
+			try {
+				session = sessionFactory.getCurrentSession();
+			}
+			catch (HibernateException e) {
+				log.debug("No CurrentSessionContext configured during getUserByUuid, opening a temporary session: " + e.getMessage());
+				session = sessionFactory.openSession();
+				manualSession = true;
+			}
 		
-		User u = (User) sessionFactory.getCurrentSession().createQuery("from User u where u.uuid = :uuid").setString("uuid",
+		// don't flush here in case we're in the AuditableInterceptor.  Will cause a StackOverflowEx otherwise
+		FlushMode flushMode = session.getHibernateFlushMode();
+		session.setHibernateFlushMode(FlushMode.MANUAL);
+		
+		User u = (User) session.createQuery("from User u where u.uuid = :uuid").setString("uuid",
 		    uuid).uniqueResult();
 		
 		// reset the flush mode to whatever it was before
-		sessionFactory.getCurrentSession().setHibernateFlushMode(flushMode);
+		session.setHibernateFlushMode(flushMode);
 		
 		return u;
+		
+		}
+		finally {
+			if (manualSession && session != null) {
+				session.close();
+			}
+		}
 	}
 	
 	/**
@@ -230,7 +265,27 @@ public class HibernateContextDAO implements ContextDAO {
 	 * @param user the User to save
 	 */
 	private void saveUserProperties(User user) {
-		sessionFactory.getCurrentSession().update(user);
+		Session session = null;
+		boolean manualSession = false;
+		try {
+			try {
+				session = sessionFactory.getCurrentSession();
+			}
+			catch (HibernateException e) {
+				log.debug("No CurrentSessionContext configured during saveUserProperties, opening a temporary session: " + e.getMessage());
+				session = sessionFactory.openSession();
+				manualSession = true;
+			}
+			session.update(user);
+			if (manualSession) {
+				session.flush();
+			}
+		}
+		finally {
+			if (manualSession && session != null) {
+				session.close();
+			}
+		}
 	}
 	
 	/**
