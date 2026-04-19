@@ -1,34 +1,69 @@
 codeRepositoryPath: .
-transformationName: AWS/comprehensive-codebase-analysis
-
-buildCommand: |
-  export JAVA_HOME=/usr/lib/jvm/java-21-amazon-corretto.x86_64
-  export PATH=$JAVA_HOME/bin:$PATH
-  mvn -DskipTests clean install
-
-validationCommands: |
-  export JAVA_HOME=/usr/lib/jvm/java-21-amazon-corretto.x86_64
-  export PATH=$JAVA_HOME/bin:$PATH
-  mvn -DskipTests clean install
+transformationName: AWS/java-version-upgrade
+buildCommand: mvn -DskipTests clean install
+validationCommands: mvn -DskipTests clean install
 
 additionalPlanContext: |
-  Refactor this Java 21-upgraded OpenMRS codebase into a modular monolith.
+  Transform this OpenMRS-based legacy Java application toward a proposed modular-monolith target architecture.
 
-  Constraints:
-  - Keep one deployable application
+  Current state:
+  - Legacy Java web application
+  - Maven multi-module build
+  - WAR packaging
+  - Uses Spring, Hibernate, Liquibase, and OpenMRS platform-style module structure
+  - Currently being modernized to Java 21 and Tomcat 10 compatible runtime
+
+  Target architecture:
+  - Modular monolith
+  - Keep a single deployable application in this phase
+  - Preserve WAR packaging in this phase unless a change is absolutely required
+  - Preserve current external behavior as much as possible
   - Keep one database
-  - Do not split into microservices
-  - Introduce domain-aligned internal modules:
-    patient, person, encounter, observation, orders, concepts,
-    users-admin, location, integration, search-reporting, web-adapter
-  - Minimize schema changes
-  - Extract clear interfaces between modules
-  - Reduce cyclic dependencies
-  - Separate web adapters from domain logic
-  - Preserve business behavior
+  - Preserve Liquibase schema migration behavior
+  - Do not convert to microservices
+  - Do not perform a full rewrite
 
-  Required output:
-  - phased refactor plan
-  - package move recommendations
-  - interface extraction recommendations
-  - buildable code changes where safe
+  Required modular-monolith boundaries:
+  - patient
+  - person
+  - encounter
+  - observation
+  - orders
+  - concepts
+  - users-admin
+  - location
+  - integration
+  - search-reporting
+  - web-adapter
+  - shared-kernel (minimal only)
+
+  Architecture rules:
+  - Separate domain, application, and infrastructure responsibilities within each module
+  - Web/controllers/REST endpoints must not contain business logic
+  - Integration concerns such as HL7 and external adapters must be isolated
+  - Shared-kernel should contain only truly common primitives and contracts
+  - Reduce cross-module coupling
+  - Eliminate cyclic dependencies where feasible
+  - Prefer interface extraction and package refactoring over broad rewrites
+  - Preserve buildability at each step
+
+  Scope of this transformation:
+  - Analyze current package and dependency structure
+  - Propose and implement the first safe refactoring wave toward the modular-monolith structure
+  - Move code only where it is low-risk and build-safe
+  - Introduce package boundaries, interfaces, and internal module structure where needed
+  - Keep startup/build behavior as intact as possible
+  - Avoid unrelated dependency churn
+
+  Required outputs:
+  1. Current-state architecture summary
+  2. Dependency and coupling findings
+  3. Proposed modular-monolith structure mapped to the target modules above
+  4. First-wave buildable refactoring changes
+  5. Risks and follow-up waves needed
+
+  Validation expectations:
+  - mvn -DskipTests clean install must pass
+  - Produce a deployable WAR
+  - Summarize exactly what was moved, extracted, or reorganized
+  - Clearly identify remaining follow-up work for later waves
