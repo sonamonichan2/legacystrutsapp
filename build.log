@@ -20,7 +20,7 @@
 [INFO] ShortRevision tag detected. The value is '6'.
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'rev-parse' '--verify' '--short=6' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
-[INFO] Storing buildNumber: 0f6dbb at timestamp: 1776611646797
+[INFO] Storing buildNumber: 25dde1 at timestamp: 1776611759852
 [INFO] Executing: /bin/sh -c cd '/home/ec2-user/projects/legacystrutsapp' && 'git' 'symbolic-ref' 'HEAD'
 [INFO] Working directory: /home/ec2-user/projects/legacystrutsapp
 [INFO] Storing scmBranch: atx-result-staging-20260419_144013_75b9e234
@@ -219,7 +219,7 @@
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ openmrs-web ---
 [INFO] Recompiling the module because of changed dependency.
-[INFO] Compiling 39 source files with javac [debug release 21] to target/classes
+[INFO] Compiling 43 source files with javac [debug release 21] to target/classes
 [INFO] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java: Some input files use or override a deprecated API.
 [INFO] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/WebModuleUtil.java: Recompile with -Xlint:deprecation for details.
 [INFO] /home/ec2-user/projects/legacystrutsapp/web/src/main/java/org/openmrs/module/web/ModuleServlet.java: Some input files use unchecked or unsafe operations.
@@ -310,15 +310,15 @@ project.artifactId
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary for OpenMRS 2.0.3:
 [INFO] 
-[INFO] OpenMRS ............................................ SUCCESS [  1.820 s]
-[INFO] openmrs-tools ...................................... SUCCESS [  0.562 s]
-[INFO] openmrs-test ....................................... SUCCESS [  0.152 s]
-[INFO] openmrs-api ........................................ SUCCESS [ 16.005 s]
-[INFO] openmrs-web ........................................ SUCCESS [  1.657 s]
-[INFO] openmrs-webapp ..................................... SUCCESS [  3.904 s]
+[INFO] OpenMRS ............................................ SUCCESS [  1.804 s]
+[INFO] openmrs-tools ...................................... SUCCESS [  0.650 s]
+[INFO] openmrs-test ....................................... SUCCESS [  0.157 s]
+[INFO] openmrs-api ........................................ SUCCESS [ 15.683 s]
+[INFO] openmrs-web ........................................ SUCCESS [  1.536 s]
+[INFO] openmrs-webapp ..................................... SUCCESS [  3.825 s]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  24.331 s
-[INFO] Finished at: 2026-04-19T15:14:30Z
+[INFO] Total time:  23.881 s
+[INFO] Finished at: 2026-04-19T15:16:22Z
 [INFO] ------------------------------------------------------------------------
