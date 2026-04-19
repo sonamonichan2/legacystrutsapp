@@ -1,0 +1,30 @@
+codeRepositoryPath: .
+transformationName: AWS/java-version-upgrade
+buildCommand: mvn -DskipTests clean install
+validationCommands: mvn -DskipTests clean install
+
+additionalPlanContext: |
+  Apply a focused runtime fix for the remaining OpenMRS startup/authentication issues on Java 21 and Tomcat 10.
+
+  Current state:
+  - The OpenMRS platform page is reachable
+  - But startup is not fully clean
+  - Remaining log issues include:
+    - org.springframework.orm.hibernate5.SpringSessionContext NoSuchMethodError
+    - org.openmrs.api.db.hibernate.HibernateContextDAO.authenticate() failing with "No CurrentSessionContext configured!"
+
+  Required changes:
+  - Review HibernateContextDAO and remaining startup/authentication-related DAO methods
+  - Replace bootstrap-time uses of getCurrentSession() with explicitly opened and closed session handling where needed
+  - Eliminate any remaining runtime path that still forces SpringSessionContext
+  - Keep normal runtime transactional behavior unchanged as much as possible
+  - Do not perform unrelated refactors
+  - Keep WAR packaging
+  - Keep Java 21 and Jakarta/Tomcat 10 compatibility work intact
+  - Keep Maven multi-module structure intact
+
+  Validation expectations:
+  - mvn -DskipTests clean install must pass
+  - Produce a deployable WAR
+  - Platform startup/authentication path should no longer fail with No CurrentSessionContext configured
+  - Summarize exactly what changed in HibernateContextDAO and any remaining session bootstrap code
